@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Azelize — Mur d'inspiration · composants</title>
+
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
+
+  <style type="text/tailwindcss" id="tw">
+    @import "tailwindcss";
+    @theme {
+  --color-brand: #002080; --color-brand-deep: #001040; --color-brand-bright: #0040FF; --color-brand-soft: #BFCFFF; --color-brand-900: #001040;
+  --color-paper: #FFFFFF; --color-parchment: #F5F1E8;
+  --color-ink: #2D3138; --color-ink-2: #4A4F57; --color-ink-soft: #6F747C; --color-ink-faint: #A7ABB2;
+  --color-line: #E7E4DA; --color-line-strong: #C9CDD2; --color-line-soft: #F1EEE5;
+  --color-ok: #16A34A; --color-ok-soft: #DCFCE7; --color-warn: #F59E0B; --color-warn-soft: #FEF3C7; --color-danger: #E11D2E; --color-danger-soft: #FEE2E2;
+  --color-on-dark: #E8EAED; --color-on-dark-bright: #FFFFFF; --color-on-dark-soft: #C9CDD2;
+  --font-display: 'Bricolage Grotesque', system-ui, sans-serif; --font-sans: 'Hanken Grotesk', system-ui, sans-serif; --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --radius-xs: 4px; --radius-sm: 6px; --radius-md: 10px; --radius-pill: 999px;
+  --color-fraise-s25-b100: #FFBFBF; --color-fraise-s50-b50: #804040; --color-fraise-s100-b25: #400000; --color-fraise-s100-b50: #800000; --color-fraise-s100-b100: #FF0000;
+  --color-miel-s25-b100: #FFDABF; --color-miel-s50-b100: #FFB580; --color-miel-s100-b25: #401B00; --color-miel-s100-b50: #803500; --color-miel-s100-b100: #FF6A00;
+  --color-citron-s25-b100: #FFF4BF; --color-citron-s50-b25: #403A20; --color-citron-s100-b25: #403500; --color-citron-s100-b50: #806A00; --color-citron-s100-b100: #FFD500;
+  --color-kiwi-s25-b100: #EFFFBF; --color-kiwi-s50-b25: #384020; --color-kiwi-s50-b100: #DFFF80; --color-kiwi-s100-b25: #304000; --color-kiwi-s100-b50: #608000; --color-kiwi-s100-b100: #BFFF00;
+  --color-menthe-s25-b100: #BFCFFF; --color-menthe-s50-b100: #809FFF; --color-menthe-s100-b25: #001040; --color-menthe-s100-b50: #002080; --color-menthe-s100-b100: #0040FF;
+  --text-h2: clamp(1.85rem, 3.8vw, 3rem); --text-h2--line-height: 1.05; --text-h3: clamp(1.25rem, 1.9vw, 1.6rem); --text-h3--line-height: 1.15;
+  --text-lead: clamp(1.0625rem, 1.6vw, 1.3rem); --text-lead--line-height: 1.5; --text-ui: 0.9375rem; --text-caption: 0.8125rem; --text-eyebrow: 0.75rem;
+  --tracking-eyebrow: 0.16em; --ease-brand: cubic-bezier(0.22, 0.68, 0.18, 1);
+    }
+  </style>
+</head>
+
+<body class="bg-paper text-ink font-sans text-[15px] leading-[1.55]">
+
+  <!-- ── En-tête ───────────────────────────────────────────────────────────── -->
+  <header class="mx-auto max-w-[1180px] px-[clamp(20px,5vw,56px)] pt-[clamp(28px,5vw,64px)] pb-8 border-b border-line">
+    <a href="index.html" class="font-mono text-[11px] text-ink-soft no-underline hover:text-brand">← hub familles</a>
+    <div class="font-mono text-[11px] tracking-eyebrow uppercase text-brand mt-2">Azelize · Mur d'inspiration</div>
+    <h1 class="font-display font-bold text-[clamp(2rem,4vw,3rem)] leading-[1.04] tracking-[-0.035em] mt-[10px] mb-[12px]">Composants</h1>
+    <p class="max-w-[72ch] text-ink-soft">Bibliothèque de tests. Règle de dosage : <b class="text-ink">~70 % neutre (blanc)</b>, <b class="text-ink">~30 % couleur fruit</b> en bandes. La menthe porte l'action ; les fruits sont des signaux ponctuels. <a href="charte-couleur.md" class="text-brand underline">Charte</a> · <a href="demo-arc.html" class="text-brand underline">Démo arc</a>.</p>
+  </header>
+
+  <main class="mx-auto max-w-[1180px] px-[clamp(20px,5vw,56px)]">
+
+    <!-- ════════ BOUTONS ════════ -->
+    <section class="py-[clamp(40px,5vw,72px)] border-b border-line">
+      <h2 class="font-display text-h3 font-semibold tracking-tight m-0 mb-7">Boutons</h2>
+      <div class="flex flex-wrap items-center gap-3 mb-5">
+        <button class="inline-flex items-center justify-center gap-2 font-semibold leading-none rounded-xs px-[26px] py-[14px] text-base bg-brand text-paper hover:bg-brand-deep active:translate-y-px transition-[background,transform] duration-150 cursor-pointer">Demander un audit</button>
+        <button class="inline-flex items-center justify-center gap-2 font-semibold leading-none rounded-xs px-[26px] py-[14px] text-base bg-transparent text-ink border border-line-strong hover:border-brand hover:text-brand active:translate-y-px transition-[background,transform,border-color,color] duration-150 cursor-pointer">En savoir plus</button>
+        <button class="inline-flex items-center justify-center gap-2 font-semibold leading-none rounded-xs px-[26px] py-[14px] text-base bg-transparent text-brand hover:bg-brand-soft active:translate-y-px transition-[background,transform] duration-150 cursor-pointer">Voir un exemple</button>
+        <a class="font-semibold text-base text-brand underline underline-offset-2 hover:text-brand-deep cursor-pointer">Lien →</a>
+        <button disabled class="inline-flex items-center gap-2 font-semibold leading-none rounded-xs px-[26px] py-[14px] text-base bg-brand text-paper opacity-40 cursor-not-allowed">Désactivé</button>
+      </div>
+      <div class="flex flex-wrap items-center gap-3">
+        <button class="inline-flex items-center gap-2 font-semibold leading-none rounded-xs px-[18px] py-[10px] text-[0.9rem] bg-brand text-paper hover:bg-brand-deep transition-[background] duration-150 cursor-pointer">Petit</button>
+        <button class="inline-flex items-center gap-2 font-semibold leading-none rounded-xs px-8 py-[17px] text-[1.0625rem] bg-brand text-paper hover:bg-brand-deep transition-[background] duration-150 cursor-pointer">Grand</button>
+        <button class="inline-flex items-center gap-2 font-semibold leading-none rounded-xs px-[26px] py-[14px] text-base bg-brand text-paper hover:bg-brand-deep transition-[background] duration-150 cursor-pointer"><span class="w-4 h-4 rounded-full bg-paper/30 grid place-items-center text-[10px]">✓</span>Avec icône</button>
+      </div>
+    </section>
+
+    <!-- ════════ BADGES & PILLS ════════ -->
+    <section class="py-[clamp(40px,5vw,72px)] border-b border-line">
+      <h2 class="font-display text-h3 font-semibold tracking-tight m-0 mb-7">Badges &amp; pastilles</h2>
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="inline-flex items-center gap-1 rounded-pill px-[11px] py-[3px] text-caption font-medium bg-line-soft text-ink-2">Neutre</span>
+        <span class="inline-flex items-center gap-1 rounded-pill px-[11px] py-[3px] text-caption font-medium bg-brand text-paper">Marque</span>
+        <span class="inline-flex items-center gap-1 rounded-pill px-[11px] py-[3px] text-caption font-medium bg-brand-soft text-brand-deep">Menthe soft</span>
+        <span class="inline-flex items-center gap-1 rounded-pill px-[11px] py-[3px] text-caption font-medium bg-kiwi-s25-b100 text-kiwi-s100-b25"><span class="font-bold">✓</span> Inclus</span>
+        <span class="inline-flex items-center gap-1 rounded-pill px-[11px] py-[3px] text-caption font-medium bg-citron-s100-b100 text-citron-s100-b25">Nouveau</span>
+        <span class="inline-flex items-center gap-1 rounded-pill px-[11px] py-[3px] text-caption font-medium bg-miel-s25-b100 text-miel-s100-b25">Étape 2</span>
+        <span class="inline-flex items-center gap-1 rounded-pill px-[11px] py-[3px] text-caption font-medium bg-fraise-s100-b50 text-paper">Alerte</span>
+        <span class="inline-flex items-center gap-1 rounded-pill px-[11px] py-[3px] text-caption font-medium border border-line-strong text-ink-2">Contour</span>
+      </div>
+    </section>
+
+    <!-- ════════ FORMULAIRE ════════ -->
+    <section class="py-[clamp(40px,5vw,72px)] border-b border-line">
+      <h2 class="font-display text-h3 font-semibold tracking-tight m-0 mb-7">Champs de formulaire</h2>
+      <div class="grid sm:grid-cols-2 gap-x-8 gap-y-6 max-w-[760px]">
+        <label class="block">
+          <span class="block text-ui font-medium text-ink mb-[6px]">Votre nom</span>
+          <input type="text" placeholder="Jean Dupont" class="w-full rounded-xs border border-line-strong bg-paper px-[14px] py-[11px] text-base placeholder:text-ink-faint focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-soft" />
+        </label>
+        <label class="block">
+          <span class="block text-ui font-medium text-ink mb-[6px]">Téléphone</span>
+          <input type="tel" placeholder="06 12 34 56 78" class="w-full rounded-xs border border-line-strong bg-paper px-[14px] py-[11px] text-base placeholder:text-ink-faint focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-soft" />
+          <span class="block text-caption text-ink-soft mt-[6px]">On ne le partage jamais.</span>
+        </label>
+        <label class="block">
+          <span class="block text-ui font-medium text-ink mb-[6px]">Email <span class="text-danger">(erreur)</span></span>
+          <input type="email" value="pasunemail" class="w-full rounded-xs border border-danger bg-paper px-[14px] py-[11px] text-base focus:outline-none focus:ring-2 focus:ring-danger-soft" />
+          <span class="block text-caption text-danger mt-[6px]">Adresse email invalide.</span>
+        </label>
+        <label class="block">
+          <span class="block text-ui font-medium text-ink mb-[6px]">Votre métier</span>
+          <select class="w-full rounded-xs border border-line-strong bg-paper px-[14px] py-[11px] text-base focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-soft">
+            <option>Artisan du bâtiment</option><option>Commerce de proximité</option><option>Profession libérale</option>
+          </select>
+        </label>
+        <label class="block sm:col-span-2">
+          <span class="block text-ui font-medium text-ink mb-[6px]">Votre message</span>
+          <textarea rows="3" placeholder="Dites-nous en deux mots…" class="w-full rounded-xs border border-line-strong bg-paper px-[14px] py-[11px] text-base placeholder:text-ink-faint focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand-soft"></textarea>
+        </label>
+        <div class="flex flex-wrap items-center gap-6 sm:col-span-2">
+          <label class="flex items-center gap-[10px] cursor-pointer"><input type="checkbox" checked class="w-[18px] h-[18px] accent-[#002080]" /><span class="text-ui">J'accepte d'être rappelé</span></label>
+          <label class="flex items-center gap-[10px] cursor-pointer"><input type="radio" name="r" checked class="w-[18px] h-[18px] accent-[#002080]" /><span class="text-ui">Le matin</span></label>
+          <label class="flex items-center gap-[10px] cursor-pointer"><input type="radio" name="r" class="w-[18px] h-[18px] accent-[#002080]" /><span class="text-ui">L'après-midi</span></label>
+          <!-- switch -->
+          <label class="flex items-center gap-[10px] cursor-pointer">
+            <span class="relative inline-block w-[42px] h-[24px]">
+              <input type="checkbox" checked class="peer sr-only" />
+              <span class="absolute inset-0 rounded-pill bg-line-strong peer-checked:bg-brand transition-colors"></span>
+              <span class="absolute top-[3px] left-[3px] w-[18px] h-[18px] rounded-full bg-paper transition-transform peer-checked:translate-x-[18px]"></span>
+            </span>
+            <span class="text-ui">Notifications</span>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════ BANDE COULEUR · MENTHE (action) ════════ -->
+  </main>
+  <section class="bg-brand text-on-dark-bright py-[clamp(48px,6vw,96px)]">
+    <div class="mx-auto max-w-[1180px] px-[clamp(20px,5vw,56px)] flex flex-col md:flex-row md:items-center md:justify-between gap-7">
+      <div>
+        <div class="font-mono text-[11px] tracking-eyebrow uppercase text-brand-soft mb-3">On s'occupe de tout</div>
+        <h2 class="font-display font-semibold text-h2 leading-[1.05] tracking-[-0.02em] m-0 max-w-[20ch]">Votre présence en ligne, prise en main.</h2>
+      </div>
+      <a href="#" class="shrink-0 inline-flex items-center gap-2 font-semibold text-[1.0625rem] px-8 py-[17px] rounded-xs cursor-pointer transition-[background,transform] duration-150 active:translate-y-px bg-brand-soft text-brand-deep hover:bg-paper active:bg-menthe-s50-b100">Être rappelé →</a>
+    </div>
+  </section>
+  <main class="mx-auto max-w-[1180px] px-[clamp(20px,5vw,56px)]">
+
+    <!-- ════════ CARTES ════════ -->
+    <section class="py-[clamp(40px,5vw,72px)] border-b border-line">
+      <h2 class="font-display text-h3 font-semibold tracking-tight m-0 mb-7">Cartes</h2>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div class="rounded-md border border-line p-6 bg-paper">
+          <div class="w-10 h-10 rounded-sm bg-brand-soft grid place-items-center text-brand mb-4 font-display font-bold">az</div>
+          <h3 class="font-display text-h3 font-medium tracking-tight m-0 mb-2">Carte simple</h3>
+          <p class="text-ink-soft m-0 text-[14.5px] leading-[1.55]">Une carte neutre sur blanc, bordure fine. Le contenu prime, la couleur reste un détail.</p>
+        </div>
+        <div class="rounded-md border border-line p-6 bg-paper">
+          <span class="inline-flex items-center gap-1 rounded-pill px-[11px] py-[3px] text-caption font-medium bg-kiwi-s25-b100 text-kiwi-s100-b25 mb-4"><span class="font-bold">✓</span> Inclus</span>
+          <h3 class="font-display text-h3 font-medium tracking-tight m-0 mb-2">Carte avec badge</h3>
+          <p class="text-ink-soft m-0 text-[14.5px] leading-[1.55]">Un petit signal fruit (Kiwi = preuve) posé sur une carte neutre.</p>
+        </div>
+        <div class="rounded-md border-2 border-brand p-6 bg-paper relative">
+          <span class="absolute -top-3 left-6 inline-flex items-center rounded-pill px-[11px] py-[3px] text-caption font-medium bg-brand text-paper">Recommandé</span>
+          <h3 class="font-display text-h3 font-medium tracking-tight m-0 mb-2 mt-1">Carte mise en avant</h3>
+          <p class="text-ink-soft m-0 text-[14.5px] leading-[1.55]">Liseré Menthe pour signaler le choix conseillé. La marque = l'action.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════ TARIFS ════════ -->
+    <section class="py-[clamp(40px,5vw,72px)] border-b border-line">
+      <h2 class="font-display text-h3 font-semibold tracking-tight m-0 mb-7">Carte tarif</h2>
+      <div class="rounded-md border-2 border-brand p-7 bg-paper max-w-[420px]">
+        <div class="font-mono text-[11px] tracking-eyebrow uppercase text-brand mb-2">Abonnement</div>
+        <div class="flex items-baseline gap-2 mb-1"><span class="font-display font-bold text-[clamp(2.4rem,5vw,3.2rem)] leading-none tracking-[-0.03em]">49&nbsp;€</span><span class="text-ink-soft">/ mois</span></div>
+        <p class="text-ink-soft text-[14.5px] m-0 mb-5">Sans engagement. 1ᵉʳ mois offert.</p>
+        <ul class="m-0 p-0 list-none flex flex-col gap-[10px] mb-6">
+          <li class="flex items-center gap-[10px] text-[14.5px]"><span class="grid place-items-center w-5 h-5 rounded-full bg-kiwi-s25-b100 text-kiwi-s100-b25 text-[12px] font-bold shrink-0">✓</span>Site &amp; hébergement</li>
+          <li class="flex items-center gap-[10px] text-[14.5px]"><span class="grid place-items-center w-5 h-5 rounded-full bg-kiwi-s25-b100 text-kiwi-s100-b25 text-[12px] font-bold shrink-0">✓</span>Référencement local</li>
+          <li class="flex items-center gap-[10px] text-[14.5px]"><span class="grid place-items-center w-5 h-5 rounded-full bg-kiwi-s25-b100 text-kiwi-s100-b25 text-[12px] font-bold shrink-0">✓</span>Maintenance incluse</li>
+        </ul>
+        <button class="w-full inline-flex items-center justify-center font-semibold rounded-xs px-[26px] py-[14px] text-base bg-brand text-paper hover:bg-brand-deep transition-[background] duration-150 cursor-pointer">Commencer</button>
+      </div>
+    </section>
+
+    <!-- ════════ STATS ════════ -->
+    <section class="py-[clamp(40px,5vw,72px)] border-b border-line">
+      <h2 class="font-display text-h3 font-semibold tracking-tight m-0 mb-7">Chiffres clés</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-8">
+        <div><div class="font-display font-bold text-[clamp(2rem,4vw,2.8rem)] leading-none tracking-[-0.03em] text-brand">+38 %</div><div class="text-ink-soft text-[14px] mt-2">de demandes en 3 mois</div></div>
+        <div><div class="font-display font-bold text-[clamp(2rem,4vw,2.8rem)] leading-none tracking-[-0.03em] text-brand">15 min</div><div class="text-ink-soft text-[14px] mt-2">pour faire le point</div></div>
+        <div><div class="font-display font-bold text-[clamp(2rem,4vw,2.8rem)] leading-none tracking-[-0.03em] text-brand">0 €</div><div class="text-ink-soft text-[14px] mt-2">le 1ᵉʳ mois</div></div>
+        <div><div class="font-display font-bold text-[clamp(2rem,4vw,2.8rem)] leading-none tracking-[-0.03em] text-brand">98 %</div><div class="text-ink-soft text-[14px] mt-2">de clients satisfaits</div></div>
+      </div>
+    </section>
+
+    <!-- ════════ ALERTES ════════ -->
+    <section class="py-[clamp(40px,5vw,72px)] border-b border-line">
+      <h2 class="font-display text-h3 font-semibold tracking-tight m-0 mb-7">Notes &amp; alertes</h2>
+      <div class="flex flex-col gap-3 max-w-[760px]">
+        <div class="rounded-sm border-l-4 border-brand bg-brand-soft/30 p-4 text-[14.5px]"><b>Info.</b> Le premier appel ne coûte rien et n'engage à rien.</div>
+        <div class="rounded-sm border-l-4 border-ok bg-ok-soft p-4 text-[14.5px]"><b>Succès.</b> Votre site est en ligne et déjà indexé sur Google.</div>
+        <div class="rounded-sm border-l-4 border-warn bg-warn-soft p-4 text-[14.5px]"><b>Attention.</b> Pensez à renouveler votre nom de domaine.</div>
+        <div class="rounded-sm border-l-4 border-fraise-s100-b50 bg-fraise-s25-b100/40 p-4 text-[14.5px]"><b>Problème.</b> Vous n'apparaissez sur aucune recherche locale.</div>
+      </div>
+    </section>
+
+    <!-- ════════ TÉMOIGNAGE ════════ -->
+    <section class="py-[clamp(40px,5vw,72px)] border-b border-line">
+      <h2 class="font-display text-h3 font-semibold tracking-tight m-0 mb-7">Témoignage</h2>
+      <figure class="max-w-[760px] m-0">
+        <blockquote class="m-0 font-display text-[clamp(1.25rem,2.4vw,1.75rem)] leading-[1.3] tracking-tight text-ink">« En deux mois, le téléphone s'est remis à sonner. Je ne m'occupe de rien, et ça marche. »</blockquote>
+        <figcaption class="flex items-center gap-3 mt-5">
+          <span class="w-10 h-10 rounded-full bg-brand-soft text-brand grid place-items-center font-display font-bold">M</span>
+          <span class="text-[14.5px]"><b class="block">Marc D.</b><span class="text-ink-soft">Maçon · Rennes</span></span>
+        </figcaption>
+      </figure>
+    </section>
+
+    <!-- ════════ FAQ (accordéon natif) ════════ -->
+    <section class="py-[clamp(40px,5vw,72px)] border-b border-line">
+      <h2 class="font-display text-h3 font-semibold tracking-tight m-0 mb-7">FAQ (accordéon)</h2>
+      <div class="max-w-[760px] border-t border-line">
+        <details class="border-b border-line py-4 group">
+          <summary class="flex items-center justify-between cursor-pointer list-none font-display font-medium text-[1.05rem] text-ink">C'est vraiment sans engagement ?<span class="text-ink-faint group-open:rotate-45 transition-transform">+</span></summary>
+          <p class="text-ink-soft text-[14.5px] mt-3 mb-0">Oui. Vous payez seulement quand le site vous amène des demandes. Sinon, on arrête.</p>
+        </details>
+        <details class="border-b border-line py-4 group">
+          <summary class="flex items-center justify-between cursor-pointer list-none font-display font-medium text-[1.05rem] text-ink">Combien de temps avant des résultats ?<span class="text-ink-faint group-open:rotate-45 transition-transform">+</span></summary>
+          <p class="text-ink-soft text-[14.5px] mt-3 mb-0">Un site neuf met quelques semaines à émerger. Le 1ᵉʳ mois est offert pour cette raison.</p>
+        </details>
+        <details class="border-b border-line py-4 group">
+          <summary class="flex items-center justify-between cursor-pointer list-none font-display font-medium text-[1.05rem] text-ink">Je dois fournir quoi ?<span class="text-ink-faint group-open:rotate-45 transition-transform">+</span></summary>
+          <p class="text-ink-soft text-[14.5px] mt-3 mb-0">Quelques photos et infos. On s'occupe du reste : textes, mise en ligne, référencement.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- ════════ ONGLETS + TABLE ════════ -->
+    <section class="py-[clamp(40px,5vw,72px)] border-b border-line">
+      <h2 class="font-display text-h3 font-semibold tracking-tight m-0 mb-7">Segments &amp; tableau</h2>
+      <div class="inline-flex p-1 rounded-pill bg-line-soft mb-7">
+        <span class="px-4 py-[7px] rounded-pill text-ui font-medium bg-paper text-ink shadow-sm">Mensuel</span>
+        <span class="px-4 py-[7px] rounded-pill text-ui font-medium text-ink-soft">Annuel</span>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full border-collapse text-[14.5px] max-w-[760px]">
+          <thead><tr class="border-b border-line-strong text-left">
+            <th class="py-3 pr-4 font-medium text-ink-soft font-sans">Offre</th><th class="py-3 px-4 font-medium text-ink-soft font-sans">Site vitrine</th><th class="py-3 px-4 font-medium text-ink-soft font-sans">Abonnement</th>
+          </tr></thead>
+          <tbody>
+            <tr class="border-b border-line"><td class="py-3 pr-4">Référencement local</td><td class="py-3 px-4 text-ink-faint">—</td><td class="py-3 px-4 text-kiwi-s100-b50 font-bold">✓</td></tr>
+            <tr class="border-b border-line"><td class="py-3 pr-4">Maintenance</td><td class="py-3 px-4 text-ink-faint">—</td><td class="py-3 px-4 text-kiwi-s100-b50 font-bold">✓</td></tr>
+            <tr class="border-b border-line"><td class="py-3 pr-4">Mises à jour</td><td class="py-3 px-4 text-kiwi-s100-b50 font-bold">✓</td><td class="py-3 px-4 text-kiwi-s100-b50 font-bold">✓</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- ════════ BANDE COULEUR · KIWI (preuve) ════════ -->
+  <section class="bg-kiwi-s50-b100 py-[clamp(40px,5vw,72px)]">
+    <div class="mx-auto max-w-[1180px] px-[clamp(20px,5vw,56px)]">
+      <div class="rounded-md bg-kiwi-s100-b25 text-paper p-[clamp(28px,4.5%,56px)]">
+        <div class="font-mono text-[11px] tracking-eyebrow uppercase text-kiwi-s50-b100 mb-4">Tout est inclus</div>
+        <h2 class="font-display font-semibold text-h2 leading-[1.05] tracking-[-0.02em] m-0 mb-7">Ce que vous avez, chaque mois</h2>
+        <ul class="grid sm:grid-cols-2 gap-x-8 gap-y-[14px] m-0 p-0 list-none">
+          <li class="flex items-center gap-[10px] text-[15px]"><span class="grid place-items-center w-5 h-5 rounded-full bg-kiwi-s50-b100 text-kiwi-s100-b25 text-[12px] font-bold shrink-0">✓</span>Site sur-mesure, rapide</li>
+          <li class="flex items-center gap-[10px] text-[15px]"><span class="grid place-items-center w-5 h-5 rounded-full bg-kiwi-s50-b100 text-kiwi-s100-b25 text-[12px] font-bold shrink-0">✓</span>Référencement local Google</li>
+          <li class="flex items-center gap-[10px] text-[15px]"><span class="grid place-items-center w-5 h-5 rounded-full bg-kiwi-s50-b100 text-kiwi-s100-b25 text-[12px] font-bold shrink-0">✓</span>Mises à jour &amp; maintenance</li>
+          <li class="flex items-center gap-[10px] text-[15px]"><span class="grid place-items-center w-5 h-5 rounded-full bg-kiwi-s50-b100 text-kiwi-s100-b25 text-[12px] font-bold shrink-0">✓</span>Avis clients &amp; photos</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <main class="mx-auto max-w-[1180px] px-[clamp(20px,5vw,56px)]">
+    <!-- ════════ PARCOURS (étapes, neutre) ════════ -->
+    <section class="py-[clamp(40px,5vw,72px)] border-b border-line">
+      <h2 class="font-display text-h3 font-semibold tracking-tight m-0 mb-7">Parcours (timeline)</h2>
+      <div class="grid sm:grid-cols-3 gap-x-7 gap-y-7">
+        <div class="border-t-2 border-miel-s100-b50 pt-4">
+          <div class="font-mono text-[11px] text-miel-s100-b50 mb-2">ÉTAPE 1</div>
+          <h3 class="font-display font-medium text-h3 tracking-tight m-0 mb-1">On fait le point</h3>
+          <p class="text-ink-soft text-[14.5px] m-0">15 min, sans engagement.</p>
+        </div>
+        <div class="border-t-2 border-miel-s100-b50 pt-4">
+          <div class="font-mono text-[11px] text-miel-s100-b50 mb-2">ÉTAPE 2</div>
+          <h3 class="font-display font-medium text-h3 tracking-tight m-0 mb-1">On met en place</h3>
+          <p class="text-ink-soft text-[14.5px] m-0">Site, référencement, image.</p>
+        </div>
+        <div class="border-t-2 border-miel-s100-b50 pt-4">
+          <div class="font-mono text-[11px] text-miel-s100-b50 mb-2">ÉTAPE 3</div>
+          <h3 class="font-display font-medium text-h3 tracking-tight m-0 mb-1">Vous payez quand ça marche</h3>
+          <p class="text-ink-soft text-[14.5px] m-0">Zéro engagement.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ════════ BANDE COULEUR · CITRON (accent, fine) ════════ -->
+  <section class="bg-citron-s100-b100 text-citron-s100-b25 py-[clamp(28px,3.5vw,48px)]">
+    <div class="mx-auto max-w-[1180px] px-[clamp(20px,5vw,56px)] flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-9">
+      <div class="font-display font-bold text-[clamp(2rem,5vw,3.2rem)] leading-none tracking-[-0.03em] shrink-0">+38&nbsp;%</div>
+      <p class="font-display font-semibold text-[clamp(1.05rem,2vw,1.4rem)] leading-[1.2] m-0">de demandes en plus, dès le 3ᵉ mois — sans rien changer à votre quotidien.</p>
+    </div>
+  </section>
+
+  <!-- ════════ BANDE COULEUR · FRAISE (douleur) ════════ -->
+  <section class="bg-fraise-s100-b50 text-paper py-[clamp(40px,5vw,72px)]">
+    <div class="mx-auto max-w-[1180px] px-[clamp(20px,5vw,56px)]">
+      <div class="font-mono text-[11px] tracking-eyebrow uppercase text-fraise-s25-b100 mb-3">C'est pour vous</div>
+      <h2 class="font-display font-semibold text-h2 leading-[1.05] tracking-[-0.02em] max-w-[20ch] m-0 mb-7">Vos clients vous cherchent. Vous y êtes&nbsp;?</h2>
+      <div class="grid sm:grid-cols-3 gap-x-7 gap-y-6">
+        <div class="flex items-start gap-2"><span class="grid place-items-center w-[18px] h-[18px] rounded-full bg-fraise-s25-b100 text-fraise-s100-b50 text-[11px] font-bold shrink-0 mt-[2px]">✗</span><p class="text-[14px] text-fraise-s25-b100 m-0">Invisible sur Google.</p></div>
+        <div class="flex items-start gap-2"><span class="grid place-items-center w-[18px] h-[18px] rounded-full bg-fraise-s25-b100 text-fraise-s100-b50 text-[11px] font-bold shrink-0 mt-[2px]">✗</span><p class="text-[14px] text-fraise-s25-b100 m-0">Un site qui fait fuir.</p></div>
+        <div class="flex items-start gap-2"><span class="grid place-items-center w-[18px] h-[18px] rounded-full bg-fraise-s25-b100 text-fraise-s100-b50 text-[11px] font-bold shrink-0 mt-[2px]">✗</span><p class="text-[14px] text-fraise-s25-b100 m-0">Pas le temps de gérer.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="mx-auto max-w-[1180px] px-[clamp(20px,5vw,56px)] py-[clamp(40px,6vw,80px)] text-[12.5px] text-ink-soft">
+    Mur d'inspiration — composants de test, non connectés. Dosage ~70 % blanc / 30 % couleur.
+    Couleurs 100 % tokens du design system. <a href="charte-couleur.md" class="text-brand underline">Charte</a>.
+  </footer>
+</body>
+</html>

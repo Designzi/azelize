@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Azelize — Démo charte vivante (arc émotionnel)</title>
+
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
+
+  <style type="text/tailwindcss" id="tw">
+    @import "tailwindcss";
+    @theme {
+  --color-brand:        #002080;   /* menthe S100·B50 */
+  --color-brand-deep:   #001040;   /* menthe S100·B25 */
+  --color-brand-bright: #0040FF;   /* menthe S100·B100 */
+  --color-brand-soft:   #BFCFFF;   /* menthe S25·B100 */
+  --color-brand-900:    #001040;
+
+  --color-paper:       #FFFFFF;
+  --color-parchment:   #F5F1E8;
+  --color-ink:         #2D3138;
+  --color-ink-soft:    #6F747C;
+  --color-line:        #E7E4DA;
+  --color-on-dark-bright: #FFFFFF;
+
+  --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
+  --font-sans:    'Hanken Grotesk', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, monospace;
+  --radius-xs: 4px; --radius-sm: 6px; --radius-md: 10px; --radius-pill: 999px;
+  --tracking-eyebrow: 0.16em;
+
+  /* fraise */
+  --color-fraise-s25-b100: #FFBFBF; --color-fraise-s50-b50: #804040;
+  --color-fraise-s100-b25: #400000; --color-fraise-s100-b50: #800000; --color-fraise-s100-b100: #FF0000;
+  /* miel */
+  --color-miel-s25-b100: #FFDABF; --color-miel-s50-b100: #FFB580;
+  --color-miel-s100-b25: #401B00; --color-miel-s100-b50: #803500; --color-miel-s100-b100: #FF6A00;
+  /* citron */
+  --color-citron-s25-b100: #FFF4BF; --color-citron-s50-b25: #403A20;
+  --color-citron-s100-b25: #403500; --color-citron-s100-b50: #806A00; --color-citron-s100-b100: #FFD500;
+  /* kiwi */
+  --color-kiwi-s25-b100: #EFFFBF; --color-kiwi-s25-b25: #3C4030; --color-kiwi-s50-b25: #384020;
+  --color-kiwi-s50-b100: #DFFF80; --color-kiwi-s100-b25: #304000; --color-kiwi-s100-b50: #608000; --color-kiwi-s100-b100: #BFFF00;
+  /* menthe */
+  --color-menthe-s25-b100: #BFCFFF; --color-menthe-s50-b100: #809FFF;
+  --color-menthe-s100-b25: #001040; --color-menthe-s100-b50: #002080; --color-menthe-s100-b100: #0040FF;
+
+  --text-h2: clamp(1.85rem, 3.8vw, 3rem); --text-h2--line-height: 1.05;
+  --text-h3: clamp(1.25rem, 1.9vw, 1.6rem); --text-h3--line-height: 1.15;
+  --ease-brand: cubic-bezier(0.22, 0.68, 0.18, 1);
+    }
+  </style>
+</head>
+
+<body class="bg-paper text-ink font-sans text-[15px] leading-[1.55]">
+
+  <!-- ── En-tête (conteneur) ───────────────────────────────────────────────── -->
+  <header class="mx-auto max-w-[1100px] px-[clamp(20px,5vw,56px)] pt-[clamp(28px,5vw,64px)] pb-8 border-b border-line">
+    <a href="index.html" class="font-mono text-[11px] text-ink-soft no-underline hover:text-brand">← hub familles</a>
+    <div class="font-mono text-[11px] tracking-eyebrow uppercase text-brand mt-2">Azelize · Charte vivante</div>
+    <h1 class="font-display font-bold text-[clamp(2rem,4vw,3rem)] leading-[1.04] tracking-[-0.035em] mt-[10px] mb-[12px]">L'arc émotionnel en situation</h1>
+    <p class="max-w-[70ch] text-ink-soft">Démo des couleurs retenues appliquées à leur rôle. On descend de la <b class="text-ink">douleur</b> (Fraise) à l'<b class="text-ink">action</b> (Menthe), en passant par le <b class="text-ink">parcours</b> (Miel), la <b class="text-ink">preuve</b> (Kiwi) et l'<b class="text-ink">accent</b> (Citron). Chaque bloc indique la combinaison retenue utilisée. <a href="charte-couleur.md" class="text-brand underline">Voir la charte</a>.</p>
+  </header>
+
+  <!-- ── 1 · FRAISE — Douleur (bande pleine largeur) ───────────────────────── -->
+  <section>
+    <div class="mx-auto max-w-[1100px] px-[clamp(20px,5vw,56px)] pt-[clamp(34px,4.5vw,60px)] pb-3">
+      <div class="flex flex-wrap items-center gap-2 font-mono text-[11px] text-ink-soft">
+        <span class="w-3 h-3 rounded-full bg-fraise-s100-b50"></span>
+        <b class="text-ink">1 · Fraise — Douleur</b><span>·</span><span>Profond · s50-b50 × s100-b50</span>
+      </div>
+    </div>
+    <div class="bg-fraise-s100-b50 text-paper py-[clamp(44px,6vw,88px)]">
+      <div class="mx-auto max-w-[1100px] px-[clamp(20px,5vw,56px)]">
+        <div class="font-mono text-[11px] tracking-eyebrow uppercase text-fraise-s25-b100 mb-4">C'est pour vous</div>
+        <h2 class="font-display font-semibold text-[clamp(1.5rem,3vw,2.3rem)] leading-[1.1] tracking-[-0.02em] max-w-[20ch] m-0">Vos clients vous cherchent sur Google. Vous y êtes&nbsp;?</h2>
+        <div class="grid sm:grid-cols-3 gap-x-7 gap-y-6 mt-9">
+          <div>
+            <div class="flex items-center gap-2 mb-[6px]"><span class="grid place-items-center w-[18px] h-[18px] rounded-full bg-fraise-s25-b100 text-fraise-s100-b50 text-[11px] font-bold leading-none">✗</span><h3 class="font-display font-semibold text-[15px] m-0">Invisible sur Google</h3></div>
+            <p class="text-[13.5px] leading-[1.5] text-fraise-s25-b100 m-0">Vos concurrents apparaissent, pas vous.</p>
+          </div>
+          <div>
+            <div class="flex items-center gap-2 mb-[6px]"><span class="grid place-items-center w-[18px] h-[18px] rounded-full bg-fraise-s25-b100 text-fraise-s100-b50 text-[11px] font-bold leading-none">✗</span><h3 class="font-display font-semibold text-[15px] m-0">Un site qui fait fuir</h3></div>
+            <p class="text-[13.5px] leading-[1.5] text-fraise-s25-b100 m-0">Lent, daté, pas pro : il fait douter.</p>
+          </div>
+          <div>
+            <div class="flex items-center gap-2 mb-[6px]"><span class="grid place-items-center w-[18px] h-[18px] rounded-full bg-fraise-s25-b100 text-fraise-s100-b50 text-[11px] font-bold leading-none">✗</span><h3 class="font-display font-semibold text-[15px] m-0">Pas le temps</h3></div>
+            <p class="text-[13.5px] leading-[1.5] text-fraise-s25-b100 m-0">Vous êtes sur le terrain, pas en ligne.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 2 · MIEL — Parcours ───────────────────────────────────────────────── -->
+  <section>
+    <div class="mx-auto max-w-[1100px] px-[clamp(20px,5vw,56px)] pt-[clamp(34px,4.5vw,60px)] pb-3">
+      <div class="flex flex-wrap items-center gap-2 font-mono text-[11px] text-ink-soft">
+        <span class="w-3 h-3 rounded-full bg-miel-s100-b50"></span>
+        <b class="text-ink">2 · Miel — Parcours</b><span>·</span><span>Doux · s25-b100 × s50-b100</span>
+      </div>
+    </div>
+    <div class="bg-miel-s25-b100 text-ink py-[clamp(44px,6vw,88px)] border-y border-miel-s100-b50/15">
+      <div class="mx-auto max-w-[1100px] px-[clamp(20px,5vw,56px)]">
+        <div class="font-mono text-[11px] tracking-eyebrow uppercase text-miel-s100-b50 mb-4">Le parcours, sans risque</div>
+        <h2 class="font-display font-semibold text-[clamp(1.5rem,3vw,2.3rem)] leading-[1.1] tracking-[-0.02em] m-0">Comment ça se passe</h2>
+        <div class="grid sm:grid-cols-3 gap-x-7 gap-y-7 mt-9">
+          <div>
+            <div class="grid place-items-center w-8 h-8 rounded-full bg-miel-s100-b50 text-paper font-display font-bold text-[15px] mb-3">1</div>
+            <h3 class="font-display font-semibold text-[15px] m-0 mb-1">On fait le point</h3>
+            <p class="text-[13.5px] leading-[1.5] text-ink-soft m-0">15 min, sans engagement.</p>
+          </div>
+          <div>
+            <div class="grid place-items-center w-8 h-8 rounded-full bg-miel-s100-b50 text-paper font-display font-bold text-[15px] mb-3">2</div>
+            <h3 class="font-display font-semibold text-[15px] m-0 mb-1">On met en place</h3>
+            <p class="text-[13.5px] leading-[1.5] text-ink-soft m-0">Site, référencement, image. Vous validez.</p>
+          </div>
+          <div>
+            <div class="grid place-items-center w-8 h-8 rounded-full bg-miel-s100-b50 text-paper font-display font-bold text-[15px] mb-3">3</div>
+            <h3 class="font-display font-semibold text-[15px] m-0 mb-1">Vous payez quand ça marche</h3>
+            <p class="text-[13.5px] leading-[1.5] text-ink-soft m-0">1er mois offert. Zéro engagement.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 3 · KIWI — Preuve / Inclus (carte sur fond, bande pleine largeur) ──── -->
+  <section>
+    <div class="mx-auto max-w-[1100px] px-[clamp(20px,5vw,56px)] pt-[clamp(34px,4.5vw,60px)] pb-3">
+      <div class="flex flex-wrap items-center gap-2 font-mono text-[11px] text-ink-soft">
+        <span class="w-3 h-3 rounded-full bg-kiwi-s100-b50"></span>
+        <b class="text-ink">3 · Kiwi — Preuve</b><span>·</span><span>Carte foncée / fond clair · s50-b100 × s100-b25</span>
+      </div>
+    </div>
+    <div class="bg-kiwi-s50-b100 py-[clamp(40px,5vw,72px)]">
+      <div class="mx-auto max-w-[1100px] px-[clamp(20px,5vw,56px)]">
+        <div class="rounded-md bg-kiwi-s100-b25 text-paper p-[clamp(28px,4.5%,56px)]">
+          <div class="font-mono text-[11px] tracking-eyebrow uppercase text-kiwi-s50-b100 mb-4">Tout est inclus</div>
+          <h2 class="font-display font-semibold text-[clamp(1.5rem,3vw,2.3rem)] leading-[1.1] tracking-[-0.02em] m-0 mb-7">Ce que vous avez, chaque mois</h2>
+          <ul class="grid sm:grid-cols-2 gap-x-8 gap-y-[14px] m-0 p-0 list-none">
+            <li class="flex items-center gap-[10px] text-[14.5px]"><span class="grid place-items-center w-5 h-5 rounded-full bg-kiwi-s50-b100 text-kiwi-s100-b25 text-[12px] font-bold leading-none shrink-0">✓</span>Site sur-mesure, rapide</li>
+            <li class="flex items-center gap-[10px] text-[14.5px]"><span class="grid place-items-center w-5 h-5 rounded-full bg-kiwi-s50-b100 text-kiwi-s100-b25 text-[12px] font-bold leading-none shrink-0">✓</span>Référencement local Google</li>
+            <li class="flex items-center gap-[10px] text-[14.5px]"><span class="grid place-items-center w-5 h-5 rounded-full bg-kiwi-s50-b100 text-kiwi-s100-b25 text-[12px] font-bold leading-none shrink-0">✓</span>Mises à jour & maintenance</li>
+            <li class="flex items-center gap-[10px] text-[14.5px]"><span class="grid place-items-center w-5 h-5 rounded-full bg-kiwi-s50-b100 text-kiwi-s100-b25 text-[12px] font-bold leading-none shrink-0">✓</span>Avis clients & photos</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 4 · CITRON — Accent / Highlight ───────────────────────────────────── -->
+  <section>
+    <div class="mx-auto max-w-[1100px] px-[clamp(20px,5vw,56px)] pt-[clamp(34px,4.5vw,60px)] pb-3">
+      <div class="flex flex-wrap items-center gap-2 font-mono text-[11px] text-ink-soft">
+        <span class="w-3 h-3 rounded-full bg-citron-s100-b50"></span>
+        <b class="text-ink">4 · Citron — Accent</b><span>·</span><span>Carte claire / fond foncé · s100-b100 × s50-b25</span>
+      </div>
+    </div>
+    <div class="bg-citron-s50-b25 py-[clamp(40px,5vw,72px)]">
+      <div class="mx-auto max-w-[1100px] px-[clamp(20px,5vw,56px)]">
+        <div class="rounded-md bg-citron-s100-b100 text-citron-s100-b25 p-[clamp(28px,4.5%,56px)] flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-9">
+          <div class="font-display font-bold text-[clamp(2.4rem,6vw,4rem)] leading-none tracking-[-0.03em] shrink-0">+38&nbsp;%</div>
+          <div>
+            <div class="font-mono text-[11px] tracking-eyebrow uppercase mb-2 opacity-70">Le point clé</div>
+            <p class="font-display font-semibold text-[clamp(1.1rem,2vw,1.5rem)] leading-[1.2] m-0 max-w-[28ch]">de demandes en plus, dès le 3ᵉ mois en ligne.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 5 · MENTHE — Action ───────────────────────────────────────────────── -->
+  <section>
+    <div class="mx-auto max-w-[1100px] px-[clamp(20px,5vw,56px)] pt-[clamp(34px,4.5vw,60px)] pb-3">
+      <div class="flex flex-wrap items-center gap-2 font-mono text-[11px] text-ink-soft">
+        <span class="w-3 h-3 rounded-full bg-brand"></span>
+        <b class="text-ink">5 · Menthe — Action (marque)</b><span>·</span><span>Carte foncée / fond clair · s25-b100 × s100-b50</span>
+      </div>
+    </div>
+    <div class="bg-brand-soft py-[clamp(40px,5vw,72px)]">
+      <div class="mx-auto max-w-[1100px] px-[clamp(20px,5vw,56px)]">
+        <div class="rounded-md bg-brand text-on-dark-bright p-[clamp(28px,4.5%,56px)] flex flex-col md:flex-row md:items-center md:justify-between gap-7">
+          <div>
+            <div class="font-mono text-[11px] tracking-eyebrow uppercase text-brand-soft mb-3">On s'occupe de tout</div>
+            <h2 class="font-display font-semibold text-[clamp(1.5rem,3vw,2.3rem)] leading-[1.1] tracking-[-0.02em] m-0 max-w-[22ch]">Commençons par un appel, sans engagement.</h2>
+          </div>
+          <a href="#" class="shrink-0 inline-flex items-center justify-center gap-2 font-semibold text-[1.0625rem] px-8 py-[17px] rounded-xs cursor-pointer transition-[background,transform] duration-150 ease-brand active:translate-y-px bg-brand-soft text-brand-deep hover:bg-paper active:bg-menthe-s50-b100">Être rappelé →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="mx-auto max-w-[1100px] px-[clamp(20px,5vw,56px)] mt-[clamp(40px,5vw,72px)] pt-7 pb-[clamp(40px,6vw,80px)] border-t border-line text-[12.5px] text-ink-soft">
+    Démo non connectée — illustre la sémantique couleur de la <a href="charte-couleur.md" class="text-brand underline">charte</a>.
+    Couleurs 100 % tokens du design system, contrastes WCAG vérifiés.
+  </footer>
+</body>
+</html>

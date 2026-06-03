@@ -22,6 +22,15 @@ interface Props extends SeoInput {
 
 const { organization, jsonLd, bare = false, landing = false, ...seo } = Astro.props;
 const mainStyle = !bare && !landing ? 'padding-top: 110px;' : undefined;
+
+/**
+ * Lien DEV-ONLY vers le hub couleurs (docs/familles/index.html : palettes retenues,
+ * charte, démo, mur d'inspiration). Servi via l'endpoint Vite `/@fs/…`, qui n'existe
+ * qu'en `astro dev` : aucune fuite en production (prop null au build). Chemin dérivé de cwd.
+ */
+const devStyleguideHref = import.meta.env.DEV
+  ? `/@fs/${process.cwd().replace(/\\/g, '/')}/docs/familles/index.html`
+  : null;
 ---
 
 <!doctype html>
@@ -48,5 +57,16 @@ const mainStyle = !bare && !landing ? 'padding-top: 110px;' : undefined;
     </main>
     {!bare && <Footer />}
     {!bare && <MobileCtaBar />}
+    {devStyleguideHref && (
+      <a
+        href={devStyleguideHref}
+        target="_blank"
+        rel="noreferrer"
+        title="Hub couleurs — palettes, charte, démo (dev uniquement)"
+        class="fixed bottom-3 left-3 z-[9999] hidden font-mono text-[11px] tracking-[0.06em] rounded-full border border-line-strong bg-paper/90 px-3 py-1.5 text-ink-2 backdrop-blur transition-colors hover:border-brand hover:bg-brand hover:text-paper sm:inline-block"
+      >
+        🎨 couleurs
+      </a>
+    )}
   </body>
 </html>

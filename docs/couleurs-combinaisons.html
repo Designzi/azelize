@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Azelize — Combinaisons de couleurs (planche de specs)</title>
+
+  <!-- Tailwind v4 (build navigateur) — utilitaires générés à l'exécution.
+       Aucun CSS maison : tout le style passe par des classes utilitaires.
+       Le seul bloc déclaratif ci-dessous est @theme = les tokens du design system
+       (copiés de src/styles/design-tokens.css → à resynchroniser via docs/sync-tokens.cjs).
+       Les ratios WCAG sont lus directement dans ce @theme : aucune couleur inventée. -->
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+
+  <!-- Polices, identiques à BaseLayout.astro -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
+
+  <style type="text/tailwindcss" id="tw">
+    @import "tailwindcss";
+
+    @theme {
+  --color-brand:        #002080;   /* menthe S100·B50 */
+  --color-brand-deep:   #001040;   /* menthe S100·B25 */
+  --color-brand-bright: #0040FF;   /* menthe S100·B100 */
+  --color-brand-soft:   #BFCFFF;   /* menthe S25·B100 */
+  --color-brand-900:    #001040;   /* menthe S100·B25 */
+
+  --color-paper:       #FFFFFF;
+  --color-parchment:   #F5F1E8;
+  --color-ink:         #2D3138;
+  --color-ink-2:       #4A4F57;
+  --color-ink-soft:    #6F747C;
+  --color-ink-faint:   #A7ABB2;
+  --color-line:        #E7E4DA;
+  --color-line-strong: #C9CDD2;
+  --color-line-soft:   #F1EEE5;
+
+  --color-ok:     #16A34A;  --color-ok-soft:     #DCFCE7;
+  --color-warn:   #F59E0B;  --color-warn-soft:   #FEF3C7;
+  --color-danger: #E11D2E;  --color-danger-soft: #FEE2E2;
+
+  /* — sur fond sombre (bande finale, footer) — */
+  --color-on-dark:        #E8EAED;
+  --color-on-dark-bright: #FFFFFF;
+  --color-on-dark-soft:   #C9CDD2;
+
+  --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
+  --font-sans:    'Hanken Grotesk', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, monospace;
+
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-pill: 999px;
+
+  --ease-out: cubic-bezier(0.22, 0.68, 0.18, 1);
+
+  /* — Palette naturelle (utilitaires Tailwind : bg-menthe-50, text-citron-s100-b100…) — */
+
+  /* fraise */
+  --color-fraise-s25-b25: #403030;
+  --color-fraise-s25-b50: #806060;
+  --color-fraise-s25-b100: #FFBFBF;
+  --color-fraise-s50-b25: #402020;
+  --color-fraise-s50-b50: #804040;
+  --color-fraise-s50-b100: #FF8080;
+  --color-fraise-s100-b25: #400000;
+  --color-fraise-s100-b50: #800000;
+  --color-fraise-s100-b100: #FF0000;
+  --color-fraise-50: #804040;
+
+  /* miel */
+  --color-miel-s25-b25: #403630;
+  --color-miel-s25-b50: #806D60;
+  --color-miel-s25-b100: #FFDABF;
+  --color-miel-s50-b25: #402D20;
+  --color-miel-s50-b50: #805A40;
+  --color-miel-s50-b100: #FFB580;
+  --color-miel-s100-b25: #401B00;
+  --color-miel-s100-b50: #803500;
+  --color-miel-s100-b100: #FF6A00;
+  --color-miel-50: #805A40;
+
+  /* citron */
+  --color-citron-s25-b25: #403D30;
+  --color-citron-s25-b50: #807A60;
+  --color-citron-s25-b100: #FFF4BF;
+  --color-citron-s50-b25: #403A20;
+  --color-citron-s50-b50: #807540;
+  --color-citron-s50-b100: #FFEA80;
+  --color-citron-s100-b25: #403500;
+  --color-citron-s100-b50: #806A00;
+  --color-citron-s100-b100: #FFD500;
+  --color-citron-50: #807540;
+
+  /* kiwi */
+  --color-kiwi-s25-b25: #3C4030;
+  --color-kiwi-s25-b50: #788060;
+  --color-kiwi-s25-b100: #EFFFBF;
+  --color-kiwi-s50-b25: #384020;
+  --color-kiwi-s50-b50: #708040;
+  --color-kiwi-s50-b100: #DFFF80;
+  --color-kiwi-s100-b25: #304000;
+  --color-kiwi-s100-b50: #608000;
+  --color-kiwi-s100-b100: #BFFF00;
+  --color-kiwi-50: #708040;
+
+  /* menthe — famille de marque */
+  --color-menthe-s25-b25: #303440;
+  --color-menthe-s25-b50: #606880;
+  --color-menthe-s25-b100: #BFCFFF;
+  --color-menthe-s50-b25: #202840;
+  --color-menthe-s50-b50: #405080;
+  --color-menthe-s50-b100: #809FFF;
+  --color-menthe-s100-b25: #001040;
+  --color-menthe-s100-b50: #002080;
+  --color-menthe-s100-b100: #0040FF;
+  --color-menthe-50: #405080;
+
+  /* — ÉCHELLE TYPO (utilitaires text-* : taille + interligne couplés) —
+     Valeurs reprises FIDÈLEMENT de la maquette (source visuelle). */
+  --text-display: clamp(2.6rem, 6vw, 5rem);
+  --text-display--line-height: 1.02;
+  --text-h1: clamp(2.5rem, 4.4vw, 3.5rem);
+  --text-h1--line-height: 1.05;
+  --text-h2: clamp(1.85rem, 3.8vw, 3rem);
+  --text-h2--line-height: 1.05;
+  --text-h3: clamp(1.25rem, 1.9vw, 1.6rem);
+  --text-h3--line-height: 1.15;
+  --text-lead: clamp(1.0625rem, 1.6vw, 1.3rem);
+  --text-lead--line-height: 1.5;
+  --text-body: 1.0625rem;
+  --text-body--line-height: 1.6;
+  --text-ui: 0.9375rem;
+  --text-ui--line-height: 1.4;
+  --text-caption: 0.8125rem;
+  --text-caption--line-height: 1.4;
+  --text-eyebrow: 0.75rem;
+  --text-eyebrow--line-height: 1.2;
+
+  /* — TRACKING (utilitaires tracking-*) — */
+  --tracking-display: -0.035em;
+  --tracking-h1: -0.025em;
+  --tracking-h2: -0.02em;
+  --tracking-tight: -0.015em;
+  --tracking-eyebrow: 0.16em;
+
+  /* — DURÉES / COURBE (utilitaires duration-* / ease-*) — */
+  --ease-brand: cubic-bezier(0.22, 0.68, 0.18, 1);
+
+
+    }
+  </style>
+</head>
+
+<body class="bg-paper text-blackfont-sans text-[15px] leading-[1.55]">
+  <div id="app" class="mx-auto max-w-[1280px] px-[clamp(22px,5vw,56px)] py-[clamp(24px,4vw,56px)]">
+    <noscript>Cette planche calcule les ratios de contraste en JavaScript — activez-le.</noscript>
+  </div>
+
+  <script>
+  /* ===========================================================================
+     MODÈLE — familles & nuances (slugs réels = utilitaires Tailwind bg-/text-/border-)
+     =========================================================================== */
+  const FAMILIES = [
+    { key:'menthe', name:'Menthe', H:225, brand:true, role:'Action + identité', sem:'CTA & liens — fil constant, jamais un fruit.' },
+    { key:'fraise', name:'Fraise', H:0,  role:'Douleur / alerte', sem:'Sections « problème », erreurs, mises en garde.' },
+    { key:'miel',   name:'Miel',   H:25, role:'Parcours / chaleur', sem:'Étapes, onboarding, ton accueillant.' },
+    { key:'citron', name:'Citron', H:50, role:'Clarté / accent', sem:'Mise en avant, highlight, fraîcheur.' },
+    { key:'kiwi',   name:'Kiwi',   H:75, role:'Positif / succès', sem:'« Inclus », preuve, validation.' },
+  ];
+  const SS = ['s25','s50','s100'], BB = ['b25','b50','b100'];
+
+  // ── PARAMÈTRE DE LA PAGE — couple de la famille de combinaison ──────────────
+  //    (pour générer une autre page, ne change QUE ces deux lignes)
+  const CLAIR   = 's25-b100';    // nuance claire  (surface tint)
+  const PROFOND = 's100-b50';    // nuance profonde (surface saturée)
+  document.title = `Azelize — combinaison ${CLAIR} × ${PROFOND}`;
+
+  const CART = {
+    eyebrow: "C'est pour vous",
+    title: "Vos clients vous cherchent sur Google. Vous y êtes ?",
+    cols: [
+      { t:'Invisible sur Google', p:['Vos concurrents apparaissent,', 'pas vous.'] },
+      { t:'Un site qui fait fuir', p:['Lent, daté, pas pro :', 'il fait douter.'] },
+      { t:'Pas le temps',          p:['Vous êtes sur le terrain.', 'Personne ne gère votre image.'] },
+    ],
+    mono: 'az',
+  };
+
+  /* ===========================================================================
+     COULEUR — hex lus dans le @theme (synchrone) + maths WCAG vérifiées
+     =========================================================================== */
+  const M = {};
+  document.getElementById('tw').textContent.replace(
+    /(--color-[a-z0-9-]+)\s*:\s*(#[0-9A-Fa-f]{3,8})/g, (_, k, v) => { M[k] = v; return _; });
+  function H(slug){
+    if (slug === 'black') return '#000000';                      // noir pur
+    if (slug === 'white' || slug === 'paper') return '#FFFFFF';   // blanc pur
+    return M['--color-' + slug];                                  // sinon : nuance fruit du @theme
+  }
+
+  function rgb(h){ h=h.replace('#',''); if(h.length===3)h=h.split('').map(c=>c+c).join(''); return [0,2,4].map(i=>parseInt(h.slice(i,i+2),16)); }
+  function lin(c){ c/=255; return c<=0.03928 ? c/12.92 : Math.pow((c+0.055)/1.055, 2.4); }
+  function lum(h){ const [r,g,b]=rgb(h); return 0.2126*lin(r)+0.7152*lin(g)+0.0722*lin(b); }
+  function ratio(a,b){ const L1=lum(a),L2=lum(b); return (Math.max(L1,L2)+0.05)/(Math.min(L1,L2)+0.05); }
+  function hsb(h){
+    let [r,g,b]=rgb(h).map(x=>x/255);
+    const mx=Math.max(r,g,b), mn=Math.min(r,g,b), d=mx-mn; let Hh=0;
+    if(d){ if(mx===r)Hh=((g-b)/d)%6; else if(mx===g)Hh=(b-r)/d+2; else Hh=(r-g)/d+4; Hh*=60; if(Hh<0)Hh+=360; }
+    return { h:Math.round(Hh), s:Math.round((mx?d/mx:0)*100), b:Math.round(mx*100) };
+  }
+  function verdict(r, large){
+    const aa = large?3:4.5, aaa = large?4.5:7;
+    if (r>=aaa) return {lvl:'AAA', cls:'aaa', pass:true};
+    if (r>=aa)  return {lvl:'AA',  cls:'aa',  pass:true};
+    return {lvl:'FAIL', cls:'fail', pass:false};
+  }
+  function fmt(r){ return r.toFixed(2); }
+  function pickReadable(bgSlug, cands){
+    const bg = H(bgSlug); let best=null;
+    for(const s of cands){ const r=ratio(bg, H(s)); if(!best||r>best.r) best={slug:s, r}; }
+    return best;
+  }
+
+  /* — Badge de contraste (Tailwind pur, couleurs = tokens) — */
+  const CHIP = 'font-mono text-[10.5px] font-medium px-[7px] py-[3px] rounded-pill inline-flex gap-[5px] items-center';
+  const VAR  = { aaa:'bg-kiwi-s25-b100 text-black border border-black/10', aa:'bg-citron-s25-b100 text-black border border-black/10', fail:'bg-fraise-s100-b50 text-paper font-semibold' };
+  function chip(label, r, large){
+    const v = verdict(r, large);
+    return `<span class="${CHIP} ${VAR[v.cls]}"><span class="opacity-60">${label}</span> ${fmt(r)}:1 · ${v.lvl}</span>`;
+  }
+
+  /* ===========================================================================
+     CARTOUCHE + FRAME (étiquetée, pleine largeur)
+     o : { bg, title, body, accent, lineCls }  (slugs de tokens)
+     =========================================================================== */
+  function cartInner(o){
+    const bg = H(o.bg);
+    const rT = ratio(bg, H(o.title)), rB = ratio(bg, H(o.body)), rA = ratio(bg, H(o.accent));
+    const fail = !verdict(rT, true).pass || !verdict(rB, false).pass;
+    const accentTextFail = !verdict(rA, false).pass;
+
+    const cols = CART.cols.map(c => `
+        <div>
+          <h4 class="font-display font-semibold text-[12.5px] leading-[1.15] tracking-tight mb-[5px] text-${o.title}">${c.t}</h4>
+          <p class="text-[10.5px] leading-[1.45] m-0 text-${o.body}">${c.p.join('<br>')}</p>
+        </div>`).join('');
+
+    const flag = fail
+      ? `<div class="absolute -top-px -right-px bg-fraise-s100-b50 text-paper font-mono text-[9.5px] font-medium tracking-[0.06em] px-[7px] py-[3px] rounded-bl-xs">✗ ÉCHEC WCAG</div>` : '';
+
+    const html = `
+      <div class="relative w-[min(100%,600px)] p-[clamp(30px,4%,48px)] border-2 ${fail?'border-fraise-s100-b50':'border-transparent'} bg-${o.bg}">
+        ${flag}
+        <div class="w-[30px] h-[30px] rounded-xs grid place-items-center font-display font-bold text-[13px] tracking-tight mb-[18px] bg-${o.accent} text-${o.bg}">${CART.mono}</div>
+        <div class="font-mono text-[10.5px] tracking-eyebrow uppercase mb-3 text-${o.accent}">${CART.eyebrow.toUpperCase()}</div>
+        <p class="font-display font-semibold text-[clamp(19px,2.1vw,24px)] leading-[1.1] tracking-[-0.025em] m-0 max-w-[15ch] text-${o.title}">${CART.title}</p>
+        <hr class="border-0 border-t ${o.lineCls} my-[20px] opacity-50" />
+        <div class="grid grid-cols-3 gap-[14px] mt-[18px]">${cols}</div>
+      </div>`;
+    return { html, fail, rT, rB, rA, accentTextFail };
+  }
+
+  /* Mini-matrice 3×3 de la famille : nuances utilisées pleines + ✓, le reste à 10 %. */
+  function miniMatrix(famKey, used){
+    let g = '';
+    SS.forEach(s => BB.forEach(b => {
+      const slug = `${famKey}-${s}-${b}`, on = used.has(`${s}-${b}`);
+      const txt = ratio(H(slug), H('black')) >= ratio(H(slug), H('paper')) ? 'black' : 'paper';
+      const check = on ? `<span class="text-${txt} text-[10px] leading-none font-bold">✓</span>` : '';
+      g += `<div class="w-[17px] h-[17px] rounded-[3px] border border-black/5 grid place-items-center bg-${slug}${on?'':' opacity-10'}">${check}</div>`;
+    }));
+    return `<div class="grid grid-cols-3 gap-[3px] shrink-0" title="Nuances ${famKey} utilisées ici (✓) — les autres à 10 %">${g}</div>`;
+  }
+
+  function frame(label, ground, o){
+    const c = cartInner(o);
+    let meta = chip('Titre', c.rT, true) + chip('Corps', c.rB, false);
+    if (c.accentTextFail) meta += chip('Eyebrow', c.rA, false);     // n'apparaît que sur problème
+    if (ground !== o.bg) {
+      const rS = ratio(H(ground), H(o.bg)), vS = verdict(rS, true);
+      meta += `<span class="${CHIP} ${VAR[vS.cls]}"><span class="opacity-60">Carte/sol</span> ${fmt(rS)}:1 · ${vS.lvl}</span>`;
+    }
+    const tk = o.bg + (ground !== o.bg ? ' sur ' + ground : '');
+
+    // Nuances de la famille réellement utilisées dans cette visualisation.
+    const famKey = o.bg.split('-')[0];
+    const used = new Set();
+    [ground, o.bg, o.title, o.body, o.accent].forEach(sl => {
+      if (sl && sl.startsWith(famKey + '-')) used.add(sl.slice(famKey.length + 1));
+    });
+
+    return {
+      fail: c.fail, rT: c.rT, rB: c.rB,
+      html: `
+      <div>
+        <div class="flex items-start justify-between gap-3 mb-3">
+          <div class="min-w-0">
+            <div class="text-black/55 font-semibold text-[12px]">${label}</div>
+            <div class="font-mono text-[10.5px] text-black/40">${tk}</div>
+          </div>
+          ${miniMatrix(famKey, used)}
+        </div>
+        <div class="flex items-center justify-center min-h-[clamp(360px,34vw,560px)] p-[clamp(48px,9%,140px)] border border-black/10 rounded-sm bg-${ground}">${c.html}</div>
+        <div class="flex flex-wrap gap-[6px] mt-[14px] items-center">${meta}</div>
+      </div>`,
+    };
+  }
+
+  /* ===========================================================================
+     RENDU
+     =========================================================================== */
+  const SYNTH = [];
+  const app = document.getElementById('app');
+  function add(html){ const d=document.createElement('div'); d.innerHTML=html; while(d.firstChild) app.appendChild(d.firstChild); }
+
+  /* — En-tête + légende — */
+  add(`
+    <header class="border-b border-black/15 pb-7 mb-10">
+      <a href="index.html" class="font-mono text-[11px] text-black/55 no-underline hover:text-menthe-s100-b50">← toutes les combinaisons</a>
+      <div class="font-mono text-[11px] tracking-eyebrow uppercase text-menthe-s100-b50 mt-2">Azelize · Design system</div>
+      <h1 class="font-display font-bold tracking-display text-[clamp(2rem,4vw,3rem)] leading-[1.04] mt-[10px] mb-[14px]">Combinaison <span class="font-mono text-[.5em] align-middle text-menthe-s100-b50">${CLAIR} × ${PROFOND}</span></h1>
+      <p class="max-w-[70ch] text-black/70 my-[6px]">Une visualisation par ligne : un cadre rempli de la couleur testée, le cartouche
+         « Problème » réel en carte centrée. Ratios WCAG calculés sur les tokens réels — <b>aucune couleur inventée</b>.</p>
+    </header>
+    <div class="sticky top-0 z-20 flex flex-wrap gap-x-[18px] gap-y-2 items-center bg-paper/90 backdrop-blur border border-black/10 rounded-sm px-[14px] py-[10px] mb-10 text-[12px]">
+      <b class="font-semibold">Seuils WCAG :</b>
+      <span class="${CHIP} ${VAR.aaa}"><span class="opacity-60">AAA</span> texte ≥7 · large ≥4.5</span>
+      <span class="${CHIP} ${VAR.aa}"><span class="opacity-60">AA</span> texte ≥4.5 · large ≥3</span>
+      <span class="${CHIP} ${VAR.fail}"><span class="opacity-60">FAIL</span> &lt; AA</span>
+      <span class="text-black/55">· Titre &amp; Mono = seuil large · Corps &amp; Eyebrow = seuil texte · carte cerclée <b class="text-fraise-s100-b50">rouge</b> = échec.</span>
+    </div>`);
+
+  /* — UN BLOC PAR FAMILLE — */
+  FAMILIES.forEach((F) => {
+    const t = (v) => `${F.key}-${v}`;   // v = variante, ex. 's25-b100'
+    const brandTag = F.brand ? ' · <b>famille de marque</b>' : '';
+
+    // a. aperçu des 9 nuances — petite matrice S (lignes) × B (colonnes), cases pures.
+    //    token + HSB + hex restent disponibles au survol (title).
+    const Bcol = { b25:3, b50:4, b100:5 }, Srow = { s25:3, s50:4, s100:5 };
+    let ramp = `
+        <div class="col-start-1 col-end-3 row-start-1 self-center font-mono text-[10px] text-black/55">H=${F.H}</div>
+        <div class="col-start-3 col-end-6 row-start-1 flex items-center gap-1 text-black/40">
+          <span class="font-mono text-[10px]">B</span><span class="flex-1 h-px bg-black/30"></span><span class="text-[9px] leading-none">▶</span>
+        </div>
+        <div class="col-start-3 row-start-2 text-center font-mono text-[10px] text-black/55">25</div>
+        <div class="col-start-4 row-start-2 text-center font-mono text-[10px] text-black/55">50</div>
+        <div class="col-start-5 row-start-2 text-center font-mono text-[10px] text-black/55">100</div>
+        <div class="col-start-1 row-start-3 row-span-3 flex flex-col items-center gap-1 text-black/40 py-1">
+          <span class="font-mono text-[10px]">S</span><span class="flex-1 w-px bg-black/30"></span><span class="text-[9px] leading-none">▼</span>
+        </div>`;
+    SS.forEach(s => {
+      ramp += `<div class="col-start-2 row-start-${Srow[s]} self-center font-mono text-[10px] text-black/55 text-right pr-[2px]">${s.slice(1)}</div>`;
+      BB.forEach(b => {
+        const slug = `${F.key}-${s}-${b}`, h = H(slug), c = hsb(h);
+        ramp += `<div class="col-start-${Bcol[b]} row-start-${Srow[s]} aspect-square rounded-sm border border-black/5 bg-${slug}" title="${slug} · H${c.h} S${c.s} B${c.b} · ${h.toUpperCase()}"></div>`;
+      });
+    });
+
+    // b. frames étiquetées (une par ligne)
+    const deepLight = pickReadable(t(PROFOND), ['paper', t(CLAIR)]).slug;
+    const fDoux = frame('Doux', 'paper', { bg:t(CLAIR), title:'black', body:'black', accent:t(PROFOND), lineCls:'border-black/15' });
+    const fProfond = frame('Profond', 'paper', { bg:t(PROFOND), title:deepLight, body:deepLight, accent:t(CLAIR), lineCls:'border-white/15' });
+    const fCarteLight = frame('Carte claire / fond foncé', t(PROFOND), { bg:t(CLAIR), title:'black', body:'black', accent:t(PROFOND), lineCls:'border-black/15' });
+    const fCarteDark = frame('Carte foncée / fond clair', t(CLAIR), { bg:t(PROFOND), title:deepLight, body:deepLight, accent:t(CLAIR), lineCls:'border-white/15' });
+
+    SYNTH.push({ fam:F.name, regime:'Doux',    rT:fDoux.rT,    rB:fDoux.rB,    pass: !fDoux.fail });
+    SYNTH.push({ fam:F.name, regime:'Profond', rT:fProfond.rT, rB:fProfond.rB, pass: !fProfond.fail });
+
+    add(`
+      <h2 class="font-display font-semibold text-[clamp(1.4rem,2.4vw,2rem)] tracking-tight mt-16 mb-[6px] pt-7 border-t-2 border-black">
+        ${F.name} <span class="font-mono text-[.6em] text-black/55 font-normal">H=${F.H}</span></h2>
+      <p class="text-black/55 mb-[26px] max-w-[78ch]"><b class="text-black/70">${F.role}</b> — ${F.sem}${brandTag}</p>
+
+      <h3 class="font-display font-semibold text-[1.25rem] tracking-tight m-0 flex items-center gap-3">
+        <span class="w-[18px] h-[18px] rounded-xs bg-${F.key}-s100-b100 border border-black/10"></span>9 nuances</h3>
+      <div class="grid grid-cols-[18px_24px_repeat(3,minmax(40px,60px))] gap-x-2 gap-y-[6px] w-max mt-[16px] mb-[36px]" title="Survol d'une case : token · HSB · hex">${ramp}</div>
+
+      <div class="flex flex-col gap-16">
+        ${fDoux.html}
+        ${fProfond.html}
+        ${fCarteLight.html}
+        ${fCarteDark.html}
+      </div>`);
+  });
+
+  </script>
+</body>
+</html>
