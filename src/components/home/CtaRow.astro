@@ -12,7 +12,7 @@ interface Props {
   riskKind?: 'model' | 'garantie';
   label?: string;
 }
-const { line, riskKind = 'model', label = 'Réserver un appel' } = Astro.props;
+const { line, riskKind = 'model', label = navCta.label } = Astro.props;
 ---
 
 <div class="mt-[clamp(56px,7vw,96px)] flex flex-col items-center gap-1.5 border-t border-line pt-[clamp(40px,5vw,64px)] reveal">

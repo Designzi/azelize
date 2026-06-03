@@ -15,9 +15,14 @@ import { navCta } from '@data/nav';
   </Fragment>
 
   <Fragment slot="cta">
-    <div class="flex flex-wrap justify-center gap-3.5">
-      <Button href={navCta.href} size="sm">Réserver un appel</Button>
-      <Button href="#preuve" size="sm" variant="outline">Voir nos réalisations</Button>
+    <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
+      <Button href={navCta.href} size="md">{navCta.label}</Button>
+      <a
+        href="#preuve"
+        class="inline-flex items-center gap-1 text-ui font-semibold text-ink-2 transition-colors hover:text-brand"
+      >
+        Voir nos réalisations <span aria-hidden="true">→</span>
+      </a>
     </div>
     <RiskNote class="mt-4 text-center" />
   </Fragment>

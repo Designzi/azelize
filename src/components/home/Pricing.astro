@@ -37,9 +37,9 @@ const TIERS = [
       </div>
       <div class="reveal">
         <p class="m-0 max-w-[52ch] text-[1.0625rem] leading-[1.55] text-ink-soft">
-          Mensuel, sans engagement. Les formules ci-dessous s'appliquent
-          <strong class="font-semibold text-brand"> une fois le démarrage atteint</strong> — quand le site vous amène
-          déjà des clients. Tarifs indicatifs, à confirmer.
+          Mensuel, sans engagement. <strong class="font-semibold text-brand">Le 1er mois est offert</strong> —
+          vous ne payez qu'une fois que le site vous amène des clients. Les
+          formules ci-dessous s'appliquent à partir de là.
         </p>
       </div>
     </div>
@@ -51,6 +51,6 @@ const TIERS = [
     <RiskNote kind="garantie" class="text-center" />
   </div>
   <div class="reveal mt-5 flex justify-center">
-    <Button href={navCta.href} size="sm" variant="outline">Vous hésitez ? Réserver un appel</Button>
+    <Button href={navCta.href} size="sm" variant="outline">Vous hésitez ? {navCta.label}</Button>
   </div>
 </Section>

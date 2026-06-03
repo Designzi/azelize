@@ -2,6 +2,7 @@
 import '@styles/global.css';
 import Header from '@components/layout/Header.astro';
 import Footer from '@components/layout/Footer.astro';
+import MobileCtaBar from '@components/layout/MobileCtaBar.astro';
 import Seo from '@components/layout/Seo.astro';
 import { site } from '@data/site';
 import type { SeoInput } from '@lib/seo';
@@ -40,11 +41,12 @@ const mainStyle = !bare && !landing ? 'padding-top: 110px;' : undefined;
     />
     <Seo {...seo} organization={organization} jsonLd={jsonLd} />
   </head>
-  <body class="flex min-h-screen flex-col">
+  <body class:list={['flex min-h-screen flex-col', !bare && 'pb-[76px] sm:pb-0']}>
     {!bare && <Header />}
     <main class="flex-1" style={mainStyle}>
       <slot />
     </main>
     {!bare && <Footer />}
+    {!bare && <MobileCtaBar />}
   </body>
 </html>

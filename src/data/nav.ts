@@ -10,5 +10,13 @@ export const mainNav: NavItem[] = [
   { label: 'Tarifs', href: '/#prix' },
 ];
 
-/** CTA principal du header. */
-export const navCta: NavItem = { label: 'Prendre rendez-vous', href: '/#contact' };
+/**
+ * CTA unique du site (brief §9 : un seul CTA, répété). Source de vérité —
+ * changer `label` ici le propage partout (header, hero, sections, mobile…).
+ * `submit` = variante 1ʳᵉ personne pour le bouton du formulaire.
+ */
+export const navCta = {
+  label: 'Réserver un appel gratuit',
+  submit: 'Réserver mon appel gratuit',
+  href: '/#contact',
+} as const;

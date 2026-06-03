@@ -1,0 +1,27 @@
+---
+/**
+ * MobileCtaBar — CTA persistant en bas d'écran sur mobile (le header masque son
+ * CTA sous 640px). Glisse à l'écran après le hero pour ne pas doublonner.
+ */
+import Button from '@components/ui/Button.astro';
+import { navCta } from '@data/nav';
+---
+
+<div
+  id="mobile-cta"
+  class="fixed inset-x-0 bottom-0 z-40 translate-y-full border-t border-line bg-paper/95 px-4 py-3 backdrop-blur-sm transition-transform duration-300 ease-brand sm:hidden [&[data-show]]:translate-y-0"
+>
+  <Button href={navCta.href} block>{navCta.label}</Button>
+</div>
+
+<script>
+  const bar = document.getElementById('mobile-cta');
+  if (bar) {
+    const onScroll = () => {
+      if (window.scrollY > 600) bar.setAttribute('data-show', '');
+      else bar.removeAttribute('data-show');
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+</script>

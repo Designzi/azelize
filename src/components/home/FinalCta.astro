@@ -3,6 +3,7 @@
  *  ⚠️ Le formulaire n'est PAS connecté (cf. brief §11) : voir FormBlock. */
 import FormBlock from '@components/blocks/FormBlock.astro';
 import RiskNote from '@components/home/RiskNote.astro';
+import { navCta } from '@data/nav';
 
 const FIELDS = [
   { name: 'nom', label: 'Votre nom', placeholder: 'Jean Dupont', autocomplete: 'name', required: true },
@@ -16,7 +17,7 @@ const FIELDS = [
   eyebrow="Commençons par un appel"
   lead="15 minutes pour voir si on peut vous aider. Pas de jargon, pas de pression. Laissez votre numéro, on vous rappelle."
   fields={FIELDS}
-  submitLabel="Réserver mon appel"
+  submitLabel={navCta.submit}
   sentBody="On vous rappelle très vite. En attendant, restez sur le chantier — on s'occupe du reste."
 >
   Commençons par un appel,<br /><em>sans&nbsp;engagement</em>.
