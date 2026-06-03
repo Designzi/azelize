@@ -1,0 +1,26 @@
+---
+/**
+ * Carte — surface blanche + filet `line`, radius 6px, SANS ombre (cf. §4).
+ * Polymorphe : rend <a> si `href` (carte cliquable avec hover sur le filet).
+ */
+interface Props {
+  href?: string;
+  class?: string;
+  [key: string]: unknown;
+}
+const { href, class: className, ...rest } = Astro.props;
+const Tag = href ? 'a' : 'div';
+const interactive = href ? 'hover:border-line-strong transition-colors duration-150' : '';
+---
+
+<Tag
+  href={href}
+  class:list={[
+    'block rounded-sm border border-line bg-paper p-6',
+    interactive,
+    className,
+  ]}
+  {...rest}
+>
+  <slot />
+</Tag>

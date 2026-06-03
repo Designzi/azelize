@@ -1,0 +1,74 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Section from '@components/ui/Section.astro';
+import Button from '@components/ui/Button.astro';
+import { site } from '@data/site';
+
+/*
+ * ⚠️ TODO (brief §8) — FORMULAIRE DEVIS : seul vrai bout dynamique.
+ * Deux options à trancher AVANT mise en prod :
+ *   1) Endpoint Astro (src/pages/api/devis.ts + `export const prerender = false`
+ *      + adapter @astrojs/vercel) ;
+ *   2) Service de formulaire externe (Formspree, Web3Forms, etc.).
+ * Décider OÙ arrivent les demandes. En attendant, le formulaire ci-dessous est
+ * inerte (action="#") — il ne soumet rien.
+ */
+---
+
+<BaseLayout
+  title="Contact"
+  description="Parlez-nous de votre projet. Réponse sous 48 h, devis clair."
+>
+  <Section width="hero">
+    <div class="grid gap-12 md:grid-cols-2">
+      <div>
+        <p class="t-eyebrow">Contact</p>
+        <h1 class="t-h1 mt-4">Parlons de votre projet</h1>
+        <p class="t-lead mt-6">
+          Dites-nous où vous en êtes. On revient vers vous sous 48 h avec un
+          premier regard et un devis clair.
+        </p>
+        <p class="t-body mt-8 text-ink-2">
+          Par e-mail :
+          <a href={`mailto:${site.email}`} class="font-mono text-brand">{site.email}</a>
+        </p>
+      </div>
+
+      {/* Formulaire inerte — câbler un endpoint ou un service (cf. TODO §8). */}
+      <form action="#" method="post" class="space-y-5" aria-label="Demande de devis">
+        <div>
+          <label for="nom" class="t-ui block">Nom</label>
+          <input
+            id="nom"
+            name="nom"
+            type="text"
+            required
+            class="mt-2 w-full rounded-xs border border-line-strong bg-paper px-3 py-2.5 t-body focus:border-brand"
+          />
+        </div>
+        <div>
+          <label for="email" class="t-ui block">E-mail</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            required
+            class="mt-2 w-full rounded-xs border border-line-strong bg-paper px-3 py-2.5 t-body focus:border-brand"
+          />
+        </div>
+        <div>
+          <label for="message" class="t-ui block">Votre projet</label>
+          <textarea
+            id="message"
+            name="message"
+            rows="5"
+            required
+            class="mt-2 w-full rounded-xs border border-line-strong bg-paper px-3 py-2.5 t-body focus:border-brand"
+          ></textarea>
+        </div>
+        <Button type="submit" size="lg" class="w-full">Envoyer la demande</Button>
+        <p class="t-caption">Formulaire non encore connecté — voir TODO §8 du brief.</p>
+      </form>
+    </div>
+  </Section>
+</BaseLayout>

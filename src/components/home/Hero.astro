@@ -1,0 +1,34 @@
+---
+/** Section Hero (landing) — compose HeroBlock + contenu et CTA Azelize. */
+import HeroBlock from '@components/blocks/HeroBlock.astro';
+import Button from '@components/ui/Button.astro';
+import RiskNote from '@components/home/RiskNote.astro';
+import { navCta } from '@data/nav';
+---
+
+<HeroBlock id="top">
+  Un site qui vous <em>amène des&nbsp;clients</em>.
+
+  <Fragment slot="lead">
+    On crée votre site et votre référencement local, et on s'en occupe chaque mois.
+    Vous ne commencez l'abonnement qu'une fois que le site vous rapporte vraiment.
+  </Fragment>
+
+  <Fragment slot="cta">
+    <div class="flex flex-wrap justify-center gap-3.5">
+      <Button href={navCta.href} size="sm">Réserver un appel</Button>
+      <Button href="#preuve" size="sm" variant="outline">Voir nos réalisations</Button>
+    </div>
+    <RiskNote class="mt-4 text-center" />
+  </Fragment>
+
+  <Fragment slot="showcase">
+    <div
+      class="flex aspect-[16/8] items-center justify-center rounded-sm border border-line-strong"
+      style="background:repeating-linear-gradient(135deg,#EEEBE0 0 16px,#E6E2D6 16px 32px);"
+      aria-hidden="true"
+    >
+      <span class="text-[0.8125rem] font-semibold uppercase tracking-[0.1em] text-ink-faint">Visuel à venir</span>
+    </div>
+  </Fragment>
+</HeroBlock>

@@ -1,0 +1,20 @@
+---
+/** Section « Comment ça se passe » — parcours sans risque · atmosphère Miel (parcours/chaleur). */
+import Section from '@components/ui/Section.astro';
+import SectionHead from '@components/ui/SectionHead.astro';
+import TimelineBlock from '@components/blocks/TimelineBlock.astro';
+import CtaRow from '@components/home/CtaRow.astro';
+
+const STEPS = [
+  { num: '1', title: 'On fait le point (15 min)', body: "On regarde ensemble votre situation et vos objectifs. Sans engagement." },
+  { num: '2', title: 'On met tout en place', body: 'Site, référencement local, image : on construit, vous validez. Seuls frais au départ : 50 € pour le nom de domaine.' },
+  { num: '3', title: 'Le 1er mois est toujours offert', body: "Un site neuf met du temps à émerger sur Google. Tant qu'il ne vous a pas amené au moins 2 demandes dans le mois, on vous offre le mois suivant — vous ne payez rien." },
+  { num: '4', title: 'Vous payez quand ça marche', body: "Dès que le site vous amène des demandes (au moins 2 dans le mois), on vous propose de continuer. Si oui, l'abonnement commence le mois d'après. Sinon, on arrête. Zéro engagement." },
+];
+---
+
+<Section id="process">
+  <SectionHead eyebrow="Le parcours, sans risque" accent="miel">Comment ça se passe</SectionHead>
+  <TimelineBlock steps={STEPS} accent="miel" />
+  <CtaRow line="Le premier pas ne coûte rien." />
+</Section>

@@ -1,0 +1,26 @@
+---
+import ArticleLayout from '@layouts/ArticleLayout.astro';
+import { getCollection, render } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+
+export const getStaticPaths = (async () => {
+  const articles = (await getCollection('blog')).filter((a) => !a.data.brouillon);
+  return articles.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}) satisfies GetStaticPaths;
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<ArticleLayout
+  title={entry.data.titre}
+  lead={entry.data.description}
+  eyebrow="Blog"
+  date={entry.data.date}
+  description={entry.data.description}
+>
+  <Content />
+</ArticleLayout>

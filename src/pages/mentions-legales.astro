@@ -1,0 +1,261 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Section from '@components/ui/Section.astro';
+
+const sections = [
+  { id: 'editeur', t: 'Éditeur du site' },
+  { id: 'hebergeur', t: 'Hébergement' },
+  { id: 'propriete', t: 'Propriété intellectuelle' },
+  { id: 'donnees', t: 'Données personnelles' },
+  { id: 'cookies', t: 'Cookies' },
+  { id: 'responsabilite', t: 'Responsabilité' },
+  { id: 'droit', t: 'Droit applicable' },
+];
+---
+
+<BaseLayout title="Mentions légales" description="Mentions légales du site Azelize." noindex>
+  <Section width="hero" class="pb-6 md:pb-10">
+    <p class="t-eyebrow">Informations légales</p>
+    <h1 class="t-h1 mt-4">Mentions légales</h1>
+    <p class="lg-updated mt-4">Dernière mise à jour : juin 2026</p>
+  </Section>
+
+  <Section width="site" class="pt-0">
+    <div class="lg-grid">
+      <nav class="lg-toc" aria-label="Sommaire">
+        <p class="lg-toc-t">Sommaire</p>
+        {sections.map((s) => <a href={`#${s.id}`}>{s.t}</a>)}
+      </nav>
+
+      <div class="lg-content">
+        <section class="lg-sec" id="editeur">
+          <h2 class="lg-h2">Éditeur du site</h2>
+          <p>
+            Le présent site <strong>azelize.fr</strong> — marque du projet
+            <strong>Fezilfeza</strong> — est édité par :
+          </p>
+          <dl class="lg-dl">
+            <dt>Éditeur</dt><dd>Taha Yasin CELIK — entrepreneur individuel</dd>
+            <dt>Nom commercial</dt><dd>Fezilfeza</dd>
+            <dt>RCS</dt><dd>912 441 953 R.C.S. Lorient</dd>
+            <dt>Date d'immatriculation</dt><dd>26/05/2026</dd>
+            <dt>Siège / établissement</dt><dd>103 B rue Léon Blum, 56600 Lanester</dd>
+            <dt>TVA intracom.</dt><dd>Non applicable — franchise en base (art. 293 B du CGI)</dd>
+            <dt>Directeur de publication</dt><dd>Taha Yasin CELIK</dd>
+            <dt>Contact</dt><dd><a href="mailto:bonjour@azelize.fr">bonjour@azelize.fr</a> · 06 14 74 95 99</dd>
+          </dl>
+        </section>
+
+        <section class="lg-sec" id="hebergeur">
+          <h2 class="lg-h2">Hébergement</h2>
+          <p>Le site est hébergé par :</p>
+          <dl class="lg-dl">
+            <dt>Hébergeur</dt><dd>OVH SAS</dd>
+            <dt>Adresse</dt><dd>2 rue Kellermann, 59100 Roubaix, France</dd>
+            <dt>Contact</dt><dd>ovhcloud.com · 1007</dd>
+          </dl>
+        </section>
+
+        <section class="lg-sec" id="propriete">
+          <h2 class="lg-h2">Propriété intellectuelle</h2>
+          <p>
+            L'ensemble des contenus présents sur ce site (textes, images, logos,
+            charte graphique, code) est, sauf mention contraire, la propriété
+            exclusive d'Azelize ou de ses partenaires.
+          </p>
+          <p>
+            Toute reproduction, représentation, modification ou exploitation,
+            totale ou partielle, sans autorisation écrite préalable, est interdite
+            et constitue une contrefaçon sanctionnée par le Code de la propriété
+            intellectuelle.
+          </p>
+          <p>
+            Les sites réalisés pour les clients d'Azelize, ainsi que leurs noms de
+            domaine, restent la propriété du client dans les conditions prévues au
+            contrat d'abonnement.
+          </p>
+        </section>
+
+        <section class="lg-sec" id="donnees">
+          <h2 class="lg-h2">Données personnelles</h2>
+          <p>
+            Les informations transmises via le formulaire de contact (nom, métier,
+            téléphone, e-mail) sont utilisées uniquement pour répondre à votre
+            demande et, le cas échéant, établir un devis. Elles ne sont jamais
+            revendues.
+          </p>
+          <p>
+            Conformément au RGPD et à la loi « Informatique et Libertés », vous
+            disposez d'un droit d'accès, de rectification, d'opposition et de
+            suppression de vos données. Pour l'exercer, écrivez à
+            <a href="mailto:bonjour@azelize.fr">bonjour@azelize.fr</a>.
+          </p>
+          <p>Durée de conservation : 3 ans à compter du dernier contact.</p>
+        </section>
+
+        <section class="lg-sec" id="cookies">
+          <h2 class="lg-h2">Cookies</h2>
+          <p>
+            Ce site utilise uniquement les cookies strictement nécessaires à son
+            fonctionnement et, le cas échéant, des cookies de mesure d'audience
+            anonymisée. Aucun cookie publicitaire n'est déposé sans votre
+            consentement.
+          </p>
+          <p>
+            Vous pouvez à tout moment configurer votre navigateur pour refuser les
+            cookies.
+          </p>
+        </section>
+
+        <section class="lg-sec" id="responsabilite">
+          <h2 class="lg-h2">Responsabilité</h2>
+          <p>
+            Azelize s'efforce d'assurer l'exactitude et la mise à jour des
+            informations diffusées sur ce site, sans pouvoir en garantir
+            l'exhaustivité. Azelize ne saurait être tenue responsable des dommages
+            liés à l'utilisation du site ou à l'impossibilité d'y accéder.
+          </p>
+        </section>
+
+        <section class="lg-sec" id="droit">
+          <h2 class="lg-h2">Droit applicable</h2>
+          <p>
+            Les présentes mentions légales sont régies par le droit français. En
+            cas de litige et à défaut de résolution amiable, les tribunaux français
+            seront seuls compétents.
+          </p>
+        </section>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  .lg-updated {
+    font-size: 0.875rem;
+    color: var(--color-ink-soft);
+  }
+
+  /* 3 colonnes symétriques : le contenu (680px) reste centré sur la page,
+     le sommaire est calé à gauche dans la gouttière. */
+  .lg-grid {
+    display: grid;
+    grid-template-columns: 1fr min(680px, 100%) 1fr;
+    column-gap: clamp(32px, 5vw, 72px);
+    align-items: start;
+  }
+  @media (max-width: 780px) {
+    .lg-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Sommaire sticky, dans la colonne de gauche */
+  .lg-toc {
+    grid-column: 1;
+    justify-self: end;
+    width: 220px;
+    position: sticky;
+    top: 130px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .lg-toc-t {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-ink-faint);
+    margin: 0 0 10px;
+  }
+  .lg-toc a {
+    font-size: 0.875rem;
+    color: var(--color-ink-2);
+    text-decoration: none;
+    padding: 6px 10px;
+    border-radius: var(--radius-xs);
+    transition: background 0.2s var(--ease), color 0.2s var(--ease);
+  }
+  .lg-toc a:hover {
+    background: var(--color-brand-soft);
+    color: var(--color-brand);
+  }
+  @media (max-width: 780px) {
+    .lg-toc {
+      display: none;
+    }
+  }
+
+  .lg-content {
+    grid-column: 2;
+    max-width: 680px;
+  }
+  @media (max-width: 780px) {
+    .lg-content {
+      grid-column: 1;
+    }
+  }
+  .lg-sec {
+    padding: clamp(24px, 3vw, 36px) 0;
+    border-top: 1px solid var(--color-line);
+  }
+  .lg-sec:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+  .lg-h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.4rem;
+    letter-spacing: -0.015em;
+    color: var(--color-ink);
+    margin: 0 0 14px;
+  }
+  .lg-content :global(p) {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--color-ink-2);
+    margin: 0 0 12px;
+  }
+  .lg-content :global(p:last-child) {
+    margin-bottom: 0;
+  }
+  .lg-content :global(strong) {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+  .lg-content :global(a) {
+    color: var(--color-brand);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .lg-content :global(a:hover) {
+    text-decoration: underline;
+  }
+  .lg-dl {
+    margin: 0;
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 8px 20px;
+  }
+  .lg-dl dt {
+    font-size: 0.95rem;
+    color: var(--color-ink-soft);
+  }
+  .lg-dl dd {
+    font-size: 0.95rem;
+    color: var(--color-ink);
+    margin: 0;
+    font-weight: 500;
+  }
+  @media (max-width: 440px) {
+    .lg-dl {
+      grid-template-columns: 1fr;
+      gap: 2px 0;
+    }
+    .lg-dl dd {
+      margin-bottom: 10px;
+    }
+  }
+</style>

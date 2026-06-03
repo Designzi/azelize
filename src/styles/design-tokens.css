@@ -1,0 +1,292 @@
+/* ============================================================================
+   AZELIZE — Design tokens (Palette naturelle HSB — marque : Menthe H=225)
+   SOURCE DE VÉRITÉ. Importé en premier via global.css.
+
+   Deux couches :
+   1) :root — variables CSS brutes (--brand, --ink, --accent…) utilisées par les
+      classes .ed-* (landing) et .az-* (helpers).
+   2) @theme — mapping pour Tailwind v4 (utilitaires : bg-brand, text-ink…).
+   ⚠️ Aucune valeur en dur hors de ce fichier.
+   Les polices sont chargées via <link> dans BaseLayout.astro (head), pas en
+   @import CSS (qui finirait après les règles Tailwind dans le bundle).
+   ========================================================================== */
+
+:root {
+  /* — BRAND (Menthe, H=225 — cf. palette HSB ci-dessous) — */
+  --brand:        #002080;   /* menthe S100·B50 */
+  --brand-deep:   #001040;   /* menthe S100·B25 */
+  --brand-bright: #0040FF;   /* menthe S100·B100 */
+  --brand-soft:   #BFCFFF;   /* menthe S25·B100 — tint clair */
+  --brand-900:    #001040;   /* menthe S100·B25 — bandes sombres, footer */
+  --brand-line:   #C9CDD2;   /* Pale Slate — filet sur surface douce */
+
+  /* — ACCENT (= brand ; bouton plein) — */
+  --accent:        #002080;
+  --accent-bright: #0040FF;
+  --accent-deep:   #001040;
+
+  /* — NEUTRES — */
+  --paper:        #FFFFFF;
+  --paper-2:      #F5F1E8;   /* Parchemin — surfaces secondaires */
+  --surface:      #FFFFFF;
+  --ink:          #2D3138;
+  --ink-2:        #4A4F57;
+  --ink-soft:     #6F747C;
+  --ink-faint:    #A7ABB2;
+  --line:         #E7E4DA;
+  --line-strong:  #C9CDD2;
+  --line-soft:    #F1EEE5;
+
+  /* — SUR FOND SOMBRE — */
+  --on-dark:        #E8EAED;
+  --on-dark-bright: #FFFFFF;
+  --on-dark-soft:   #C9CDD2;
+  --on-dark-line:   rgba(255,255,255,0.16);
+
+  /* — ÉTATS — */
+  --ok:     #16A34A;  --ok-soft:     #DCFCE7;
+  --warn:   #F59E0B;  --warn-soft:   #FEF3C7;
+  --danger: #E11D2E;  --danger-soft: #FEE2E2;
+
+  /* — TYPE — */
+  --font-display: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
+  --font-sans:    'Hanken Grotesk', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, Menlo, monospace;
+
+  --fs-display: clamp(2.6rem, 6vw, 5rem);
+  --fs-h1:      clamp(2.5rem, 4.4vw, 3.5rem);
+  --fs-h2:      clamp(1.85rem, 3.8vw, 3rem);
+  --fs-h3:      1.4rem;
+  --fs-lead:    1.3rem;
+  --fs-body:    1.0625rem;
+  --fs-sm:      0.9375rem;
+  --fs-caption: 0.8125rem;
+  --fs-eyebrow: 0.75rem;
+
+  --lh-tight: 1.02;  --lh-snug: 1.05;  --lh-body: 1.6;
+  --tracking-display: -0.035em;
+  --tracking-tight:   -0.015em;
+  --tracking-eyebrow:  0.16em;
+
+  /* — ESPACEMENT (base 4px) — */
+  --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px; --sp-4: 16px; --sp-5: 24px;
+  --sp-6: 32px; --sp-7: 48px; --sp-8: 64px; --sp-9: 96px; --sp-10: 128px;
+
+  /* — RAYONS (registre très peu arrondi) — */
+  --r-xs:   4px;
+  --r-sm:   6px;
+  --r-md:   10px;
+  --r-pill: 999px;
+
+  /* — OMBRES (réservées aux cas résiduels — on s'appuie sur les filets) — */
+  --shadow-xs: 0 1px 2px rgba(45,40,18,0.06);
+  --shadow-sm: 0 2px 8px rgba(45,40,18,0.07);
+
+  /* — LAYOUT — */
+  --container:      1240px;
+  --container-site: 1240px;  /* alias consommé par .container-site */
+  --container-hero: 1080px;  /* hero centré */
+  --container-px:   clamp(22px, 5vw, 72px);
+  --hero-max:       1080px;
+
+  /* — FOCUS — anneau accessible cohérent (consommé par :focus-visible) — */
+  --ring-focus: 0 0 0 3px color-mix(in srgb, var(--brand) 35%, transparent);
+
+  /* — MOTION — */
+  --ease:       cubic-bezier(0.22, 0.68, 0.18, 1);
+  --dur-fast:   180ms;
+  --dur:        320ms;
+  --dur-reveal: 720ms;
+
+  /* ==========================================================================
+     PALETTE NATURELLE (grille HSB systématique)
+     5 teintes × 9 variations : S25/S50/S100 × B25/B50/B100.
+     Alias `-50` = S50·B50 (équilibre par défaut). Menthe = famille de marque.
+     ========================================================================== */
+
+  /* fraise (H=0) */
+  --fraise-s25-b25: #403030;
+  --fraise-s25-b50: #806060;
+  --fraise-s25-b100: #FFBFBF;
+  --fraise-s50-b25: #402020;
+  --fraise-s50-b50: #804040;
+  --fraise-s50-b100: #FF8080;
+  --fraise-s100-b25: #400000;
+  --fraise-s100-b50: #800000;
+  --fraise-s100-b100: #FF0000;
+  --fraise-50: #804040;
+
+  /* miel (H=25) */
+  --miel-s25-b25: #403630;
+  --miel-s25-b50: #806D60;
+  --miel-s25-b100: #FFDABF;
+  --miel-s50-b25: #402D20;
+  --miel-s50-b50: #805A40;
+  --miel-s50-b100: #FFB580;
+  --miel-s100-b25: #401B00;
+  --miel-s100-b50: #803500;
+  --miel-s100-b100: #FF6A00;
+  --miel-50: #805A40;
+
+  /* citron (H=50) */
+  --citron-s25-b25: #403D30;
+  --citron-s25-b50: #807A60;
+  --citron-s25-b100: #FFF4BF;
+  --citron-s50-b25: #403A20;
+  --citron-s50-b50: #807540;
+  --citron-s50-b100: #FFEA80;
+  --citron-s100-b25: #403500;
+  --citron-s100-b50: #806A00;
+  --citron-s100-b100: #FFD500;
+  --citron-50: #807540;
+
+  /* kiwi (H=75) */
+  --kiwi-s25-b25: #3C4030;
+  --kiwi-s25-b50: #788060;
+  --kiwi-s25-b100: #EFFFBF;
+  --kiwi-s50-b25: #384020;
+  --kiwi-s50-b50: #708040;
+  --kiwi-s50-b100: #DFFF80;
+  --kiwi-s100-b25: #304000;
+  --kiwi-s100-b50: #608000;
+  --kiwi-s100-b100: #BFFF00;
+  --kiwi-50: #708040;
+
+  /* menthe (H=225) — famille de marque */
+  --menthe-s25-b25: #303440;
+  --menthe-s25-b50: #606880;
+  --menthe-s25-b100: #BFCFFF;
+  --menthe-s50-b25: #202840;
+  --menthe-s50-b50: #405080;
+  --menthe-s50-b100: #809FFF;
+  --menthe-s100-b25: #001040;
+  --menthe-s100-b50: #002080;
+  --menthe-s100-b100: #0040FF;
+  --menthe-50: #405080;
+}
+
+/* — Mapping Tailwind v4 (utilitaires pour les pages hors landing) — */
+@theme {
+  --color-brand:        #002080;   /* menthe S100·B50 */
+  --color-brand-deep:   #001040;   /* menthe S100·B25 */
+  --color-brand-bright: #0040FF;   /* menthe S100·B100 */
+  --color-brand-soft:   #BFCFFF;   /* menthe S25·B100 */
+  --color-brand-900:    #001040;   /* menthe S100·B25 */
+
+  --color-paper:       #FFFFFF;
+  --color-parchment:   #F5F1E8;
+  --color-ink:         #2D3138;
+  --color-ink-2:       #4A4F57;
+  --color-ink-soft:    #6F747C;
+  --color-ink-faint:   #A7ABB2;
+  --color-line:        #E7E4DA;
+  --color-line-strong: #C9CDD2;
+  --color-line-soft:   #F1EEE5;
+
+  --color-ok:     #16A34A;  --color-ok-soft:     #DCFCE7;
+  --color-warn:   #F59E0B;  --color-warn-soft:   #FEF3C7;
+  --color-danger: #E11D2E;  --color-danger-soft: #FEE2E2;
+
+  /* — sur fond sombre (bande finale, footer) — */
+  --color-on-dark:        #E8EAED;
+  --color-on-dark-bright: #FFFFFF;
+  --color-on-dark-soft:   #C9CDD2;
+
+  --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
+  --font-sans:    'Hanken Grotesk', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, monospace;
+
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-pill: 999px;
+
+  --ease-out: cubic-bezier(0.22, 0.68, 0.18, 1);
+
+  /* — Palette naturelle (utilitaires Tailwind : bg-menthe-50, text-citron-s100-b100…) — */
+
+  /* fraise */
+  --color-fraise-s25-b25: #403030;
+  --color-fraise-s25-b50: #806060;
+  --color-fraise-s25-b100: #FFBFBF;
+  --color-fraise-s50-b25: #402020;
+  --color-fraise-s50-b50: #804040;
+  --color-fraise-s50-b100: #FF8080;
+  --color-fraise-s100-b25: #400000;
+  --color-fraise-s100-b50: #800000;
+  --color-fraise-s100-b100: #FF0000;
+  --color-fraise-50: #804040;
+
+  /* miel */
+  --color-miel-s25-b25: #403630;
+  --color-miel-s25-b50: #806D60;
+  --color-miel-s25-b100: #FFDABF;
+  --color-miel-s50-b25: #402D20;
+  --color-miel-s50-b50: #805A40;
+  --color-miel-s50-b100: #FFB580;
+  --color-miel-s100-b25: #401B00;
+  --color-miel-s100-b50: #803500;
+  --color-miel-s100-b100: #FF6A00;
+  --color-miel-50: #805A40;
+
+  /* citron */
+  --color-citron-s25-b25: #403D30;
+  --color-citron-s25-b50: #807A60;
+  --color-citron-s25-b100: #FFF4BF;
+  --color-citron-s50-b25: #403A20;
+  --color-citron-s50-b50: #807540;
+  --color-citron-s50-b100: #FFEA80;
+  --color-citron-s100-b25: #403500;
+  --color-citron-s100-b50: #806A00;
+  --color-citron-s100-b100: #FFD500;
+  --color-citron-50: #807540;
+
+  /* kiwi */
+  --color-kiwi-s25-b25: #3C4030;
+  --color-kiwi-s25-b50: #788060;
+  --color-kiwi-s25-b100: #EFFFBF;
+  --color-kiwi-s50-b25: #384020;
+  --color-kiwi-s50-b50: #708040;
+  --color-kiwi-s50-b100: #DFFF80;
+  --color-kiwi-s100-b25: #304000;
+  --color-kiwi-s100-b50: #608000;
+  --color-kiwi-s100-b100: #BFFF00;
+  --color-kiwi-50: #708040;
+
+  /* menthe — famille de marque */
+  --color-menthe-s25-b25: #303440;
+  --color-menthe-s25-b50: #606880;
+  --color-menthe-s25-b100: #BFCFFF;
+  --color-menthe-s50-b25: #202840;
+  --color-menthe-s50-b50: #405080;
+  --color-menthe-s50-b100: #809FFF;
+  --color-menthe-s100-b25: #001040;
+  --color-menthe-s100-b50: #002080;
+  --color-menthe-s100-b100: #0040FF;
+  --color-menthe-50: #405080;
+
+  /* — ÉCHELLE TYPO (utilitaires text-* : taille + interligne couplés) —
+     Valeurs reprises FIDÈLEMENT de la maquette (source visuelle). */
+  --text-display: clamp(2.6rem, 6vw, 5rem);
+  --text-display--line-height: 1.02;
+  --text-h1: clamp(2.5rem, 4.4vw, 3.5rem);
+  --text-h1--line-height: 1.05;
+  --text-h2: clamp(1.85rem, 3.8vw, 3rem);
+  --text-h2--line-height: 1.05;
+  --text-h3: clamp(1.25rem, 1.9vw, 1.6rem);
+  --text-h3--line-height: 1.15;
+  --text-lead: clamp(1.0625rem, 1.6vw, 1.3rem);
+  --text-lead--line-height: 1.5;
+  --text-eyebrow: 0.75rem;
+  --text-eyebrow--line-height: 1.2;
+
+  /* — TRACKING (utilitaires tracking-*) — */
+  --tracking-display: -0.035em;
+  --tracking-h1: -0.025em;
+  --tracking-h2: -0.02em;
+  --tracking-tight: -0.015em;
+  --tracking-eyebrow: 0.16em;
+
+  /* — DURÉES / COURBE (utilitaires duration-* / ease-*) — */
+  --ease-brand: cubic-bezier(0.22, 0.68, 0.18, 1);
+}

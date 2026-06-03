@@ -1,0 +1,102 @@
+---
+/**
+ * FormBlock — bande sombre + formulaire (couche 3). Le moment « contact ».
+ * Titre via slot par défaut, chapô + champs en props, note de réassurance en slot `risk`.
+ *
+ * ⚠️ Le formulaire n'est PAS connecté (cf. brief §11) : la soumission n'affiche
+ *    qu'un état « envoyé » local. Brancher un endpoint / service avant prod.
+ */
+import Button from '@components/ui/Button.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+
+export interface Field {
+  name: string;
+  label: string;
+  type?: 'text' | 'email' | 'tel' | 'url' | 'number';
+  placeholder?: string;
+  autocomplete?: string;
+  required?: boolean;
+}
+interface Props {
+  eyebrow?: string;
+  lead?: string;
+  fields: Field[];
+  submitLabel?: string;
+  sentTitle?: string;
+  sentBody?: string;
+  id?: string;
+}
+const {
+  eyebrow,
+  lead,
+  fields,
+  submitLabel = 'Envoyer',
+  sentTitle = "C'est noté.",
+  sentBody = 'On vous recontacte très vite.',
+  id = 'contact',
+} = Astro.props;
+const hasRisk = Astro.slots.has('risk');
+---
+
+<section id={id} data-formblock class="bg-brand-900 py-[clamp(72px,10vw,150px)] text-on-dark">
+  <div class="container-site">
+    <div class="grid grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-[clamp(40px,6vw,88px)]">
+      <div>
+        {eyebrow && <div class="reveal"><Eyebrow onDark class="mb-6">{eyebrow}</Eyebrow></div>}
+        <div class="reveal">
+          <h2 class="m-0 font-display text-[clamp(2rem,4vw,3.4rem)] font-medium leading-[1.05] tracking-[-0.03em] text-on-dark [&_em]:text-on-dark-bright">
+            <slot />
+          </h2>
+        </div>
+        {lead && (
+          <div class="reveal">
+            <p class="mt-[clamp(22px,2.6vw,32px)] max-w-[44ch] text-[clamp(1.0625rem,1.5vw,1.25rem)] leading-[1.55] text-on-dark-soft">{lead}</p>
+          </div>
+        )}
+      </div>
+
+      <div class="reveal">
+        <form class="flex flex-col gap-[18px] rounded-sm bg-paper p-[clamp(26px,3vw,40px)]" data-contact-form>
+          {fields.map((field) => (
+            <label class="flex flex-col gap-[7px]">
+              <span class="text-[0.8125rem] font-semibold tracking-[0.01em] text-ink-2">{field.label}</span>
+              <input
+                class="rounded-xs border border-line-strong bg-paper px-[15px] py-[13px] font-sans text-base text-ink outline-none transition-[border-color,box-shadow] placeholder:text-ink-faint focus:border-brand focus:shadow-[var(--ring-focus)]"
+                type={field.type ?? 'text'}
+                name={field.name}
+                placeholder={field.placeholder}
+                autocomplete={field.autocomplete}
+                required={field.required}
+              />
+            </label>
+          ))}
+          <Button type="submit" size="sm" block class="mt-1">{submitLabel}</Button>
+          {hasRisk && <div class="text-center"><slot name="risk" /></div>}
+        </form>
+
+        <div class="hidden flex-col items-center gap-2.5 rounded-sm bg-paper px-[clamp(26px,3vw,40px)] py-[clamp(40px,5vw,60px)] text-center" data-contact-sent>
+          <div class="flex h-[54px] w-[54px] items-center justify-center rounded-full bg-brand text-[1.6rem] font-bold text-paper" aria-hidden="true">✓</div>
+          <h3 class="mt-2 font-display text-[1.6rem] font-medium tracking-[-0.02em] text-ink" data-contact-sent-title>{sentTitle}</h3>
+          <p class="m-0 max-w-[34ch] text-base leading-[1.55] text-ink-soft">{sentBody}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Formulaire provisoire : état « envoyé » local, sans backend (cf. brief §11).
+  document.querySelectorAll<HTMLFormElement>('form[data-contact-form]').forEach((form) => {
+    const root = form.closest('[data-formblock]');
+    const sent = root?.querySelector<HTMLElement>('[data-contact-sent]');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const nom = (form.elements.namedItem('nom') as HTMLInputElement | null)?.value?.trim();
+      const title = root?.querySelector<HTMLElement>('[data-contact-sent-title]');
+      if (title && nom) title.textContent = `C'est noté, ${nom}.`;
+      form.classList.add('hidden');
+      sent?.classList.remove('hidden');
+      sent?.classList.add('flex');
+    });
+  });
+</script>

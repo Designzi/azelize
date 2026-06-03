@@ -1,0 +1,27 @@
+---
+/**
+ * Eyebrow — surtitre de section (couche 2). Porte la teinte d'ambiance.
+ * La teinte ne décore pas l'action : c'est juste le signal du « lieu » (§8).
+ *
+ * accent : menthe (défaut) | fraise | miel | citron | kiwi
+ * onDark : surtitre posé sur une bande sombre (ton clair lisible)
+ */
+import { accentText, type Accent } from '@lib/accents';
+
+interface Props {
+  accent?: Accent;
+  onDark?: boolean;
+  class?: string;
+}
+const { accent = 'menthe', onDark = false, class: className } = Astro.props;
+---
+
+<p
+  class:list={[
+    'text-eyebrow font-semibold uppercase tracking-eyebrow',
+    onDark ? 'text-fraise-s25-b100' : accentText[accent],
+    className,
+  ]}
+>
+  <slot />
+</p>

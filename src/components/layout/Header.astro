@@ -1,0 +1,41 @@
+---
+/**
+ * Header (singleton, couche 1) — bandeau d'annonce + header fixe qui se densifie
+ * au scroll (via data-scrolled). Navigation minimale (ancres de la landing).
+ */
+import Button from '@components/ui/Button.astro';
+import { mainNav, navCta } from '@data/nav';
+---
+
+{/* Bandeau d'annonce — atmosphère Citron (clarté/accent) */}
+<div class="fixed inset-x-0 top-0 z-[60] flex h-[38px] items-center justify-center gap-2.5 bg-citron-s50-b100 px-4 text-center text-[0.8125rem] font-semibold tracking-[0.005em] text-ink">
+  <span class="h-[7px] w-[7px] shrink-0 rounded-full bg-ink" aria-hidden="true"></span>
+  Vous ne payez que quand ça marche
+</div>
+
+<header
+  id="site-header"
+  class="fixed inset-x-0 top-[38px] z-50 border-b border-transparent transition-[background,border-color] duration-[400ms] ease-brand [&[data-scrolled]]:border-line [&[data-scrolled]]:bg-[color-mix(in_srgb,var(--color-paper)_84%,transparent)] [&[data-scrolled]]:backdrop-blur-[14px]"
+>
+  <div class="container-site flex h-[72px] items-center justify-between gap-5">
+    <a href="/" class="font-display text-[1.4rem] font-semibold tracking-[-0.02em] text-ink">Azelize</a>
+    <nav class="ml-auto mr-2 hidden items-center gap-[clamp(16px,2.4vw,34px)] md:flex" aria-label="Navigation principale">
+      {mainNav.map((item) => (
+        <a href={item.href} class="text-[0.9rem] font-medium text-ink-2 transition-colors hover:text-brand">{item.label}</a>
+      ))}
+    </nav>
+    <Button href={navCta.href} size="sm" class="hidden sm:inline-flex">{navCta.label}</Button>
+  </div>
+</header>
+
+<script>
+  const header = document.getElementById('site-header');
+  if (header) {
+    const onScroll = () => {
+      if (window.scrollY > 8) header.setAttribute('data-scrolled', '');
+      else header.removeAttribute('data-scrolled');
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  }
+</script>

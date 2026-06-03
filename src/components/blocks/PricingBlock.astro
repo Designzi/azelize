@@ -1,0 +1,76 @@
+---
+/**
+ * PricingBlock — grille de paliers tarifaires (couche 3).
+ * Le palier « recommandé » (featured) est en Menthe (marque) ; le CTA reste Menthe.
+ */
+import Button from '@components/ui/Button.astro';
+import Badge from '@components/ui/Badge.astro';
+
+export interface Tier {
+  name: string;
+  line: string;
+  /** Montant mensuel (nombre) ou libellé court. */
+  price: string | number;
+  unit?: string;
+  feats: string[];
+  featured?: boolean;
+  /** La 1re feature est une ligne de report (« Tout X, plus : »). */
+  rolloverFirst?: boolean;
+}
+interface Props {
+  tiers: Tier[];
+  ctaHref: string;
+  featuredLabel?: string;
+  /** Petite mention sous le prix (ex. « sans engagement »). */
+  engagementNote?: string;
+  class?: string;
+}
+const { tiers, ctaHref, featuredLabel = 'Le plus choisi', engagementNote, class: className } = Astro.props;
+
+// Puce-filet (guillemets doubles : la classe doit rester littérale pour Tailwind).
+const bulletFeat =
+  "relative pl-5 text-ink-2 before:absolute before:left-0 before:top-[0.56em] before:h-0.5 before:w-2 before:bg-brand before:content-['']";
+---
+
+<div class:list={['grid grid-cols-1 items-stretch gap-[clamp(18px,2.4vw,28px)] md:grid-cols-3 mx-auto max-w-[440px] md:max-w-none', className]}>
+  {tiers.map((tier) => (
+    <div class:list={['flex reveal', tier.featured && 'order-first md:order-none']}>
+      <div
+        class:list={[
+          'relative flex flex-1 flex-col rounded-sm bg-paper p-[clamp(26px,2.8vw,38px)]',
+          tier.featured ? 'border-2 border-brand' : 'border border-line-strong',
+        ]}
+      >
+        {tier.featured && (
+          <Badge class="absolute -top-3 left-[clamp(26px,2.8vw,38px)]">{featuredLabel}</Badge>
+        )}
+        <h3 class="m-0 font-display text-[1.5rem] font-medium tracking-[-0.015em] text-ink">{tier.name}</h3>
+        <p class="mt-1.5 text-[0.95rem] text-ink-soft">{tier.line}</p>
+
+        <div class="mb-[clamp(18px,2.4vw,26px)] mt-[clamp(18px,2.4vw,28px)] flex items-baseline gap-2 border-b border-line pb-[clamp(18px,2.4vw,26px)]">
+          <span class="font-display text-[clamp(2.6rem,4vw,3.4rem)] font-medium leading-[0.9] tracking-[-0.03em] text-ink">{tier.price}</span>
+          {tier.unit && <span class="text-[0.95rem] text-ink-soft">{tier.unit}</span>}
+        </div>
+
+        {engagementNote && <span class="mb-[18px] block text-[0.8125rem] text-ink-soft">{engagementNote}</span>}
+
+        <ul class="m-0 mb-[clamp(24px,3vw,32px)] flex flex-1 list-none flex-col gap-[11px] p-0">
+          {tier.feats.map((f, i) => (
+            <li
+              class:list={[
+                i === 0 && tier.rolloverFirst ? 'font-semibold text-ink-soft' : bulletFeat,
+                'text-[0.9375rem] leading-[1.4]',
+              ]}
+            >
+              {f}
+            </li>
+          ))}
+        </ul>
+
+        <Button href={ctaHref} size="sm" variant={tier.featured ? 'solid' : 'outline'} block>
+          Choisir {tier.name}
+        </Button>
+      </div>
+    </div>
+  ))}
+</div>

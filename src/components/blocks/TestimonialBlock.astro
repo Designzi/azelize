@@ -1,0 +1,38 @@
+---
+/**
+ * TestimonialBlock — grille de témoignages (couche 3).
+ * Photo en placeholder neutre (assets à fournir, cf. brief §11).
+ */
+export interface Testimonial {
+  quote: string;
+  name: string;
+  trade: string;
+}
+interface Props {
+  items: Testimonial[];
+  class?: string;
+}
+const { items, class: className } = Astro.props;
+---
+
+<div
+  class:list={[
+    'mt-[clamp(36px,4.5vw,64px)] grid grid-cols-1 gap-[clamp(24px,3.4vw,48px)] md:grid-cols-2',
+    className,
+  ]}
+>
+  {items.map((t) => (
+    <figure class="m-0 flex flex-col reveal">
+      <blockquote class="m-0 flex-1 font-display text-[clamp(1.2rem,1.9vw,1.55rem)] font-normal leading-[1.32] tracking-[-0.01em] text-ink text-pretty">
+        {t.quote}
+      </blockquote>
+      <figcaption class="mt-6 flex items-center gap-[14px] border-t border-line pt-5">
+        <span class="h-12 w-12 shrink-0 rounded-full border border-line bg-parchment" aria-hidden="true"></span>
+        <span>
+          <span class="block text-[0.95rem] font-semibold text-ink">{t.name}</span>
+          <span class="mt-0.5 block text-[0.85rem] text-ink-soft">{t.trade}</span>
+        </span>
+      </figcaption>
+    </figure>
+  ))}
+</div>

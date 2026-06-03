@@ -1,0 +1,49 @@
+---
+/** Section « La preuve » — cas resinefar.fr · Menthe (preuve/identité).
+ *  ⚠️ Chiffres et citations à confirmer avec les vrais résultats clients (§11). */
+import Section from '@components/ui/Section.astro';
+import SectionHead from '@components/ui/SectionHead.astro';
+import StatsBlock from '@components/blocks/StatsBlock.astro';
+import TestimonialBlock from '@components/blocks/TestimonialBlock.astro';
+import CtaRow from '@components/home/CtaRow.astro';
+
+const STATS = [
+  { n: '3e', label: 'page Google', sub: '→ 1re page sur ses mots-clés' },
+  { n: '×4', label: 'demandes de devis', sub: 'en ligne, chaque mois' },
+  { n: '48 h', label: 'pour être en ligne', sub: 'présence prête, rapidement' },
+];
+
+const TESTI = [
+  {
+    quote: "Avant, je n'existais pas sur internet. Maintenant on me trouve, et on m'appelle. Je n'ai rien eu à gérer.",
+    name: 'Patron — resinefar.fr',
+    trade: 'Résine & sols',
+  },
+  {
+    quote: 'Ils ont fait le site et ils le tiennent. Moi je suis sur le chantier, pas devant un écran le dimanche soir.',
+    name: 'Artisan client',
+    trade: 'Finitions & rénovation',
+  },
+];
+---
+
+<Section id="preuve">
+  <SectionHead eyebrow="La preuve" accent="menthe">
+    Un cas concret : resinefar.fr
+    <Fragment slot="intro">
+      Un artisan de la résine, invisible en ligne. Site créé et tenu par Azelize —
+      voici ce qui a changé.
+    </Fragment>
+  </SectionHead>
+
+  <StatsBlock stats={STATS} accent="menthe" />
+  <TestimonialBlock items={TESTI} />
+
+  <div class="reveal">
+    <p class="mt-[clamp(28px,3.4vw,44px)] text-[0.8125rem] text-ink-faint">
+      Cas et chiffres à confirmer / compléter avec les vrais résultats clients.
+    </p>
+  </div>
+
+  <CtaRow line="Le prochain résultat, c'est le vôtre." />
+</Section>

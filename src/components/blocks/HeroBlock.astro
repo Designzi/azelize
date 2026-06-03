@@ -1,0 +1,43 @@
+---
+/**
+ * HeroBlock — hero centré + showcase (couche 3). Structure générique, pilotée
+ * par slots : titre (slot par défaut), `lead`, `cta`, `showcase`.
+ * Réutilisable sur la home, une prestation, un cas, un article.
+ */
+interface Props {
+  id?: string;
+  class?: string;
+}
+const { id, class: className } = Astro.props;
+const hasShowcase = Astro.slots.has('showcase');
+const hasLead = Astro.slots.has('lead');
+const hasCta = Astro.slots.has('cta');
+---
+
+<div id={id} class:list={['pt-[clamp(146px,14vw,190px)] pb-[clamp(48px,7vw,90px)] text-center', className]}>
+  <div class="container-site">
+    <div class="mx-auto flex max-w-[1080px] flex-col items-center">
+      <h1 class="anim-2 m-0 mt-[clamp(22px,3vw,34px)] max-w-[22ch] font-display text-display font-medium tracking-display text-ink [&_em]:text-brand">
+        <slot />
+      </h1>
+      {hasLead && (
+        <p class="anim-3 mt-[clamp(18px,2.4vw,28px)] max-w-[62ch] text-lead leading-[1.5] text-ink-2">
+          <slot name="lead" />
+        </p>
+      )}
+      {hasCta && (
+        <div class="anim-4 mt-[clamp(26px,3vw,38px)] w-full">
+          <slot name="cta" />
+        </div>
+      )}
+    </div>
+  </div>
+
+  {hasShowcase && (
+    <div class="container-site">
+      <div class="anim-5 mt-[clamp(40px,5vw,72px)]">
+        <slot name="showcase" />
+      </div>
+    </div>
+  )}
+</div>

@@ -1,0 +1,55 @@
+---
+/**
+ * Bouton — cf. design system §4.
+ * padding 12×24 (sm 8×16, lg 16×32) · radius 4px · texte 15/600
+ * plein `brand` + label blanc → hover `brand-deep` · focus : anneau de focus
+ * Polymorphe : rend <a> si `href`, sinon <button>.
+ */
+interface Props {
+  href?: string;
+  variant?: 'solid' | 'outline' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
+  /** Pleine largeur (formulaire, colonnes de prix). */
+  block?: boolean;
+  type?: 'button' | 'submit' | 'reset';
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  href,
+  variant = 'solid',
+  size = 'md',
+  block = false,
+  type = 'button',
+  class: className,
+  ...rest
+} = Astro.props;
+
+const base =
+  'inline-flex items-center justify-center gap-2 font-sans font-semibold leading-none rounded-xs whitespace-nowrap cursor-pointer transition-[background,transform] duration-150 ease-brand select-none active:translate-y-px';
+
+const sizes = {
+  sm: 'text-[0.9rem] px-[18px] py-[10px]',
+  md: 'text-base px-[26px] py-[14px]',
+  lg: 'text-[1.0625rem] px-8 py-[17px]',
+};
+
+const variants = {
+  solid: 'bg-brand text-paper hover:bg-brand-deep border border-transparent',
+  outline: 'bg-transparent text-ink border border-line-strong hover:border-brand hover:text-brand',
+  ghost: 'bg-transparent text-brand hover:bg-brand-soft border border-transparent',
+};
+
+const classes = [base, sizes[size], variants[variant], block && 'w-full', className];
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag
+  class:list={classes}
+  href={href}
+  type={href ? undefined : type}
+  {...rest}
+>
+  <slot />
+</Tag>

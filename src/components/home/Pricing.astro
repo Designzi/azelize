@@ -1,0 +1,56 @@
+---
+/** Section « Tarifs » — 3 paliers · Menthe (contexte Azelize, action = Menthe).
+ *  ⚠️ Prix indicatifs en attente d'arbitrage (cf. brief §11). */
+import Section from '@components/ui/Section.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import Button from '@components/ui/Button.astro';
+import PricingBlock from '@components/blocks/PricingBlock.astro';
+import RiskNote from '@components/home/RiskNote.astro';
+import { navCta } from '@data/nav';
+
+const PRICE_UNIT = '€ / mois';
+const TIERS = [
+  {
+    name: 'Présence', price: 390, unit: PRICE_UNIT,
+    line: 'Site pro + fiche Google + entretien mensuel.',
+    feats: ['Site vitrine sur-mesure', 'Fiche Google optimisée', 'Hébergement, sécurité & mises à jour', 'Suivi mensuel'],
+  },
+  {
+    name: 'Visibilité', price: 590, unit: PRICE_UNIT, featured: true, rolloverFirst: true,
+    line: 'Tout Présence + référencement local actif + contenus mensuels + rapport.',
+    feats: ['Tout Présence, plus :', 'Référencement local actif', 'Contenus publiés chaque mois', 'Gestion des avis Google', 'Rapport mensuel clair'],
+  },
+  {
+    name: 'Croissance', price: 890, unit: PRICE_UNIT, rolloverFirst: true,
+    line: 'Tout Visibilité + campagnes + supports (vidéo, print) + priorité.',
+    feats: ['Tout Visibilité, plus :', 'Campagnes (Google, réseaux)', 'Supports vidéo & print', 'Traitement prioritaire'],
+  },
+];
+---
+
+<Section id="prix">
+  <div class="mb-[clamp(44px,5.5vw,80px)]">
+    <div class="reveal"><Eyebrow accent="menthe" class="mb-[18px]">Tarifs</Eyebrow></div>
+    <div class="grid grid-cols-1 items-start gap-4 md:grid-cols-2 md:gap-[clamp(24px,4vw,64px)]">
+      <div class="reveal">
+        <h2 class="m-0 font-display text-h2 font-medium tracking-h2 text-ink text-pretty">Une formule claire pour rester visible.</h2>
+      </div>
+      <div class="reveal">
+        <p class="m-0 max-w-[52ch] text-[1.0625rem] leading-[1.55] text-ink-soft">
+          Mensuel, sans engagement. Les formules ci-dessous s'appliquent
+          <strong class="font-semibold text-brand"> une fois le démarrage atteint</strong> — quand le site vous amène
+          déjà des clients. Tarifs indicatifs, à confirmer.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <PricingBlock tiers={TIERS} ctaHref={navCta.href} engagementNote="sans engagement" />
+
+  <div class="reveal mt-[clamp(28px,3.4vw,44px)] flex justify-center">
+    <RiskNote kind="garantie" class="text-center" />
+  </div>
+  <div class="reveal mt-5 flex justify-center">
+    <Button href={navCta.href} size="sm" variant="outline">Vous hésitez ? Réserver un appel</Button>
+  </div>
+</Section>

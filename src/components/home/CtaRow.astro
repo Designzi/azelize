@@ -1,0 +1,28 @@
+---
+/**
+ * Rangée CTA de clôture de section : ligne d'accroche + bouton Menthe + réassurance.
+ * L'action reste toujours en Menthe (jamais un fruit, cf. brief §8).
+ */
+import Button from '@components/ui/Button.astro';
+import RiskNote from '@components/home/RiskNote.astro';
+import { navCta } from '@data/nav';
+
+interface Props {
+  line?: string;
+  riskKind?: 'model' | 'garantie';
+  label?: string;
+}
+const { line, riskKind = 'model', label = 'Réserver un appel' } = Astro.props;
+---
+
+<div class="mt-[clamp(56px,7vw,96px)] flex flex-col items-center gap-1.5 border-t border-line pt-[clamp(40px,5vw,64px)] reveal">
+  {line && (
+    <p class="mb-2 text-center font-display text-[clamp(1.3rem,2.4vw,1.9rem)] font-medium tracking-[-0.02em] text-ink text-pretty">
+      {line}
+    </p>
+  )}
+  <div class="flex flex-col items-center gap-3.5 text-center">
+    <Button href={navCta.href} size="sm">{label}</Button>
+    <RiskNote kind={riskKind} />
+  </div>
+</div>

@@ -1,0 +1,74 @@
+---
+/**
+ * FaqBlock — accordéon FAQ (couche 3), avec colonne latérale en slot `aside`.
+ * Premier item ouvert par défaut. Comportement (accordéon) embarqué et autonome.
+ */
+export interface QA {
+  q: string;
+  a: string;
+}
+interface Props {
+  items: QA[];
+  class?: string;
+}
+const { items, class: className } = Astro.props;
+const hasAside = Astro.slots.has('aside');
+---
+
+<div class:list={['grid grid-cols-1 items-start gap-7 md:gap-[clamp(36px,5vw,72px)] md:grid-cols-[0.8fr_1.2fr]', className]}>
+  {hasAside && <div><slot name="aside" /></div>}
+
+  <div class="flex flex-col gap-2.5" data-faq>
+    {items.map((item, i) => (
+      <div
+        class:list={[
+          'group rounded-sm border bg-paper transition-colors reveal',
+          i === 0 ? 'is-open border-brand' : 'border-line hover:border-line-strong',
+        ]}
+        data-faq-item
+      >
+        <button
+          type="button"
+          class="flex w-full cursor-pointer items-start gap-4 border-0 bg-transparent px-5 py-[18px] text-left font-display text-[1.1rem] font-medium tracking-[-0.01em] text-ink transition-colors hover:text-brand group-[.is-open]:text-brand group-[.is-open]:pb-3"
+          aria-expanded={i === 0 ? 'true' : 'false'}
+          data-faq-q
+        >
+          <span class="inline-flex h-[26px] w-[26px] shrink-0 items-center justify-center rounded-full border border-line-strong bg-paper font-mono text-[0.72rem] text-brand transition-colors group-[.is-open]:border-brand group-[.is-open]:bg-brand group-[.is-open]:text-paper">
+            {String(i + 1).padStart(2, '0')}
+          </span>
+          <span class="flex-1 pt-0.5">{item.q}</span>
+          <svg
+            class="mt-1.5 h-3 w-3 shrink-0 text-ink-soft transition-transform duration-300 group-[.is-open]:rotate-180 group-[.is-open]:text-brand"
+            viewBox="0 0 12 12" fill="none" aria-hidden="true"
+          >
+            <path d="M2 4.5 6 8.5l4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </button>
+        <div class="max-h-0 overflow-hidden transition-[max-height] duration-300 ease-brand" data-faq-a>
+          <p class="m-0 max-w-[64ch] px-5 pb-[22px] pl-5 text-base leading-[1.65] text-ink-2 md:pl-[62px]">{item.a}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+<script>
+  // Accordéon FAQ — autonome (un seul item ouvert à la fois).
+  document.querySelectorAll<HTMLElement>('[data-faq]').forEach((list) => {
+    const items = Array.from(list.querySelectorAll<HTMLElement>('[data-faq-item]'));
+    const setOpen = (item: HTMLElement, open: boolean) => {
+      item.classList.toggle('is-open', open);
+      item.querySelector('[data-faq-q]')?.setAttribute('aria-expanded', String(open));
+      const wrap = item.querySelector<HTMLElement>('[data-faq-a]');
+      if (wrap) wrap.style.maxHeight = open ? wrap.scrollHeight + 32 + 'px' : '0px';
+    };
+    items.forEach((item) => {
+      setOpen(item, item.classList.contains('is-open'));
+      item.querySelector('[data-faq-q]')?.addEventListener('click', () => {
+        const isOpen = item.classList.contains('is-open');
+        items.forEach((other) => setOpen(other, false));
+        setOpen(item, !isOpen);
+      });
+    });
+  });
+</script>

@@ -1,0 +1,36 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import type { SeoInput } from '@lib/seo';
+
+interface Props extends SeoInput {
+  title: string;
+  lead?: string;
+  eyebrow?: string;
+  date?: Date;
+}
+
+const { title, lead, eyebrow, date, ...seo } = Astro.props;
+
+const dateLabel = date
+  ? new Intl.DateTimeFormat('fr-FR', { dateStyle: 'long' }).format(date)
+  : undefined;
+---
+
+<BaseLayout {...seo} title={title} type="article">
+  <article>
+    <header class="border-b border-line">
+      <div class="container-hero py-16 md:py-24">
+        {eyebrow && <p class="t-eyebrow">{eyebrow}</p>}
+        <h1 class="t-h1 mt-4">{title}</h1>
+        {lead && <p class="t-lead mt-6 max-w-2xl">{lead}</p>}
+        {dateLabel && <p class="t-caption mt-6 font-mono">{dateLabel}</p>}
+      </div>
+    </header>
+
+    <div class="container-hero py-12 md:py-16">
+      <div class="prose-azelize mx-auto max-w-2xl">
+        <slot />
+      </div>
+    </div>
+  </article>
+</BaseLayout>

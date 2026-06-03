@@ -1,0 +1,41 @@
+---
+/** Section FAQ — accordéon · atmosphère Fraise (rappel de la douleur).
+ *  La carte « Une autre question ? » est enveloppée de Miel, mais son CTA reste
+ *  Menthe (règle §8 : l'action ne prend jamais une teinte de fruit). */
+import Section from '@components/ui/Section.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import Button from '@components/ui/Button.astro';
+import FaqBlock from '@components/blocks/FaqBlock.astro';
+import { navCta } from '@data/nav';
+
+const FAQ = [
+  { q: 'Quand est-ce que je commence à payer ?',
+    a: "Le 1er mois est toujours offert. Tant que le site ne vous a pas amené au moins 2 demandes dans le mois, on vous offre le mois suivant — on ne facture rien tant que ça n'a pas décollé. Dès qu'il démarre, on vous propose de continuer : l'abonnement commence le mois d'après, si vous le voulez. Seuls frais au départ : 50 € pour le nom de domaine, une seule fois." },
+  { q: 'Je suis engagé combien de temps ?',
+    a: "Aucun engagement. Vous arrêtez quand vous voulez, d'un mois sur l'autre." },
+  { q: "Si j'arrête, je garde mon site ?",
+    a: 'À préciser ensemble selon votre formule — on en parle franchement dès le premier appel, sans piège. (Politique définitive à confirmer.)' },
+  { q: 'En combien de temps je suis en ligne ?',
+    a: 'Votre site est en ligne en 2 semaines environ — on vous donne une date précise dès le point de départ.' },
+  { q: "C'est pour quels métiers ?",
+    a: 'Bâtiment, finitions, services techniques : maçons, électriciens, plombiers, peintres, applicateurs de résine…' },
+  { q: 'Pourquoi pas juste payer un site une fois ?',
+    a: "Parce qu'un site livré puis abandonné se dégrade : il décroche sur Google, ses infos datent. L'abonnement le garde vivant et visible — c'est tout l'intérêt." },
+];
+---
+
+<Section id="faq">
+  <FaqBlock items={FAQ}>
+    <Fragment slot="aside">
+      <div class="reveal"><Eyebrow accent="fraise" class="mb-[18px]">Vos questions</Eyebrow></div>
+      <div class="reveal">
+        <h2 class="m-0 font-display text-h2 font-medium tracking-h2 text-ink text-pretty">Tout ce qu'on nous demande.</h2>
+      </div>
+      <div class="reveal mt-[clamp(24px,3vw,36px)] max-w-[300px] rounded-sm bg-miel-s25-b100 p-[22px]">
+        <div class="font-display text-[1.1rem] font-semibold tracking-[-0.01em] text-ink">Une autre question ?</div>
+        <p class="mb-4 mt-2 text-[0.9375rem] leading-[1.5] text-ink-2">On y répond au téléphone, sans jargon — en 15 minutes.</p>
+        <Button href={navCta.href} size="sm">Réserver un appel</Button>
+      </div>
+    </Fragment>
+  </FaqBlock>
+</Section>

@@ -1,0 +1,37 @@
+---
+/**
+ * SectionHead — en-tête de section (eyebrow + titre + chapô optionnel).
+ * Motif récurrent, piloté par props ; la teinte d'ambiance passe par `accent`.
+ *
+ * Slot par défaut = le titre (permet <em>, &nbsp;…). Slot "intro" = chapô.
+ */
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import type { Accent } from '@lib/accents';
+
+interface Props {
+  eyebrow?: string;
+  accent?: Accent;
+  /** Largeur max du bloc d'en-tête (par défaut ~46ch, comme la maquette). */
+  class?: string;
+}
+const { eyebrow, accent = 'menthe', class: className } = Astro.props;
+const hasIntro = Astro.slots.has('intro');
+---
+
+<div class:list={['max-w-[46ch] mb-[clamp(44px,5.5vw,80px)]', className]}>
+  {eyebrow && (
+    <div class="reveal"><Eyebrow accent={accent} class="mb-[18px]">{eyebrow}</Eyebrow></div>
+  )}
+  <div class="reveal">
+    <h2 class="text-h2 font-display font-medium tracking-h2 text-ink text-pretty m-0">
+      <slot />
+    </h2>
+  </div>
+  {hasIntro && (
+    <div class="reveal">
+      <p class="mt-4 text-[1.0625rem] leading-[1.55] text-ink-soft">
+        <slot name="intro" />
+      </p>
+    </div>
+  )}
+</div>

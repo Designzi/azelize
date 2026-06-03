@@ -1,0 +1,54 @@
+---
+/**
+ * Section — primitive de rythme vertical + conteneur (cf. brief §7, couche 2).
+ * Ne connaît pas son contenu : tone + largeur + padding en props, slot pour le reste.
+ *
+ * tone  : 'paper' (défaut) | 'parchment' | 'dark' (bande Menthe profonde) | 'brand-soft'
+ *         | 'fraise' | 'miel' | 'citron' | 'kiwi' (enveloppe claire d'ambiance)
+ * width : 'site' (1240px) | 'hero' (1080px) | 'bleed' (pleine largeur, sans conteneur)
+ * pad   : 'lg' (rythme landing, défaut) | 'default' (pages internes) | 'none'
+ */
+interface Props {
+  tone?: 'paper' | 'parchment' | 'dark' | 'brand-soft' | 'fraise' | 'miel' | 'citron' | 'kiwi';
+  width?: 'site' | 'hero' | 'bleed';
+  pad?: 'lg' | 'default' | 'none';
+  as?: string;
+  id?: string;
+  class?: string;
+}
+
+const { tone = 'paper', width = 'site', pad = 'lg', as = 'section', id, class: className } = Astro.props;
+const Tag = as as any;
+
+const tones: Record<NonNullable<Props['tone']>, string> = {
+  paper: 'bg-paper text-ink',
+  parchment: 'bg-parchment text-ink',
+  'brand-soft': 'bg-brand-soft text-ink',
+  dark: 'bg-brand-900 text-on-dark',
+  // Enveloppes d'ambiance — ton très clair S25·B100, jamais saturé.
+  fraise: 'bg-fraise-s25-b100 text-ink',
+  miel: 'bg-miel-s25-b100 text-ink',
+  citron: 'bg-citron-s25-b100 text-ink',
+  kiwi: 'bg-kiwi-s25-b100 text-ink',
+};
+
+const pads: Record<NonNullable<Props['pad']>, string> = {
+  lg: 'py-[clamp(72px,9vw,148px)]',
+  default: 'py-16 md:py-24',
+  none: '',
+};
+
+const containers: Record<NonNullable<Props['width']>, string> = {
+  site: 'container-site',
+  hero: 'container-hero',
+  bleed: '',
+};
+---
+
+<Tag id={id} class:list={[pads[pad], tones[tone], className]}>
+  {width === 'bleed' ? <slot /> : (
+    <div class={containers[width]}>
+      <slot />
+    </div>
+  )}
+</Tag>

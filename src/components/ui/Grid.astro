@@ -1,0 +1,24 @@
+---
+/**
+ * Grid — grille responsive mobile-first (couche 2). 1 colonne en étroit,
+ * `cols` colonnes à partir de md. Le gap se passe en `class` (gap-* ou arbitraire)
+ * pour coller aux valeurs de la maquette section par section.
+ */
+interface Props {
+  cols?: 2 | 3 | 4;
+  as?: string;
+  class?: string;
+}
+const { cols = 3, as = 'div', class: className } = Astro.props;
+const Tag = as as any;
+
+const colsMap: Record<NonNullable<Props['cols']>, string> = {
+  2: 'grid-cols-1 md:grid-cols-2',
+  3: 'grid-cols-1 md:grid-cols-3',
+  4: 'grid-cols-1 md:grid-cols-4',
+};
+---
+
+<Tag class:list={['grid', colsMap[cols], className]}>
+  <slot />
+</Tag>

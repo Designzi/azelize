@@ -1,0 +1,24 @@
+---
+/** Section « Tout est compris » — livrables mensuels · atmosphère Kiwi (positif/succès). */
+import Section from '@components/ui/Section.astro';
+import SectionHead from '@components/ui/SectionHead.astro';
+import IncludesBlock from '@components/blocks/IncludesBlock.astro';
+
+const INCL = [
+  'Votre site tenu à jour et sécurisé',
+  "Votre référencement local suivi (Google et fiche d'établissement)",
+  'Vos modifications et nouveaux contenus à la demande',
+  'Le suivi de vos avis clients',
+  'Un rapport mensuel clair : appels, visites, position sur Google',
+  'Un interlocuteur unique, qui répond',
+];
+---
+
+<Section id="inclus">
+  <SectionHead eyebrow="Tout est compris" accent="kiwi">Ce qu'on fait pour vous, chaque mois</SectionHead>
+  <IncludesBlock
+    items={INCL}
+    accent="kiwi"
+    note="Tout est inclus dans votre formule. Pas de surprise sur la facture."
+  />
+</Section>

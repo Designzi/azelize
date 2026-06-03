@@ -1,0 +1,19 @@
+---
+/** Section « C'est pour vous » — 3 douleurs · atmosphère Fraise (douleur/alerte). */
+import Section from '@components/ui/Section.astro';
+import SectionHead from '@components/ui/SectionHead.astro';
+import GridBlock from '@components/blocks/GridBlock.astro';
+
+const PAINS = [
+  { title: 'Invisible sur Google', body: "Vos concurrents apparaissent, pas vous. Les appels partent ailleurs." },
+  { title: 'Un site qui fait fuir', body: 'Lent, daté, pas pro : il fait douter avant même le devis.' },
+  { title: 'Pas le temps', body: "Vous êtes sur le terrain. Personne ne s'occupe de votre image en ligne." },
+];
+---
+
+<Section id="probleme">
+  <SectionHead eyebrow="C'est pour vous" accent="fraise">
+    Vos clients vous cherchent sur Google. Vous y êtes&nbsp;?
+  </SectionHead>
+  <GridBlock items={PAINS} cols={3} />
+</Section>

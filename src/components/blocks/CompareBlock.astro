@@ -1,0 +1,58 @@
+---
+/**
+ * CompareBlock — comparatif deux colonnes (couche 3).
+ * La colonne « recommandée » est en Menthe (marque/identité), jamais un fruit (§8).
+ * Phrase de clôture optionnelle via le slot par défaut.
+ */
+export interface CompareSide {
+  title: string;
+  items: string[];
+}
+interface Props {
+  bad: CompareSide;
+  good: CompareSide;
+  class?: string;
+}
+const { bad, good, class: className } = Astro.props;
+const hasClose = Astro.slots.has('default');
+---
+
+<div class:list={[className]}>
+  <div class="grid grid-cols-1 gap-[clamp(18px,2.4vw,28px)] md:grid-cols-2">
+    {/* Colonne « moins bien » — neutre, en retrait */}
+    <div class="rounded-sm border border-line-strong p-[clamp(26px,3vw,40px)] reveal">
+      <div class="mb-5 border-b border-line pb-3.5 font-display text-[1.25rem] font-medium tracking-[-0.01em] text-ink-soft">
+        {bad.title}
+      </div>
+      <ul class="m-0 flex list-none flex-col gap-3.5 p-0">
+        {bad.items.map((x) => (
+          <li class="relative pl-6 text-[1.0625rem] leading-[1.4] text-ink-soft before:absolute before:-top-[0.05em] before:left-0 before:text-[1.15em] before:text-ink-faint before:content-['×']">
+            {x}
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    {/* Colonne « recommandée » — Menthe (marque) */}
+    <div class="rounded-sm border-2 border-brand bg-paper p-[clamp(26px,3vw,40px)] reveal">
+      <div class="mb-5 border-b border-line pb-3.5 font-display text-[1.25rem] font-medium tracking-[-0.01em] text-ink">
+        {good.title}
+      </div>
+      <ul class="m-0 flex list-none flex-col gap-3.5 p-0">
+        {good.items.map((x) => (
+          <li class="relative pl-6 text-[1.0625rem] leading-[1.4] text-ink-2 before:absolute before:left-0 before:top-[0.5em] before:h-0.5 before:w-[11px] before:bg-brand before:content-['']">
+            {x}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  {hasClose && (
+    <div class="reveal">
+      <p class="mx-auto mt-[clamp(36px,4.5vw,60px)] max-w-[42ch] text-center font-display text-[clamp(1.2rem,2vw,1.6rem)] font-normal italic leading-[1.3] text-ink">
+        <slot />
+      </p>
+    </div>
+  )}
+</div>

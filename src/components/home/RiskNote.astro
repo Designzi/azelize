@@ -1,0 +1,32 @@
+---
+/**
+ * Ligne de réduction du risque, sous chaque CTA (cf. brief §9).
+ * kind: 'model' (par défaut) | 'garantie' · onDark pour les bandes sombres.
+ */
+interface Props {
+  kind?: 'model' | 'garantie';
+  onDark?: boolean;
+  class?: string;
+}
+const { kind = 'model', onDark = false, class: className } = Astro.props;
+
+const parts =
+  kind === 'garantie'
+    ? ['Sans engagement', 'Résiliable à tout moment', 'Satisfait ou remboursé 30 jours']
+    : ['1er mois offert', 'Vous ne payez qu’une fois que ça vous rapporte', 'Sans engagement'];
+---
+
+<p
+  class:list={[
+    'm-0 text-[0.8125rem] tracking-[0.01em]',
+    onDark ? 'text-on-dark-soft' : 'text-ink-soft',
+    className,
+  ]}
+>
+  {parts.map((p, i) => (
+    <>
+      {i > 0 && <span class:list={['mx-[0.55em]', onDark ? 'text-on-dark-soft/60' : 'text-ink-faint']}>·</span>}
+      {p.replace(/ /g, ' ')}
+    </>
+  ))}
+</p>

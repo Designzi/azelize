@@ -1,0 +1,24 @@
+---
+/**
+ * Pill — petite gélule bordée (statut, mise en avant légère). Point optionnel.
+ * `dot` reprend la teinte d'ambiance ; le reste reste neutre et net (§8).
+ */
+import { accentBg, type Accent } from '@lib/accents';
+
+interface Props {
+  dot?: boolean;
+  accent?: Accent;
+  class?: string;
+}
+const { dot = false, accent = 'menthe', class: className } = Astro.props;
+---
+
+<span
+  class:list={[
+    'inline-flex items-center gap-2.5 rounded-pill border border-line-strong bg-paper px-4 py-2 text-[0.8125rem] font-semibold text-ink-2',
+    className,
+  ]}
+>
+  {dot && <span class:list={['h-2 w-2 shrink-0 rounded-full', accentBg[accent]]} aria-hidden="true"></span>}
+  <slot />
+</span>

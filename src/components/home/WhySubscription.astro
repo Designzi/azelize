@@ -1,0 +1,35 @@
+---
+/** Section « L'objection, retournée » — comparatif · atmosphère Citron (clarté/accent). */
+import Section from '@components/ui/Section.astro';
+import SectionHead from '@components/ui/SectionHead.astro';
+import CompareBlock from '@components/blocks/CompareBlock.astro';
+
+const ONESHOT = {
+  title: 'Un site livré une fois',
+  items: [
+    "Gros chèque d'un coup",
+    'Livré puis abandonné',
+    'Se dégrade (Google, technique, contenus)',
+    'Personne à rappeler quand ça casse',
+  ],
+};
+const AZELIZE = {
+  title: "L'abonnement Azelize",
+  items: [
+    'Coût lissé et prévisible',
+    'Entretenu et amélioré en continu',
+    'Reste visible et à jour',
+    'Un interlocuteur qui répond',
+  ],
+};
+---
+
+<Section id="pourquoi-abo">
+  <SectionHead eyebrow="L'objection, retournée" accent="citron">
+    Pourquoi un abonnement, et pas un site livré une fois&nbsp;?
+  </SectionHead>
+  <CompareBlock bad={ONESHOT} good={AZELIZE}>
+    Un site, c'est comme un véhicule de chantier&nbsp;: sans entretien,
+    il vous lâche au pire moment.
+  </CompareBlock>
+</Section>
