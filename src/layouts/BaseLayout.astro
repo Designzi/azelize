@@ -8,6 +8,8 @@ import type { SeoInput } from '@lib/seo';
 
 interface Props extends SeoInput {
   organization?: boolean;
+  /** Blocs JSON-LD additionnels (transmis à Seo). */
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
   /** Masquer le header/footer (ex. pages spéciales). */
   bare?: boolean;
   /**
@@ -17,7 +19,7 @@ interface Props extends SeoInput {
   landing?: boolean;
 }
 
-const { organization, bare = false, landing = false, ...seo } = Astro.props;
+const { organization, jsonLd, bare = false, landing = false, ...seo } = Astro.props;
 const mainStyle = !bare && !landing ? 'padding-top: 110px;' : undefined;
 ---
 
@@ -36,7 +38,7 @@ const mainStyle = !bare && !landing ? 'padding-top: 110px;' : undefined;
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
     />
-    <Seo {...seo} organization={organization} />
+    <Seo {...seo} organization={organization} jsonLd={jsonLd} />
   </head>
   <body class="flex min-h-screen flex-col">
     {!bare && <Header />}

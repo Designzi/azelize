@@ -6,7 +6,14 @@ import sitemap from '@astrojs/sitemap';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://azelize.com', // requis pour le sitemap + URLs canoniques
-  integrations: [mdx(), sitemap()],
+  integrations: [
+    mdx(),
+    sitemap({
+      // Exclure les pages noindex (cohérent avec la balise robots).
+      filter: (page) =>
+        !page.includes('/mentions-legales') && !page.includes('/confidentialite'),
+    }),
+  ],
   vite: {
     plugins: [tailwindcss()],
   },

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Eyebrow from '@components/ui/Eyebrow.astro';
+import Breadcrumbs from '@components/ui/Breadcrumbs.astro';
 import { formatDate } from '@lib/format';
 import type { SeoInput } from '@lib/seo';
 
@@ -9,16 +10,19 @@ interface Props extends SeoInput {
   lead?: string;
   eyebrow?: string;
   date?: Date;
+  breadcrumbs?: { name: string; url: string }[];
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
-const { title, lead, eyebrow, date, ...seo } = Astro.props;
+const { title, lead, eyebrow, date, breadcrumbs, jsonLd, ...seo } = Astro.props;
 const dateLabel = date ? formatDate(date) : undefined;
 ---
 
-<BaseLayout {...seo} title={title} type="article">
+<BaseLayout {...seo} title={title} type="article" jsonLd={jsonLd}>
   <article>
     <header class="border-b border-line">
       <div class="container-hero py-16 md:py-24">
+        {breadcrumbs && <Breadcrumbs items={breadcrumbs} class="mb-6" />}
         {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
         <h1 class="mt-4 font-display text-h1 font-medium tracking-h1 text-ink">{title}</h1>
         {lead && <p class="mt-6 max-w-2xl text-lead text-ink-2">{lead}</p>}

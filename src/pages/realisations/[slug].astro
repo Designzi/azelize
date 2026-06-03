@@ -4,6 +4,7 @@ import ArticleLayout from '@layouts/ArticleLayout.astro';
 import Section from '@components/ui/Section.astro';
 import Blocks from '@components/blocks/Blocks.astro';
 import { getCollection, render } from 'astro:content';
+import { creativeWorkJsonLd, breadcrumbJsonLd } from '@lib/seo';
 import type { GetStaticPaths } from 'astro';
 
 export const getStaticPaths = (async () => {
@@ -14,6 +15,17 @@ export const getStaticPaths = (async () => {
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 const { client, resume, date, seo, sections } = entry.data;
+const url = `/realisations/${entry.id}`;
+
+const breadcrumbs = [
+  { name: 'Accueil', url: '/' },
+  { name: 'Réalisations', url: '/realisations' },
+  { name: client, url },
+];
+const jsonLd = [
+  creativeWorkJsonLd({ name: client, description: seo?.description ?? resume, url, date }),
+  breadcrumbJsonLd(breadcrumbs),
+];
 ---
 
 {
@@ -23,6 +35,7 @@ const { client, resume, date, seo, sections } = entry.data;
       description={seo?.description ?? resume}
       image={seo?.ogImage}
       type="article"
+      jsonLd={jsonLd}
     >
       <Blocks sections={sections} />
       <Section width="hero" pad="default">
@@ -39,6 +52,8 @@ const { client, resume, date, seo, sections } = entry.data;
       date={date}
       description={seo?.description ?? resume}
       image={seo?.ogImage}
+      breadcrumbs={breadcrumbs}
+      jsonLd={jsonLd}
     >
       <Content />
     </ArticleLayout>

@@ -1,0 +1,31 @@
+---
+/**
+ * Breadcrumbs — fil d'Ariane visible (couche 2). Le BreadcrumbList JSON-LD
+ * correspondant est émis séparément (lib/seo.ts → breadcrumbJsonLd).
+ * Le dernier élément = page courante (non cliquable, aria-current).
+ */
+interface Crumb {
+  name: string;
+  url: string;
+}
+interface Props {
+  items: Crumb[];
+  class?: string;
+}
+const { items, class: className } = Astro.props;
+---
+
+<nav aria-label="Fil d'Ariane" class:list={['flex flex-wrap items-center gap-2 text-caption text-ink-soft', className]}>
+  {
+    items.map((it, i) =>
+      i < items.length - 1 ? (
+        <>
+          <a href={it.url} class="transition-colors hover:text-brand">{it.name}</a>
+          <span aria-hidden="true" class="text-ink-faint">/</span>
+        </>
+      ) : (
+        <span aria-current="page" class="text-ink-2">{it.name}</span>
+      ),
+    )
+  }
+</nav>

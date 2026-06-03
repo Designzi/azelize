@@ -1,6 +1,7 @@
 ---
 import ArticleLayout from '@layouts/ArticleLayout.astro';
 import { getCollection, render } from 'astro:content';
+import { articleJsonLd, breadcrumbJsonLd } from '@lib/seo';
 import type { GetStaticPaths } from 'astro';
 
 export const getStaticPaths = (async () => {
@@ -13,7 +14,18 @@ export const getStaticPaths = (async () => {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
-const { titre, description, date, seo } = entry.data;
+const { titre, description, date, updated, seo } = entry.data;
+const url = `/blog/${entry.id}`;
+
+const breadcrumbs = [
+  { name: 'Accueil', url: '/' },
+  { name: 'Blog', url: '/blog' },
+  { name: titre, url },
+];
+const jsonLd = [
+  articleJsonLd({ title: titre, description, url, date, updated, image: seo?.ogImage }),
+  breadcrumbJsonLd(breadcrumbs),
+];
 ---
 
 <ArticleLayout
@@ -23,6 +35,8 @@ const { titre, description, date, seo } = entry.data;
   date={date}
   description={seo?.description ?? description}
   image={seo?.ogImage}
+  breadcrumbs={breadcrumbs}
+  jsonLd={jsonLd}
 >
   <Content />
 </ArticleLayout>

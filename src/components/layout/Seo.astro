@@ -5,10 +5,17 @@ import { site } from '@data/site';
 interface Props extends SeoInput {
   /** Inclure le JSON-LD Organization (home / pages clés). */
   organization?: boolean;
+  /** Blocs JSON-LD additionnels (Article, Service, BreadcrumbList…). */
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
-const { organization = false, ...seoInput } = Astro.props;
+const { organization = false, jsonLd, ...seoInput } = Astro.props;
 const seo = resolveSeo({ ...seoInput, pathname: seoInput.pathname ?? Astro.url.pathname });
+
+const graphs = [
+  ...(organization ? [organizationJsonLd()] : []),
+  ...(jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : []),
+];
 ---
 
 <title>{seo.title}</title>
@@ -32,11 +39,7 @@ const seo = resolveSeo({ ...seoInput, pathname: seoInput.pathname ?? Astro.url.p
 <meta name="twitter:image" content={seo.image} />
 
 {
-  organization && (
-    <script
-      is:inline
-      type="application/ld+json"
-      set:html={JSON.stringify(organizationJsonLd())}
-    />
-  )
+  graphs.map((g) => (
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(g)} />
+  ))
 }

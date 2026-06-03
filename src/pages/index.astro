@@ -9,9 +9,10 @@ import Proof from '@components/home/Proof.astro';
 import Pricing from '@components/home/Pricing.astro';
 import Faq from '@components/home/Faq.astro';
 import FinalCta from '@components/home/FinalCta.astro';
+import { localBusinessJsonLd } from '@lib/seo';
 ---
 
-<BaseLayout landing organization>
+<BaseLayout landing organization jsonLd={localBusinessJsonLd()}>
   <script is:inline>document.documentElement.classList.add('anim');</script>
   <Hero />
   <Problem />
