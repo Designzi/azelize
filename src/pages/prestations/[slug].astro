@@ -1,25 +1,45 @@
 ---
+import BaseLayout from '@layouts/BaseLayout.astro';
 import ArticleLayout from '@layouts/ArticleLayout.astro';
+import Section from '@components/ui/Section.astro';
+import Blocks from '@components/blocks/Blocks.astro';
 import { getCollection, render } from 'astro:content';
 import type { GetStaticPaths } from 'astro';
 
 export const getStaticPaths = (async () => {
   const prestations = await getCollection('prestations');
-  return prestations.map((entry) => ({
-    params: { slug: entry.id },
-    props: { entry },
-  }));
+  return prestations.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
 }) satisfies GetStaticPaths;
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
+const { titre, resume, seo, sections } = entry.data;
 ---
 
-<ArticleLayout
-  title={entry.data.titre}
-  lead={entry.data.resume}
-  eyebrow="Prestation"
-  description={entry.data.resume}
->
-  <Content />
-</ArticleLayout>
+{
+  sections?.length ? (
+    <BaseLayout
+      title={seo?.title ?? titre}
+      description={seo?.description ?? resume}
+      image={seo?.ogImage}
+      type="article"
+    >
+      <Blocks sections={sections} />
+      <Section width="hero" pad="default">
+        <div class="prose-azelize mx-auto max-w-2xl">
+          <Content />
+        </div>
+      </Section>
+    </BaseLayout>
+  ) : (
+    <ArticleLayout
+      title={titre}
+      lead={resume}
+      eyebrow="Prestation"
+      description={seo?.description ?? resume}
+      image={seo?.ogImage}
+    >
+      <Content />
+    </ArticleLayout>
+  )
+}

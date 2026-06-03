@@ -2,6 +2,7 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Section from '@components/ui/Section.astro';
 import Card from '@components/ui/Card.astro';
+import PageHeader from '@components/ui/PageHeader.astro';
 import { getCollection } from 'astro:content';
 
 const prestations = (await getCollection('prestations')).sort(
@@ -13,23 +14,22 @@ const prestations = (await getCollection('prestations')).sort(
   title="Prestations"
   description="Sites, identités et outils sur mesure — un périmètre resserré, exécuté avec soin."
 >
-  <Section>
-    <div class="max-w-2xl">
-      <p class="t-eyebrow">Prestations</p>
-      <h1 class="t-h1 mt-4">Ce que nous faisons</h1>
-      <p class="t-lead mt-6">
+  <Section pad="default">
+    <PageHeader eyebrow="Prestations">
+      Ce que nous faisons
+      <Fragment slot="lead">
         Un périmètre resserré, exécuté avec soin. On ajoute des prestations par
         paliers, avec du contenu réel.
-      </p>
-    </div>
+      </Fragment>
+    </PageHeader>
 
     <div class="mt-12 grid gap-6 md:grid-cols-2">
       {
         prestations.map((p) => (
           <Card href={`/prestations/${p.id}`}>
-            <h2 class="t-h3">{p.data.titre}</h2>
-            <p class="t-body mt-3 text-ink-2">{p.data.resume}</p>
-            <span class="t-ui mt-5 inline-block text-brand">En savoir plus →</span>
+            <h2 class="font-display text-h3 font-medium tracking-tight text-ink">{p.data.titre}</h2>
+            <p class="mt-3 text-body text-ink-2">{p.data.resume}</p>
+            <span class="mt-5 inline-block text-ui font-semibold text-brand">En savoir plus →</span>
           </Card>
         ))
       }

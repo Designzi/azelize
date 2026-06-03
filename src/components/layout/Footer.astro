@@ -1,12 +1,17 @@
 ---
 /**
- * Footer (singleton, couche 1).
- * ⚠️ Coordonnées (e-mail, téléphone, adresse) PROVISOIRES — à confirmer (§11).
+ * Footer (singleton, couche 1) — données issues de data/site.ts (coordonnées)
+ * et data/footer.ts (colonnes de navigation + baseline).
+ * ⚠️ Coordonnées PROVISOIRES — à confirmer (§11).
  */
 import { site } from '@data/site';
+import { footerColumns, footerBaseline } from '@data/footer';
+
+const linkClass = 'block py-[5px] text-[0.9375rem] text-ink-2 transition-colors hover:text-brand';
 ---
 
 <footer class="bg-paper pb-9 pt-[clamp(52px,6vw,84px)]">
+  {/* Ajuster le gabarit md: si l'on ajoute des colonnes (cf. footerColumns). */}
   <div class="container-site grid grid-cols-2 gap-[clamp(28px,4vw,56px)] md:grid-cols-[2fr_1fr_1fr]">
     <div class="col-span-2 md:col-span-1">
       <a href="/" class="font-display text-[1.5rem] font-semibold tracking-[-0.02em] text-brand">Azelize</a>
@@ -19,20 +24,29 @@ import { site } from '@data/site';
 
     <div>
       <div class="mb-4 text-[0.75rem] uppercase tracking-[0.1em] text-ink-faint">Contact</div>
-      <a class="block py-[5px] text-[0.9375rem] text-ink-2 transition-colors hover:text-brand" href={`mailto:${site.email}`}>{site.email}</a>
-      <a class="block py-[5px] text-[0.9375rem] text-ink-2 transition-colors hover:text-brand" href="tel:+33614749599">06 14 74 95 99</a>
-      <span class="block py-[5px] text-[0.9375rem] text-ink-soft">103 B rue Léon Blum<br />56600 Lanester</span>
+      <a class={linkClass} href={`mailto:${site.email}`}>{site.email}</a>
+      <a class={linkClass} href={site.phoneHref}>{site.phone}</a>
+      <span class="block py-[5px] text-[0.9375rem] text-ink-soft">
+        {site.address.map((line, i) => (
+          <>{i > 0 && <br />}{line}</>
+        ))}
+      </span>
     </div>
 
-    <div>
-      <div class="mb-4 text-[0.75rem] uppercase tracking-[0.1em] text-ink-faint">Informations</div>
-      <a class="block py-[5px] text-[0.9375rem] text-ink-2 transition-colors hover:text-brand" href="/mentions-legales">Mentions légales</a>
-      <a class="block py-[5px] text-[0.9375rem] text-ink-2 transition-colors hover:text-brand" href="/confidentialite">Confidentialité</a>
-    </div>
+    {
+      footerColumns.map((col) => (
+        <div>
+          <div class="mb-4 text-[0.75rem] uppercase tracking-[0.1em] text-ink-faint">{col.title}</div>
+          {col.links.map((link) => (
+            <a class={linkClass} href={link.href}>{link.label}</a>
+          ))}
+        </div>
+      ))
+    }
   </div>
 
   <div class="container-site mt-[clamp(44px,5vw,72px)] flex flex-wrap items-center justify-between gap-4 border-t border-line pt-[22px] text-[0.8125rem] text-ink-faint">
     <span>© 2026 Azelize</span>
-    <span>Devis gratuit · Réponse sous 48 h</span>
+    <span>{footerBaseline}</span>
   </div>
 </footer>

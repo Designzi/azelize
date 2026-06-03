@@ -17,7 +17,7 @@ const isActive = (href: string) =>
       <a
         href={item.href}
         class:list={[
-          't-ui transition-colors duration-150',
+          'text-ui font-semibold transition-colors duration-150',
           isActive(item.href) ? 'text-brand' : 'text-ink-2 hover:text-ink',
         ]}
         aria-current={isActive(item.href) ? 'page' : undefined}

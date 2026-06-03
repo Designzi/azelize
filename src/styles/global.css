@@ -1,7 +1,12 @@
 /* ============================================================================
    Azelize — Feuille de styles globale (point d'entrée unique)
    Importée UNE SEULE FOIS dans BaseLayout.astro.
-   Ordre : Tailwind → tokens du design system → styles de base.
+   Ordre : Tailwind → tokens du design system → base → utilitaires → motion.
+
+   L'échelle typographique est exposée en utilitaires Tailwind via @theme
+   (`text-display`, `text-h1`, `text-h2`, `text-h3`, `text-lead`, `text-body`,
+   `text-ui`, `text-caption`, `text-eyebrow`, `tracking-*`). On ne définit plus
+   de classes typographiques maison ici.
    ========================================================================== */
 
 @import "tailwindcss";
@@ -69,95 +74,25 @@
 }
 
 /* ----------------------------------------------------------------------------
-   Échelle typographique (classes sémantiques — cf. design system §4)
-   taille · interligne · graisse ; tracking négatif sur les titres
+   Conteneurs — utilitaires Tailwind (max-width + centrage + gouttières token)
+   max 1240px · hero centré 1080px · gouttières var(--container-px)
    -------------------------------------------------------------------------- */
-@layer components {
-  .t-display {
-    font-family: var(--font-display);
-    font-size: clamp(2.6rem, 1.4rem + 4.4vw, 5rem);
-    line-height: 1.02;
-    font-weight: 500;
-    letter-spacing: -0.03em;
-  }
-  .t-h1 {
-    font-family: var(--font-display);
-    font-size: clamp(2.5rem, 1.9rem + 2.6vw, 3.5rem);
-    line-height: 1.05;
-    font-weight: 500;
-    letter-spacing: -0.025em;
-  }
-  .t-h2 {
-    font-family: var(--font-display);
-    font-size: clamp(1.85rem, 1.3rem + 2.2vw, 3rem);
-    line-height: 1.05;
-    font-weight: 500;
-    letter-spacing: -0.02em;
-  }
-  .t-h3 {
-    font-family: var(--font-display);
-    font-size: 22px;
-    line-height: 1.15;
-    font-weight: 500;
-    letter-spacing: -0.01em;
-  }
-  /* Chapô / lead */
-  .t-lead {
-    font-family: var(--font-sans);
-    font-size: 21px;
-    line-height: 1.5;
-    font-weight: 400;
-    color: var(--color-ink-2);
-  }
-  .t-body {
-    font-size: 17px;
-    line-height: 1.6;
-    font-weight: 400;
-  }
-  .t-ui {
-    font-size: 15px;
-    line-height: 1.4;
-    font-weight: 600;
-  }
-  .t-caption {
-    font-size: 13px;
-    line-height: 1.4;
-    font-weight: 500;
-    color: var(--color-ink-soft);
-  }
-  /* Eyebrow — surtitre technique (mono) */
-  .t-eyebrow {
-    font-family: var(--font-mono);
-    font-size: 12px;
-    line-height: 1.2;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.16em;
-    color: var(--color-brand);
-  }
+@utility container-site {
+  width: 100%;
+  max-width: var(--container-site);
+  margin-inline: auto;
+  padding-inline: var(--container-px);
+}
+@utility container-hero {
+  width: 100%;
+  max-width: var(--container-hero);
+  margin-inline: auto;
+  padding-inline: var(--container-px);
 }
 
 /* ----------------------------------------------------------------------------
-   Conteneurs (cf. design system §4)
-   max 1240px · gouttières clamp(22px,5vw,72px) · hero centré 1080px
-   -------------------------------------------------------------------------- */
-@layer components {
-  .container-site {
-    width: 100%;
-    max-width: var(--container-site);
-    margin-inline: auto;
-    padding-inline: clamp(22px, 5vw, 72px);
-  }
-  .container-hero {
-    width: 100%;
-    max-width: var(--container-hero);
-    margin-inline: auto;
-    padding-inline: clamp(22px, 5vw, 72px);
-  }
-}
-
-/* ----------------------------------------------------------------------------
-   Contenu d'article (MDX) — styles de prose minimalistes, fidèles au système
+   Contenu d'article (MDX) — prose minimaliste, fidèle au système.
+   Exception assumée : on ne peut pas poser d'utilitaires sur du Markdown rendu.
    -------------------------------------------------------------------------- */
 @layer components {
   .prose-azelize {
@@ -226,6 +161,3 @@
   }
   html { scroll-behavior: auto; }
 }
-
-/* Utilitaire d'état (bascule JS du formulaire) */
-.is-hidden { display: none !important; }

@@ -277,6 +277,12 @@
   --text-h3--line-height: 1.15;
   --text-lead: clamp(1.0625rem, 1.6vw, 1.3rem);
   --text-lead--line-height: 1.5;
+  --text-body: 1.0625rem;
+  --text-body--line-height: 1.6;
+  --text-ui: 0.9375rem;
+  --text-ui--line-height: 1.4;
+  --text-caption: 0.8125rem;
+  --text-caption--line-height: 1.4;
   --text-eyebrow: 0.75rem;
   --text-eyebrow--line-height: 1.2;
 

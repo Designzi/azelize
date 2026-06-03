@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Section from '@components/ui/Section.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
 
 const sections = [
   { id: 'editeur', t: 'Éditeur du site' },
@@ -14,13 +15,13 @@ const sections = [
 ---
 
 <BaseLayout title="Mentions légales" description="Mentions légales du site Azelize." noindex>
-  <Section width="hero" class="pb-6 md:pb-10">
-    <p class="t-eyebrow">Informations légales</p>
-    <h1 class="t-h1 mt-4">Mentions légales</h1>
+  <Section width="hero" pad="default" class="pb-6 md:pb-10">
+    <Eyebrow>Informations légales</Eyebrow>
+    <h1 class="mt-4 font-display text-h1 font-medium tracking-h1 text-ink">Mentions légales</h1>
     <p class="lg-updated mt-4">Dernière mise à jour : juin 2026</p>
   </Section>
 
-  <Section width="site" class="pt-0">
+  <Section width="site" pad="default" class="pt-0">
     <div class="lg-grid">
       <nav class="lg-toc" aria-label="Sommaire">
         <p class="lg-toc-t">Sommaire</p>

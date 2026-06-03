@@ -13,14 +13,16 @@ export const getStaticPaths = (async () => {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
+const { titre, description, date, seo } = entry.data;
 ---
 
 <ArticleLayout
-  title={entry.data.titre}
-  lead={entry.data.description}
+  title={titre}
+  lead={description}
   eyebrow="Blog"
-  date={entry.data.date}
-  description={entry.data.description}
+  date={date}
+  description={seo?.description ?? description}
+  image={seo?.ogImage}
 >
   <Content />
 </ArticleLayout>

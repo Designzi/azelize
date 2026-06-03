@@ -1,4 +1,8 @@
-/** Colonnes du footer. */
+/**
+ * Contenu du footer (source unique consommée par Footer.astro).
+ * Les coordonnées vivent dans data/site.ts. Ajouter ici de nouvelles colonnes
+ * de navigation (Prestations, Studio…) quand le site grandit.
+ */
 export interface FooterLink {
   label: string;
   href: string;
@@ -11,27 +15,12 @@ export interface FooterColumn {
 
 export const footerColumns: FooterColumn[] = [
   {
-    title: 'Prestations',
-    links: [
-      { label: 'Sites & landing', href: '/prestations' },
-      { label: 'Identité de marque', href: '/prestations' },
-      { label: 'Outils sur mesure', href: '/prestations' },
-    ],
-  },
-  {
-    title: 'Studio',
-    links: [
-      { label: 'À propos', href: '/a-propos' },
-      { label: 'Réalisations', href: '/realisations' },
-      { label: 'Blog', href: '/blog' },
-      { label: 'Contact', href: '/contact' },
-    ],
-  },
-  {
-    title: 'Légal',
+    title: 'Informations',
     links: [
       { label: 'Mentions légales', href: '/mentions-legales' },
       { label: 'Confidentialité', href: '/confidentialite' },
     ],
   },
 ];
+
+export const footerBaseline = 'Devis gratuit · Réponse sous 48 h';

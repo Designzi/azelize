@@ -1,0 +1,67 @@
+---
+/**
+ * Blocks — renderer de sections pilotées par le contenu (couche 4 générique).
+ * Mappe chaque `section.type` (union discriminée, cf. lib/sections.ts) vers son
+ * bloc (couche 3), enveloppé dans Section (rythme + teinte) + SectionHead.
+ * Une page dynamique = `<Blocks sections={entry.data.sections} />`.
+ */
+import Section from '@components/ui/Section.astro';
+import SectionHead from '@components/ui/SectionHead.astro';
+import Button from '@components/ui/Button.astro';
+import HeroBlock from '@components/blocks/HeroBlock.astro';
+import GridBlock from '@components/blocks/GridBlock.astro';
+import IncludesBlock from '@components/blocks/IncludesBlock.astro';
+import StatsBlock from '@components/blocks/StatsBlock.astro';
+import TimelineBlock from '@components/blocks/TimelineBlock.astro';
+import CompareBlock from '@components/blocks/CompareBlock.astro';
+import PricingBlock from '@components/blocks/PricingBlock.astro';
+import FaqBlock from '@components/blocks/FaqBlock.astro';
+import { navCta } from '@data/nav';
+import type { SectionData } from '@lib/sections';
+
+interface Props {
+  sections: SectionData[];
+}
+const { sections } = Astro.props;
+---
+
+{
+  sections.map((s) => {
+    if (s.type === 'hero') {
+      return (
+        <HeroBlock>
+          {s.title}
+          {s.lead && <Fragment slot="lead">{s.lead}</Fragment>}
+          <Fragment slot="cta">
+            <Button href={navCta.href} size="sm">{navCta.label}</Button>
+          </Fragment>
+        </HeroBlock>
+      );
+    }
+
+    return (
+      <Section tone={s.tone ?? 'paper'}>
+        {s.title && (
+          <SectionHead eyebrow={s.eyebrow} accent={s.accent}>
+            {s.title}
+            {s.intro && <Fragment slot="intro">{s.intro}</Fragment>}
+          </SectionHead>
+        )}
+        {s.type === 'grid' && <GridBlock items={s.items} cols={s.cols} />}
+        {s.type === 'includes' && <IncludesBlock items={s.items} accent={s.accent} note={s.note} />}
+        {s.type === 'stats' && <StatsBlock stats={s.stats} accent={s.accent} />}
+        {s.type === 'timeline' && <TimelineBlock steps={s.steps} accent={s.accent} />}
+        {s.type === 'compare' && <CompareBlock bad={s.bad} good={s.good} close={s.close} />}
+        {s.type === 'pricing' && (
+          <PricingBlock
+            tiers={s.tiers}
+            ctaHref={s.ctaHref ?? navCta.href}
+            engagementNote={s.engagementNote}
+            featuredLabel={s.featuredLabel}
+          />
+        )}
+        {s.type === 'faq' && <FaqBlock items={s.items} />}
+      </Section>
+    );
+  })
+}

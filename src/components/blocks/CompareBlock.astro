@@ -11,10 +11,12 @@ export interface CompareSide {
 interface Props {
   bad: CompareSide;
   good: CompareSide;
+  /** Phrase de clôture (alternative au slot par défaut, pour le rendu piloté par données). */
+  close?: string;
   class?: string;
 }
-const { bad, good, class: className } = Astro.props;
-const hasClose = Astro.slots.has('default');
+const { bad, good, close, class: className } = Astro.props;
+const hasClose = close !== undefined || Astro.slots.has('default');
 ---
 
 <div class:list={[className]}>
@@ -51,7 +53,7 @@ const hasClose = Astro.slots.has('default');
   {hasClose && (
     <div class="reveal">
       <p class="mx-auto mt-[clamp(36px,4.5vw,60px)] max-w-[42ch] text-center font-display text-[clamp(1.2rem,2vw,1.6rem)] font-normal italic leading-[1.3] text-ink">
-        <slot />
+        {close ?? <slot />}
       </p>
     </div>
   )}

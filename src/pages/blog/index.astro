@@ -1,21 +1,18 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Section from '@components/ui/Section.astro';
+import PageHeader from '@components/ui/PageHeader.astro';
 import { getCollection } from 'astro:content';
+import { formatDate } from '@lib/format';
 
 const articles = (await getCollection('blog'))
   .filter((a) => !a.data.brouillon)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
-
-const fmt = (d: Date) => new Intl.DateTimeFormat('fr-FR', { dateStyle: 'long' }).format(d);
 ---
 
 <BaseLayout title="Blog" description="Notes et coulisses du studio Azelize.">
-  <Section>
-    <div class="max-w-2xl">
-      <p class="t-eyebrow">Blog</p>
-      <h1 class="t-h1 mt-4">Notes & coulisses</h1>
-    </div>
+  <Section pad="default">
+    <PageHeader eyebrow="Blog">Notes &amp; coulisses</PageHeader>
 
     {
       articles.length > 0 ? (
@@ -24,18 +21,18 @@ const fmt = (d: Date) => new Intl.DateTimeFormat('fr-FR', { dateStyle: 'long' })
             <li>
               <a href={`/blog/${a.id}`} class="group flex flex-col gap-2 py-6 md:flex-row md:items-baseline md:justify-between">
                 <div class="max-w-2xl">
-                  <h2 class="t-h3 text-ink group-hover:text-brand">{a.data.titre}</h2>
-                  <p class="t-body mt-2 text-ink-2">{a.data.description}</p>
+                  <h2 class="font-display text-h3 font-medium tracking-tight text-ink group-hover:text-brand">{a.data.titre}</h2>
+                  <p class="mt-2 text-body text-ink-2">{a.data.description}</p>
                 </div>
-                <time class="t-caption shrink-0 font-mono" datetime={a.data.date.toISOString()}>
-                  {fmt(a.data.date)}
+                <time class="shrink-0 font-mono text-caption text-ink-soft" datetime={a.data.date.toISOString()}>
+                  {formatDate(a.data.date)}
                 </time>
               </a>
             </li>
           ))}
         </ul>
       ) : (
-        <p class="t-body mt-8 text-ink-soft">Les premiers articles arrivent bientôt.</p>
+        <p class="mt-8 text-body text-ink-soft">Les premiers articles arrivent bientôt.</p>
       )
     }
   </Section>

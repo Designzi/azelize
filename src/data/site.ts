@@ -14,6 +14,9 @@ export const site = {
   defaultOgImage: '/og/default.png',
   // ⚠️ Coordonnées provisoires (cf. maquette) — à confirmer.
   email: 'bonjour@azelize.fr',
+  phone: '06 14 74 95 99',
+  phoneHref: 'tel:+33614749599',
+  address: ['103 B rue Léon Blum', '56600 Lanester'],
 } as const;
 
 export type Site = typeof site;

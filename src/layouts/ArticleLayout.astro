@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '@layouts/BaseLayout.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import { formatDate } from '@lib/format';
 import type { SeoInput } from '@lib/seo';
 
 interface Props extends SeoInput {
@@ -10,20 +12,17 @@ interface Props extends SeoInput {
 }
 
 const { title, lead, eyebrow, date, ...seo } = Astro.props;
-
-const dateLabel = date
-  ? new Intl.DateTimeFormat('fr-FR', { dateStyle: 'long' }).format(date)
-  : undefined;
+const dateLabel = date ? formatDate(date) : undefined;
 ---
 
 <BaseLayout {...seo} title={title} type="article">
   <article>
     <header class="border-b border-line">
       <div class="container-hero py-16 md:py-24">
-        {eyebrow && <p class="t-eyebrow">{eyebrow}</p>}
-        <h1 class="t-h1 mt-4">{title}</h1>
-        {lead && <p class="t-lead mt-6 max-w-2xl">{lead}</p>}
-        {dateLabel && <p class="t-caption mt-6 font-mono">{dateLabel}</p>}
+        {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
+        <h1 class="mt-4 font-display text-h1 font-medium tracking-h1 text-ink">{title}</h1>
+        {lead && <p class="mt-6 max-w-2xl text-lead text-ink-2">{lead}</p>}
+        {dateLabel && <p class="mt-6 font-mono text-caption text-ink-soft">{dateLabel}</p>}
       </div>
     </header>
 
