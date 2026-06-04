@@ -16,11 +16,12 @@ interface OgPage {
   description: string;
 }
 
-const [metiers, prestations, realisations, blog] = await Promise.all([
+const [metiers, prestations, realisations, blog, guides] = await Promise.all([
   getCollection('metiers'),
   getCollection('prestations'),
   getCollection('realisations'),
   getCollection('blog'),
+  getCollection('guides'),
 ]);
 
 const pages: Record<string, OgPage> = {
@@ -45,6 +46,9 @@ for (const r of realisations) {
 }
 for (const b of blog.filter((a) => !a.data.brouillon)) {
   pages[`blog/${b.id}`] = { title: b.data.titre, description: b.data.description };
+}
+for (const g of guides) {
+  pages[`guides/${g.id}`] = { title: g.data.titre, description: g.data.description };
 }
 
 export const { getStaticPaths, GET } = await OGImageRoute({

@@ -1,0 +1,66 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import ArticleLayout from '@layouts/ArticleLayout.astro';
+import Section from '@components/ui/Section.astro';
+import Blocks from '@components/blocks/Blocks.astro';
+import { getCollection, render } from 'astro:content';
+import { articleJsonLd, breadcrumbJsonLd, faqJsonLd } from '@lib/seo';
+import { ogImage } from '@lib/og';
+import type { GetStaticPaths } from 'astro';
+
+export const getStaticPaths = (async () => {
+  const guides = await getCollection('guides');
+  return guides.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}) satisfies GetStaticPaths;
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { titre, description, date, updated, seo, sections } = entry.data;
+const url = `/guides/${entry.id}`;
+const image = seo?.ogImage ?? ogImage(`guides/${entry.id}`);
+
+const breadcrumbs = [
+  { name: 'Accueil', url: '/' },
+  { name: 'Guides', url: '/guides' },
+  { name: titre, url },
+];
+// FAQPage dérivé des sections FAQ visibles (rich results) — contenu identique à l'affichage.
+const faqItems = sections?.flatMap((s) => (s.type === 'faq' ? s.items : [])) ?? [];
+const jsonLd = [
+  articleJsonLd({ title: titre, description, url, date, updated, image }),
+  breadcrumbJsonLd(breadcrumbs),
+  ...(faqItems.length ? [faqJsonLd(faqItems)] : []),
+];
+---
+
+{
+  sections?.length ? (
+    <BaseLayout
+      title={seo?.title ?? titre}
+      description={seo?.description ?? description}
+      image={image}
+      type="article"
+      jsonLd={jsonLd}
+    >
+      <Blocks sections={sections} />
+      <Section width="hero" pad="default">
+        <div class="prose-azelize mx-auto max-w-2xl">
+          <Content />
+        </div>
+      </Section>
+    </BaseLayout>
+  ) : (
+    <ArticleLayout
+      title={titre}
+      lead={description}
+      eyebrow="Guide"
+      date={date}
+      description={seo?.description ?? description}
+      image={image}
+      breadcrumbs={breadcrumbs}
+      jsonLd={jsonLd}
+    >
+      <Content />
+    </ArticleLayout>
+  )
+}

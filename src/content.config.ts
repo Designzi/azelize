@@ -66,4 +66,21 @@ const metiers = defineCollection({
   }),
 });
 
-export const collections = { prestations, realisations, blog, metiers };
+/**
+ * Guides pratiques (contenu éditorial long, intention informationnelle « comment
+ * faire X »). Calqué sur `blog`/`metiers` : `titre`/`description` pilotent le SEO
+ * et l'OG, `resume` sert l'accroche éditoriale (header, listes). Sections
+ * composables optionnelles via `base`.
+ */
+const guides = defineCollection({
+  loader: glob({ pattern: '**/*.mdx', base: './src/content/guides' }),
+  schema: base.extend({
+    titre: z.string(),
+    description: z.string(),
+    date: z.coerce.date().optional(),
+    resume: z.string(),
+    ordre: z.number().optional(),
+  }),
+});
+
+export const collections = { prestations, realisations, blog, metiers, guides };
