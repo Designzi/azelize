@@ -1,0 +1,92 @@
+---
+/**
+ * /tarifs — page tarifs : en-tête + 3 paliers (source unique `data/pricing.ts`,
+ * partagée avec la landing) + tableau comparatif détaillé + bande CTA sombre.
+ * ⚠️ Montants indicatifs — à confirmer.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Section from '@components/ui/Section.astro';
+import PageHeader from '@components/ui/PageHeader.astro';
+import PricingBlock from '@components/blocks/PricingBlock.astro';
+import CtaBand from '@components/blocks/CtaBand.astro';
+import RiskNote from '@components/home/RiskNote.astro';
+import { tiers, compareRows } from '@data/pricing';
+import { chromeCta } from '@data/nav';
+---
+
+<BaseLayout
+  title="Tarifs"
+  description="Trois formules mensuelles sans engagement pour rester visible : Présence, Visibilité, Croissance. Le 1er mois est offert."
+>
+  <Section width="hero" pad="default">
+    <PageHeader eyebrow="Tarifs">
+      Une formule claire, sans engagement.
+      <p slot="lead">
+        Mensuel, résiliable à tout moment. Le 1er mois est offert : vous ne payez
+        qu'une fois que le site vous amène des clients.
+      </p>
+    </PageHeader>
+  </Section>
+
+  <Section pad="none" class="pb-[clamp(40px,6vw,80px)]">
+    <PricingBlock tiers={tiers} ctaHref={chromeCta.href} engagementNote="sans engagement" />
+    <div class="mt-[clamp(28px,3.4vw,44px)] flex justify-center">
+      <RiskNote kind="garantie" class="text-center" />
+    </div>
+  </Section>
+
+  {/* ── Comparatif détaillé ────────────────────────────────────────────────── */}
+  <Section tone="parchment" pad="default">
+    <h2 class="mb-[clamp(28px,3.5vw,48px)] text-center font-display text-h2 font-medium tracking-h2 text-ink">
+      Le détail, formule par formule
+    </h2>
+
+    <div class="mx-auto max-w-4xl overflow-x-auto">
+      <table class="w-full min-w-[560px] border-collapse text-left">
+        <thead>
+          <tr class="border-b border-line-strong">
+            <th class="py-3.5 pr-4 text-[0.95rem] font-medium text-ink-soft">Inclus</th>
+            {tiers.map((t) => (
+              <th
+                class:list={[
+                  'px-3 py-3.5 text-center font-display text-[1.0625rem] font-medium tracking-[-0.01em]',
+                  t.featured ? 'text-brand' : 'text-ink',
+                ]}
+              >
+                {t.name}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {compareRows.map((row) => (
+            <tr class="border-b border-line">
+              <td class="py-3 pr-4 text-[0.95rem] text-ink-2">{row.label}</td>
+              {row.has.map((on, i) => (
+                <td
+                  class:list={[
+                    'px-3 py-3 text-center',
+                    tiers[i].featured && 'bg-brand-soft/40',
+                  ]}
+                >
+                  {on ? (
+                    <svg class="mx-auto h-4.5 w-4.5 text-brand" viewBox="0 0 20 20" fill="none" aria-label="inclus">
+                      <path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                  ) : (
+                    <span class="text-ink-faint" aria-label="non inclus">—</span>
+                  )}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </Section>
+
+  <CtaBand
+    title="Une question avant de vous lancer ?"
+    lead="On en parle 15 minutes, sans jargon ni pression. On regarde la formule qui colle à votre métier."
+  />
+</BaseLayout>

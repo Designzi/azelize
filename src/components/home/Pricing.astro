@@ -1,5 +1,6 @@
 ---
 /** Section « Tarifs » — 3 paliers · Menthe (contexte Azelize, action = Menthe).
+ *  Montants issus de la source unique `data/pricing.ts` (partagée avec /tarifs).
  *  ⚠️ Prix indicatifs en attente d'arbitrage (cf. brief §11). */
 import Section from '@components/ui/Section.astro';
 import Eyebrow from '@components/ui/Eyebrow.astro';
@@ -7,25 +8,7 @@ import Button from '@components/ui/Button.astro';
 import PricingBlock from '@components/blocks/PricingBlock.astro';
 import RiskNote from '@components/home/RiskNote.astro';
 import { navCta } from '@data/nav';
-
-const PRICE_UNIT = '€ / mois';
-const TIERS = [
-  {
-    name: 'Présence', price: 390, unit: PRICE_UNIT,
-    line: 'Site pro + fiche Google + entretien mensuel.',
-    feats: ['Site vitrine sur-mesure', 'Fiche Google optimisée', 'Hébergement, sécurité & mises à jour', 'Suivi mensuel'],
-  },
-  {
-    name: 'Visibilité', price: 590, unit: PRICE_UNIT, featured: true, rolloverFirst: true,
-    line: 'Tout Présence + référencement local actif + contenus mensuels + rapport.',
-    feats: ['Tout Présence, plus :', 'Référencement local actif', 'Contenus publiés chaque mois', 'Gestion des avis Google', 'Rapport mensuel clair'],
-  },
-  {
-    name: 'Croissance', price: 890, unit: PRICE_UNIT, rolloverFirst: true,
-    line: 'Tout Visibilité + campagnes + supports (vidéo, print) + priorité.',
-    feats: ['Tout Visibilité, plus :', 'Campagnes (Google, réseaux)', 'Supports vidéo & print', 'Traitement prioritaire'],
-  },
-];
+import { tiers as TIERS } from '@data/pricing';
 ---
 
 <Section id="prix">
