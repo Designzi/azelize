@@ -1,0 +1,85 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Section from '@components/ui/Section.astro';
+import PageHeader from '@components/ui/PageHeader.astro';
+import Button from '@components/ui/Button.astro';
+import CtaBand from '@components/blocks/CtaBand.astro';
+
+/*
+ * Page « Avis clients ».
+ * PROVISOIRE — aucun témoignage n'est inventé : les cartes sont des coquilles
+ * neutres « Avis à venir », prêtes à recevoir nom + métier + ville + texte.
+ * Remplacer chaque carte par un vrai avis (avec accord du client) au fil de l'eau.
+ */
+
+// PROVISOIRE : remplacer par de vrais avis clients (cf. commentaires par carte).
+const avis = [
+  { metier: 'Métier', ville: 'Ville' },
+  { metier: 'Métier', ville: 'Ville' },
+  { metier: 'Métier', ville: 'Ville' },
+  { metier: 'Métier', ville: 'Ville' },
+];
+---
+
+<BaseLayout
+  title="Avis clients"
+  description="Ce que disent les artisans et TPE accompagnés par Azelize. Des avis vérifiés, sans esbroufe."
+>
+  <Section width="hero" pad="default">
+    <PageHeader eyebrow="Avis">
+      Ce qu’en disent les artisans
+      <span slot="lead">
+        On préfère vous montrer des retours réels plutôt que des promesses. Cette
+        page se remplit au fil des sites mis en ligne et des mois passés à les
+        tenir à jour — pas de témoignage de complaisance, pas de chiffre gonflé.
+      </span>
+    </PageHeader>
+  </Section>
+
+  <Section tone="parchment" width="site" pad="default">
+    <ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {avis.map((a) => (
+        /* PROVISOIRE : remplacer par un vrai avis client (nom, métier, ville, texte). */
+        <li class="flex flex-col rounded-md border border-line bg-paper p-7">
+          <p class="text-[1.0625rem] leading-[1.55] text-ink-soft italic">
+            « Avis à venir. »
+          </p>
+          <div class="mt-6 border-t border-line-soft pt-5">
+            <p class="font-medium text-ink">Prénom N.</p>
+            <p class="mt-0.5 text-sm text-ink-faint">{a.metier} · {a.ville}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </Section>
+
+  <Section width="hero" pad="default">
+    <div class="max-w-2xl">
+      <h2 class="font-display text-h2 font-medium tracking-h2 text-ink">
+        Des avis vérifiés, sans tri à notre avantage
+      </h2>
+      <div class="prose-azelize mt-6 max-w-2xl">
+        <p>
+          On gère votre fiche d’avis Google dans le cadre de l’abonnement :
+          mise en place de la demande d’avis, suivi des nouveaux retours et
+          réponse à chacun, qu’il soit positif ou non. Vous gardez la main —
+          rien n’est publié en votre nom sans votre accord.
+        </p>
+        <p>
+          Les témoignages affichés sur cette page sont publiés avec l’accord
+          des personnes concernées. Tant qu’un avis n’est pas réel et validé,
+          la carte reste neutre : on ne complète jamais avec un faux retour.
+        </p>
+      </div>
+      <div class="mt-8">
+        {/* PROVISOIRE : pointer vers la vraie fiche Google Business une fois en ligne. */}
+        <Button href="/contact" variant="outline">Demander des références</Button>
+      </div>
+    </div>
+  </Section>
+
+  <CtaBand
+    title="Envie de figurer ici dans quelques mois ?"
+    lead="On crée votre site, on le référence et on le tient chaque mois. Vous gardez votre métier — et vos clients laissent les avis."
+  />
+</BaseLayout>

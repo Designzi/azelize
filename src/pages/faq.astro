@@ -1,0 +1,96 @@
+---
+/**
+ * Page FAQ (/faq) — questions de la home (source unique `homeFaq`) enrichies
+ * de questions détaillées sur l'offre Azelize (abonnement, résiliation, délais,
+ * propriété, hébergement, suivi mensuel, référencement local, paiement).
+ * Réponses fidèles au modèle ; aucun chiffre de résultat promis.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Section from '@components/ui/Section.astro';
+import PageHeader from '@components/ui/PageHeader.astro';
+import FaqBlock from '@components/blocks/FaqBlock.astro';
+import CtaBand from '@components/blocks/CtaBand.astro';
+import { homeFaq, type FaqItem } from '@data/faq';
+
+// Questions détaillées sur l'offre, à la suite de celles de la home.
+const offerFaq: FaqItem[] = [
+  {
+    q: 'Comment marche l’abonnement, exactement ?',
+    a: 'On crée votre site, on le met en ligne, on le référence et on le tient à jour chaque mois. Vous payez un montant fixe mensuel, sans engagement. Vous gardez votre métier ; le site, c’est notre affaire.',
+  },
+  {
+    q: 'Le 1er mois est-il vraiment offert ?',
+    a: 'Oui. Le premier mois est offert, sans condition. Et tant que le site ne vous a pas amené au moins 2 demandes dans le mois, on vous offre le mois suivant : on ne facture rien tant que ça n’a pas décollé. Seuls frais au départ : 50 € pour le nom de domaine, une seule fois.',
+  },
+  {
+    q: 'Y a-t-il un engagement de durée ?',
+    a: 'Aucun. L’abonnement est mensuel, sans engagement. Vous décidez chaque mois de continuer ou non.',
+  },
+  {
+    q: 'Comment je résilie si je veux arrêter ?',
+    a: 'Un message suffit. On arrête à la fin du mois en cours, sans pénalité ni paperasse. Pas de période de préavis cachée.',
+  },
+  {
+    q: 'En combien de temps mon site est-il en ligne ?',
+    a: 'Comptez environ 2 semaines entre le point de départ et la mise en ligne. On vous donne une date précise dès le premier rendez-vous, et on s’y tient.',
+  },
+  {
+    q: 'L’hébergement est-il inclus ?',
+    a: 'Oui. L’hébergement, le nom de domaine, le certificat de sécurité (HTTPS) et la maintenance technique sont compris dans l’abonnement. Vous n’avez aucun outil à gérer ni aucune facture séparée à suivre.',
+  },
+  {
+    q: 'Puis-je demander des modifications chaque mois ?',
+    a: 'Oui, c’est le principe. Nouvelle prestation, photos d’un chantier récent, horaires, zone d’intervention : vous nous envoyez, on met à jour. Votre site reste fidèle à votre activité au fil des mois.',
+  },
+  {
+    q: 'Vous vous occupez du référencement local ?',
+    a: 'Oui. On structure le site pour vos recherches locales (votre métier + votre ville et les communes autour) et on l’entretient pour qu’il reste visible. On ne promet pas une position précise sur Google : personne ne peut la garantir honnêtement. Ce qu’on garantit, c’est un site soigné, à jour et travaillé pour être trouvé.',
+  },
+  // PROVISOIRE : préciser le moyen de paiement exact (prélèvement SEPA, carte…) une fois arrêté.
+  {
+    q: 'Comment se passe le paiement ?',
+    a: 'Par prélèvement mensuel, un montant fixe connu à l’avance. Pas de surprise, pas de frais cachés en cours de route.',
+  },
+  // PROVISOIRE : politique de reprise / restitution à confirmer.
+  {
+    q: 'Que se passe-t-il si j’arrête mon abonnement ?',
+    a: 'Le site cesse d’être hébergé et mis à jour par nos soins. Ce qu’il advient de votre site et de votre nom de domaine est à préciser ensemble selon votre formule — on en parle franchement dès le premier appel, sans piège.',
+  },
+  // PROVISOIRE : conditions de propriété à formaliser selon la formule.
+  {
+    q: 'Le site m’appartient-il ?',
+    a: 'On en parle clairement dès le départ : ce que vous gardez, ce qui reste lié à l’abonnement, et comment ça se passe si vous partez. Rien d’écrit en petits caractères.',
+  },
+  {
+    q: 'Pourquoi un abonnement plutôt qu’un site payé une seule fois ?',
+    a: 'Un site livré puis abandonné se dégrade : il décroche sur Google, ses infos datent, plus personne ne s’en occupe. L’abonnement le garde vivant, à jour et visible mois après mois — c’est là toute la différence.',
+  },
+];
+
+const faqItems: FaqItem[] = [...homeFaq, ...offerFaq];
+---
+
+<BaseLayout
+  title="FAQ — questions fréquentes"
+  description="Abonnement, résiliation, 1er mois offert, délais, hébergement, propriété du site : les réponses concrètes sur l’offre Azelize."
+>
+  <Section width="hero" pad="default">
+    <PageHeader eyebrow="FAQ">
+      Vos questions, sans détour
+      <Fragment slot="lead">
+        L’essentiel sur l’abonnement : engagement, délais, ce qui est inclus et
+        ce qui se passe si vous arrêtez. Une question manque ? Posez-la au
+        premier appel — on répond franchement.
+      </Fragment>
+    </PageHeader>
+
+    <div class="mt-12 md:mt-16">
+      <FaqBlock items={faqItems} />
+    </div>
+  </Section>
+
+  <CtaBand
+    title="Une question avant de vous lancer ?"
+    lead="Un appel de 15 minutes, sans jargon ni pression. On répond à tout, et on regarde si le site peut vraiment vous amener des clients."
+  />
+</BaseLayout>

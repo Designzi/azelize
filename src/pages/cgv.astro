@@ -1,0 +1,151 @@
+---
+/*
+ * /cgv — Conditions Générales de Vente.
+ *
+ * {/* PROVISOIRE — à faire valider par un juriste */}
+ * Trame neutre et générique : aucun montant, délai ni clause chiffrée n'est
+ * inventé. Tous les éléments factuels (durées, prix, coordonnées, mentions
+ * légales opposables) sont des placeholders à compléter après validation.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Section from '@components/ui/Section.astro';
+import PageHeader from '@components/ui/PageHeader.astro';
+import CtaBand from '@components/blocks/CtaBand.astro';
+---
+
+<BaseLayout
+  title="Conditions Générales de Vente"
+  description="Conditions générales de vente d’Azelize : abonnement mensuel sans engagement pour la création, le référencement et l’entretien de votre site."
+>
+  <Section width="hero" pad="default">
+    <PageHeader eyebrow="Mentions">
+      Conditions Générales de Vente
+      <Fragment slot="lead">
+        Les conditions qui encadrent l’abonnement Azelize : ce que l’on fait,
+        comment se passe le paiement mensuel, et comment arrêter quand vous le
+        souhaitez.
+      </Fragment>
+    </PageHeader>
+
+    {/* PROVISOIRE — à faire valider par un juriste */}
+    <aside
+      class="mt-10 max-w-2xl rounded-xs border border-line-strong bg-accent-2-soft p-5 md:p-6"
+      role="note"
+    >
+      <p class="text-eyebrow font-semibold uppercase tracking-eyebrow text-accent-2-ink-deep">
+        Document provisoire
+      </p>
+      <p class="mt-2 text-[0.95rem] leading-[1.55] text-accent-2-ink">
+        Ce texte est une trame en cours de validation juridique. Il n’a pas
+        encore de valeur contractuelle opposable et sera complété et vérifié par
+        un juriste avant publication définitive.
+      </p>
+    </aside>
+
+    <div class="prose-azelize mt-12 max-w-2xl">
+      <h2>1. Objet</h2>
+      <p>
+        Les présentes conditions générales de vente (les «&nbsp;CGV&nbsp;»)
+        définissent les modalités de souscription et d’exécution des prestations
+        d’abonnement proposées par Azelize (le «&nbsp;Prestataire&nbsp;») à toute
+        personne physique ou morale qui y souscrit (le «&nbsp;Client&nbsp;»).
+        Toute souscription emporte acceptation sans réserve des présentes CGV.
+      </p>
+
+      <h2>2. Prestations d’abonnement</h2>
+      <p>
+        Le Prestataire propose un abonnement couvrant la création, la mise en
+        ligne, le référencement et l’entretien régulier d’un site internet pour
+        le compte du Client. Le périmètre exact des prestations incluses est
+        précisé lors de la souscription et peut évoluer d’une formule à l’autre.
+      </p>
+      <p>
+        Les prestations sont fournies de manière continue pendant toute la durée
+        de l’abonnement. Le Client reste responsable du contenu qu’il fournit et
+        du choix des informations publiées sur son site.
+      </p>
+
+      <h2>3. Prix et paiement mensuel</h2>
+      <p>
+        L’abonnement est facturé mensuellement. Le montant de l’abonnement, les
+        éventuelles options et les modalités de prélèvement sont indiqués au
+        moment de la souscription{/* PROVISOIRE : montants et options à compléter */}.
+      </p>
+      <p>
+        Sauf mention contraire, le premier mois est offert. Le paiement est dû à
+        échéance régulière, selon la périodicité et le moyen de paiement
+        convenus. En cas de défaut de paiement, le Prestataire se réserve le
+        droit de suspendre les prestations après information du Client{/* PROVISOIRE : délais de suspension / pénalités à préciser */}.
+      </p>
+
+      <h2>4. Durée et résiliation — sans engagement</h2>
+      <p>
+        L’abonnement est conclu sans durée d’engagement&nbsp;: il est reconduit
+        mois après mois et peut être résilié à tout moment par le Client.
+      </p>
+      <p>
+        La résiliation prend effet à l’issue de la période mensuelle en cours{/* PROVISOIRE : délai de préavis exact à confirmer */}.
+        Aucun frais de résiliation n’est appliqué. Les modalités de récupération
+        ou de transfert des éléments du site à la fin de l’abonnement sont
+        précisées au Client sur demande.
+      </p>
+
+      <h2>5. Obligations des parties</h2>
+      <p>
+        Le Prestataire s’engage à exécuter les prestations avec soin et selon les
+        règles de l’art, et à informer le Client de toute difficulté susceptible
+        d’affecter le service.
+      </p>
+      <p>
+        Le Client s’engage à fournir, en temps utile, les informations, contenus
+        et accès nécessaires à la bonne réalisation des prestations, et à
+        garantir qu’il dispose des droits sur les éléments qu’il transmet.
+      </p>
+
+      <h2>6. Propriété intellectuelle</h2>
+      <p>
+        Le Prestataire conserve la titularité des éléments, méthodes et outils
+        qu’il développe dans le cadre de son activité. Le Client dispose d’un
+        droit d’usage sur le site réalisé pour les besoins de son activité,
+        pendant la durée de l’abonnement, selon les conditions précisées lors de
+        la souscription{/* PROVISOIRE : étendue exacte des droits cédés à préciser */}.
+      </p>
+      <p>
+        Les contenus fournis par le Client (textes, images, marques, logos)
+        restent sa propriété et demeurent sous sa responsabilité.
+      </p>
+
+      <h2>7. Données personnelles</h2>
+      <p>
+        Le traitement des données personnelles dans le cadre de la relation
+        contractuelle est décrit dans notre
+        <a href="/confidentialite">politique de confidentialité</a>, qui
+        complète les présentes CGV.
+      </p>
+
+      <h2>8. Responsabilité</h2>
+      <p>
+        Le Prestataire est tenu à une obligation de moyens dans l’exécution de
+        ses prestations. Sa responsabilité ne saurait être engagée en cas de
+        dommage résultant d’un fait du Client, d’un tiers, ou d’un cas de force
+        majeure. Les limitations de responsabilité applicables sont précisées
+        dans la version définitive des présentes CGV{/* PROVISOIRE : plafonds et exclusions à valider juridiquement */}.
+      </p>
+
+      <h2>9. Droit applicable et litiges</h2>
+      <p>
+        Les présentes CGV sont soumises au droit français. En cas de différend,
+        les parties s’efforceront de trouver une solution amiable avant toute
+        action contentieuse. À défaut d’accord, le litige sera porté devant les
+        juridictions compétentes{/* PROVISOIRE : juridiction compétente / médiation à préciser */}.
+      </p>
+
+      <p>
+        <strong>Dernière mise à jour&nbsp;:</strong>
+        {/* PROVISOIRE : date d’entrée en vigueur à compléter */} à compléter.
+      </p>
+    </div>
+  </Section>
+
+  <CtaBand />
+</BaseLayout>

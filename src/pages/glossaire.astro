@@ -1,0 +1,135 @@
+---
+/**
+ * Glossaire — page statique (/glossaire). Termes web & SEO expliqués simplement
+ * pour un artisan : pas de jargon, des phrases courtes, des exemples concrets.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Section from '@components/ui/Section.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import CtaBand from '@components/blocks/CtaBand.astro';
+
+interface Terme {
+  terme: string;
+  definition: string;
+}
+
+const termes: Terme[] = [
+  {
+    terme: 'Nom de domaine',
+    definition:
+      'L’adresse de votre site sur internet, par exemple monentreprise.fr. C’est elle que vos clients tapent ou retiennent. Vous la louez chaque année ; on s’occupe de la garder active à votre nom.',
+  },
+  {
+    terme: 'Hébergement',
+    definition:
+      'L’espace, sur un serveur, où sont stockés les fichiers de votre site pour qu’il soit accessible 24 h/24. Sans hébergement, pas de site en ligne. C’est compris dans l’abonnement.',
+  },
+  {
+    terme: 'Site responsive',
+    definition:
+      'Un site qui s’adapte tout seul à la taille de l’écran : téléphone, tablette ou ordinateur. La majorité de vos visiteurs viennent sur mobile : un site lisible sur petit écran est indispensable.',
+  },
+  {
+    terme: 'Référencement naturel (SEO)',
+    definition:
+      'L’ensemble des réglages qui aident Google à comprendre votre site et à le proposer aux bonnes personnes, sans payer la publicité. C’est un travail de fond, qui se construit dans la durée.',
+  },
+  {
+    terme: 'Référencement local',
+    definition:
+      'Le fait d’apparaître quand quelqu’un cherche un artisan « près de chez moi » : par exemple « plombier Annecy ». C’est souvent le plus utile pour un métier de proximité.',
+  },
+  {
+    terme: 'Fiche Google (Google Business Profile)',
+    definition:
+      'Votre fiche gratuite sur Google : horaires, téléphone, adresse, photos et avis. Elle s’affiche dans la recherche et sur Google Maps, et amène beaucoup d’appels. On la crée et on la tient à jour.',
+  },
+  {
+    terme: 'Mot-clé',
+    definition:
+      'Les mots que tapent vos clients dans Google, comme « rénovation salle de bain » ou « électricien dépannage ». On choisit ceux qui comptent pour votre métier et votre secteur, puis on les place au bon endroit.',
+  },
+  {
+    terme: 'Backlink (lien entrant)',
+    definition:
+      'Un lien posé sur un autre site qui pointe vers le vôtre. Aux yeux de Google, c’est un vote de confiance : plus vous en avez de sérieux, plus votre site gagne en crédibilité.',
+  },
+  {
+    terme: 'Balise title',
+    definition:
+      'Le titre bleu cliquable de votre page dans les résultats Google, et le texte affiché dans l’onglet du navigateur. C’est l’une des premières choses que voit un visiteur : elle doit être claire et donner envie.',
+  },
+  {
+    terme: 'Méta description',
+    definition:
+      'Le petit texte gris sous le titre, dans les résultats Google. Il résume la page en deux phrases. Bien écrit, il donne envie de cliquer plutôt que d’aller chez le voisin.',
+  },
+  {
+    terme: 'HTTPS / certificat SSL',
+    definition:
+      'Le petit cadenas devant l’adresse de votre site. Il signale que la connexion est sécurisée et chiffrée. Sans lui, le navigateur affiche « Non sécurisé » et fait fuir les visiteurs. C’est fourni d’office.',
+  },
+  {
+    terme: 'CMS',
+    definition:
+      'Le système qui permet de gérer un site (textes, photos, pages) sans toucher au code. Sur votre abonnement, c’est nous qui pilotons les mises à jour : vous n’avez rien à apprendre.',
+  },
+  {
+    terme: 'Taux de conversion',
+    definition:
+      'La part de visiteurs qui passent à l’action : ils appellent, remplissent le formulaire ou demandent un devis. Un site n’est pas là pour être joli, mais pour transformer une visite en contact.',
+  },
+  {
+    terme: 'Call-to-action (appel à l’action)',
+    definition:
+      'Le bouton ou la phrase qui invite à agir : « Demander un devis », « Appelez-nous ». Bien placé et bien formulé, il guide le visiteur vers le geste utile pour vous.',
+  },
+  {
+    terme: 'Avis Google',
+    definition:
+      'Les notes et commentaires laissés par vos clients sur votre fiche. Ils rassurent les nouveaux visiteurs et pèsent dans votre référencement local. On vous aide à en récolter régulièrement.',
+  },
+  {
+    terme: 'Sitemap',
+    definition:
+      'Un plan de votre site, lisible par Google, qui liste toutes vos pages. Il aide les moteurs à tout trouver et à indexer votre site plus vite. On le génère et on le tient à jour pour vous.',
+  },
+];
+---
+
+<BaseLayout
+  title="Glossaire du web"
+  description="Nom de domaine, SEO, fiche Google, HTTPS… les mots du web expliqués simplement, pour les artisans et les TPE."
+>
+  <Section width="hero" pad="default">
+    <Eyebrow>Glossaire</Eyebrow>
+    <h1 class="mt-4 font-display text-h1 font-medium tracking-h1 text-ink">
+      Les mots du web, sans le jargon
+    </h1>
+    <p class="mt-6 max-w-2xl text-lead text-ink-2">
+      Hébergement, référencement, fiche Google… Voici les termes qui reviennent
+      le plus souvent, expliqués en clair. Vous gardez votre métier, on garde
+      le vocabulaire technique pour nous.
+    </p>
+
+    <dl class="mt-12 grid gap-px overflow-hidden rounded-sm bg-line md:grid-cols-2">
+      {
+        termes.map(({ terme, definition }) => (
+          <div class="bg-paper p-6 md:p-8">
+            <dt class="font-display text-lg font-medium tracking-h2 text-ink">
+              {terme}
+            </dt>
+            <dd class="mt-3 text-[1.0625rem] leading-[1.6] text-ink-soft">
+              {definition}
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+  </Section>
+
+  <CtaBand
+    title="Un terme reste flou ?"
+    lead="Posez-nous la question lors d’un appel de 15 minutes, sans jargon ni pression. On regarde ensemble ce qui ferait avancer votre visibilité."
+  />
+</BaseLayout>
