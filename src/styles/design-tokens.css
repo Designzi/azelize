@@ -12,18 +12,20 @@
    ========================================================================== */
 
 :root {
-  /* — BRAND (Menthe, H=225 — cf. palette HSB ci-dessous) — */
-  --brand:        #002080;   /* menthe S100·B50 */
-  --brand-deep:   #001040;   /* menthe S100·B25 */
-  --brand-bright: #0040FF;   /* menthe S100·B100 */
-  --brand-soft:   #BFCFFF;   /* menthe S25·B100 — tint clair */
-  --brand-900:    #001040;   /* menthe S100·B25 — bandes sombres, footer */
+  /* — BRAND (Ocean Twilight — réconcilié sur la palette Design réelle, Q1.
+     Le bloc « palette naturelle » fruit reste défini plus bas en attendant
+     son élagage au Lot 1 ; la landing n'utilise plus que brand + neutres.) — */
+  --brand:        #2347B8;   /* Ocean Twilight — primaire */
+  --brand-deep:   #1C39A0;   /* hover / pressé */
+  --brand-bright: #2F57D0;   /* clair */
+  --brand-soft:   #E6EBF9;   /* wash bleu clair — surfaces, badges */
+  --brand-900:    #2D3138;   /* Jet Black — bandes sombres, footer */
   --brand-line:   #C9CDD2;   /* Pale Slate — filet sur surface douce */
 
   /* — ACCENT (= brand ; bouton plein) — */
-  --accent:        #002080;
-  --accent-bright: #0040FF;
-  --accent-deep:   #001040;
+  --accent:        #2347B8;
+  --accent-bright: #2F57D0;
+  --accent-deep:   #1C39A0;
 
   /* — NEUTRES — */
   --paper:        #FFFFFF;
@@ -167,11 +169,22 @@
 
 /* — Mapping Tailwind v4 (utilitaires pour les pages hors landing) — */
 @theme {
-  --color-brand:        #002080;   /* menthe S100·B50 */
-  --color-brand-deep:   #001040;   /* menthe S100·B25 */
-  --color-brand-bright: #0040FF;   /* menthe S100·B100 */
-  --color-brand-soft:   #BFCFFF;   /* menthe S25·B100 */
-  --color-brand-900:    #001040;   /* menthe S100·B25 */
+  --color-brand:        #2347B8;   /* Ocean Twilight — primaire (Q1) */
+  --color-brand-deep:   #1C39A0;
+  --color-brand-bright: #2F57D0;
+  --color-brand-soft:   #E6EBF9;
+  --color-brand-900:    #2D3138;   /* Jet Black */
+
+  /* — Accent jaune ponctuel (topbar + carte contact FAQ) — Design réel, Q2 — */
+  --color-accent-2:          #FFD500;
+  --color-accent-2-soft:     #FFEA80;
+  --color-accent-2-ink:      #403500;   /* texte/bouton sur fond jaune */
+  --color-accent-2-ink-deep: #2B2400;   /* hover du bouton */
+
+  /* — Chrome (méga-menu / tiroir mobile) — */
+  --color-hover:   #F2F2F2;               /* survol neutre du méga-menu (jamais brand) */
+  --color-overlay: rgba(45, 49, 56, 0.42); /* voile du tiroir mobile */
+  --shadow-mega:   0 34px 60px -34px rgba(45, 40, 18, 0.34);
 
   --color-paper:       #FFFFFF;
   --color-parchment:   #F5F1E8;
