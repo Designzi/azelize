@@ -1,0 +1,77 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Section from '@components/ui/Section.astro';
+import Card from '@components/ui/Card.astro';
+import Breadcrumbs from '@components/ui/Breadcrumbs.astro';
+import Blocks from '@components/blocks/Blocks.astro';
+import FinalCta from '@components/home/FinalCta.astro';
+import { getCollection } from 'astro:content';
+import { serviceJsonLd, breadcrumbJsonLd } from '@lib/seo';
+import { ogImage } from '@lib/og';
+import { SERVICES, SERVICE_AVEC_METIERS } from '@data/seo-architecture';
+import type { GetStaticPaths } from 'astro';
+
+/**
+ * Couche 1 — hub de service (/{service}). Contenu éditorial piloté par le
+ * registre SEO (seo-architecture.ts). Seuls les services `ship` sont générés.
+ * Le hub `creation-site-internet` liste en plus ses pages métier (couche 3).
+ */
+export const getStaticPaths = (() =>
+  SERVICES.filter((s) => s.statut === 'ship').map((s) => ({
+    params: { service: s.slug },
+    props: { service: s },
+  }))) satisfies GetStaticPaths;
+
+const { service } = Astro.props;
+const url = `/${service.slug}`;
+
+const breadcrumbs = [
+  { name: 'Accueil', url: '/' },
+  { name: service.court, url },
+];
+const jsonLd = [
+  serviceJsonLd({ name: service.nom, description: service.resume, url }),
+  breadcrumbJsonLd(breadcrumbs),
+];
+
+// Maillage interne : le hub création de site liste ses pages métier (couche 3).
+const metiers =
+  service.slug === SERVICE_AVEC_METIERS
+    ? (await getCollection('metiers')).sort((a, b) => (a.data.ordre ?? 99) - (b.data.ordre ?? 99))
+    : [];
+---
+
+<BaseLayout
+  title={service.nom}
+  description={service.resume}
+  image={ogImage(service.slug)}
+  jsonLd={jsonLd}
+>
+  <Section pad="none" class="pt-6">
+    <Breadcrumbs items={breadcrumbs} />
+  </Section>
+
+  <Blocks sections={service.hub} />
+
+  {
+    metiers.length > 0 && (
+      <Section pad="default" tone="parchment">
+        <h2 class="font-display text-h2 font-medium tracking-h2 text-ink">Votre site selon votre métier</h2>
+        <p class="mt-3 max-w-2xl text-body text-ink-2">
+          On part de votre métier — vos clients, vos urgences, vos preuves. Choisissez le vôtre :
+        </p>
+        <div class="mt-10 grid gap-6 md:grid-cols-2">
+          {metiers.map((m) => (
+            <Card href={`/${service.slug}/${m.id}`}>
+              <h3 class="font-display text-h3 font-medium tracking-tight text-ink">{m.data.titre}</h3>
+              <p class="mt-3 text-body text-ink-2">{m.data.resume}</p>
+              <span class="mt-5 inline-block text-ui font-semibold text-brand">Voir la page métier →</span>
+            </Card>
+          ))}
+        </div>
+      </Section>
+    )
+  }
+
+  <FinalCta />
+</BaseLayout>

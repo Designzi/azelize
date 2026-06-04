@@ -114,6 +114,23 @@ export function articleJsonLd(a: ArticleInput): JsonLd {
   };
 }
 
+/**
+ * FAQPage — éligible aux rich results Google. À émettre dès qu'une page rend une
+ * section FAQ visible (cf. blocs `faq`). Le contenu doit être identique à
+ * l'affichage (règle Google), d'où la dérivation directe depuis les sections.
+ */
+export function faqJsonLd(items: { q: string; a: string }[]): JsonLd {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: items.map((it) => ({
+      '@type': 'Question',
+      name: it.q,
+      acceptedAnswer: { '@type': 'Answer', text: it.a },
+    })),
+  };
+}
+
 /** Prestation = Service rendu par l'organisation. */
 export function serviceJsonLd(s: { name: string; description: string; url: string }): JsonLd {
   return {

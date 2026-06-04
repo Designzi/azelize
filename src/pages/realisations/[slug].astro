@@ -5,6 +5,7 @@ import Section from '@components/ui/Section.astro';
 import Blocks from '@components/blocks/Blocks.astro';
 import { getCollection, render } from 'astro:content';
 import { creativeWorkJsonLd, breadcrumbJsonLd } from '@lib/seo';
+import { ogImage } from '@lib/og';
 import type { GetStaticPaths } from 'astro';
 
 export const getStaticPaths = (async () => {
@@ -33,7 +34,7 @@ const jsonLd = [
     <BaseLayout
       title={seo?.title ?? client}
       description={seo?.description ?? resume}
-      image={seo?.ogImage}
+      image={seo?.ogImage ?? ogImage(`realisations/${entry.id}`)}
       type="article"
       jsonLd={jsonLd}
     >
@@ -51,7 +52,7 @@ const jsonLd = [
       eyebrow="Réalisation"
       date={date}
       description={seo?.description ?? resume}
-      image={seo?.ogImage}
+      image={seo?.ogImage ?? ogImage(`realisations/${entry.id}`)}
       breadcrumbs={breadcrumbs}
       jsonLd={jsonLd}
     >

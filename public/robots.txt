@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://azelize.com/sitemap-index.xml

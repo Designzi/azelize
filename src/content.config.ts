@@ -49,4 +49,21 @@ const blog = defineCollection({
   }),
 });
 
-export const collections = { prestations, realisations, blog };
+/**
+ * Pages SEO « métier » (intention d'achat « site internet pour [métier] »).
+ * Cible : l'artisan qui cherche qui va lui faire son site — PAS le SEO local
+ * géographique (doorway pour un produit vendu partout en France). Chaque entrée
+ * porte un contenu UNIQUE par métier (problèmes, besoins, FAQ propres au métier)
+ * via `sections` → évite le contenu dupliqué / doorway.
+ */
+const metiers = defineCollection({
+  loader: glob({ pattern: '**/*.mdx', base: './src/content/metiers' }),
+  schema: base.extend({
+    metier: z.string(), // nom du métier au singulier, ex. « plombier » (titres + JSON-LD)
+    titre: z.string(), // titre éditorial, ex. « Site internet pour plombier »
+    resume: z.string(),
+    ordre: z.number().optional(),
+  }),
+});
+
+export const collections = { prestations, realisations, blog, metiers };

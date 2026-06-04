@@ -2,6 +2,7 @@
 import ArticleLayout from '@layouts/ArticleLayout.astro';
 import { getCollection, render } from 'astro:content';
 import { articleJsonLd, breadcrumbJsonLd } from '@lib/seo';
+import { ogImage } from '@lib/og';
 import type { GetStaticPaths } from 'astro';
 
 export const getStaticPaths = (async () => {
@@ -16,6 +17,7 @@ const { entry } = Astro.props;
 const { Content } = await render(entry);
 const { titre, description, date, updated, seo } = entry.data;
 const url = `/blog/${entry.id}`;
+const image = seo?.ogImage ?? ogImage(`blog/${entry.id}`);
 
 const breadcrumbs = [
   { name: 'Accueil', url: '/' },
@@ -23,7 +25,7 @@ const breadcrumbs = [
   { name: titre, url },
 ];
 const jsonLd = [
-  articleJsonLd({ title: titre, description, url, date, updated, image: seo?.ogImage }),
+  articleJsonLd({ title: titre, description, url, date, updated, image }),
   breadcrumbJsonLd(breadcrumbs),
 ];
 ---
@@ -34,7 +36,7 @@ const jsonLd = [
   eyebrow="Blog"
   date={date}
   description={seo?.description ?? description}
-  image={seo?.ogImage}
+  image={image}
   breadcrumbs={breadcrumbs}
   jsonLd={jsonLd}
 >
