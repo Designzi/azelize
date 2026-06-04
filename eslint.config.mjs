@@ -4,7 +4,9 @@ import ts from 'typescript-eslint';
 import astro from 'eslint-plugin-astro';
 
 export default ts.config(
-  { ignores: ['dist/', '.astro/', 'node_modules/'] },
+  // docs/ = outillage couleurs autonome (CDN Tailwind + scripts Node CJS),
+  // hors périmètre lint comme il l'est déjà de check:tokens.
+  { ignores: ['dist/', '.astro/', 'node_modules/', 'docs/'] },
   js.configs.recommended,
   ...ts.configs.recommended,
   ...astro.configs.recommended,
