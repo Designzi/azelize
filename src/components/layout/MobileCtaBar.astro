@@ -9,7 +9,7 @@ import { navCta } from '@data/nav';
 
 <div
   id="mobile-cta"
-  class="fixed inset-x-0 bottom-0 z-40 translate-y-full border-t border-line bg-paper/95 px-4 py-3 backdrop-blur-sm transition-transform duration-300 ease-brand sm:hidden [&[data-show]]:translate-y-0"
+  class="fixed inset-x-0 bottom-0 z-40 translate-y-full border-t border-line bg-paper/95 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-sm transition-transform duration-300 ease-brand md:hidden [&[data-show]]:translate-y-0"
 >
   <Button href={navCta.href} block>{navCta.label}</Button>
 </div>

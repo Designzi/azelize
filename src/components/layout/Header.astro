@@ -1,35 +1,184 @@
 ---
 /**
- * Header (singleton, couche 1) — bandeau d'annonce + header fixe qui se densifie
- * au scroll (via data-scrolled). Navigation minimale (ancres de la landing).
+ * Header (singleton, couche 1) — fidèle à la maquette Design :
+ *   topbar jaune · header flouté fixe · méga-menu Services 4 colonnes (icônes +
+ *   descriptions) · tiroir mobile avec sous-menu Services. Interactions en JS
+ *   vanilla (scroll-state, hover/clic méga-menu, tiroir, sous-accordéon).
+ * Desktop ≥ lg ; en dessous : burger + tiroir.
  */
 import Button from '@components/ui/Button.astro';
-import { mainNav, navCta } from '@data/nav';
+import { serviceGroups, primaryNav, secondaryNav, chromeCta } from '@data/nav';
+import type { IconName } from '@data/nav';
+
+/** Tracés SVG internes des icônes du méga-menu (wrapper svg ci-dessous). */
+const ICONS: Record<IconName, string> = {
+  site: '<rect x="3" y="4" width="18" height="13" rx="2"></rect><path d="M8 21h8M12 17v4"></path>',
+  seo: '<circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path>',
+  brand: '<path d="M12 3l1.8 4.7L18.5 9.5 13.8 11.3 12 16l-1.8-4.7L5.5 9.5 10.2 7.7z"></path>',
+  print:
+    '<rect x="6" y="3" width="12" height="6" rx="1"></rect><rect x="4" y="9" width="16" height="8" rx="2"></rect><rect x="7" y="14" width="10" height="6" rx="1"></rect>',
+  truck:
+    '<rect x="2" y="6" width="13" height="9" rx="1"></rect><path d="M15 9h4l3 3v3h-7z"></path><circle cx="7" cy="17.5" r="1.6"></circle><circle cx="18" cy="17.5" r="1.6"></circle>',
+  mail: '<rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path>',
+  layers: '<path d="m12 3 9 5-9 5-9-5z"></path><path d="m3 13 9 5 9-5"></path>',
+  book: '<path d="M5 4h11a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2z"></path><path d="M9 4v14"></path>',
+  video: '<circle cx="12" cy="12" r="9"></circle><path d="m10 8.5 5.5 3.5-5.5 3.5z"></path>',
+  grid: '<rect x="3" y="3" width="7" height="7" rx="1"></rect><rect x="14" y="3" width="7" height="7" rx="1"></rect><rect x="3" y="14" width="7" height="7" rx="1"></rect><rect x="14" y="14" width="7" height="7" rx="1"></rect>',
+  bolt: '<path d="M13 2 4 14h7l-1 8 9-12h-7z"></path>',
+};
+
+const allServices = serviceGroups.flatMap((g) => g.items);
+const caret =
+  'h-[7px] w-[7px] flex-none -translate-y-px rotate-45 border-b-[1.5px] border-r-[1.5px] border-current transition-transform duration-200';
 ---
 
-{/* Bandeau d'annonce — atmosphère Citron (clarté/accent) */}
-<div class="fixed inset-x-0 top-0 z-[60] flex h-[38px] items-center justify-center gap-2.5 bg-citron-s50-b100 px-4 text-center text-[0.8125rem] font-semibold tracking-[0.005em] text-ink">
-  <span class="h-[7px] w-[7px] shrink-0 rounded-full bg-ink" aria-hidden="true"></span>
+{/* Topbar — jaune (accent-2), fidèle Design */}
+<div
+  class="fixed inset-x-0 top-0 z-[60] flex h-[38px] items-center justify-center gap-2.5 whitespace-nowrap bg-accent-2-soft px-4 text-center text-[0.8125rem] font-bold text-accent-2-ink"
+>
+  <span class="h-[7px] w-[7px] flex-none rounded-full bg-accent-2-ink" aria-hidden="true"></span>
   Vous ne payez que quand ça marche
 </div>
 
 <header
   id="site-header"
-  class="fixed inset-x-0 top-[38px] z-50 border-b border-transparent transition-[background,border-color] duration-[400ms] ease-brand [&[data-scrolled]]:border-line [&[data-scrolled]]:bg-[color-mix(in_srgb,var(--color-paper)_84%,transparent)] [&[data-scrolled]]:backdrop-blur-[14px]"
+  class="fixed inset-x-0 top-[38px] z-50 border-b border-line bg-[color-mix(in_srgb,var(--color-paper)_84%,transparent)] backdrop-blur-[14px] transition-colors duration-300 ease-brand [&[data-scrolled]]:bg-[color-mix(in_srgb,var(--color-paper)_90%,transparent)]"
 >
   <div class="container-site flex h-[72px] items-center justify-between gap-5">
     <a href="/" class="font-display text-[1.4rem] font-semibold tracking-[-0.02em] text-ink">Azelize</a>
-    <nav class="ml-auto mr-2 hidden items-center gap-[clamp(16px,2.4vw,34px)] md:flex" aria-label="Navigation principale">
-      {mainNav.map((item) => (
-        <a href={item.href} class="text-[0.9rem] font-medium text-ink-2 transition-colors hover:text-brand">{item.label}</a>
-      ))}
+
+    {/* Nav desktop */}
+    <nav class="ml-auto mr-2 hidden items-center gap-[clamp(16px,2.4vw,30px)] lg:flex" aria-label="Navigation principale">
+      <button
+        type="button"
+        data-mega-trigger
+        aria-expanded="false"
+        class="group inline-flex items-center gap-[7px] text-[0.9rem] font-medium text-ink-2 transition-colors hover:text-brand data-[open]:text-brand"
+      >
+        Services
+        <span class={`${caret} group-data-[open]:rotate-[225deg] group-data-[open]:translate-y-px`} aria-hidden="true"></span>
+      </button>
+      {
+        primaryNav.map((item) => (
+          <a href={item.href} data-mega-close class="text-[0.9rem] font-medium text-ink-2 transition-colors hover:text-brand">
+            {item.label}
+          </a>
+        ))
+      }
     </nav>
-    <Button href={navCta.href} size="sm" class="hidden sm:inline-flex">{navCta.label}</Button>
+
+    <Button href={chromeCta.href} size="sm" class="hidden lg:inline-flex">{chromeCta.label}</Button>
+
+    {/* Burger — sous lg */}
+    <button
+      type="button"
+      data-burger
+      aria-label="Ouvrir le menu"
+      aria-controls="mobile-drawer"
+      class="inline-flex h-[42px] w-[42px] flex-none flex-col items-center justify-center gap-1 rounded-md border border-line-strong bg-paper lg:hidden"
+    >
+      <span class="h-0.5 w-[18px] rounded-sm bg-ink"></span>
+      <span class="h-0.5 w-[18px] rounded-sm bg-ink"></span>
+      <span class="h-0.5 w-[18px] rounded-sm bg-ink"></span>
+    </button>
+  </div>
+
+  {/* Méga-menu Services (desktop) */}
+  <div
+    data-mega
+    class="invisible absolute inset-x-0 top-full -translate-y-2.5 border-y border-line bg-paper opacity-0 shadow-mega transition-[opacity,transform,visibility] duration-[260ms] ease-brand data-[open]:visible data-[open]:translate-y-0 data-[open]:opacity-100 hidden lg:block"
+  >
+    <div class="container-site grid grid-cols-4 gap-[clamp(14px,1.6vw,28px)] pb-[clamp(18px,2.2vw,26px)] pt-[clamp(26px,3vw,38px)]">
+      {
+        serviceGroups.map((group) => (
+          <div>
+            <div class="mb-1.5 pl-4 text-[0.7rem] font-bold uppercase tracking-[0.11em] text-ink-faint">{group.title}</div>
+            {group.items.map((it) => (
+              <a href={it.href} class="group -mx-2 flex w-fit max-w-full items-center gap-3 rounded-lg px-4 py-2.5 transition-colors hover:bg-hover">
+                <span class="flex h-[38px] w-[38px] flex-none items-center justify-center rounded-lg bg-brand-soft text-brand transition-colors group-hover:bg-brand group-hover:text-paper">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <Fragment set:html={ICONS[it.icon]} />
+                  </svg>
+                </span>
+                <span class="min-w-0">
+                  <span class="block text-[0.9rem] font-semibold text-ink">
+                    {it.label}
+                    {it.badge && (
+                      <span class="ml-1.5 inline-block rounded-xs bg-accent-2 px-1.5 py-0.5 align-middle text-[0.56rem] font-bold uppercase tracking-[0.05em] text-accent-2-ink">
+                        {it.badge}
+                      </span>
+                    )}
+                  </span>
+                  <span class="mt-0.5 block text-[0.77rem] leading-[1.4] text-ink-soft">{it.desc}</span>
+                </span>
+              </a>
+            ))}
+          </div>
+        ))
+      }
+    </div>
   </div>
 </header>
 
+{/* Voile + tiroir mobile */}
+<div data-overlay class="invisible fixed inset-0 z-[80] bg-overlay opacity-0 transition-[opacity,visibility] duration-[250ms] data-[open]:visible data-[open]:opacity-100 lg:hidden"></div>
+
+<aside
+  id="mobile-drawer"
+  data-drawer
+  class="fixed inset-y-0 right-0 z-[81] flex w-[min(384px,87vw)] translate-x-full flex-col overflow-y-auto bg-paper px-[22px] pb-7 pt-[18px] transition-transform duration-300 ease-brand data-[open]:translate-x-0 lg:hidden"
+>
+  <div class="mb-2.5 flex items-center justify-between">
+    <a href="/" class="font-display text-[1.4rem] font-semibold tracking-[-0.02em] text-ink">Azelize</a>
+    <button type="button" data-drawer-close aria-label="Fermer le menu" class="h-10 w-10 text-[1.6rem] leading-none text-ink-soft">×</button>
+  </div>
+
+  <button
+    type="button"
+    data-drawer-sub-toggle
+    aria-expanded="false"
+    class="group flex w-full items-center justify-between border-b border-line py-[15px] text-left font-display text-[1.15rem] font-medium tracking-[-0.01em] text-ink"
+  >
+    Services
+    <span class={`${caret} border-ink-soft group-data-[open]:rotate-[225deg]`} aria-hidden="true"></span>
+  </button>
+  <div data-drawer-sub class="max-h-0 overflow-hidden transition-[max-height] duration-300 ease-brand data-[open]:max-h-[640px]">
+    {
+      allServices.map((it) => (
+        <a href={it.href} class="block border-b border-line-soft py-[11px] pl-3.5 text-[0.95rem] text-ink-2">
+          {it.label}
+        </a>
+      ))
+    }
+  </div>
+
+  {
+    primaryNav.map((item) => (
+      <a href={item.href} class="flex items-center justify-between border-b border-line py-[15px] font-display text-[1.15rem] font-medium tracking-[-0.01em] text-ink">
+        {item.label}
+      </a>
+    ))
+  }
+
+  <div class="mt-[18px] grid grid-cols-2 gap-x-[18px] gap-y-0.5">
+    {secondaryNav.map((item) => <a href={item.href} class="py-[7px] text-[0.9rem] text-ink-soft">{item.label}</a>)}
+  </div>
+
+  <Button href={chromeCta.href} size="lg" block class="mt-5">{chromeCta.label}</Button>
+</aside>
+
 <script>
   const header = document.getElementById('site-header');
+  const trigger = document.querySelector<HTMLButtonElement>('[data-mega-trigger]');
+  const mega = document.querySelector<HTMLElement>('[data-mega]');
+  const burger = document.querySelector<HTMLButtonElement>('[data-burger]');
+  const overlay = document.querySelector<HTMLElement>('[data-overlay]');
+  const drawer = document.querySelector<HTMLElement>('[data-drawer]');
+  const drawerClose = document.querySelector<HTMLButtonElement>('[data-drawer-close]');
+  const subToggle = document.querySelector<HTMLButtonElement>('[data-drawer-sub-toggle]');
+  const sub = document.querySelector<HTMLElement>('[data-drawer-sub]');
+
+  // ── Header densifié au scroll ───────────────────────────────────────────────
   if (header) {
     const onScroll = () => {
       if (window.scrollY > 8) header.setAttribute('data-scrolled', '');
@@ -38,4 +187,50 @@ import { mainNav, navCta } from '@data/nav';
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
   }
+
+  // ── Méga-menu (hover + clic) ────────────────────────────────────────────────
+  const setMega = (open: boolean) => {
+    if (!trigger || !mega) return;
+    trigger.toggleAttribute('data-open', open);
+    mega.toggleAttribute('data-open', open);
+    trigger.setAttribute('aria-expanded', String(open));
+  };
+  if (header && trigger && mega) {
+    trigger.addEventListener('mouseenter', () => setMega(true));
+    trigger.addEventListener('click', () => setMega(!trigger.hasAttribute('data-open')));
+    header.addEventListener('mouseleave', () => setMega(false));
+    document.querySelectorAll('[data-mega-close]').forEach((el) =>
+      el.addEventListener('mouseenter', () => setMega(false)),
+    );
+  }
+
+  // ── Tiroir mobile ───────────────────────────────────────────────────────────
+  const setDrawer = (open: boolean) => {
+    if (!drawer || !overlay || !burger) return;
+    drawer.toggleAttribute('data-open', open);
+    overlay.toggleAttribute('data-open', open);
+    burger.setAttribute('aria-expanded', String(open));
+    document.body.style.overflow = open ? 'hidden' : '';
+  };
+  burger?.addEventListener('click', () => setDrawer(true));
+  drawerClose?.addEventListener('click', () => setDrawer(false));
+  overlay?.addEventListener('click', () => setDrawer(false));
+  drawer?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setDrawer(false)));
+  subToggle?.addEventListener('click', () => {
+    const open = !subToggle.hasAttribute('data-open');
+    subToggle.toggleAttribute('data-open', open);
+    sub?.toggleAttribute('data-open', open);
+    subToggle.setAttribute('aria-expanded', String(open));
+  });
+
+  // ── Échap + retour desktop ──────────────────────────────────────────────────
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      setMega(false);
+      setDrawer(false);
+    }
+  });
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 1024) setDrawer(false);
+  });
 </script>

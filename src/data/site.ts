@@ -10,7 +10,7 @@ export const site = {
     "Azelize crée le site et le référencement local des artisans, puis s'en occupe chaque mois. Vous ne payez l'abonnement qu'une fois que le site vous amène des clients.",
   locale: 'fr_FR',
   lang: 'fr',
-  // Image Open Graph par défaut (à fournir dans public/og/)
+  // Image Open Graph par défaut — générée au build (src/pages/og/[...route].ts).
   defaultOgImage: '/og/default.png',
   // ⚠️ Coordonnées provisoires (cf. maquette) — à confirmer.
   email: 'bonjour@azelize.fr',
