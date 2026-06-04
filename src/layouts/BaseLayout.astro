@@ -50,7 +50,7 @@ const devStyleguideHref = import.meta.env.DEV
     />
     <Seo {...seo} organization={organization} jsonLd={jsonLd} />
   </head>
-  <body class:list={['flex min-h-screen flex-col', !bare && 'pb-[76px] sm:pb-0']}>
+  <body class:list={['flex min-h-screen flex-col', !bare && 'pb-[76px] md:pb-0']}>
     {!bare && <Header />}
     <main class="flex-1" style={mainStyle}>
       <slot />

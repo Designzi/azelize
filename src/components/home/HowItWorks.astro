@@ -1,20 +1,54 @@
 ---
-/** Section « Comment ça se passe » — parcours sans risque · atmosphère Miel (parcours/chaleur). */
+/**
+ * Section « Comment ça se passe » — parcours 4 étapes, le risque rendu nul.
+ * Mobile-first : timeline verticale (filet à gauche) → 4 colonnes (filet au-dessus) en md.
+ */
 import Section from '@components/ui/Section.astro';
 import SectionHead from '@components/ui/SectionHead.astro';
-import TimelineBlock from '@components/blocks/TimelineBlock.astro';
 import CtaRow from '@components/home/CtaRow.astro';
 
-const STEPS = [
-  { num: '1', title: 'On fait le point (15 min)', body: "On regarde ensemble votre situation et vos objectifs. Sans engagement." },
-  { num: '2', title: 'On met tout en place', body: 'Site, référencement local, image : on construit, vous validez. Seuls frais au départ : 50 € pour le nom de domaine.' },
-  { num: '3', title: 'Le 1er mois est toujours offert', body: "Un site neuf met du temps à émerger sur Google. Tant qu'il ne vous a pas amené au moins 2 demandes dans le mois, on vous offre le mois suivant — vous ne payez rien." },
-  { num: '4', title: 'Vous payez quand ça marche', body: "Dès que le site vous amène des demandes (au moins 2 dans le mois), on vous propose de continuer. Si oui, l'abonnement commence le mois d'après. Sinon, on arrête. Zéro engagement." },
+const STEPS: { num: string; title: string; body: string }[] = [
+  {
+    num: '1',
+    title: 'On fait le point (15 min)',
+    body: 'On regarde ensemble votre situation et vos objectifs. Sans engagement.',
+  },
+  {
+    num: '2',
+    title: 'On met tout en place',
+    body: 'Site, référencement local, image : on construit, vous validez. Seuls frais au départ : 50 € pour le nom de domaine.',
+  },
+  {
+    num: '3',
+    title: 'Le 1er mois est toujours offert',
+    body: "Un site neuf met du temps à émerger sur Google. Tant qu'il ne vous a pas amené au moins 2 demandes dans le mois, on vous offre le mois suivant — vous ne payez rien.",
+  },
+  {
+    num: '4',
+    title: 'Vous payez quand ça marche',
+    body: "Dès que le site vous amène des demandes (au moins 2 dans le mois), on vous propose de continuer. Si oui, l'abonnement commence le mois d'après. Sinon, on arrête. Zéro engagement.",
+  },
 ];
 ---
 
-<Section id="process">
-  <SectionHead eyebrow="Le parcours, sans risque" accent="miel">Comment ça se passe</SectionHead>
-  <TimelineBlock steps={STEPS} accent="miel" />
+<Section id="process" tone="paper">
+  <SectionHead eyebrow="Le parcours, sans risque">Comment ça se passe</SectionHead>
+
+  <ol
+    class="m-0 grid list-none grid-cols-1 gap-0 p-0 md:grid-cols-4 md:gap-[clamp(20px,2.6vw,36px)]"
+  >
+    {
+      STEPS.map((s) => (
+        <li class="reveal relative border-l-2 border-line-strong py-6 pl-[22px] first:border-l-brand md:border-l-0 md:border-t-2 md:pt-7 md:pl-0 md:first:border-t-brand">
+          <span class="font-display text-[1.4rem] font-medium leading-none text-brand">{s.num}</span>
+          <h3 class="mt-3 font-display text-[clamp(1.15rem,1.7vw,1.4rem)] font-medium tracking-tight text-ink">
+            {s.title}
+          </h3>
+          <p class="mt-2.5 text-ui leading-[1.55] text-ink-soft">{s.body}</p>
+        </li>
+      ))
+    }
+  </ol>
+
   <CtaRow line="Le premier pas ne coûte rien." />
 </Section>

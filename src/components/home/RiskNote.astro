@@ -2,6 +2,7 @@
 /**
  * Ligne de réduction du risque, sous chaque CTA (cf. brief §9).
  * kind: 'model' (par défaut) | 'garantie' · onDark pour les bandes sombres.
+ * Segments insécables, séparés par · ; ne cassent qu'entre eux (mobile-safe).
  */
 interface Props {
   kind?: 'model' | 'garantie';
@@ -12,21 +13,23 @@ const { kind = 'model', onDark = false, class: className } = Astro.props;
 
 const parts =
   kind === 'garantie'
-    ? ['Sans engagement', 'Résiliable à tout moment', 'Satisfait ou remboursé 30 jours']
+    ? ['Sans engagement', 'Résiliable à tout moment']
     : ['1er mois offert', 'Vous ne payez qu’une fois que ça vous rapporte', 'Sans engagement'];
 ---
 
 <p
   class:list={[
-    'm-0 text-[0.8125rem] tracking-[0.01em]',
+    'm-0 flex flex-wrap items-center justify-center gap-x-[0.55em] gap-y-1 text-[0.8125rem] tracking-[0.01em]',
     onDark ? 'text-on-dark-soft' : 'text-ink-soft',
     className,
   ]}
 >
   {parts.map((p, i) => (
-    <>
-      {i > 0 && <span class:list={['mx-[0.55em]', onDark ? 'text-on-dark-soft/60' : 'text-ink-faint']}>·</span>}
-      {p.replace(/ /g, ' ')}
-    </>
+    <span class="inline-flex items-center gap-x-[0.55em] whitespace-nowrap">
+      {i > 0 && (
+        <span aria-hidden="true" class:list={[onDark ? 'text-on-dark-soft/60' : 'text-ink-faint']}>·</span>
+      )}
+      {p}
+    </span>
   ))}
 </p>

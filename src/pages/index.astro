@@ -9,10 +9,12 @@ import Proof from '@components/home/Proof.astro';
 import Pricing from '@components/home/Pricing.astro';
 import Faq from '@components/home/Faq.astro';
 import FinalCta from '@components/home/FinalCta.astro';
-import { localBusinessJsonLd } from '@lib/seo';
+import { localBusinessJsonLd, faqJsonLd } from '@lib/seo';
+import { ogImage } from '@lib/og';
+import { homeFaq } from '@data/faq';
 ---
 
-<BaseLayout landing organization jsonLd={localBusinessJsonLd()}>
+<BaseLayout landing organization image={ogImage('home')} jsonLd={[localBusinessJsonLd(), faqJsonLd(homeFaq)]}>
   <script is:inline>document.documentElement.classList.add('anim');</script>
   <Hero />
   <Problem />

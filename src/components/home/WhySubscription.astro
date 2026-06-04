@@ -1,35 +1,72 @@
 ---
-/** Section « L'objection, retournée » — comparatif · atmosphère Citron (clarté/accent). */
+/**
+ * Section « Pourquoi un abonnement » — comparatif (objection retournée).
+ * La colonne recommandée est en marque (brand), jamais une teinte fruit.
+ * Mobile-first : colonnes empilées → 2 colonnes en md.
+ */
 import Section from '@components/ui/Section.astro';
 import SectionHead from '@components/ui/SectionHead.astro';
-import CompareBlock from '@components/blocks/CompareBlock.astro';
 
-const ONESHOT = {
-  title: 'Un site livré une fois',
-  items: [
-    "Gros chèque d'un coup",
-    'Livré puis abandonné',
-    'Se dégrade (Google, technique, contenus)',
-    'Personne à rappeler quand ça casse',
-  ],
-};
-const AZELIZE = {
-  title: "L'abonnement Azelize",
-  items: [
-    'Coût lissé et prévisible',
-    'Entretenu et amélioré en continu',
-    'Reste visible et à jour',
-    'Un interlocuteur qui répond',
-  ],
-};
+const ONESHOT = [
+  "Gros chèque d'un coup",
+  'Livré puis abandonné',
+  'Se dégrade (Google, technique, contenus)',
+  'Personne à rappeler quand ça casse',
+];
+const AZELIZE = [
+  'Coût lissé et prévisible',
+  'Entretenu et amélioré en continu',
+  'Reste visible et à jour',
+  'Un interlocuteur qui répond',
+];
 ---
 
-<Section id="pourquoi-abo">
-  <SectionHead eyebrow="L'objection, retournée" accent="citron">
+<Section id="pourquoi-abo" tone="paper">
+  <SectionHead eyebrow="L'objection, retournée">
     Pourquoi un abonnement, et pas un site livré une fois&nbsp;?
   </SectionHead>
-  <CompareBlock bad={ONESHOT} good={AZELIZE}>
-    Un site, c'est comme un véhicule de chantier&nbsp;: sans entretien,
-    il vous lâche au pire moment.
-  </CompareBlock>
+
+  <div class="grid grid-cols-1 gap-[clamp(18px,2.4vw,28px)] md:grid-cols-2">
+    <!-- Colonne « livré une fois » — neutre -->
+    <div class="reveal rounded-sm border border-line-strong p-[clamp(26px,3vw,40px)]">
+      <p
+        class="mb-5 border-b border-line pb-3.5 font-display text-[1.25rem] font-medium tracking-tight text-ink-soft"
+      >
+        Un site livré une fois
+      </p>
+      <ul class="m-0 flex list-none flex-col gap-3.5 p-0">
+        {
+          ONESHOT.map((x) => (
+            <li class="relative pl-6 text-[1.0625rem] leading-[1.4] text-ink-soft before:absolute before:left-0 before:top-[-0.05em] before:text-[1.15em] before:text-ink-faint before:content-['×']">
+              {x}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <!-- Colonne « abonnement » — recommandée, marque -->
+    <div class="reveal rounded-sm border-2 border-brand p-[clamp(26px,3vw,40px)]">
+      <p
+        class="mb-5 border-b border-line pb-3.5 font-display text-[1.25rem] font-medium tracking-tight text-ink"
+      >
+        L'abonnement Azelize
+      </p>
+      <ul class="m-0 flex list-none flex-col gap-3.5 p-0">
+        {
+          AZELIZE.map((x) => (
+            <li class="relative pl-6 text-[1.0625rem] leading-[1.4] text-ink-2 before:absolute before:left-0 before:top-[0.5em] before:h-0.5 before:w-[11px] before:bg-brand before:content-['']">
+              {x}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+
+  <p
+    class="reveal mx-auto mt-[clamp(36px,4.5vw,60px)] max-w-[42ch] text-center font-display text-[clamp(1.2rem,2vw,1.6rem)] italic leading-[1.3] text-ink"
+  >
+    Un site, c'est comme un véhicule de chantier&nbsp;: sans entretien, il vous lâche au pire moment.
+  </p>
 </Section>

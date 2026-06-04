@@ -1,19 +1,44 @@
 ---
-/** Section « C'est pour vous » — 3 douleurs · atmosphère Fraise (douleur/alerte). */
+/**
+ * Section Problème — 3 douleurs (« c'est pour vous »), titres front-loaded.
+ * Mobile-first : empilé avec filets de séparation → grille 3 colonnes en md.
+ */
 import Section from '@components/ui/Section.astro';
 import SectionHead from '@components/ui/SectionHead.astro';
-import GridBlock from '@components/blocks/GridBlock.astro';
 
-const PAINS = [
-  { title: 'Invisible sur Google', body: "Vos concurrents apparaissent, pas vous. Les appels partent ailleurs." },
-  { title: 'Un site qui fait fuir', body: 'Lent, daté, pas pro : il fait douter avant même le devis.' },
-  { title: 'Pas le temps', body: "Vous êtes sur le terrain. Personne ne s'occupe de votre image en ligne." },
+const PAINS: { title: string; body: string }[] = [
+  {
+    title: 'Invisible sur Google',
+    body: 'Vos concurrents apparaissent, pas vous. Les appels partent ailleurs.',
+  },
+  {
+    title: 'Un site qui fait fuir',
+    body: 'Lent, daté, pas pro : il fait douter avant même le devis.',
+  },
+  {
+    title: 'Pas le temps',
+    body: "Vous êtes sur le terrain. Personne ne s'occupe de votre image en ligne.",
+  },
 ];
 ---
 
-<Section id="probleme" tone="fraise">
-  <SectionHead eyebrow="C'est pour vous" accent="fraise">
+<Section id="probleme" tone="paper">
+  <SectionHead eyebrow="C'est pour vous">
     Vos clients vous cherchent sur Google. Vous y êtes&nbsp;?
   </SectionHead>
-  <GridBlock items={PAINS} cols={3} />
+
+  <div
+    class="grid grid-cols-1 gap-0 md:grid-cols-3 md:gap-[clamp(24px,3.4vw,52px)] md:border-t md:border-line md:pt-[clamp(32px,4vw,52px)]"
+  >
+    {
+      PAINS.map((p) => (
+        <div class="reveal border-t border-line py-6 first:border-t-0 md:border-t-0 md:py-0">
+          <h3 class="m-0 font-display text-[clamp(1.25rem,1.9vw,1.6rem)] font-medium tracking-tight text-ink">
+            {p.title}
+          </h3>
+          <p class="mt-3 text-[1.0625rem] leading-[1.55] text-ink-soft">{p.body}</p>
+        </div>
+      ))
+    }
+  </div>
 </Section>

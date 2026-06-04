@@ -1,8 +1,11 @@
 ---
-/** Section « Tout est compris » — livrables mensuels · atmosphère Kiwi (positif/succès). */
+/**
+ * Section « Tout est compris » — livrables mensuels, puces bleues (Ocean Twilight).
+ * Mobile-first : liste empilée → grille 3 colonnes en md. Pas de carte d'ambiance
+ * (la maquette Design est monochrome : puces brand sur fond blanc).
+ */
 import Section from '@components/ui/Section.astro';
 import SectionHead from '@components/ui/SectionHead.astro';
-import IncludesBlock from '@components/blocks/IncludesBlock.astro';
 
 const INCL = [
   'Votre site tenu à jour et sécurisé',
@@ -14,11 +17,26 @@ const INCL = [
 ];
 ---
 
-<Section id="inclus" tone="kiwi">
-  <SectionHead eyebrow="Tout est compris" accent="kiwi">Ce qu'on fait pour vous, chaque mois</SectionHead>
-  <IncludesBlock
-    items={INCL}
-    accent="kiwi"
-    note="Tout est inclus dans votre formule. Pas de surprise sur la facture."
-  />
+<Section id="inclus" tone="paper">
+  <SectionHead eyebrow="Tout est compris">Ce qu'on fait pour vous, chaque mois</SectionHead>
+
+  <ul
+    class="grid list-none grid-cols-1 gap-[clamp(20px,2.6vw,40px)] border-t border-line p-0 pt-[clamp(32px,4vw,48px)] md:grid-cols-3"
+  >
+    {
+      INCL.map((f) => (
+        <li class="reveal flex items-start gap-[13px]">
+          <span
+            class="mt-[0.42em] h-[11px] w-[11px] flex-none rounded-[3px] bg-brand"
+            aria-hidden="true"
+          />
+          <span class="text-[1.0625rem] leading-[1.45] text-ink-2">{f}</span>
+        </li>
+      ))
+    }
+  </ul>
+
+  <p class="reveal mt-[clamp(28px,3.4vw,44px)] text-ui text-ink-soft">
+    Tout est inclus dans votre formule. Pas de surprise sur la facture.
+  </p>
 </Section>
