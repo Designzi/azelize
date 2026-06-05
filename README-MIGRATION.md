@@ -15,7 +15,7 @@ Tour **analyse + plan** (Prompt 2). Cartographie du stack Astro récepteur, mesu
 
 Le dépôt Astro **n'est pas un stack vierge** : il a **déjà implémenté le socle** — collections + schémas Zod, routes dynamiques `[service]/[metier]`, registre SEO gaté anti-doorway (`seo-architecture.ts`), génération OG (`astro-og-canvas`), tokens centralisés `@theme`, interactivité **100 % vanilla** (zéro îlot React), garde-fous CI (`check:tokens` → `lint` → `build`).
 
-➡️ La migration est un **portage fidèle, page par page**, de chaque maquette Design vers une page Astro dédiée — **sur le modèle de la home** (`index.astro` + composants de section dédiés dans `components/home/`, Tailwind, JS vanilla). On **ne coule plus le contenu dans un jeu de blocs génériques** (`Blocks.astro` / `sections[]`) : chaque page **reproduit sa maquette telle quelle** (structure, copie, composants spécifiques : mockups, bandes de stats, tableaux d'objections, chips de maillage…). Les seuls écarts tolérés sont ceux du passage **CSS → Tailwind**.
+➡️ La migration est un **portage fidèle, page par page**, de chaque maquette Design vers une page Astro dédiée — **sur le modèle de la home** (`index.astro` + sections de vue dédiées dans `views/home/`, Tailwind, JS vanilla). On **ne coule plus le contenu dans un jeu de blocs génériques** (`Blocks.astro` / `sections[]`) : chaque page **reproduit sa maquette telle quelle** (structure, copie, composants spécifiques : mockups, bandes de stats, tableaux d'objections, chips de maillage…). Les seuls écarts tolérés sont ceux du passage **CSS → Tailwind**.
 
 ## Décisions actées (détail dans MIGRATION-DELTA « Décisions actées »)
 
