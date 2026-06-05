@@ -1,9 +1,7 @@
 ---
 /**
- * StatsBlock — bande de chiffres clés (couche 3). Chiffres à la teinte d'ambiance.
+ * StatsBlock — bande de chiffres clés (couche 3). Chiffres en marque (brand).
  */
-import { accentText, type Accent } from '@lib/accents';
-
 export interface Stat {
   n: string;
   label: string;
@@ -11,10 +9,9 @@ export interface Stat {
 }
 interface Props {
   stats: Stat[];
-  accent?: Accent;
   class?: string;
 }
-const { stats, accent = 'menthe', class: className } = Astro.props;
+const { stats, class: className } = Astro.props;
 ---
 
 <div
@@ -25,7 +22,7 @@ const { stats, accent = 'menthe', class: className } = Astro.props;
 >
   {stats.map((stat) => (
     <div>
-      <div class:list={['font-display text-[clamp(2.6rem,5vw,4rem)] font-medium leading-[0.9] tracking-[-0.03em]', accentText[accent]]}>{stat.n}</div>
+      <div class="font-display text-[clamp(2.6rem,5vw,4rem)] font-medium leading-[0.9] tracking-[-0.03em] text-brand">{stat.n}</div>
       <div class="mt-3 text-base font-semibold text-ink">{stat.label}</div>
       {stat.sub && <div class="mt-1 text-[0.9rem] text-ink-soft">{stat.sub}</div>}
     </div>

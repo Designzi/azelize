@@ -75,6 +75,7 @@ const caret =
       data-burger
       aria-label="Ouvrir le menu"
       aria-controls="mobile-drawer"
+      aria-expanded="false"
       class="inline-flex h-[42px] w-[42px] flex-none flex-col items-center justify-center gap-1 rounded-md border border-line-strong bg-paper lg:hidden"
     >
       <span class="h-0.5 w-[18px] rounded-sm bg-ink"></span>
@@ -126,11 +127,19 @@ const caret =
 <aside
   id="mobile-drawer"
   data-drawer
+  role="dialog"
+  aria-modal="true"
+  aria-label="Menu de navigation"
+  inert
   class="fixed inset-y-0 right-0 z-[81] flex w-[min(384px,87vw)] translate-x-full flex-col overflow-y-auto bg-paper px-[22px] pb-7 pt-[18px] transition-transform duration-300 ease-brand data-[open]:translate-x-0 lg:hidden"
 >
   <div class="mb-2.5 flex items-center justify-between">
     <a href="/" class="font-display text-[1.4rem] font-semibold tracking-[-0.02em] text-ink">Azelize</a>
-    <button type="button" data-drawer-close aria-label="Fermer le menu" class="h-10 w-10 text-[1.6rem] leading-none text-ink-soft">×</button>
+    <button type="button" data-drawer-close aria-label="Fermer le menu" class="inline-flex h-10 w-10 items-center justify-center text-ink-soft">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M6 6l12 12M18 6 6 18"></path>
+      </svg>
+    </button>
   </div>
 
   <button
@@ -198,24 +207,69 @@ const caret =
   if (header && trigger && mega) {
     trigger.addEventListener('mouseenter', () => setMega(true));
     trigger.addEventListener('click', () => setMega(!trigger.hasAttribute('data-open')));
+    // Ouverture/fermeture au clavier (Entrée/Espace gérés nativement par le clic du bouton).
+    // Flèche bas : ouvre le menu et place le focus sur le 1er lien.
+    trigger.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        setMega(true);
+        mega.querySelector<HTMLElement>('a')?.focus();
+      }
+    });
     header.addEventListener('mouseleave', () => setMega(false));
+    // Fermeture quand le focus quitte le header (Tab au-delà du dernier lien).
+    header.addEventListener('focusout', () => {
+      requestAnimationFrame(() => {
+        if (!header.contains(document.activeElement)) setMega(false);
+      });
+    });
     document.querySelectorAll('[data-mega-close]').forEach((el) =>
       el.addEventListener('mouseenter', () => setMega(false)),
     );
   }
 
   // ── Tiroir mobile ───────────────────────────────────────────────────────────
+  const FOCUSABLE =
+    'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])';
+  const drawerFocusable = () =>
+    drawer ? Array.from(drawer.querySelectorAll<HTMLElement>(FOCUSABLE)) : [];
+
   const setDrawer = (open: boolean) => {
     if (!drawer || !overlay || !burger) return;
     drawer.toggleAttribute('data-open', open);
     overlay.toggleAttribute('data-open', open);
     burger.setAttribute('aria-expanded', String(open));
     document.body.style.overflow = open ? 'hidden' : '';
+    if (open) {
+      // Retiré du flux : on enlève inert avant de déplacer le focus dedans.
+      drawer.removeAttribute('inert');
+      drawerFocusable()[0]?.focus();
+    } else {
+      // Si le focus est encore dans le tiroir, on le rend au burger avant d'inerter.
+      if (drawer.contains(document.activeElement)) burger.focus();
+      drawer.setAttribute('inert', '');
+    }
   };
   burger?.addEventListener('click', () => setDrawer(true));
   drawerClose?.addEventListener('click', () => setDrawer(false));
   overlay?.addEventListener('click', () => setDrawer(false));
   drawer?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setDrawer(false)));
+
+  // Piège de focus : Tab/Shift+Tab cyclent à l'intérieur du tiroir ouvert.
+  drawer?.addEventListener('keydown', (e) => {
+    if (e.key !== 'Tab' || !drawer.hasAttribute('data-open')) return;
+    const items = drawerFocusable();
+    if (items.length === 0) return;
+    const first = items[0];
+    const last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  });
   subToggle?.addEventListener('click', () => {
     const open = !subToggle.hasAttribute('data-open');
     subToggle.toggleAttribute('data-open', open);

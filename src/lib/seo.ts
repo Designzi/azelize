@@ -47,11 +47,15 @@ export function organizationJsonLd(): JsonLd {
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
+    // @id partagé avec ProfessionalService → Google fusionne les deux nœuds homonymes.
+    '@id': abs('/#organization'),
     name: site.name,
     url: site.url,
     description: site.description,
     email: site.email,
     logo: abs('/favicon.svg'),
+    // TODO sameAs : ajouter ici les URLs de profils réels (fiche Google Business,
+    // réseaux sociaux) dès qu'elles existent dans site.ts. Ne pas inventer d'URLs.
   };
 }
 
@@ -60,6 +64,8 @@ export function localBusinessJsonLd(): JsonLd {
   return {
     '@context': 'https://schema.org',
     '@type': 'ProfessionalService',
+    // Même @id que Organization : une seule entité aux yeux des moteurs.
+    '@id': abs('/#organization'),
     name: site.name,
     url: site.url,
     description: site.description,
@@ -127,6 +133,31 @@ export function faqJsonLd(items: { q: string; a: string }[]): JsonLd {
       '@type': 'Question',
       name: it.q,
       acceptedAnswer: { '@type': 'Answer', text: it.a },
+    })),
+  };
+}
+
+/**
+ * DefinedTermSet — glossaire structuré (un DefinedTerm par entrée). Cible de choix
+ * pour les moteurs de réponse (« c'est quoi … »). Le contenu doit être identique à
+ * l'affichage, d'où la dérivation directe depuis la liste de termes rendue.
+ */
+export function definedTermSetJsonLd(
+  set: { name: string; description: string; url: string; terms: { term: string; def: string }[] },
+): JsonLd {
+  const id = abs(`${set.url}#glossaire`);
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'DefinedTermSet',
+    '@id': id,
+    name: set.name,
+    description: set.description,
+    url: abs(set.url),
+    hasDefinedTerm: set.terms.map((t) => ({
+      '@type': 'DefinedTerm',
+      name: t.term,
+      description: t.def,
+      inDefinedTermSet: id,
     })),
   };
 }

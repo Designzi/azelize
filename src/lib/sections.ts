@@ -9,7 +9,6 @@ import { z } from 'astro:content';
  * permet « 100 prestations = 1 page paramétrée » sans dupliquer de structure.
  */
 
-const accent = z.enum(['menthe', 'fraise', 'miel', 'citron', 'kiwi']).optional();
 const tone = z.enum(['paper', 'parchment', 'dark', 'brand-soft']).optional();
 
 /** Champs d'en-tête communs aux sections (hors hero). */
@@ -17,7 +16,6 @@ const head = {
   eyebrow: z.string().optional(),
   title: z.string().optional(),
   intro: z.string().optional(),
-  accent,
   tone,
 };
 
@@ -27,7 +25,6 @@ export const sectionSchema = z.discriminatedUnion('type', [
     eyebrow: z.string().optional(),
     title: z.string(),
     lead: z.string().optional(),
-    accent,
   }),
   z.object({
     ...head,

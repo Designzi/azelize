@@ -1,5 +1,7 @@
 # ARCHITECTURE-CIBLE.md
 
+> **🟢 ÉTAT RÉEL — révision 2026-06-05.** L'architecture cible décrite ici **correspond fidèlement à l'implémentation**, et une grande partie du « à créer » est désormais **faite** : collection `guides` créée (+ routes + 7 guides), `data/pricing.ts` créé, méga-menu 4 colonnes en place. Restent **non câblés (délibéré)** : la couche **villes** (collection `villes` + route `[service]/[ville]` + route triple-gatée) — vues `views/villes/` orphelines à câbler **ou** supprimer ; `glossaire`/`temoignages` ont été implémentés en **pages statiques**, pas en collections. Tokens : encre/bandes = **brun-olive `#403D30`** (le Jet `#2D3138` est retiré). Annotations « ✅ fait » / « ⏸️ en attente » ajoutées ci-dessous.
+
 Architecture cible **partant de l'existant** (`CARTOGRAPHIE-ASTRO.md`). Principe : **ne remplacer aucune pratique en place sans gain chiffré**. La plupart des fondations existent déjà → on **étend**, on ne reconstruit pas.
 
 > **Posture.** Pour chaque section : ce qui **existe et reste**, l'**écart** au regard des cas Design, et la **proposition** (avec justification DRY/SEO/perf/maintenabilité). Quand l'existant suffit, c'est dit explicitement.
@@ -10,7 +12,7 @@ Architecture cible **partant de l'existant** (`CARTOGRAPHIE-ASTRO.md`). Principe
 
 **Existe (à conserver) :** `content.config.ts` — schéma `base` (`seo`, `updated`, `tags`, **`sections[]`**) + collections `prestations`, `realisations`, `blog`, `metiers`. Le champ `sections` (union discriminée Zod, `lib/sections.ts`) est le pivot qui supprime la duplication.
 
-**Écart vs Design :** les couches **guides**, **villes**, **glossaire**, **témoignages** n'ont pas de collection ; le registre `seo-architecture.ts` les anticipe (matrices) mais sans loaders.
+**Écart vs Design (révisé 2026-06-05) :** `guides` est désormais une **collection** ; `glossaire` et `temoignages`/avis ont été faits en **pages statiques** (pas en collections) ; seule la couche **villes** reste sans collection ni route (en attente, registre `seo-architecture.ts` prêt).
 
 **Proposition (étendre, justifié) :**
 
@@ -19,13 +21,13 @@ Architecture cible **partant de l'existant** (`CARTOGRAPHIE-ASTRO.md`). Principe
 | `prestations` | **garder** | `titre, resume, ordre?` | — | en place |
 | `realisations` | **garder** | `client, resume, date, couverture?, resultats?` | études de cas | en place ; enrichir entrée Global Cars |
 | `blog` | **garder** | `titre, description, date, brouillon` | — | en place |
-| `metiers` | **garder** | `metier, titre, resume, ordre?` | 8 pages métier clonées | en place ; porter les métiers manquants |
-| `guides` | **créer** | `titre, description, date, sommaire?` | 7 guides C5 | un shell article + N entrées MD/MDX → DRY fort |
-| `villes` | **créer** | `nom, slug, population, zone, quartiers[], temoignage?` | gabarit `-VILLE` + instances | ville = donnée ; gating par `MATRICE_VILLE` |
-| `temoignages` | **créer** | `auteur, metier, note, citation, ville?` | `avis.html` | bloc `testimonial` existe déjà |
-| `glossaire` | **créer** | `terme, definition, lettre` | `TERMS` | filtre alpha en `<script>` |
+| `metiers` | **garder** ✅ | `metier, titre, resume, ordre?` | pages métier clonées | en place — **5 métiers** : `electricien, garage-automobile, macon, plombier, vtc` (menuisier/paysagiste abandonnés) |
+| `guides` | ✅ **créée (fait)** | `titre, description, date, sommaire?` | 7 guides C5 | collection + 7 MDX + `/guides` + `/guides/[slug]` + 7 vues |
+| `villes` | ⏸️ **EN ATTENTE (délibéré)** | `nom, slug, population, zone, quartiers[], temoignage?` | gabarit `-VILLE` + instances | non créée ; vues `views/villes/` orphelines ; gating `MATRICE_VILLE` prêt — à câbler **ou** supprimer |
+| ~~`temoignages`~~ | 🔁 **page statique `/avis` (fait)** | — | `avis.html` | implémenté en **page statique**, pas en collection (changement de stratégie) |
+| ~~`glossaire`~~ | 🔁 **page statique `/glossaire` (fait)** | — | `TERMS` | implémenté en **page statique**, pas en collection (changement de stratégie) |
 
-> **Source unique de prix** : créer `src/data/pricing.ts` (paliers + features) consommé par le bloc `pricing`, la page tarifs et le simulateur. Évite la triple-saisie Design (F9).
+> **Source unique de prix** : ✅ **fait** — `src/data/pricing.ts` (paliers + features) consommé par le bloc `pricing`, la page tarifs et le simulateur. Évite la triple-saisie Design (F9).
 
 **Gating par la donnée (déjà la philosophie du récepteur) :** une page n'existe que si (a) l'entrée de collection existe **et** (b) sa cellule registre est `ship`. C'est le verrou anti-doorway de `seo-architecture.ts` — à **étendre** aux villes/guides, pas à réinventer.
 
@@ -42,13 +44,13 @@ Architecture cible **partant de l'existant** (`CARTOGRAPHIE-ASTRO.md`). Principe
 
 | Route à créer | Source | Gating | Couche |
 |---|---|---|---|
-| `/{service}/[ville].astro` | `getCollection('villes')` × service avec `matrice.ville` | **`MATRICE_VILLE[`${service}/${ville}`] === 'ship'`** (registre déjà écrit, tout `conditionnel`/`exclu` aujourd'hui) | C2 |
-| `/guides/index.astro` + `/guides/[slug].astro` | `getCollection('guides')` (`!brouillon`) | existence d'entrée | C5 |
-| `/glossaire.astro` | `getCollection('glossaire')` | toujours `ship` | outil |
-| `/avis.astro` | `getCollection('temoignages')` | toujours `ship` | C0 |
-| `/tarifs.astro` + `/simulateur-investissement.astro` | `data/pricing.ts` | statiques | C0/outil |
+| `/{service}/[ville].astro` ⏸️ **EN ATTENTE** | `getCollection('villes')` × service avec `matrice.ville` | **`MATRICE_VILLE[`${service}/${ville}`] === 'ship'`** (registre prêt, tout `conditionnel`/`exclu`) | C2 — **non câblée (délibéré)** |
+| `/guides/index.astro` + `/guides/[slug].astro` ✅ **FAIT** | `getCollection('guides')` | existence d'entrée | C5 |
+| `/glossaire.astro` ✅ **FAIT** | **page statique** (pas de collection) | toujours `ship` | outil |
+| `/avis.astro` ✅ **FAIT** | **page statique** (pas de collection) | toujours `ship` | C0 |
+| `/tarifs.astro` + `/simulateur-investissement.astro` ✅ **FAIT** | `data/pricing.ts` | statiques | C0/outil |
 
-> **Triple gaté `/{service}/[metier]/[ville]` (acté) :** **créer la route** `[service]/[metier]/[ville].astro`, gardée par le registre avec **statut `exclu`** par défaut. La route existe (structure prête) mais **aucune page n'est générée** (ni index, ni sitemap, ni OG) tant qu'une cellule ne passe pas `ship` avec contenu local spécifique réel. Risque doorway neutralisé par le gating, sans bloquer la structure.
+> **Triple gaté `/{service}/[metier]/[ville]` (acté — ⏸️ NON CRÉÉ, délibéré) :** la route `[service]/[metier]/[ville].astro` **n'a pas été scaffoldée** (le répertoire `src/pages/[service]/[metier]/` n'existe pas). Décision conservée comme intention ; à créer (statut `exclu`, 0 page générée) **ou** à retirer si la stratégie ville/métier est abandonnée. Aucune régression (la route ne devait générer aucune page).
 
 **`getStaticPaths`** : pattern uniforme déjà en place — `collection × registre → params/props`. Une cellule absente ou non-`ship` ⇒ page non générée ⇒ absente du sitemap (gating natif).
 
@@ -61,7 +63,7 @@ Architecture cible **partant de l'existant** (`CARTOGRAPHIE-ASTRO.md`). Principe
 **Proposition (minimale) :**
 - **Pas** de nouvelle hiérarchie `ServiceLayout/GuideLayout/CaseLayout` : `BaseLayout` + `Blocks.astro` couvrent déjà les hubs/métiers/prestations ; `ArticleLayout` couvre guides/blog. Ajouter un layout n'apporterait pas de DRY supplémentaire → **on garde**.
 - **Nettoyer** le doublon `components/layout/Nav.astro` (non utilisé) — confirmer avant suppression.
-- **Méga-menu Services (acté) :** **étendre `data/nav.ts`** en structure groupée **4 colonnes** (groupes Design : *Présence en ligne · Image de marque · Contenu & templates · Outils sur-mesure*, chaque item = titre + description) et enrichir `Header.astro` pour parser cette structure — **JS vanilla, zéro régression** (l'ouverture/fermeture du panneau reste un `<script>`). La nav d'ancres one-page actuelle devient un sous-cas (liens `/#…` conservés pour la landing).
+- **Méga-menu Services (acté — ✅ FAIT) :** `data/nav.ts` expose `serviceGroups` en structure groupée **4 colonnes** (groupes Design : *Présence en ligne · Image de marque · Contenu & templates · Outils sur-mesure*, chaque item = titre + description) et enrichir `Header.astro` pour parser cette structure — **JS vanilla, zéro régression** (l'ouverture/fermeture du panneau reste un `<script>`). La nav d'ancres one-page actuelle devient un sous-cas (liens `/#…` conservés pour la landing).
 
 ---
 
@@ -75,8 +77,8 @@ Architecture cible **partant de l'existant** (`CARTOGRAPHIE-ASTRO.md`). Principe
 - **Réconcilier les valeurs** des tokens existants vers Ocean Twilight (nom pour nom) : `brand`/`brand-deep`/`brand-bright`/`brand-soft`/`brand-900` → valeurs Design réelles (cf. §2C du delta). Neutres/lignes/parchemin/on-dark : déjà identiques.
 - **Créer** les tokens accent réellement utilisés (audit Q2–Q3) : `--color-accent-2` (jaune vif), `--color-accent-2-soft`, `--color-accent-2-ink`, `--color-section-warm` (beige, 1 token) ; `--color-accent-2-wash` et `--color-olive` (CtaBand) **uniquement si usage réel confirmé Lot 1**.
 - **Élaguer** les 45 slots fruit non adossés à une couleur Design réelle (« aucun ajout fantôme »).
-- **Recâbler** `lib/accents.ts` + énums `tone`/`accent` (`lib/sections.ts`, `Section.astro`, blocs) : de `menthe|fraise|miel|citron|kiwi` vers les rôles Ocean Twilight.
-- **Mettre à jour `CLAUDE.md` (§Couleurs) + la mémoire `palette-retenue.md`** : la règle « 17 combinaisons fruit » est remplacée par « palette Ocean Twilight réelle ». Sinon garde-fou contradictoire.
+- **Recâbler** `lib/accents.ts` + énums `tone`/`accent` (`lib/sections.ts`, `Section.astro`, blocs) : de `menthe|fraise|miel|citron|kiwi` vers les rôles Ocean Twilight. ⚠️ **Partiel (2026-06-05)** : les tokens fruit sont élagués et `lib/accents.ts` renvoie `brand` pour tout accent, **mais** l'énum `menthe…kiwi` subsiste (inerte) dans `lib/accents.ts:12` et `lib/sections.ts` — recâblage à finir.
+- **Mettre à jour `CLAUDE.md` (§Couleurs) + la mémoire `palette-retenue.md`** : ✅ **fait** — « 17 combinaisons fruit » remplacée par la palette Ocean Twilight réelle ; **encre/bandes = brun-olive `#403D30`**, le Jet `#2D3138` est **retiré**.
 - **Inchangé** : `check:tokens` reste actif (zéro hex hors `design-tokens.css`) ; classes canoniques avant `[...]` (CLAUDE.md) ; registre rounded-xs + quasi sans ombres.
 - **Aucune régression visuelle** sur vitrines (hero, Global Cars, simulateur) : parité au pixel.
 
@@ -133,4 +135,4 @@ Architecture cible **partant de l'existant** (`CARTOGRAPHIE-ASTRO.md`). Principe
 
 ---
 
-*Fin de l'architecture cible. Aucun fichier de code créé dans `src/`.*
+*Fin de l'architecture cible. **Note (2026-06-05) : l'architecture décrite est implémentée à ≈ 80 %** ; annotations « ✅ fait » / « ⏸️ en attente » ajoutées. La couche villes et la route triple-gatée restent volontairement non câblées.*

@@ -1,2 +1,0 @@
-Claude --dangerously-skip-permissions
-

@@ -1,5 +1,5 @@
 ---
-/** Section « La preuve » — cas resinefar.fr · Menthe (preuve/identité).
+/** Section « La preuve » — cas resinefar.fr (preuve/identité, marque).
  *  ⚠️ Chiffres et citations à confirmer avec les vrais résultats clients (§11). */
 import Section from '@components/ui/Section.astro';
 import SectionHead from '@components/ui/SectionHead.astro';
@@ -28,7 +28,7 @@ const TESTI = [
 ---
 
 <Section id="preuve" tone="paper">
-  <SectionHead eyebrow="La preuve" accent="menthe">
+  <SectionHead eyebrow="La preuve">
     Un cas concret : resinefar.fr
     <Fragment slot="intro">
       Un artisan de la résine, invisible en ligne. Site créé et tenu par Azelize —
@@ -36,7 +36,7 @@ const TESTI = [
     </Fragment>
   </SectionHead>
 
-  <StatsBlock stats={STATS} accent="menthe" />
+  <StatsBlock stats={STATS} />
   <TestimonialBlock items={TESTI} />
 
   <div class="reveal">

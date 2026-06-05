@@ -13,6 +13,8 @@ interface Props {
 }
 const { items, class: className } = Astro.props;
 const hasAside = Astro.slots.has('aside');
+// Base d'id unique par instance de bloc (plusieurs FAQ possibles par page).
+const uid = `faq-${Math.random().toString(36).slice(2, 8)}`;
 ---
 
 <div class:list={['grid grid-cols-1 items-start gap-7 md:gap-[clamp(36px,5vw,72px)] md:grid-cols-[0.8fr_1.2fr]', className]}>
@@ -31,6 +33,7 @@ const hasAside = Astro.slots.has('aside');
           type="button"
           class="flex w-full cursor-pointer items-start gap-4 border-0 bg-transparent px-5 py-[18px] text-left font-display text-[1.1rem] font-medium tracking-[-0.01em] text-ink transition-colors hover:text-brand group-[.is-open]:text-brand group-[.is-open]:pb-3"
           aria-expanded={i === 0 ? 'true' : 'false'}
+          aria-controls={`${uid}-panel-${i}`}
           data-faq-q
         >
           <span class="inline-flex h-[26px] w-[26px] shrink-0 items-center justify-center rounded-full border border-line-strong bg-paper font-mono text-[0.72rem] text-brand transition-colors group-[.is-open]:border-brand group-[.is-open]:bg-brand group-[.is-open]:text-paper">
@@ -44,7 +47,12 @@ const hasAside = Astro.slots.has('aside');
             <path d="M2 4.5 6 8.5l4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
         </button>
-        <div class="max-h-0 overflow-hidden transition-[max-height] duration-300 ease-brand" data-faq-a>
+        <div
+          id={`${uid}-panel-${i}`}
+          class="max-h-0 overflow-hidden transition-[max-height] duration-300 ease-brand"
+          data-faq-a
+          hidden={i !== 0}
+        >
           <p class="m-0 max-w-[64ch] px-5 pb-[22px] pl-5 text-base leading-[1.65] text-ink-2 md:pl-[62px]">{item.a}</p>
         </div>
       </div>
@@ -60,7 +68,21 @@ const hasAside = Astro.slots.has('aside');
       item.classList.toggle('is-open', open);
       item.querySelector('[data-faq-q]')?.setAttribute('aria-expanded', String(open));
       const wrap = item.querySelector<HTMLElement>('[data-faq-a]');
-      if (wrap) wrap.style.maxHeight = open ? wrap.scrollHeight + 32 + 'px' : '0px';
+      if (!wrap) return;
+      if (open) {
+        // Réintègre le panneau à l'arbre d'accessibilité avant l'animation d'ouverture.
+        wrap.hidden = false;
+        wrap.style.maxHeight = wrap.scrollHeight + 32 + 'px';
+      } else {
+        wrap.style.maxHeight = '0px';
+        // Masque le panneau (retiré de l'arbre a11y) une fois la fermeture animée terminée.
+        const onEnd = (e: TransitionEvent) => {
+          if (e.propertyName !== 'max-height') return;
+          if (!item.classList.contains('is-open')) wrap.hidden = true;
+          wrap.removeEventListener('transitionend', onEnd);
+        };
+        wrap.addEventListener('transitionend', onEnd);
+      }
     };
     items.forEach((item) => {
       setOpen(item, item.classList.contains('is-open'));

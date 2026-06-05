@@ -9,6 +9,7 @@
 import Button from '@components/ui/Button.astro';
 import CtaBand from '@components/blocks/CtaBand.astro';
 import { tiers } from '@data/pricing';
+import { faqJsonLd } from '@lib/seo';
 
 // Prix d'entrée importé de la source unique (jamais codé en dur dans la copie).
 const prixEntree = tiers[0].price;
@@ -18,6 +19,26 @@ const vehicules = [
   { tag: 'Dispo', nom: 'Citadine · 2021', prix: '12 900 €' },
   { tag: 'Dispo', nom: 'Berline · 2019', prix: '15 400 €' },
   { tag: 'Réservé', nom: 'SUV · 2020', prix: '21 900 €' },
+];
+
+// FAQ — source unique : affichée ET déclarée en FAQPage (parité Google).
+const FAQ: { q: string; a: string }[] = [
+  {
+    q: 'Je peux gérer mon stock moi-même ?',
+    a: "Oui : c'est tout l'intérêt du back-office. Vous ajoutez, modifiez et marquez « vendu » en quelques clics, sans nous rappeler. On vous forme en une fois.",
+  },
+  {
+    q: 'Ça remplace leboncoin ?',
+    a: 'Ça réduit votre dépendance : le portail reste un apport, mais votre site capte les clients qui vous cherchent directement — sans commission ni concurrents à côté de vous.',
+  },
+  {
+    q: "J'ai beaucoup de véhicules, c'est gérable ?",
+    a: "Oui, le catalogue est pensé pour ça : stock illimité, filtres, photos multiples. C'est exactement ce qu'on a construit pour Global Cars.",
+  },
+  {
+    q: "C'est combien pour un garage ?",
+    a: `À partir de ${prixEntree} €/mois, tout compris. Et vous ne commencez à payer qu'une fois que le site vous amène des contacts.`,
+  },
 ];
 ---
 
@@ -189,31 +210,16 @@ const vehicules = [
       </h2>
       <div class="mt-[clamp(28px,4vw,40px)] flex max-w-[780px] flex-col gap-2.5">
         {
-          [
-            [
-              'Je peux gérer mon stock moi-même ?',
-              "Oui : c'est tout l'intérêt du back-office. Vous ajoutez, modifiez et marquez « vendu » en quelques clics, sans nous rappeler. On vous forme en une fois.",
-            ],
-            [
-              'Ça remplace leboncoin ?',
-              'Ça réduit votre dépendance : le portail reste un apport, mais votre site capte les clients qui vous cherchent directement — sans commission ni concurrents à côté de vous.',
-            ],
-            [
-              "J'ai beaucoup de véhicules, c'est gérable ?",
-              "Oui, le catalogue est pensé pour ça : stock illimité, filtres, photos multiples. C'est exactement ce qu'on a construit pour Global Cars.",
-            ],
-            [
-              "C'est combien pour un garage ?",
-              `À partir de ${prixEntree} €/mois, tout compris. Et vous ne commencez à payer qu'une fois que le site vous amène des contacts.`,
-            ],
-          ].map(([q, a]) => (
+          FAQ.map((f) => (
             <div class="reveal rounded-sm border border-line bg-paper px-[22px] py-5">
-              <p class="m-0 font-display text-[1.1rem] font-medium text-ink">{q}</p>
-              <p class="mt-2.5 text-base leading-[1.6] text-ink-2">{a}</p>
+              <p class="m-0 font-display text-[1.1rem] font-medium text-ink">{f.q}</p>
+              <p class="mt-2.5 text-base leading-[1.6] text-ink-2">{f.a}</p>
             </div>
           ))
         }
       </div>
+      {/* FAQPage JSON-LD — dérivé du MÊME tableau FAQ affiché (parité Google). */}
+      <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd(FAQ))} />
       <div class="reveal mt-[clamp(24px,3vw,32px)] flex flex-wrap gap-[9px]">
         {
           [

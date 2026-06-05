@@ -1,5 +1,7 @@
 # CARTOGRAPHIE-ASTRO.md
 
+> **🟢 ÉTAT RÉEL — révision 2026-06-05.** Cartographie initiale resynchronisée avec le code actuel. Changements depuis : métiers réels = **`electricien, garage-automobile, macon, plombier, vtc`** (plus de menuisier/paysagiste) ; les sections de la landing vivent sous **`src/sections/home/`** (9 fichiers) + **`src/sections/shared/`** (FinalCta), l'ancien `components/home/` n'existe plus ; le système **fruit/17-combos** est **élagué** (0 token fruit ; palette = Ocean Twilight + encre/bandes **brun-olive `#403D30`**, le Jet `#2D3138` est retiré) ; collection `guides` créée. Les chemins et compteurs ci-dessous sont **mis à jour**.
+
 **Stack récepteur — état de l'art déjà en place.** Document de cartographie en lecture seule.
 Miroir structurel de `CARTOGRAPHIE-DESIGN.md` (mêmes intitulés là où ils existent) pour permettre une comparaison ligne à ligne en Phase 2.
 
@@ -41,22 +43,29 @@ src/
 │   ├── realisations/{index,[slug]}.astro
 │   ├── blog/{index,[slug]}.astro
 │   ├── og/[...route].ts            # endpoint OG (astro-og-canvas)
-│   ├── a-propos.astro · contact.astro
+│   ├── guides/{index,[slug]}.astro  # couche 5 — guides éditoriaux (dynamique)
+│   ├── a-propos.astro · contact.astro · avis.astro · faq.astro · glossaire.astro
+│   ├── tarifs.astro · devis.astro · simulateur-investissement.astro
+│   ├── merci.astro · 404.astro · cgv.astro · cookies.astro · notre-methodologie.astro · vos-30-premiers-jours.astro
 │   └── mentions-legales.astro · confidentialite.astro   (noindex)
 ├── content/
-│   ├── prestations/*.mdx · realisations/*.mdx · blog/*.mdx
-│   └── metiers/*.mdx                # 5 métiers (electricien, macon, menuisier, paysagiste, plombier)
+│   ├── prestations/*.mdx · realisations/*.mdx · blog/*.mdx · guides/*.mdx
+│   └── metiers/*.mdx                # 5 métiers (electricien, garage-automobile, macon, plombier, vtc)
+├── sections/        # fragments de page statique (≠ pages/ = routes only)
+│   ├── home/     9 sections de la landing (Hero, HowItWorks, Problem, Proof, WhySubscription, WhatsIncluded, Pricing, Faq, CtaRow)
+│   └── shared/   FinalCta.astro (réutilisé)
+├── views/           # corps de pages servies par une route dynamique (familles)
+│   └── hubs/ · metiers/ · guides/ · realisations/ · villes/ (⏸️ villes orphelines : aucune route/glob)
 ├── components/
 │   ├── blocks/   Blocks.astro + 10 blocs (Hero, Grid, Includes, Stats, Timeline, Compare, Pricing, Faq, Testimonial, Form)
-│   ├── home/     11 sections de la landing (Hero, HowItWorks, … FinalCta) + CtaRow, RiskNote
-│   ├── layout/   Header, Footer, Nav, MobileCtaBar, Seo
-│   └── ui/       Section, SectionHead, Button, Card, Grid, Badge, Pill, Eyebrow, Breadcrumbs, PageHeader, Field, Logo
+│   ├── layout/   Header, Footer, Nav (⚠️ orphelin), MobileCtaBar, Seo
+│   └── ui/       Section, SectionHead, Button, Card, Grid, Badge, Pill, Eyebrow, Breadcrumbs, PageHeader, Field, Logo, RiskNote
 ├── layouts/      BaseLayout.astro · ArticleLayout.astro
 ├── lib/          sections.ts (schéma Zod) · seo.ts (JSON-LD) · accents.ts · og.ts · format.ts
-├── data/         site.ts · nav.ts · footer.ts · faq.ts · seo-architecture.ts
+├── data/         site.ts · nav.ts · footer.ts · faq.ts · pricing.ts · seo-architecture.ts
 ├── styles/       design-tokens.css (@theme) · global.css
-└── content.config.ts               # 4 collections + schéma `base` commun
-docs/familles/    charte-couleur.md + HTML autonomes (palettes par fruit) ; sync-tokens.cjs
+└── content.config.ts               # 5 collections (prestations, realisations, blog, metiers, guides) + schéma `base` commun
+docs/familles/    charte-couleur.md + HTML autonomes (palettes par fruit, superseded) ; sync-tokens.cjs
 scripts/          check-tokens.mjs  (garde-fou « aucune couleur en dur »)
 ```
 
@@ -83,16 +92,16 @@ Architecture en couches explicite (commentée dans `Blocks.astro:2-7`) :
 
 ### Stylage & tokens — fortement centralisé (Tailwind v4 `@theme`)
 - **Source de vérité unique** : `src/styles/design-tokens.css` — couche `:root` (variables) + bloc `@theme` (utilitaires Tailwind v4).
-- Tokens couleur exposés `--color-*` (brand, ink, paper, parchment, line… + **45 slots fruit** `--color-{famille}-s{25|50|100}-b{25|50|100}`).
+- Tokens couleur exposés `--color-*` : `brand` (Ocean Twilight `#2347B8`, + `-deep/-bright/-soft/-900`), `ink`/`brand-900` **brun-olive `#403D30`** (warm ; le Jet `#2D3138` est retiré), `paper`, `parchment`, `line…`, `on-dark*` (crème sur sombre), jaune `accent-2*` (ponctuel). ~~45 slots fruit~~ **élagués** (0 token fruit ; système fruit/17-combos superseded — révisé 2026-06-05).
 - Tokens typo (`--font-display/sans/mono`), tailles **appariées** `--text-* / --text-*--line-height` (`text-h1` pose taille + interligne), `--tracking-*`, `--radius-*`, `--ease-brand`.
 - `global.css` : `@import "tailwindcss"` → `@import design-tokens` → `@layer base` (resets) → `@utility container-site/hero` → `@layer components .prose-azelize` → infra motion (`.reveal`, `.anim`).
 - **Garde-fou** : `scripts/check-tokens.mjs` rejette tout `#hex`/`rgb()`/`hsl()` hors `design-tokens.css` ; câblé en CI. → **zéro valeur couleur en dur**, déjà tenu.
-- `lib/accents.ts` : type `Accent = menthe|fraise|miel|citron|kiwi` → 4 dictionnaires de **classes littérales** (`accentText/Bg/Border/SoftBg`) — pas de template strings (compatible purge Tailwind).
+- `lib/accents.ts` : le type `Accent = menthe|fraise|miel|citron|kiwi` **subsiste comme étiquettes inertes** (compat schéma) mais **tous les dictionnaires pointent vers `brand`** depuis l'élagage du fruit — aucun effet visuel distinct. Recâblage de l'énum à finir (révisé 2026-06-05).
 
-### Collections de contenu — 4 collections + schéma `base` partagé
+### Collections de contenu — 5 collections + schéma `base` partagé
 `content.config.ts` :
 - `base` (commun) : `seo?{title,description,ogImage}`, `updated?`, `tags?`, **`sections?: SectionData[]`** (composable).
-- `prestations` (+ `titre`, `resume`, `ordre?`), `realisations` (+ `client`, `resume`, `date`, `couverture?`, `resultats?`), `blog` (+ `titre`, `description`, `date`, `brouillon`), `metiers` (+ `metier`, `titre`, `resume`, `ordre?`).
+- `prestations` (+ `titre`, `resume`, `ordre?`), `realisations` (+ `client`, `resume`, `date`, `couverture?`, `resultats?`), `blog` (+ `titre`, `description`, `date`, `brouillon`), `metiers` (+ `metier`, `titre`, `resume`, `ordre?`), **`guides`** (+ `titre`, `description`, `date`, `sommaire?`). *(glossaire et avis sont des **pages statiques**, pas des collections.)*
 - Loader `glob` sur `src/content/**`. **`sections` est le pivot** : il permet « 1 page paramétrée = N entrées » sans dupliquer de structure.
 
 ### Routage — statique + dynamique gaté
@@ -131,9 +140,9 @@ Architecture en couches explicite (commentée dans `Blocks.astro:2-7`) :
 | Axe | Design (source) | Astro (récepteur) |
 |---|---|---|
 | **Pages** | 54 `.html` autonomes | ~14 routes dont 2 dynamiques génératrices ; le reste devient **données** |
-| **Composants** | 16 `.jsx` (1 fin sur `index`, monolithes ailleurs) | 4 couches : 10 blocs + 12 primitives + chrome + 11 sections home, **pur `.astro`** |
-| **Chrome** | `site-chrome.jsx` inclus par script + `_chrome.css` | `Header/Footer/MobileCtaBar` + `BaseLayout` (slots), data `nav.ts`/`footer.ts` |
-| **Tokens** | `colors_and_type.css` (vars) — palette **Ocean Twilight** + jaune | `design-tokens.css` (`@theme`) — palette **fruit / 17 combos** (voir delta) |
+| **Composants** | 16 `.jsx` (1 fin sur `index`, monolithes ailleurs) | 4 couches : 10 blocs + 12 primitives + chrome + **9 sections home** (`src/sections/home/`) + `shared/`, **pur `.astro`** |
+| **Chrome** | `site-chrome.jsx` inclus par script + `_chrome.css` | `Header/Footer/MobileCtaBar` + `BaseLayout` (slots), data `nav.ts` (**méga-menu 4 col.**)/`footer.ts` |
+| **Tokens** | `colors_and_type.css` (vars) — palette **Ocean Twilight** + jaune | `design-tokens.css` (`@theme`) — palette **Ocean Twilight** (brand bleu + encre/bandes brun-olive `#403D30` + crème + jaune `accent-2`) ; **fruit élagué** |
 | **Patterns** | `.az-*` partagées + héros/mockups copiés par page | `sections[] → Blocks.astro` (DRY) ; mockups : à composer en blocs |
 | **Contenu** | en dur dans markup ; embryons `DATA`/`RATES`/`TERMS` | **collections + `sections` Zod** ; registre `seo-architecture.ts` |
 | **Interactivité** | React 18 + Babel standalone (CDN, par page) | **JS vanilla**, zéro îlot |
@@ -142,4 +151,4 @@ Architecture en couches explicite (commentée dans `Blocks.astro:2-7`) :
 
 ---
 
-*Fin de la cartographie Astro. Lecture seule, aucun fichier modifié.*
+*Fin de la cartographie Astro. **Mise à jour 2026-06-05** : resynchronisée avec le code (métiers, `src/sections/`, collection `guides`, palette Ocean Twilight + encre brun-olive, fruit élagué). La couche `views/villes/` reste orpheline (délibéré).*

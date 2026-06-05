@@ -1,5 +1,7 @@
 # MIGRATION-DELTA.md
 
+> **🟢 ÉTAT RÉEL — révision 2026-06-05.** La colonne **« État »** des tables ci-dessous a été **resynchronisée** avec le code. Faits depuis la rédaction initiale : guides (collection + 7 + routes), glossaire et avis (en **pages statiques**, pas en collections), `pricing.ts` (source unique), 5 métiers, méga-menu 4 colonnes. ⚠️ **Correction palette majeure** : la table §2C ci-dessous documentait l'encre/`brand-900` en **Jet `#2D3138`** — décision **révisée** : c'est désormais **brun-olive `#403D30`** (warm pivot), le **Jet est retiré** du système (CLAUDE.md fait foi). Voir l'annotation « révisé » dans §2C.
+
 Comparaison ligne à ligne entre le **langage source** (`CARTOGRAPHIE-DESIGN.md`, UI kit `ui_kits/azelize-studio/`) et le **langage cible** (`CARTOGRAPHIE-ASTRO.md`). En déduit les **règles de traduction** et la **table de mapping des tokens**.
 
 > **Cadrage essentiel.** Le récepteur Astro n'attend pas d'être construit : il **existe déjà**. La plupart des « idiomes cibles » ci-dessous sont **déjà opérationnels**. Le delta dominant n'est donc pas *structurel* (l'architecture est là) mais *volumétrique* : **~40 pages de contenu** du UI kit restent à porter en **entrées de collection** + **registre `seo-architecture.ts`**, et quelques patterns visuels (mockups, cas premium) restent à factoriser en blocs.
@@ -16,17 +18,17 @@ Comparaison ligne à ligne entre le **langage source** (`CARTOGRAPHIE-DESIGN.md`
 | Chrome `site-chrome.jsx` + `_chrome.css` | `Header/Footer/MobileCtaBar` + `BaseLayout` | chrome unique en composants, nav via `data/nav.ts` & `footer.ts` | **D** | — |
 | Composant `.jsx` **statique** (Problem, HowItWorks…) | composant `.astro`, **pas d'îlot** | si zéro interactivité → `.astro` pur | **D** | — |
 | Composant `.jsx` **interactif** (FaqList, simulateur, glossaire, cookies) | **JS vanilla** en `<script>` (PAS de React) | hydrater uniquement le comportement, via `<script>` côté client | **P** (FAQ/form faits ; simulateur/glossaire/cookies à porter) | M–L |
-| Gabarit `-VILLE` + instances `-lorient`/`-vannes` | **1** route `[service]/[ville].astro` + collection `villes` | la ville = donnée ; **gating** via `MATRICE_VILLE` (déjà encodé) | **P** (registre prêt, route + collection absentes) | M |
-| Pages métier clonées (C3) | `[service]/[metier].astro` + collection `metiers` | métier = entrée MDX `sections[]` ; contenu **unique** par métier | **D** (route + 5 entrées) ; **À** : porter les autres métiers | M |
+| Gabarit `-VILLE` + instances `-lorient`/`-vannes` | **1** route `[service]/[ville].astro` + collection `villes` | la ville = donnée ; **gating** via `MATRICE_VILLE` (déjà encodé) | **⏸️ EN ATTENTE** (registre prêt ; route + collection absentes ; vues `views/villes/` orphelines, non câblées — délibéré) | M |
+| Pages métier clonées (C3) | `[service]/[metier].astro` + collection `metiers` | métier = entrée MDX `sections[]` ; contenu **unique** par métier | **✅ D** (route + **5 métiers** : `electricien, garage-automobile, macon, plombier, vtc`) | — |
 | Hubs services C1 (×11) | `[service]/index.astro` + `SERVICES[].hub` | service = entrée du registre ; hub = `sections[]` | **D** (route + 6 services `ship`) ; **À** : enrichir les hubs | M |
 | Styles inline / valeurs en dur | utilitaires Tailwind v4 / tokens `@theme` | via **table de mapping tokens** (§2C) ; `check:tokens` interdit le hex | **D** (garde-fou actif) | — |
 | Pages clones C2/C3 (duplication) | routes dynamiques + collections | factorisation pilotée par la donnée | **P** | M |
-| Guides éditoriaux (C5) | collection `guides` + `guides/[slug].astro` | corps en MD/MDX ; shell `ArticleLayout` | **À** (collection à créer ; `ArticleLayout` existe) | M |
+| Guides éditoriaux (C5) | collection `guides` + `guides/[slug].astro` | corps en MD/MDX ; shell `ArticleLayout` | **✅ D** (collection `guides` créée + 7 guides MDX + `/guides` + `/guides/[slug]` + 7 vues) | — |
 | Études de cas | collection `realisations` + `realisations/[slug].astro` | gabarit narratif + données + **vrais visuels** (`<Image/>`) | **P** (route + 1 entrée `far`) ; **À** : Global Cars premium | M–L |
-| Pages légales (`mentions`, `cgv`, `confidentialite`, `cookies`) | pages statiques (ou collection `legal`) | shell « sommaire collant + sections numérotées » | **P** (2 pages présentes ; `cgv`/`cookies` à ajouter) | S |
-| Tarifs (`tarifs.html`, `TarifsSection.jsx`, simulateur) | bloc `pricing` + **source de prix unique** | prix = donnée unique réutilisée (page, simulateur, hub) | **P** (bloc `pricing` existe ; source unique de prix à centraliser) | S–M |
-| Glossaire (`TERMS`) | collection `glossaire` + filtre alpha en `<script>` | termes = données ; recherche/filtre en JS vanilla | **À** | M |
-| Avis (`avis.html`) | collection `temoignages` + bloc `testimonial` | avis = données ; bloc existe | **À** | S |
+| Pages légales (`mentions`, `cgv`, `confidentialite`, `cookies`) | pages statiques (ou collection `legal`) | shell « sommaire collant + sections numérotées » | **✅ D** (`mentions-legales`, `confidentialite`, `cgv`, `cookies` présentes) | — |
+| Tarifs (`tarifs.html`, `TarifsSection.jsx`, simulateur) | bloc `pricing` + **source de prix unique** | prix = donnée unique réutilisée (page, simulateur, hub) | **✅ D** (`src/data/pricing.ts` créé ; page `/tarifs` présente) | — |
+| Glossaire (`TERMS`) | ~~collection `glossaire`~~ → **page statique** `/glossaire` + filtre alpha en `<script>` | termes = données ; recherche/filtre en JS vanilla | **✅ D** (page `glossaire.astro` ; **changement de stratégie** : page statique, pas collection) | — |
+| Avis (`avis.html`) | ~~collection `temoignages`~~ → **page statique** `/avis` + bloc `testimonial` | avis = données ; bloc existe | **✅ D** (page `avis.astro` ; **changement de stratégie** : page statique, pas collection) | — |
 | OG par page (Design : absent) | `og/[...route].ts` (astro-og-canvas) | OG générées au build pour toute entrée `ship` | **D** | — |
 | Mockups CSS (SERP, dashboard, van, catalogue) copiés par page | blocs/primitives dédiés (`mockup-*`) ou `<Image/>` | factoriser les répétés ; one-offs restent locaux | **À** | M–L |
 
@@ -51,7 +53,7 @@ Comparaison ligne à ligne entre le **langage source** (`CARTOGRAPHIE-DESIGN.md`
 
 ## 2C. Table de mapping des tokens (source Design → cible Astro) — **réconciliée (Q1–Q3 actées)**
 
-> ✅ **Décision Q1.** La source de vérité palette = **les couleurs réelles du Design**, jamais les `.md`/commentaires. Le Design ship un fichier **`design-tokens.css` auto-intitulé « Source unique de vérité »** : palette **Ocean Twilight** (`--brand: #2347B8`) + Jet + Blanc + Parchemin + Pale Slate, et — fait décisif — **les mêmes noms de tokens que le récepteur** (`--color-brand`, `--color-brand-deep`, `--color-brand-soft`…). Le « mapping 1:1 » est donc **littéral, nom pour nom** ; seules les **valeurs** divergent. Le système **fruit / 17 combos** du récepteur (marque Menthe `#002080`, 45 slots, `menthe/fraise/miel/citron/kiwi`) n'est documenté que dans `docs/familles/charte-couleur.md` — **un `.md`, donc explicitement ignoré par Q1** : c'est le **« superflu » à élaguer** (« aucun ajout fantôme »).
+> ✅ **Décision Q1.** La source de vérité palette = **les couleurs réelles du Design**, jamais les `.md`/commentaires. Le Design ship un fichier **`design-tokens.css` auto-intitulé « Source unique de vérité »** : palette **Ocean Twilight** (`--brand: #2347B8`) + ~~Jet~~ **encre brun-olive `#403D30` (révisé 2026-06-05 — le Jet `#2D3138` est retiré)** + Blanc + Parchemin + Pale Slate, et — fait décisif — **les mêmes noms de tokens que le récepteur** (`--color-brand`, `--color-brand-deep`, `--color-brand-soft`…). Le « mapping 1:1 » est donc **littéral, nom pour nom** ; seules les **valeurs** divergent. Le système **fruit / 17 combos** du récepteur (marque Menthe `#002080`, 45 slots, `menthe/fraise/miel/citron/kiwi`) n'est documenté que dans `docs/familles/charte-couleur.md` — **un `.md`, donc explicitement ignoré par Q1** : c'est le **« superflu » à élaguer** (« aucun ajout fantôme »).
 
 > ➡️ **Réconciliation** = importer les **valeurs réelles Ocean Twilight** dans les **noms de tokens existants** du récepteur, puis **supprimer les slots fruit non adossés à une couleur Design réellement utilisée**.
 
@@ -59,7 +61,7 @@ Comparaison ligne à ligne entre le **langage source** (`CARTOGRAPHIE-DESIGN.md`
 > Fichiers audités : `templates/azelize/{design-tokens.css, colors_and_type.css}` + `preview/*.html` (regex hex/rgba, fréquences). ⚠️ **Les 54 pages produit `.jsx/.html` ne sont PAS sur cette machine** → l'audit d'usage par page (combien de fois chaque jaune sert réellement, brun-olive CtaBand, etc.) reste à compléter au Lot 1, kit en main.
 
 - **Marque (bleu)** confirmée active : `#2347b8` (×9), `#1c39a0` (×6), `#2f57d0` (×4), wash `#e6ebf9` (×5).
-- **Encre/neutres** (match exact récepteur) : `#2d3138` (×9), `#4a4f57`, `#6f747c`, `#a7abb2`, lignes `#e7e4da`/`#c9cdd2`(×14)/`#f1eee5`, parchemin `#f5f1e8` (×5), papier `#fff/#ffffff`.
+- **Encre/neutres** : ~~`#2d3138` (×9)~~ → **révisé en `#403D30` brun-olive** (warm pivot ; le Jet est retiré), `#4a4f57`, `#6f747c`, `#a7abb2`, lignes `#e7e4da`/`#c9cdd2`(×14)/`#f1eee5`, parchemin `#f5f1e8` (×5), papier `#fff/#ffffff`.
 - **Jaunes (accent-2)** définis : `#ffd500` (vif, ×1), `#ffea80` (soft, ×1), `#fff4bf` (wash, ×1) + encre `#403500` (×1). → **2 à 3 variantes** selon usage réel (vif + soft sûrs ; wash « réservé/hover » à confirmer Lot 1).
 - **Beige de section** : `#f2f0e6` (×1) — **1 seule variante** (Q3 → **1 token**).
 - **Brun-olive CtaBand `#403d30`** : **absent du kit token** (vit dans le `<style>` des pages produit, non présentes) → variante réelle probable, **à confirmer Lot 1**.
@@ -74,8 +76,8 @@ Comparaison ligne à ligne entre le **langage source** (`CARTOGRAPHIE-DESIGN.md`
 | `#1C39A0` `--brand-deep` | Primaire foncé | `--color-brand-deep` (`#001040`) | **réconcilier** → `#1C39A0` |
 | `#2F57D0` `--brand-bright` | Primaire clair | `--color-brand-bright` (`#0040FF`) | **réconcilier** → `#2F57D0` |
 | `#E6EBF9` `--brand-soft` | Wash bleu | `--color-brand-soft` (`#BFCFFF`) | **réconcilier** → `#E6EBF9` |
-| `#2D3138` `--ink` | Jet Black (encre) | `--color-ink` (`#2D3138`) | **réutiliser** (match) |
-| `#2D3138` `--brand-900` | Bandes sombres | `--color-brand-900` (`#001040`) | **réconcilier** → `#2D3138` (Jet) |
+| ~~`#2D3138` Jet~~ → **`#403D30`** `--ink` | ~~Jet Black~~ → **encre brun-olive (warm)** | `--color-ink` = **`#403D30`** | **🔁 RÉVISÉ (2026-06-05)** : décision pivotée vers **brun-olive `#403D30`** ; le **Jet `#2D3138` est retiré** (CLAUDE.md interdit de le réintroduire) |
+| ~~`#2D3138`~~ → **`#403D30`** `--brand-900` | Bandes sombres / footer | `--color-brand-900` = **`#403D30`** | **🔁 RÉVISÉ (2026-06-05)** : **brun-olive `#403D30`** (warm), **pas** le Jet `#2D3138` |
 | `#FFD500` `--accent-2` | Jaune vif | *(aucun — slots citron à élaguer)* | **créer** `--color-accent-2` |
 | `#FFEA80` `--accent-2-soft` | Jaune clair (topbar) | `citron-s50-b100` (=`#FFEA80`) | **créer** `--color-accent-2-soft` (élaguer citron) |
 | `#FFF4BF` `--accent-2-wash` | Jaune très clair (hover) | — | **créer si usage réel confirmé** (Lot 1) |
@@ -95,7 +97,7 @@ Comparaison ligne à ligne entre le **langage source** (`CARTOGRAPHIE-DESIGN.md`
 **Conséquences à traiter (réconciliation fruit → Ocean Twilight)** — voir PLAN Lot 1 :
 - `src/lib/accents.ts` (mappe vers familles fruit) → recâbler sur les rôles Ocean Twilight ou neutraliser.
 - Props `tone`/`accent` (`lib/sections.ts`, `Section.astro`, blocs) qui énumèrent `menthe|fraise|…` → redéfinir l'énum sur la palette réelle.
-- **`CLAUDE.md`** (§Couleurs « 17 combinaisons », « jamais ok/warn/danger ») et la **mémoire `palette-retenue.md`** : **désormais supersédés** par Q1 → à mettre à jour avant le portage (sinon garde-fou contradictoire).
+- **`CLAUDE.md`** (§Couleurs) et la **mémoire `palette-retenue.md`** : ✅ **mis à jour (fait)** — la règle « 17 combinaisons fruit » est remplacée par la palette Ocean Twilight réelle ; CLAUDE.md **fait désormais foi** (encre/bandes = brun-olive `#403D30` ; Jet `#2D3138` retiré ; `ok/warn/danger` jamais en surface).
 - `docs/familles/*` + `check-tokens.mjs` : la doc fruit devient obsolète ; `check:tokens` reste valide (toujours zéro hex hors `design-tokens.css`).
 
 **Objectif inchangé :** zéro valeur en dur après portage (`check:tokens`) ; mais le **set de tokens** est désormais la **palette Design réelle**, élaguée du superflu fruit.
@@ -116,4 +118,4 @@ Comparaison ligne à ligne entre le **langage source** (`CARTOGRAPHIE-DESIGN.md`
 
 ---
 
-*Fin du delta. Aucune migration exécutée.*
+*Fin du delta. **Note (2026-06-05) : migration exécutée à ≈ 80 %** ; colonnes d'état et table de tokens §2C resynchronisées avec le code réel.*

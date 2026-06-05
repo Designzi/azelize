@@ -42,15 +42,15 @@ const { sections } = Astro.props;
     return (
       <Section tone={s.tone ?? 'paper'}>
         {s.title && (
-          <SectionHead eyebrow={s.eyebrow} accent={s.accent}>
+          <SectionHead eyebrow={s.eyebrow}>
             {s.title}
             {s.intro && <Fragment slot="intro">{s.intro}</Fragment>}
           </SectionHead>
         )}
         {s.type === 'grid' && <GridBlock items={s.items} cols={s.cols} />}
-        {s.type === 'includes' && <IncludesBlock items={s.items} accent={s.accent} note={s.note} />}
-        {s.type === 'stats' && <StatsBlock stats={s.stats} accent={s.accent} />}
-        {s.type === 'timeline' && <TimelineBlock steps={s.steps} accent={s.accent} />}
+        {s.type === 'includes' && <IncludesBlock items={s.items} note={s.note} />}
+        {s.type === 'stats' && <StatsBlock stats={s.stats} />}
+        {s.type === 'timeline' && <TimelineBlock steps={s.steps} />}
         {s.type === 'compare' && <CompareBlock bad={s.bad} good={s.good} close={s.close} />}
         {s.type === 'pricing' && (
           <PricingBlock

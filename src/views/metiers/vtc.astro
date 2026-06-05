@@ -7,6 +7,7 @@
 import Button from '@components/ui/Button.astro';
 import CtaBand from '@components/blocks/CtaBand.astro';
 import { tiers } from '@data/pricing';
+import { faqJsonLd } from '@lib/seo';
 
 // Prix de base (source unique) — Design : « À partir de 390 €/mois ».
 const fromPrice = tiers[0].price;
@@ -48,8 +49,7 @@ const faq = [
 const chips = [
   { label: 'Création de site', href: '/creation-site-internet' },
   { label: 'Référencement local', href: '/referencement-seo' },
-  { label: 'Site à Lorient', href: '/creation-site-internet-lorient' },
-  { label: 'Le prix d’un site', href: '/combien-coute-site-internet' },
+  { label: 'Le prix d’un site', href: '/guides/combien-coute-site-internet' },
 ];
 ---
 
@@ -200,6 +200,8 @@ const chips = [
           ))
         }
       </div>
+      {/* FAQPage JSON-LD — dérivé du MÊME tableau faq affiché (parité Google). */}
+      <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd(faq))} />
       <div class="mt-[clamp(24px,3vw,32px)] flex flex-wrap gap-[9px]">
         {
           chips.map((c) => (

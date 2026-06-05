@@ -365,14 +365,17 @@ import Eyebrow from '@components/ui/Eyebrow.astro';
 <script>
   // ── Gestion des cookies — logique React Design réécrite en vanilla ──────────
   // États NON persistés (démo, fidèle au Design).
+  // ⚠️ Script en JS pur (sans annotations TS) : le scanner de dépendances de Vite
+  //    (esbuild, étape optimizeDeps au démarrage de `astro dev`) échoue sur certains
+  //    génériques TS dans un <script> inline (ex. `Record<string, () => void>`).
   const state = { audience: true, perso: false };
 
-  const toggles = Array.from(document.querySelectorAll<HTMLButtonElement>('.ck-tog[data-tog]'));
-  const banner = document.querySelector<HTMLElement>('[data-banner]');
-  const savedEl = document.querySelector<HTMLElement>('.ck-saved');
+  const toggles = Array.from(document.querySelectorAll('.ck-tog[data-tog]'));
+  const banner = document.querySelector('[data-banner]');
+  const savedEl = document.querySelector('.ck-saved');
 
-  function syncToggle(btn: HTMLButtonElement) {
-    const key = btn.dataset.tog as 'audience' | 'perso';
+  function syncToggle(btn) {
+    const key = btn.dataset.tog;
     const on = state[key];
     btn.classList.toggle('is-on', on);
     btn.setAttribute('aria-pressed', String(on));
@@ -381,8 +384,8 @@ import Eyebrow from '@components/ui/Eyebrow.astro';
     toggles.forEach(syncToggle);
   }
 
-  let flashTimer: number | undefined;
-  function flash(msg: string) {
+  let flashTimer;
+  function flash(msg) {
     if (!savedEl) return;
     savedEl.textContent = msg;
     if (flashTimer) window.clearTimeout(flashTimer);
@@ -394,7 +397,7 @@ import Eyebrow from '@components/ui/Eyebrow.astro';
   // Toggles individuels
   toggles.forEach((btn) => {
     btn.addEventListener('click', () => {
-      const key = btn.dataset.tog as 'audience' | 'perso';
+      const key = btn.dataset.tog;
       state[key] = !state[key];
       syncToggle(btn);
     });
@@ -405,7 +408,7 @@ import Eyebrow from '@components/ui/Eyebrow.astro';
   }
 
   // Actions
-  const handlers: Record<string, () => void> = {
+  const handlers = {
     'accept-all': () => {
       state.audience = true;
       state.perso = true;
@@ -438,7 +441,7 @@ import Eyebrow from '@components/ui/Eyebrow.astro';
     },
   };
 
-  document.querySelectorAll<HTMLElement>('[data-action]').forEach((el) => {
+  document.querySelectorAll('[data-action]').forEach((el) => {
     const fn = handlers[el.dataset.action ?? ''];
     if (fn) el.addEventListener('click', fn);
   });

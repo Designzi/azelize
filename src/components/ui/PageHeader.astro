@@ -4,19 +4,17 @@
  * les pages de liste, les pages statiques et les articles. Slot par défaut = titre.
  */
 import Eyebrow from '@components/ui/Eyebrow.astro';
-import type { Accent } from '@lib/accents';
 
 interface Props {
   eyebrow?: string;
-  accent?: Accent;
   class?: string;
 }
-const { eyebrow, accent = 'menthe', class: className } = Astro.props;
+const { eyebrow, class: className } = Astro.props;
 const hasLead = Astro.slots.has('lead');
 ---
 
 <div class:list={['max-w-2xl', className]}>
-  {eyebrow && <Eyebrow accent={accent}>{eyebrow}</Eyebrow>}
+  {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
   <h1 class="mt-4 font-display text-h1 font-medium tracking-h1 text-ink">
     <slot />
   </h1>

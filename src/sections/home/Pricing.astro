@@ -1,5 +1,5 @@
 ---
-/** Section « Tarifs » — 3 paliers · Menthe (contexte Azelize, action = Menthe).
+/** Section « Tarifs » — 3 paliers (contexte Azelize, action = marque).
  *  Montants issus de la source unique `data/pricing.ts` (partagée avec /tarifs).
  *  ⚠️ Prix indicatifs en attente d'arbitrage (cf. brief §11). */
 import Section from '@components/ui/Section.astro';
@@ -13,7 +13,7 @@ import { tiers as TIERS } from '@data/pricing';
 
 <Section id="prix">
   <div class="mb-[clamp(44px,5.5vw,80px)]">
-    <div class="reveal"><Eyebrow accent="menthe" class="mb-[18px]">Tarifs</Eyebrow></div>
+    <div class="reveal"><Eyebrow class="mb-[18px]">Tarifs</Eyebrow></div>
     <div class="grid grid-cols-1 items-start gap-4 md:grid-cols-2 md:gap-[clamp(24px,4vw,64px)]">
       <div class="reveal">
         <h2 class="m-0 font-display text-h2 font-medium tracking-h2 text-ink text-pretty">Une formule claire pour rester visible.</h2>

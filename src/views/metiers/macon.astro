@@ -9,9 +9,26 @@
 import Button from '@components/ui/Button.astro';
 import CtaBand from '@components/blocks/CtaBand.astro';
 import { tiers } from '@data/pricing';
+import { faqJsonLd } from '@lib/seo';
 
 // Prix d'entrée importé de la source unique (jamais codé en dur dans la copie).
 const prixEntree = tiers[0].price;
+
+// FAQ — source unique : affichée ET déclarée en FAQPage (parité Google).
+const FAQ: { q: string; a: string }[] = [
+  {
+    q: 'Mes chantiers sont longs, le site sert vraiment ?',
+    a: "Oui : c'est souvent là que se décide le choix de l'artisan. Un site sérieux avec vos réalisations fait pencher la balance avant même le premier rendez-vous.",
+  },
+  {
+    q: "Je n'ai pas de photos pro de mes chantiers.",
+    a: 'Quelques photos au téléphone suffisent pour démarrer, on les met en valeur. On enrichit au fil des chantiers.',
+  },
+  {
+    q: "C'est combien pour un maçon ?",
+    a: `À partir de ${prixEntree} €/mois, tout compris. Vous ne commencez à payer qu'une fois que le site vous amène des demandes.`,
+  },
+];
 ---
 
 <main>
@@ -164,27 +181,16 @@ const prixEntree = tiers[0].price;
       </h2>
       <div class="mt-[clamp(28px,4vw,40px)] flex max-w-[780px] flex-col gap-2.5">
         {
-          [
-            [
-              'Mes chantiers sont longs, le site sert vraiment ?',
-              "Oui : c'est souvent là que se décide le choix de l'artisan. Un site sérieux avec vos réalisations fait pencher la balance avant même le premier rendez-vous.",
-            ],
-            [
-              "Je n'ai pas de photos pro de mes chantiers.",
-              'Quelques photos au téléphone suffisent pour démarrer, on les met en valeur. On enrichit au fil des chantiers.',
-            ],
-            [
-              "C'est combien pour un maçon ?",
-              `À partir de ${prixEntree} €/mois, tout compris. Vous ne commencez à payer qu'une fois que le site vous amène des demandes.`,
-            ],
-          ].map(([q, a]) => (
+          FAQ.map((f) => (
             <div class="reveal rounded-sm border border-line bg-paper px-[22px] py-5">
-              <p class="m-0 font-display text-[1.1rem] font-medium text-ink">{q}</p>
-              <p class="mt-2.5 text-base leading-[1.6] text-ink-2">{a}</p>
+              <p class="m-0 font-display text-[1.1rem] font-medium text-ink">{f.q}</p>
+              <p class="mt-2.5 text-base leading-[1.6] text-ink-2">{f.a}</p>
             </div>
           ))
         }
       </div>
+      {/* FAQPage JSON-LD — dérivé du MÊME tableau FAQ affiché (parité Google). */}
+      <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd(FAQ))} />
       <div class="reveal mt-[clamp(24px,3vw,32px)] flex flex-wrap gap-[9px]">
         {
           [

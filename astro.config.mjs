@@ -21,10 +21,17 @@ export default defineConfig({
     mdx(),
     sitemap({
       // Exclure les pages noindex (cohérent avec la balise robots).
+      // À garder synchronisé avec les pages qui posent <meta robots="noindex">.
       filter: (page) =>
-        !page.includes('/mentions-legales') && !page.includes('/confidentialite'),
+        !['/mentions-legales', '/confidentialite', '/merci'].some((p) => page.includes(p)),
+      // lastmod : à défaut d'une date par page (site statique éditorial),
+      // on prend la date du build — signale au moins la fraîcheur de l'ensemble.
+      serialize: (item) => ({ ...item, lastmod: new Date().toISOString() }),
     }),
   ],
+  // Précharge les liens internes au survol : transitions quasi instantanées,
+  // coût quasi nul sur un site statique.
+  prefetch: { prefetchAll: true },
   vite: {
     plugins: [tailwindcss()],
   },

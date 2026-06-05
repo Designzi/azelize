@@ -46,13 +46,21 @@ const devStyleguideHref = import.meta.env.DEV
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
     />
     <Seo {...seo} organization={organization} jsonLd={jsonLd} />
   </head>
   <body class:list={['flex min-h-screen flex-col', !bare && 'pb-[76px] md:pb-0']}>
+    {!bare && (
+      <a
+        href="#contenu"
+        class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[10000] focus:rounded-md focus:bg-brand focus:px-4 focus:py-2 focus:text-on-dark"
+      >
+        Aller au contenu
+      </a>
+    )}
     {!bare && <Header />}
-    <main class="flex-1" style={mainStyle}>
+    <main id="contenu" class="flex-1" style={mainStyle}>
       <slot />
     </main>
     {!bare && <Footer />}

@@ -12,6 +12,7 @@
 import Button from '@components/ui/Button.astro';
 import CtaBand from '@components/blocks/CtaBand.astro';
 import { tiers } from '@data/pricing';
+import { faqJsonLd } from '@lib/seo';
 
 const prixPresence = tiers[0].price;
 
@@ -145,10 +146,7 @@ const FAQ: { q: string; a: string }[] = [
 
 const LINKS: { label: string; href: string }[] = [
   { label: 'Site pour électricien', href: '/creation-site-internet/electricien' },
-  { label: 'Site à Lanester', href: '/creation-site-internet/lanester' },
-  { label: 'Site à Lorient', href: '/creation-site-internet/lorient' },
-  { label: 'Site à Vannes', href: '/creation-site-internet/vannes' },
-  { label: 'Référencement local', href: '/prestations/referencement-seo' },
+  { label: 'Référencement local', href: '/referencement-seo' },
 ];
 ---
 
@@ -167,7 +165,7 @@ const LINKS: { label: string; href: string }[] = [
     </p>
     <div class="mt-7 flex flex-wrap gap-3.5">
       <Button href="/contact" size="lg">Demander un devis gratuit</Button>
-      <Button href="/prestations/creation-site-internet" variant="outline" size="lg">Voir le service</Button>
+      <Button href="/creation-site-internet" variant="outline" size="lg">Voir le service</Button>
     </div>
   </div>
 
@@ -363,6 +361,8 @@ const LINKS: { label: string; href: string }[] = [
       }
     </div>
   </div>
+  {/* FAQPage JSON-LD — dérivé du MÊME tableau FAQ affiché (parité Google). */}
+  <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd(FAQ))} />
 </section>
 
 {/* MAILLAGE INTERNE — chips */}

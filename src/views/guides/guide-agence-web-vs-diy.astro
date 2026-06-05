@@ -7,6 +7,7 @@
  * Le chrome (header/footer) + breadcrumbs sont fournis par la route /guides/[slug].
  */
 import CtaBand from '@components/blocks/CtaBand.astro';
+import { faqJsonLd } from '@lib/seo';
 
 const DIY: string[] = [
   'Des heures le dimanche soir, au lieu de souffler.',
@@ -46,7 +47,7 @@ const FAQ: { q: string; a: string }[] = [
 
 const LINKS: { label: string; href: string }[] = [
   { label: 'Guide SEO pour artisans', href: '/guides/guide-seo-tpe-btp' },
-  { label: 'Création de site', href: '/prestations/creation-site-internet' },
+  { label: 'Création de site', href: '/creation-site-internet' },
   { label: 'Voir les tarifs', href: '/tarifs' },
   { label: 'Réalisations', href: '/realisations' },
 ];
@@ -177,6 +178,8 @@ const LINKS: { label: string; href: string }[] = [
       }
     </div>
   </div>
+  {/* FAQPage JSON-LD — dérivé du MÊME tableau FAQ affiché (parité Google). */}
+  <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd(FAQ))} />
 </section>
 
 {/* MAILLAGE — chips */}

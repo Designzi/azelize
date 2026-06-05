@@ -63,7 +63,7 @@ const hasRisk = Astro.slots.has('risk');
           {hasRisk && <div class="text-center"><slot name="risk" /></div>}
         </form>
 
-        <div class="hidden flex-col items-center gap-2.5 rounded-sm bg-paper px-[clamp(26px,3vw,40px)] py-[clamp(40px,5vw,60px)] text-center" data-contact-sent>
+        <div class="hidden flex-col items-center gap-2.5 rounded-sm bg-paper px-[clamp(26px,3vw,40px)] py-[clamp(40px,5vw,60px)] text-center" data-contact-sent role="status" aria-live="polite" tabindex="-1">
           <div class="flex h-[54px] w-[54px] items-center justify-center rounded-full bg-brand text-[1.6rem] font-bold text-paper" aria-hidden="true">✓</div>
           <h3 class="mt-2 font-display text-[1.6rem] font-medium tracking-[-0.02em] text-ink" data-contact-sent-title>{sentTitle}</h3>
           <p class="m-0 max-w-[34ch] text-base leading-[1.55] text-ink-soft">{sentBody}</p>
@@ -86,6 +86,7 @@ const hasRisk = Astro.slots.has('risk');
       form.classList.add('hidden');
       sent?.classList.remove('hidden');
       sent?.classList.add('flex');
+      sent?.focus(); // restitue le focus + annonce le message aux lecteurs d'écran
     });
   });
 </script>

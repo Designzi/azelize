@@ -2,103 +2,43 @@
    AZELIZE — Design tokens (Ocean Twilight — marque #2347B8, site monochrome)
    SOURCE DE VÉRITÉ. Importé en premier via global.css.
 
-   Deux couches :
-   1) :root — variables CSS brutes (--brand, --ink, --accent…) utilisées par les
-      classes .ed-* (landing) et .az-* (helpers).
-   2) @theme — mapping pour Tailwind v4 (utilitaires : bg-brand, text-ink…).
+   Une seule couche fait foi pour les couleurs/échelles : @theme (mapping
+   Tailwind v4 → utilitaires bg-brand, text-ink, text-h2, rounded-md…, et
+   variables var(--color-*) consommées par les rares blocs CSS scoped .ed-*/.az-*).
+   :root ne conserve QUE les primitives réellement lues en CSS brut et qui n'ont
+   pas d'équivalent utilitaire : courbe/durées de motion (--ease), anneau de
+   focus (--ring-focus), familles de police, conteneurs (--container-*) et les
+   couleurs racine dont dérivent ces primitives (--brand, --ink, --paper).
    ⚠️ Aucune valeur en dur hors de ce fichier.
    Les polices sont chargées via <link> dans BaseLayout.astro (head), pas en
    @import CSS (qui finirait après les règles Tailwind dans le bundle).
    ========================================================================== */
 
 :root {
-  /* — BRAND (Ocean Twilight bleu, Q1) — la marque reste bleue. L'encre et les
-     bandes sombres sont WARM (brun-olive #403D30, texte crème). Jaune accent-2
-     ponctuel. Fruit élagué ; plus aucun #2D3138 (Jet) dans le système. — */
-  --brand:        #2347B8;   /* Ocean Twilight — primaire */
-  --brand-deep:   #1C39A0;   /* hover / pressé */
-  --brand-bright: #2F57D0;   /* clair */
-  --brand-soft:   #E6EBF9;   /* wash bleu clair — surfaces, badges */
-  --brand-900:    #403D30;   /* Brun-olive sombre — bandes sombres, footer (encre chaude marque) */
-  --brand-line:   #C9CDD2;   /* Pale Slate — filet sur surface douce */
+  /* Primitives réellement lues en CSS brut (le reste vit en @theme ci-dessous).
+     Les couleurs racine ne servent que de base au reset global.css et à
+     l'anneau de focus ; tout le reste de la palette passe par --color-* (@theme). */
 
-  /* — ACCENT (= brand ; bouton plein) — */
-  --accent:        #2347B8;
-  --accent-bright: #2F57D0;
-  --accent-deep:   #1C39A0;
+  /* — COULEURS racine (base du reset + dérivation du focus) — */
+  --brand: #2347B8;   /* Ocean Twilight — base de --ring-focus */
+  --ink:   #403D30;   /* Brun-olive — couleur de texte par défaut (body) */
+  --paper: #FFFFFF;   /* fond par défaut (body, ::selection) */
 
-  /* — NEUTRES — */
-  --paper:        #FFFFFF;
-  --paper-2:      #F5F1E8;   /* Parchemin — surfaces secondaires */
-  --surface:      #FFFFFF;
-  --ink:          #403D30;   /* Brun-olive — encre chaude de la marque */
-  --ink-2:        #4A4F57;
-  --ink-soft:     #6F747C;
-  --ink-faint:    #A7ABB2;
-  --line:         #E7E4DA;
-  --line-strong:  #C9CDD2;
-  --line-soft:    #F1EEE5;
-
-  /* — SUR FOND SOMBRE (crème sur bande brun-olive) — */
-  --on-dark:        #F4F1E6;                   /* crème clair — titres/texte sur sombre */
-  --on-dark-bright: #FFFFFF;                   /* blanc — survol du bouton crème */
-  --on-dark-soft:   rgba(244, 241, 230, 0.78); /* crème 78% — sous-titres */
-  --on-dark-line:   rgba(255,255,255,0.16);
-
-  /* — ÉTATS — */
-  --ok:     #16A34A;  --ok-soft:     #DCFCE7;
-  --warn:   #F59E0B;  --warn-soft:   #FEF3C7;
-  --danger: #E11D2E;  --danger-soft: #FEE2E2;
-
-  /* — TYPE — */
+  /* — TYPE (familles consommées en var(--font-*)) — */
   --font-display: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
   --font-sans:    'Hanken Grotesk', ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-mono:    'JetBrains Mono', ui-monospace, Menlo, monospace;
 
-  --fs-display: clamp(2.6rem, 6vw, 5rem);
-  --fs-h1:      clamp(2.5rem, 4.4vw, 3.5rem);
-  --fs-h2:      clamp(1.85rem, 3.8vw, 3rem);
-  --fs-h3:      1.4rem;
-  --fs-lead:    1.3rem;
-  --fs-body:    1.0625rem;
-  --fs-sm:      0.9375rem;
-  --fs-caption: 0.8125rem;
-  --fs-eyebrow: 0.75rem;
-
-  --lh-tight: 1.02;  --lh-snug: 1.05;  --lh-body: 1.6;
-  --tracking-display: -0.035em;
-  --tracking-tight:   -0.015em;
-  --tracking-eyebrow:  0.16em;
-
-  /* — ESPACEMENT (base 4px) — */
-  --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px; --sp-4: 16px; --sp-5: 24px;
-  --sp-6: 32px; --sp-7: 48px; --sp-8: 64px; --sp-9: 96px; --sp-10: 128px;
-
-  /* — RAYONS (registre très peu arrondi) — */
-  --r-xs:   4px;
-  --r-sm:   6px;
-  --r-md:   10px;
-  --r-pill: 999px;
-
-  /* — OMBRES (réservées aux cas résiduels — on s'appuie sur les filets) — */
-  --shadow-xs: 0 1px 2px rgba(45,40,18,0.06);
-  --shadow-sm: 0 2px 8px rgba(45,40,18,0.07);
-
-  /* — LAYOUT — */
-  --container:      1240px;
-  --container-site: 1240px;  /* alias consommé par .container-site */
+  /* — LAYOUT (conteneurs consommés par les utilities container-*) — */
+  --container-site: 1240px;
   --container-hero: 1080px;  /* hero centré */
   --container-px:   clamp(22px, 5vw, 72px);
-  --hero-max:       1080px;
 
   /* — FOCUS — anneau accessible cohérent (consommé par :focus-visible) — */
   --ring-focus: 0 0 0 3px color-mix(in srgb, var(--brand) 35%, transparent);
 
-  /* — MOTION — */
-  --ease:       cubic-bezier(0.22, 0.68, 0.18, 1);
-  --dur-fast:   180ms;
-  --dur:        320ms;
-  --dur-reveal: 720ms;
+  /* — MOTION — courbe consommée par .reveal / animations (global.css) — */
+  --ease: cubic-bezier(0.22, 0.68, 0.18, 1);
 }
 
 /* — Mapping Tailwind v4 (utilitaires pour les pages hors landing) — */
@@ -125,14 +65,13 @@
   --color-ink:         #403D30;   /* Brun-olive — encre chaude de la marque */
   --color-ink-2:       #4A4F57;
   --color-ink-soft:    #6F747C;
-  --color-ink-faint:   #A7ABB2;
+  --color-ink-faint:   #6E6B5A;   /* brun-olive discret — AA (5.37:1 /blanc, 4.76:1 /parchemin) */
   --color-line:        #E7E4DA;
   --color-line-strong: #C9CDD2;
   --color-line-soft:   #F1EEE5;
 
-  --color-ok:     #16A34A;  --color-ok-soft:     #DCFCE7;
-  --color-warn:   #F59E0B;  --color-warn-soft:   #FEF3C7;
-  --color-danger: #E11D2E;  --color-danger-soft: #FEE2E2;
+  /* États ok/warn/danger : bannis en surface (CLAUDE.md). Volontairement NON
+     exposés en @theme pour qu'aucun utilitaire bg-danger/text-warn… n'existe. */
 
   /* — sur fond sombre (bande finale, footer) — */
   --color-on-dark:        #F4F1E6;

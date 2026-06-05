@@ -1,6 +1,8 @@
 # README-MIGRATION — Index
 
-Tour **analyse + plan** (Prompt 2). Cartographie du stack Astro récepteur, mesure de l'écart avec le langage source Design, architecture cible et plan de portage séquencé. **Aucune migration exécutée**, aucun fichier de `src/` modifié, aucune dépendance installée.
+> **🟢 ÉTAT RÉEL — MIGRATION EXÉCUTÉE À ≈ 80 % (révision 2026-06-05).** Ces 5 documents ont d'abord été rédigés en phase « avant travaux ». Ils sont depuis **désynchronisés** : les lots 1 à 5 sont en grande partie **faits** (palette Ocean Twilight migrée, fruit élagué des tokens, méga-menu 4 colonnes, `pricing.ts`, collection `guides` + 7 guides, 5 métiers, pages C0, avis/glossaire). Les tables d'état et les chemins ci-dessous sont **mis à jour** pour refléter le code réel ; les mentions historiques restantes sont annotées. Restant réel : câbler **ou** supprimer la couche villes (vues orphelines), finir le recâblage de l'énum fruit (`lib/accents.ts`/`lib/sections.ts`), interactif Lot 6, vitrines Lot 7. Source de vérité = le code `src/` + `CLAUDE.md`.
+
+Tour **analyse + plan** (Prompt 2). Cartographie du stack Astro récepteur, mesure de l'écart avec le langage source Design, architecture cible et plan de portage séquencé.
 
 ## Les 5 documents
 
@@ -31,4 +33,9 @@ Archi 4 couches · `<head>` unique · SEO centralisé · **zéro îlot/zéro Rea
 
 ## Prochaine étape
 
-Valider ces 4 documents et trancher Lot 0, puis lancer la migration **lot par lot** (chaque lot validé séparément). Le présent tour s'arrête à l'analyse.
+*(Note historique : ce tour partait de l'analyse. Depuis, la migration a été exécutée à ≈ 80 % — voir bandeau d'état en tête.)*
+
+Restant réel (révision 2026-06-05) :
+- **Couche villes** : trancher — câbler (collection `villes` + route `[service]/[ville]` gatée `MATRICE_VILLE`) **ou** supprimer `src/views/villes/` (vues orphelines, aucun glob, aucune route). Décision délibérément **en attente** (on n'indexe pas un gros volume au départ).
+- **Énum fruit** : finir le recâblage de `lib/accents.ts` / `lib/sections.ts` (énum `menthe…kiwi` encore présente mais inerte — toutes les classes pointent vers `brand`).
+- **Lot 6** (interactif vanilla : simulateur, glossaire, cookies), **Lot 7** (vitrine Global Cars + visuels WebP), **Lot 8** (formulaire), **Lot 9** (redirections, nettoyage `Nav.astro`/`z.md`).

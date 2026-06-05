@@ -7,6 +7,7 @@
  */
 import BaseLayout from '@layouts/BaseLayout.astro';
 import CtaBand from '@components/blocks/CtaBand.astro';
+import { definedTermSetJsonLd } from '@lib/seo';
 
 /**
  * Termes du glossaire. `link` (optionnel) injecte un lien inline dans la
@@ -55,11 +56,22 @@ const groups = TERMS.reduce<Record<string, Term[]>>((acc, t) => {
 const letters = Object.keys(groups).sort();
 const present = new Set(letters);
 const ALPHA = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+
+// JSON-LD DefinedTermSet — dérivé des mêmes termes que l'affichage (parité Google).
+const glossaryDescription =
+  "Tous les mots du web expliqués simplement, pour les artisans : SEO, fiche Google, nom de domaine, responsive, hébergement… Sans jargon.";
+const glossaryJsonLd = definedTermSetJsonLd({
+  name: 'Glossaire du digital pour artisans',
+  description: glossaryDescription,
+  url: '/glossaire',
+  terms: TERMS.map((t) => ({ term: t.term, def: t.def })),
+});
 ---
 
 <BaseLayout
   title="Glossaire du digital pour artisans"
-  description="Tous les mots du web expliqués simplement, pour les artisans : SEO, fiche Google, nom de domaine, responsive, hébergement… Sans jargon."
+  description={glossaryDescription}
+  jsonLd={glossaryJsonLd}
 >
   <section class="container-site hero-pad">
     <div class="max-w-[760px]">

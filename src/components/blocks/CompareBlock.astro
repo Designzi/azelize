@@ -1,7 +1,7 @@
 ---
 /**
  * CompareBlock — comparatif deux colonnes (couche 3).
- * La colonne « recommandée » est en Menthe (marque/identité), jamais un fruit (§8).
+ * La colonne « recommandée » est en marque (brand), site monochrome.
  * Phrase de clôture optionnelle via le slot par défaut.
  */
 export interface CompareSide {
@@ -35,7 +35,7 @@ const hasClose = close !== undefined || Astro.slots.has('default');
       </ul>
     </div>
 
-    {/* Colonne « recommandée » — Menthe (marque) */}
+    {/* Colonne « recommandée » — marque (brand) */}
     <div class="rounded-sm border-2 border-brand bg-paper p-[clamp(26px,3vw,40px)] reveal">
       <div class="mb-5 border-b border-line pb-3.5 font-display text-[1.25rem] font-medium tracking-[-0.01em] text-ink">
         {good.title}

@@ -4,13 +4,6 @@ export interface NavItem {
   href: string;
 }
 
-/** Landing — ancres one-page (utilisées sur '/'). */
-export const mainNav: NavItem[] = [
-  { label: 'Comment ça se passe', href: '/#process' },
-  { label: 'La preuve', href: '/#preuve' },
-  { label: 'Tarifs', href: '/#prix' },
-];
-
 /**
  * CTA de conversion (sections de la landing). Source de vérité —
  * `submit` = variante 1ʳᵉ personne pour le bouton du formulaire.

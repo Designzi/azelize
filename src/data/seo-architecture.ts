@@ -49,7 +49,6 @@ export const SERVICES: Service[] = [
         type: 'includes',
         eyebrow: 'Ce qui est compris',
         title: 'Ce que vous obtenez',
-        accent: 'kiwi',
         items: [
           'Un site clair, rapide et fidèle à votre métier',
           'Référencement local soigné dès la mise en ligne',
@@ -62,7 +61,6 @@ export const SERVICES: Service[] = [
         type: 'timeline',
         eyebrow: 'La méthode',
         title: 'Comment on travaille',
-        accent: 'miel',
         steps: [
           { num: '1', title: 'On cadre', body: 'Votre métier, vos clients, vos zones — en un appel de 15 minutes.' },
           { num: '2', title: 'On construit', body: 'Site en ligne en deux semaines environ, avec du contenu réel.' },
@@ -90,7 +88,6 @@ export const SERVICES: Service[] = [
         type: 'includes',
         eyebrow: 'Ce qui est compris',
         title: 'Ce qu’on met en place',
-        accent: 'menthe',
         items: [
           'Référencement sur vos villes et vos prestations',
           'Fiche Google et avis travaillés',
@@ -120,7 +117,6 @@ export const SERVICES: Service[] = [
         type: 'includes',
         eyebrow: 'Ce qui est compris',
         title: 'Ce que vous obtenez',
-        accent: 'citron',
         items: [
           'Logo et déclinaisons (couleur, monochrome, favicon)',
           'Charte : couleurs, typographies, usages',
@@ -149,7 +145,6 @@ export const SERVICES: Service[] = [
         type: 'includes',
         eyebrow: 'Ce qui est compris',
         title: 'Ce que vous obtenez',
-        accent: 'fraise',
         items: [
           'Conception cohérente avec votre identité',
           'Marquage partiel ou covering total',
@@ -178,7 +173,6 @@ export const SERVICES: Service[] = [
         type: 'includes',
         eyebrow: 'Ce qui est compris',
         title: 'Ce que vous obtenez',
-        accent: 'kiwi',
         items: [
           'Vidéo de présentation ou de chantier',
           'Format adapté site, Google et réseaux',
@@ -207,7 +201,6 @@ export const SERVICES: Service[] = [
         type: 'includes',
         eyebrow: 'Ce qui est compris',
         title: 'Ce que vous obtenez',
-        accent: 'miel',
         items: [
           'Cartes de visite, flyers, plaquettes',
           'Modèles de devis et factures à votre image',
@@ -236,7 +229,6 @@ export const SERVICES: Service[] = [
         type: 'includes',
         eyebrow: 'Ce qui est compris',
         title: 'Ce que vous obtenez',
-        accent: 'citron',
         items: [
           'Des modèles aux couleurs et au logo de votre métier',
           'Publications réseaux prêtes à poster',
@@ -249,7 +241,6 @@ export const SERVICES: Service[] = [
         type: 'timeline',
         eyebrow: 'Comment ça marche',
         title: 'De zéro à publié en quelques minutes',
-        accent: 'miel',
         steps: [
           { num: '1', title: 'Vous recevez vos modèles', body: 'Une sélection à votre image, ouverte dans votre compte Canva.' },
           { num: '2', title: 'Vous personnalisez', body: 'Vous changez le texte, la photo, l’offre du moment — sans toucher à la mise en page.' },
@@ -260,7 +251,6 @@ export const SERVICES: Service[] = [
         type: 'compare',
         eyebrow: 'Pourquoi des modèles',
         title: 'Partir d’une page blanche, ou d’un modèle qui marche',
-        accent: 'fraise',
         bad: {
           title: 'Sans modèle',
           items: [
@@ -319,7 +309,6 @@ export const SERVICES: Service[] = [
         type: 'includes',
         eyebrow: 'Ce qui est compris',
         title: 'Ce que vous obtenez',
-        accent: 'kiwi',
         items: [
           'Un outil pensé sur vos gestes réels, pas un logiciel générique',
           'Espace client clair : suivi de chantier, documents, échanges',
@@ -332,7 +321,6 @@ export const SERVICES: Service[] = [
         type: 'grid',
         eyebrow: 'Les usages',
         title: 'Ce qu’on peut construire pour vous',
-        accent: 'menthe',
         cols: 3,
         items: [
           {
@@ -365,7 +353,6 @@ export const SERVICES: Service[] = [
         type: 'timeline',
         eyebrow: 'La méthode',
         title: 'Comment on construit votre outil',
-        accent: 'miel',
         steps: [
           {
             num: '1',
@@ -388,7 +375,6 @@ export const SERVICES: Service[] = [
         type: 'faq',
         eyebrow: 'Questions fréquentes',
         title: 'Ce qu’on nous demande souvent',
-        accent: 'citron',
         items: [
           {
             q: 'Je n’ai pas le temps de gérer un logiciel. C’est compliqué pour moi ?',
@@ -425,7 +411,6 @@ export const SERVICES: Service[] = [
         type: 'includes',
         eyebrow: 'Ce qui est compris',
         title: 'Ce qu’on met en place',
-        accent: 'menthe',
         items: [
           'Relance automatique des devis sans réponse',
           'Demande d’avis envoyée après chaque chantier terminé',
@@ -440,7 +425,6 @@ export const SERVICES: Service[] = [
         title: 'Ce qu’on automatise pour vous',
         intro: 'Des tâches simples mais chronophages, qu’on enlève de votre liste une bonne fois.',
         cols: 2,
-        accent: 'miel',
         items: [
           {
             title: 'Relances de devis',
@@ -464,7 +448,6 @@ export const SERVICES: Service[] = [
         type: 'compare',
         eyebrow: 'Avant / après',
         title: 'Ce que ça change concrètement',
-        accent: 'fraise',
         bad: {
           title: 'Aujourd’hui, à la main',
           items: [
@@ -526,7 +509,6 @@ export const SERVICES: Service[] = [
         type: 'includes',
         eyebrow: 'Ce qui est compris',
         title: 'Ce que vous obtenez',
-        accent: 'citron',
         items: [
           'Signature e-mail à votre identité (logo, couleurs, coordonnées)',
           'Modèles de réponse : devis, prise de rendez-vous, relance, remerciement',
@@ -539,7 +521,6 @@ export const SERVICES: Service[] = [
         type: 'timeline',
         eyebrow: 'La méthode',
         title: 'Comment on travaille',
-        accent: 'miel',
         steps: [
           { num: '1', title: 'On cadre', body: 'Vos envois courants, votre identité, votre messagerie — en un appel de 15 minutes.' },
           { num: '2', title: 'On rédige', body: 'Signature et modèles écrits à votre voix, fidèles à votre image.' },
@@ -550,7 +531,6 @@ export const SERVICES: Service[] = [
         type: 'compare',
         eyebrow: 'La différence',
         title: 'Avant / après',
-        accent: 'kiwi',
         bad: {
           title: 'Sans modèles',
           items: [
@@ -609,7 +589,6 @@ export const SERVICES: Service[] = [
         type: 'includes',
         eyebrow: 'Ce qui est compris',
         title: 'Ce que vous obtenez',
-        accent: 'miel',
         items: [
           'Un catalogue clair, fidèle à votre gamme et à votre image',
           'Trois versions : imprimé, PDF à envoyer, page web',
@@ -623,7 +602,6 @@ export const SERVICES: Service[] = [
         eyebrow: 'Trois usages',
         title: 'Un catalogue, trois façons de s’en servir',
         intro: 'La même gamme, déclinée là où vos clients la regardent.',
-        accent: 'citron',
         cols: 3,
         items: [
           {
@@ -644,7 +622,6 @@ export const SERVICES: Service[] = [
         type: 'compare',
         eyebrow: 'La différence',
         title: 'Un catalogue tenu, pas un catalogue figé',
-        accent: 'fraise',
         bad: {
           title: 'Le catalogue qu’on refait une fois',
           items: [

@@ -1,24 +1,20 @@
 ---
 /**
  * Eyebrow — surtitre de section (couche 2). Site monochrome : toujours brand.
- * La prop `accent` (héritage, type conservé pour compat) rend brand quelle que
- * soit la valeur. onDark : surtitre sur bande brun-olive → jaune `accent-2-soft`
+ * onDark : surtitre sur bande brun-olive → jaune `accent-2-soft`
  * (le bleu marque jure sur le warm ; le jaune ponctuel ressort).
  */
-import { accentText, type Accent } from '@lib/accents';
-
 interface Props {
-  accent?: Accent;
   onDark?: boolean;
   class?: string;
 }
-const { accent = 'menthe', onDark = false, class: className } = Astro.props;
+const { onDark = false, class: className } = Astro.props;
 ---
 
 <p
   class:list={[
     'text-eyebrow font-semibold uppercase tracking-eyebrow',
-    onDark ? 'text-accent-2-soft' : accentText[accent],
+    onDark ? 'text-accent-2-soft' : 'text-brand',
     className,
   ]}
 >

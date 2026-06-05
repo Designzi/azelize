@@ -1,18 +1,15 @@
 ---
 /**
  * IncludesBlock — liste de livrables à puces (couche 3).
- * Puce à la teinte d'ambiance ; filet supérieur neutre.
+ * Puce marque (brand) ; filet supérieur neutre.
  */
-import { accentBg, type Accent } from '@lib/accents';
-
 interface Props {
   items: string[];
-  accent?: Accent;
   note?: string;
   cols?: 2 | 3;
   class?: string;
 }
-const { items, accent = 'menthe', note, cols = 3, class: className } = Astro.props;
+const { items, note, cols = 3, class: className } = Astro.props;
 const colsClass = cols === 2 ? 'md:grid-cols-2' : 'md:grid-cols-3';
 ---
 
@@ -20,7 +17,7 @@ const colsClass = cols === 2 ? 'md:grid-cols-2' : 'md:grid-cols-3';
   <ul class:list={['m-0 grid list-none grid-cols-1 gap-[clamp(20px,2.6vw,40px)] border-t border-line p-0 pt-[clamp(32px,4vw,48px)]', colsClass]}>
     {items.map((item) => (
       <li class="flex items-start gap-[13px] reveal">
-        <span class:list={['mt-[0.42em] h-[11px] w-[11px] shrink-0 rounded-[3px]', accentBg[accent]]} aria-hidden="true"></span>
+        <span class="mt-[0.42em] h-[11px] w-[11px] shrink-0 rounded-[3px] bg-brand" aria-hidden="true"></span>
         <span class="text-[1.0625rem] leading-[1.45] text-ink-2">{item}</span>
       </li>
     ))}

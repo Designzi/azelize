@@ -8,6 +8,7 @@
  */
 import CtaBand from '@components/blocks/CtaBand.astro';
 import { tiers } from '@data/pricing';
+import { faqJsonLd } from '@lib/seo';
 
 const prix = tiers[0].price;
 
@@ -69,7 +70,7 @@ const CATS: { cat: string; items: Item[] }[] = [
     items: [
       {
         q: 'Comment apparaître quand on tape « plombier + ma ville » ?',
-        a: 'Avec une fiche Google bien remplie + un site optimisé localement. C’est tout l’objet du <a href="/prestations/referencement-seo">référencement local</a> : on vise les requêtes précises de votre secteur.',
+        a: 'Avec une fiche Google bien remplie + un site optimisé localement. C’est tout l’objet du <a href="/referencement-seo">référencement local</a> : on vise les requêtes précises de votre secteur.',
       },
       {
         q: 'Le SEO d’un plombier est-il différent des autres métiers ?',
@@ -102,7 +103,7 @@ const CATS: { cat: string; items: Item[] }[] = [
 
 const LINKS: { label: string; href: string }[] = [
   { label: 'Site internet pour plombier', href: '/creation-site-internet/plombier' },
-  { label: 'Référencement local', href: '/prestations/referencement-seo' },
+  { label: 'Référencement local', href: '/referencement-seo' },
   { label: 'Le prix d’un site', href: '/guides/combien-coute-site-internet' },
   { label: 'Invisible sur Google ?', href: '/guides/invisible-sur-google' },
 ];
@@ -114,6 +115,9 @@ const slug = (s: string) =>
     .replace(/[̀-ͯ]/g, '')
     .replace(/[^a-z]+/g, '-')
     .replace(/^-|-$/g, '');
+
+// FAQPage : aplatit les catégories en items {q, a} — même contenu que l'affichage.
+const FAQ_ITEMS = CATS.flatMap((c) => c.items);
 ---
 
 {/* HERO */}
@@ -191,6 +195,8 @@ const slug = (s: string) =>
       }
     </div>
   </div>
+  {/* FAQPage JSON-LD — dérivé des MÊMES items affichés (parité Google). */}
+  <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd(FAQ_ITEMS))} />
 </section>
 
 {/* MAILLAGE — chips */}

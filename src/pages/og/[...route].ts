@@ -3,7 +3,7 @@
  *
  * Inspiré du `/og` dynamique de far (resinefar.fr), transposé au statique : ici
  * astro-og-canvas pré-rend des PNG au build (aucun adapter SSR requis). Chaque
- * image reprend le titre + résumé de sa page, sur fond Menthe profond de la marque.
+ * image reprend le titre + résumé de sa page, sur fond profond de la marque.
  * Servies à `/og/<clé>.png` ; les pages réfèrent ce chemin via `lib/og.ts`.
  */
 import { OGImageRoute } from 'astro-og-canvas';
@@ -57,7 +57,7 @@ export const { getStaticPaths, GET } = await OGImageRoute({
   getImageOptions: (_path, page: OgPage) => ({
     title: page.title,
     description: page.description,
-    // Marque Menthe : dégradé profond #001040 → #002080, liseré #0040FF.
+    // Marque : dégradé profond #001040 → #002080, liseré #0040FF.
     bgGradient: [
       [0, 16, 64],
       [0, 32, 128],

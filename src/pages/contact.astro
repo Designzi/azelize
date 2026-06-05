@@ -11,6 +11,7 @@ import Button from '@components/ui/Button.astro';
 import Eyebrow from '@components/ui/Eyebrow.astro';
 import Field from '@components/ui/Field.astro';
 import RiskNote from '@components/ui/RiskNote.astro';
+import { localBusinessJsonLd } from '@lib/seo';
 
 const CP_NEXT: [string, string, string][] = [
   ['01', 'On vous rappelle sous 48 h', 'Pas de standard ni de formulaire qui tombe dans le vide. On vous rappelle, vous.'],
@@ -22,6 +23,8 @@ const CP_NEXT: [string, string, string][] = [
 <BaseLayout
   title="Contact · Demandez votre devis gratuit"
   description="Laissez-nous votre numéro. On vous rappelle sous 48 h, sans engagement, pour comprendre votre métier et vous dire concrètement ce qu'on peut faire."
+  organization
+  jsonLd={localBusinessJsonLd()}
 >
   <script is:inline>document.documentElement.classList.add('anim');</script>
 
@@ -87,6 +90,9 @@ const CP_NEXT: [string, string, string][] = [
           <div
             class="hidden flex-col items-center gap-2.5 rounded-sm border border-line bg-paper px-[clamp(26px,3vw,40px)] py-[clamp(48px,6vw,72px)] text-center"
             data-contact-sent
+            role="status"
+            aria-live="polite"
+            tabindex="-1"
           >
             <div
               class="flex h-[54px] w-[54px] items-center justify-center rounded-full bg-accent-2 text-[1.6rem] font-bold text-brand"
@@ -192,6 +198,7 @@ const CP_NEXT: [string, string, string][] = [
       form.classList.add('hidden');
       sent?.classList.remove('hidden');
       sent?.classList.add('flex');
+      sent?.focus(); // restitue le focus + annonce le message aux lecteurs d'écran
     });
   });
 </script>

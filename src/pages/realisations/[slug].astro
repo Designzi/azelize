@@ -34,8 +34,8 @@ const CaseComponent = (caseModules[`../../views/realisations/${entry.id}.astro`]
   | { default: any }
   | undefined)?.default;
 
-// Corps éditorial MDX (rendu toujours valide ; ignoré si un composant dédié prime).
-const { Content } = await render(entry);
+// Repli seulement : corps éditorial MDX (ignoré si un composant dédié prime).
+const { Content } = CaseComponent ? { Content: null } : await render(entry);
 ---
 
 {
@@ -63,7 +63,7 @@ const { Content } = await render(entry);
       <Blocks sections={sections} />
       <Section width="hero" pad="default">
         <div class="prose-azelize mx-auto max-w-2xl">
-          <Content />
+          {Content && <Content />}
         </div>
       </Section>
     </BaseLayout>
@@ -78,7 +78,7 @@ const { Content } = await render(entry);
       breadcrumbs={breadcrumbs}
       jsonLd={jsonLd}
     >
-      <Content />
+      {Content && <Content />}
     </ArticleLayout>
   )
 }
