@@ -65,7 +65,7 @@ hors des tokens.**
 
 ## Pages
 
-- `/` — landing one-page (sections mono-usage dans `views/home/` : Hero, Problem,
+- `/` — landing one-page (sections mono-usage co-localisées dans `pages/_home/` : Hero, Problem,
   HowItWorks, WhatsIncluded, WhySubscription, Proof, Pricing, Faq ; le CTA final
   réutilisé est `components/sections/FinalCta.astro`).
 - `/mentions-legales`, `/confidentialite` — pages légales (provisoires).
