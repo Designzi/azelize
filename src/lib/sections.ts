@@ -10,9 +10,7 @@ import { z } from 'astro:content';
  */
 
 const accent = z.enum(['menthe', 'fraise', 'miel', 'citron', 'kiwi']).optional();
-const tone = z
-  .enum(['paper', 'parchment', 'dark', 'brand-soft', 'fraise', 'miel', 'citron', 'kiwi'])
-  .optional();
+const tone = z.enum(['paper', 'parchment', 'dark', 'brand-soft']).optional();
 
 /** Champs d'en-tête communs aux sections (hors hero). */
 const head = {

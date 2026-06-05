@@ -1,5 +1,5 @@
 /* ============================================================================
-   AZELIZE — Design tokens (Palette naturelle HSB — marque : Menthe H=225)
+   AZELIZE — Design tokens (Ocean Twilight — marque #2347B8, site monochrome)
    SOURCE DE VÉRITÉ. Importé en premier via global.css.
 
    Deux couches :
@@ -12,9 +12,8 @@
    ========================================================================== */
 
 :root {
-  /* — BRAND (Ocean Twilight — réconcilié sur la palette Design réelle, Q1.
-     Le bloc « palette naturelle » fruit reste défini plus bas en attendant
-     son élagage au Lot 1 ; la landing n'utilise plus que brand + neutres.) — */
+  /* — BRAND (Ocean Twilight — palette Design réelle, Q1). Site monochrome :
+     marque + neutres + jaune accent-2 ponctuel. Le système fruit a été élagué. — */
   --brand:        #2347B8;   /* Ocean Twilight — primaire */
   --brand-deep:   #1C39A0;   /* hover / pressé */
   --brand-bright: #2F57D0;   /* clair */
@@ -99,72 +98,6 @@
   --dur-fast:   180ms;
   --dur:        320ms;
   --dur-reveal: 720ms;
-
-  /* ==========================================================================
-     PALETTE NATURELLE (grille HSB systématique)
-     5 teintes × 9 variations : S25/S50/S100 × B25/B50/B100.
-     Alias `-50` = S50·B50 (équilibre par défaut). Menthe = famille de marque.
-     ========================================================================== */
-
-  /* fraise (H=0) */
-  --fraise-s25-b25: #403030;
-  --fraise-s25-b50: #806060;
-  --fraise-s25-b100: #FFBFBF;
-  --fraise-s50-b25: #402020;
-  --fraise-s50-b50: #804040;
-  --fraise-s50-b100: #FF8080;
-  --fraise-s100-b25: #400000;
-  --fraise-s100-b50: #800000;
-  --fraise-s100-b100: #FF0000;
-  --fraise-50: #804040;
-
-  /* miel (H=25) */
-  --miel-s25-b25: #403630;
-  --miel-s25-b50: #806D60;
-  --miel-s25-b100: #FFDABF;
-  --miel-s50-b25: #402D20;
-  --miel-s50-b50: #805A40;
-  --miel-s50-b100: #FFB580;
-  --miel-s100-b25: #401B00;
-  --miel-s100-b50: #803500;
-  --miel-s100-b100: #FF6A00;
-  --miel-50: #805A40;
-
-  /* citron (H=50) */
-  --citron-s25-b25: #403D30;
-  --citron-s25-b50: #807A60;
-  --citron-s25-b100: #FFF4BF;
-  --citron-s50-b25: #403A20;
-  --citron-s50-b50: #807540;
-  --citron-s50-b100: #FFEA80;
-  --citron-s100-b25: #403500;
-  --citron-s100-b50: #806A00;
-  --citron-s100-b100: #FFD500;
-  --citron-50: #807540;
-
-  /* kiwi (H=75) */
-  --kiwi-s25-b25: #3C4030;
-  --kiwi-s25-b50: #788060;
-  --kiwi-s25-b100: #EFFFBF;
-  --kiwi-s50-b25: #384020;
-  --kiwi-s50-b50: #708040;
-  --kiwi-s50-b100: #DFFF80;
-  --kiwi-s100-b25: #304000;
-  --kiwi-s100-b50: #608000;
-  --kiwi-s100-b100: #BFFF00;
-  --kiwi-50: #708040;
-
-  /* menthe (H=225) — famille de marque */
-  --menthe-s25-b25: #303440;
-  --menthe-s25-b50: #606880;
-  --menthe-s25-b100: #BFCFFF;
-  --menthe-s50-b25: #202840;
-  --menthe-s50-b50: #405080;
-  --menthe-s50-b100: #809FFF;
-  --menthe-s100-b25: #001040;
-  --menthe-s100-b50: #002080;
-  --menthe-s100-b100: #0040FF;
-  --menthe-50: #405080;
 }
 
 /* — Mapping Tailwind v4 (utilitaires pour les pages hors landing) — */
@@ -215,68 +148,6 @@
   --radius-pill: 999px;
 
   --ease-out: cubic-bezier(0.22, 0.68, 0.18, 1);
-
-  /* — Palette naturelle (utilitaires Tailwind : bg-menthe-50, text-citron-s100-b100…) — */
-
-  /* fraise */
-  --color-fraise-s25-b25: #403030;
-  --color-fraise-s25-b50: #806060;
-  --color-fraise-s25-b100: #FFBFBF;
-  --color-fraise-s50-b25: #402020;
-  --color-fraise-s50-b50: #804040;
-  --color-fraise-s50-b100: #FF8080;
-  --color-fraise-s100-b25: #400000;
-  --color-fraise-s100-b50: #800000;
-  --color-fraise-s100-b100: #FF0000;
-  --color-fraise-50: #804040;
-
-  /* miel */
-  --color-miel-s25-b25: #403630;
-  --color-miel-s25-b50: #806D60;
-  --color-miel-s25-b100: #FFDABF;
-  --color-miel-s50-b25: #402D20;
-  --color-miel-s50-b50: #805A40;
-  --color-miel-s50-b100: #FFB580;
-  --color-miel-s100-b25: #401B00;
-  --color-miel-s100-b50: #803500;
-  --color-miel-s100-b100: #FF6A00;
-  --color-miel-50: #805A40;
-
-  /* citron */
-  --color-citron-s25-b25: #403D30;
-  --color-citron-s25-b50: #807A60;
-  --color-citron-s25-b100: #FFF4BF;
-  --color-citron-s50-b25: #403A20;
-  --color-citron-s50-b50: #807540;
-  --color-citron-s50-b100: #FFEA80;
-  --color-citron-s100-b25: #403500;
-  --color-citron-s100-b50: #806A00;
-  --color-citron-s100-b100: #FFD500;
-  --color-citron-50: #807540;
-
-  /* kiwi */
-  --color-kiwi-s25-b25: #3C4030;
-  --color-kiwi-s25-b50: #788060;
-  --color-kiwi-s25-b100: #EFFFBF;
-  --color-kiwi-s50-b25: #384020;
-  --color-kiwi-s50-b50: #708040;
-  --color-kiwi-s50-b100: #DFFF80;
-  --color-kiwi-s100-b25: #304000;
-  --color-kiwi-s100-b50: #608000;
-  --color-kiwi-s100-b100: #BFFF00;
-  --color-kiwi-50: #708040;
-
-  /* menthe — famille de marque */
-  --color-menthe-s25-b25: #303440;
-  --color-menthe-s25-b50: #606880;
-  --color-menthe-s25-b100: #BFCFFF;
-  --color-menthe-s50-b25: #202840;
-  --color-menthe-s50-b50: #405080;
-  --color-menthe-s50-b100: #809FFF;
-  --color-menthe-s100-b25: #001040;
-  --color-menthe-s100-b50: #002080;
-  --color-menthe-s100-b100: #0040FF;
-  --color-menthe-50: #405080;
 
   /* — ÉCHELLE TYPO (utilitaires text-* : taille + interligne couplés) —
      Valeurs reprises FIDÈLEMENT de la maquette (source visuelle). */
