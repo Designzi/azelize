@@ -72,7 +72,7 @@ Architecture en couches explicite (commentée dans `Blocks.astro:2-7`) :
 - **Couche 3 — blocs** : 10 blocs sémantiques dans `components/blocks/` (props typées via `lib/sections.ts`).
 - **Couche 2 — primitives UI** : 12 composants dans `components/ui/` (`Section`, `Button`, `Card`, `Grid`, `Eyebrow`…), polymorphes (`as`, `href`), pilotés par slots.
 - **Couche 1 — chrome** : `Header`, `Footer`, `MobileCtaBar`, `Seo` dans `components/layout/`.
-- **Landing** : `pages/_home/*` — 9 sections **co-localisées** avec `index.astro` (dossier `_` exclu du routing), mono-usage, qui composent blocs/primitives. `views/` est réservé aux corps de pages servies par une route **dynamique** (familles). Les sections réutilisées ailleurs vivent en `components/` (`sections/FinalCta`, `ui/RiskNote`).
+- **Landing** : `sections/home/*` — 9 sections mono-usage de `/` (composent blocs/primitives), rangées dans `src/sections/` (alias `@sections/*`) : `pages/` reste **routes uniquement**. `views/` = corps de pages servies par une route **dynamique** (familles) ; `sections/` = fragments d'une page statique. Les sections réutilisées ailleurs vivent en `components/` (`sections/FinalCta`, `ui/RiskNote`).
 
 > ⚠️ `components/layout/Nav.astro` semble **non utilisé** (Header source sa nav depuis `@data/nav` directement). Doublon léger à confirmer/nettoyer.
 
