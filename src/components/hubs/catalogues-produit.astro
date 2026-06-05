@@ -1,0 +1,146 @@
+---
+/**
+ * Hub service — /catalogues-produit. Portage fidèle de la maquette Design
+ * (catalogues-produit.html). Corps complet du <main> : héro + mockup double page,
+ * les formats (3 cartes), ce qu’on gère (liste « tout compris » + maillage),
+ * bande CTA finale. Le chrome et les breadcrumbs sont fournis en amont.
+ */
+import Button from '@components/ui/Button.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import CtaBand from '@components/blocks/CtaBand.astro';
+
+const FORMATS = [
+  { n: '01', t: 'Imprimé', p: 'Pour vos salons, votre showroom, vos commerciaux sur le terrain.' },
+  { n: '02', t: 'PDF interactif', p: 'À envoyer par e-mail, avec liens cliquables vers vos fiches.' },
+  { n: '03', t: 'Feuilletable en ligne', p: 'Une version web intégrée à votre site, toujours à jour.' },
+];
+
+const INCLUDED = [
+  { t: 'Mise en page soignée', p: 'Vos produits valorisés, à votre charte.' },
+  { t: 'Photos retouchées', p: 'On harmonise vos visuels produit pour un rendu pro.' },
+  { t: 'Fichiers prêts à imprimer', p: 'Calibrés, avec fonds perdus, sans surprise chez l’imprimeur.' },
+  { t: 'Mises à jour faciles', p: 'Nouveau produit, nouveau prix : on actualise vite.' },
+];
+
+const PRODS = ['Référence A', 'Référence B', 'Référence C'];
+
+const LINKS = [
+  { label: 'Supports imprimés', href: '/supports-print' },
+  { label: 'Identité visuelle', href: '/identite-visuelle' },
+  { label: 'Création de site', href: '/creation-site-internet' },
+];
+
+const chip =
+  'whitespace-nowrap rounded-full border border-line-strong bg-paper px-[15px] py-2 text-[0.9rem] font-medium text-ink-2 no-underline transition-colors duration-200 ease-brand hover:border-brand hover:text-brand';
+---
+
+{/* ── Héro + mockup double page ───────────────────────────────────────────── */}
+<section
+  class="container-site max-w-[860px] pt-[clamp(150px,16vw,200px)] pb-[clamp(28px,3vw,44px)]"
+>
+  <Eyebrow>Catalogues produit</Eyebrow>
+  <h1
+    class="mt-4 font-display text-[clamp(2.3rem,5vw,4rem)] font-medium leading-[1.02] tracking-display text-ink [&_em]:not-italic [&_em]:text-brand"
+  >
+    Vos produits, <em>mis en valeur et prêts à présenter</em>.
+  </h1>
+  <p class="mt-[22px] max-w-[54ch] text-[clamp(1.0625rem,1.6vw,1.3rem)] leading-[1.55] text-ink-2">
+    Catalogue imprimé, PDF à envoyer, version feuilletable en ligne : on met en page vos références
+    pour qu’elles donnent envie — et qu’elles soient faciles à tenir à jour.
+  </p>
+  <div class="mt-7 flex flex-wrap gap-3.5">
+    <Button href="/contact" size="lg">Demander un devis gratuit</Button>
+    <Button href="/supports-print" variant="outline" size="lg">Voir les supports print</Button>
+  </div>
+
+  {/* mockup double page catalogue */}
+  <div
+    class="mt-[clamp(32px,4vw,48px)] grid max-w-[760px] grid-cols-1 gap-0.5 overflow-hidden rounded-md border border-line bg-line sm:grid-cols-2"
+  >
+    <div
+      class="flex flex-col justify-between bg-brand p-[clamp(18px,2.5vw,28px)]"
+    >
+      <div
+        class="font-display text-[clamp(1.3rem,2.4vw,1.9rem)] font-bold leading-[1.1] tracking-h2 text-paper"
+      >
+        Catalogue<br />2026
+      </div>
+      <div class="font-mono text-[0.78rem] text-on-dark-soft">Votre marque · collection</div>
+    </div>
+    <div class="bg-paper p-[clamp(18px,2.5vw,28px)]">
+      {
+        PRODS.map((name) => (
+          <div class="flex items-center gap-3 border-b border-line py-2.5 last:border-b-0">
+            <div class="h-12 w-12 flex-none rounded-sm bg-parchment" />
+            <div>
+              <div class="text-[0.85rem] font-semibold text-ink">{name}</div>
+              <div class="mt-0.5 text-[0.74rem] text-ink-soft">Description courte du produit</div>
+            </div>
+            <div class="ml-auto font-display text-[0.95rem] font-semibold text-brand">— €</div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+{/* ── Les formats ─────────────────────────────────────────────────────────── */}
+<section class="bg-parchment py-[clamp(48px,6vw,88px)]">
+  <div class="container-site">
+    <Eyebrow>Les formats</Eyebrow>
+    <h2
+      class="mt-3 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink"
+    >
+      Un catalogue, plusieurs usages.
+    </h2>
+    <div class="mt-[clamp(28px,4vw,40px)] grid grid-cols-1 gap-3.5 md:grid-cols-3">
+      {
+        FORMATS.map((f) => (
+          <div class="rounded-md border border-line bg-paper p-6">
+            <div class="font-mono text-[0.8rem] text-brand">{f.n}</div>
+            <h3 class="mt-2.5 font-display text-[1.15rem] font-semibold tracking-[-0.01em] text-ink">
+              {f.t}
+            </h3>
+            <p class="mt-2 text-[0.95rem] leading-[1.55] text-ink-soft">{f.p}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+{/* ── Ce qu’on gère ───────────────────────────────────────────────────────── */}
+<section class="py-[clamp(48px,6vw,88px)]">
+  <div class="container-site">
+    <Eyebrow>Ce qu’on gère</Eyebrow>
+    <h2
+      class="mt-3 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink"
+    >
+      De la mise en page à la mise à jour.
+    </h2>
+    <div class="mt-[clamp(28px,4vw,40px)] grid grid-cols-1 gap-x-10 md:grid-cols-2">
+      {
+        INCLUDED.map((i) => (
+          <div class="flex items-start gap-3 border-b border-line py-4">
+            <span class="mt-2 h-2 w-2 flex-none rounded-full bg-brand" />
+            <div>
+              <div class="text-base font-semibold text-ink">{i.t}</div>
+              <div class="mt-[3px] text-[0.9rem] leading-[1.5] text-ink-soft">{i.p}</div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+    <div class="mt-[clamp(24px,3vw,32px)] flex flex-wrap gap-[9px]">
+      {LINKS.map((l) => <a href={l.href} class={chip}>{l.label}</a>)}
+    </div>
+  </div>
+</section>
+
+{/* ── Bande CTA finale ────────────────────────────────────────────────────── */}
+<CtaBand
+  title="Mettons vos produits en valeur."
+  lead="15 minutes pour en parler. Sans engagement."
+  ctaLabel="Demander un devis gratuit"
+  ctaHref="/contact"
+/>

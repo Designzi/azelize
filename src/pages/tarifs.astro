@@ -1,55 +1,73 @@
 ---
 /**
- * /tarifs — page tarifs : en-tête + 3 paliers (source unique `data/pricing.ts`,
- * partagée avec la landing) + tableau comparatif détaillé + bande CTA sombre.
- * ⚠️ Montants indicatifs — à confirmer.
+ * /tarifs — portage fidèle de la maquette Design `tarifs.html` (C0).
+ * Grille 3 paliers (médian recommandé) + tableau comparatif + réassurance + bande CTA.
+ * Mensuel uniquement, sans engagement.
+ * ⚠️ Montants issus de la source unique `data/pricing.ts` — aucun prix codé en dur.
  */
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Section from '@components/ui/Section.astro';
-import PageHeader from '@components/ui/PageHeader.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
 import PricingBlock from '@components/blocks/PricingBlock.astro';
 import CtaBand from '@components/blocks/CtaBand.astro';
-import RiskNote from '@components/home/RiskNote.astro';
+import { ogImage } from '@lib/og';
 import { tiers, compareRows } from '@data/pricing';
 import { chromeCta } from '@data/nav';
+
+// Drapeau « ● / — » du comparatif (libellé littéral pour Tailwind).
 ---
 
 <BaseLayout
   title="Tarifs"
-  description="Trois formules mensuelles sans engagement pour rester visible : Présence, Visibilité, Croissance. Le 1er mois est offert."
+  description="Des formules claires, sans engagement, à partir de 390 €/mois. Site, référencement et entretien compris. Vous ne payez qu'une fois que ça marche."
+  image={ogImage('default')}
 >
-  <Section width="hero" pad="default">
-    <PageHeader eyebrow="Tarifs">
-      Une formule claire, sans engagement.
-      <p slot="lead">
-        Mensuel, résiliable à tout moment. Le 1er mois est offert : vous ne payez
-        qu'une fois que le site vous amène des clients.
+  <script is:inline>document.documentElement.classList.add('anim');</script>
+
+  {/* ── Hero ───────────────────────────────────────────────────────────────── */}
+  <Section pad="none" class="pt-[clamp(40px,8vw,72px)]">
+    <div class="max-w-[760px]">
+      <div class="reveal"><Eyebrow>Tarifs</Eyebrow></div>
+      <h1 class="reveal mt-4 font-display text-[clamp(2.3rem,5vw,3.8rem)] font-medium leading-[1.02] tracking-display text-ink">
+        Une formule claire pour rester visible.
+      </h1>
+      <p class="reveal mt-5 max-w-[52ch] text-[clamp(1.0625rem,1.5vw,1.25rem)] leading-[1.55] text-ink-2">
+        Mensuel, sans engagement. Vous ne commencez à payer qu'une fois que le site
+        vous amène déjà des clients. Pas de gros budget, pas de frais cachés.
       </p>
-    </PageHeader>
+      <div class="reveal mt-[22px] inline-flex items-center gap-2.5 rounded-md bg-brand-soft px-4.5 py-[11px] text-[0.9rem] text-ink-2">
+        <span class="block h-2 w-2 flex-none rounded-full bg-brand"></span>
+        <span><strong class="font-bold text-brand">1er mois offert</strong> · vous ne payez qu'une fois que ça vous rapporte</span>
+      </div>
+    </div>
   </Section>
 
-  <Section pad="none" class="pb-[clamp(40px,6vw,80px)]">
+  {/* ── Paliers ────────────────────────────────────────────────────────────── */}
+  <Section pad="none" class="pt-[clamp(32px,4vw,52px)] pb-[clamp(40px,5vw,64px)]">
     <PricingBlock tiers={tiers} ctaHref={chromeCta.href} engagementNote="sans engagement" />
-    <div class="mt-[clamp(28px,3.4vw,44px)] flex justify-center">
-      <RiskNote kind="garantie" class="text-center" />
-    </div>
+    <p class="reveal mt-[clamp(20px,3vw,32px)] text-center text-[0.9rem] text-ink-soft">
+      Sans engagement<span class="mx-2 text-ink-faint">·</span>Résiliable à tout moment<span class="mx-2 text-ink-faint">·</span>Satisfait ou remboursé 30&nbsp;jours
+    </p>
   </Section>
 
   {/* ── Comparatif détaillé ────────────────────────────────────────────────── */}
   <Section tone="parchment" pad="default">
-    <h2 class="mb-[clamp(28px,3.5vw,48px)] text-center font-display text-h2 font-medium tracking-h2 text-ink">
-      Le détail, formule par formule
+    <div class="reveal"><Eyebrow>Le détail</Eyebrow></div>
+    <h2 class="reveal mt-3 mb-[clamp(28px,4vw,40px)] max-w-[22ch] font-display text-h2 font-medium leading-[1.08] tracking-h2 text-ink">
+      Ce qui est compris dans chaque formule.
     </h2>
 
-    <div class="mx-auto max-w-4xl overflow-x-auto">
-      <table class="w-full min-w-[560px] border-collapse text-left">
+    <div class="reveal overflow-x-auto">
+      <table class="w-full border-collapse overflow-hidden rounded-md border border-line bg-paper">
         <thead>
-          <tr class="border-b border-line-strong">
-            <th class="py-3.5 pr-4 text-[0.95rem] font-medium text-ink-soft">Inclus</th>
+          <tr>
+            <th class="border-b border-line bg-parchment px-4.5 py-[15px] text-left font-sans text-[0.75rem] font-semibold uppercase tracking-[0.08em] text-ink-faint">
+              Prestation
+            </th>
             {tiers.map((t) => (
               <th
                 class:list={[
-                  'px-3 py-3.5 text-center font-display text-[1.0625rem] font-medium tracking-[-0.01em]',
+                  'border-b border-line bg-parchment px-4.5 py-[15px] text-left font-display text-base font-semibold',
                   t.featured ? 'text-brand' : 'text-ink',
                 ]}
               >
@@ -60,33 +78,57 @@ import { chromeCta } from '@data/nav';
         </thead>
         <tbody>
           {compareRows.map((row) => (
-            <tr class="border-b border-line">
-              <td class="py-3 pr-4 text-[0.95rem] text-ink-2">{row.label}</td>
-              {row.has.map((on, i) => (
-                <td
-                  class:list={[
-                    'px-3 py-3 text-center',
-                    tiers[i].featured && 'bg-brand-soft/40',
-                  ]}
-                >
+            <tr>
+              <td class="border-b border-line px-4.5 py-[15px] text-left text-[0.92rem] font-medium text-ink">{row.label}</td>
+              {row.has.map((on) => (
+                <td class="border-b border-line px-4.5 py-[15px] text-left text-[0.92rem]">
                   {on ? (
-                    <svg class="mx-auto h-4.5 w-4.5 text-brand" viewBox="0 0 20 20" fill="none" aria-label="inclus">
-                      <path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
+                    <span class="font-bold text-brand">●</span>
                   ) : (
-                    <span class="text-ink-faint" aria-label="non inclus">—</span>
+                    <span class="text-ink-faint">—</span>
                   )}
                 </td>
               ))}
             </tr>
           ))}
+          <tr>
+            <td class="px-4.5 py-[15px] text-left text-[0.92rem] font-medium text-ink">Tarif mensuel</td>
+            {tiers.map((t) => (
+              <td class="px-4.5 py-[15px] text-left text-[0.92rem] text-ink-2">{t.price} €</td>
+            ))}
+          </tr>
         </tbody>
       </table>
     </div>
   </Section>
 
   <CtaBand
-    title="Une question avant de vous lancer ?"
-    lead="On en parle 15 minutes, sans jargon ni pression. On regarde la formule qui colle à votre métier."
+    title="Vous hésitez sur la formule ?"
+    lead="15 minutes pour voir ce qui colle à votre métier. Sans engagement, sans pression."
+    ctaLabel="Réserver un appel"
+    ctaHref={chromeCta.href}
   />
 </BaseLayout>
+
+<script>
+  // Reveal au scroll (calqué sur la home).
+  document.documentElement.classList.add('anim');
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reveals = Array.from(document.querySelectorAll<HTMLElement>('.reveal'));
+  if (prefersReduced || !('IntersectionObserver' in window)) {
+    reveals.forEach((el) => el.classList.add('in'));
+  } else {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
+    );
+    reveals.forEach((el) => io.observe(el));
+  }
+</script>

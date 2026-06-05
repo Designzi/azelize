@@ -1,0 +1,198 @@
+---
+/**
+ * Hub service — /identite-visuelle. Portage FIDÈLE de la maquette Design
+ * (identite-visuelle.html) : corps <main> complet, CTA compris.
+ * Le chrome (header/footer) est fourni par BaseLayout.
+ * Interactivité : aucune (pages statiques) ; reveal au scroll via .reveal.
+ */
+import Button from '@components/ui/Button.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import CtaBand from '@components/blocks/CtaBand.astro';
+
+const MOCKUP =
+  'background:repeating-linear-gradient(135deg,var(--color-parchment) 0 14px,var(--color-line) 14px 28px);';
+
+const STEPS = [
+  {
+    n: '01',
+    t: 'On vous écoute',
+    p: 'Votre métier, vos clients, ce qui vous distingue. Pas de jargon créatif.',
+  },
+  {
+    n: '02',
+    t: 'On propose',
+    p: "Deux pistes de logo et d'univers. Vous choisissez, on affine ensemble.",
+  },
+  {
+    n: '03',
+    t: 'On décline',
+    p: 'Site, supports, camion : tout part de la même base, cohérent partout.',
+  },
+];
+
+const FAQ = [
+  {
+    q: 'Je peux garder mon logo actuel ?',
+    a: "Bien sûr. On peut partir de l'existant, le moderniser, ou repartir de zéro — c'est vous qui décidez.",
+  },
+  {
+    q: 'Je reçois les fichiers ?',
+    a: 'Oui : logo en plusieurs formats, couleurs, polices. Vous êtes propriétaire de votre identité.',
+  },
+  {
+    q: 'Ça coûte combien ?',
+    a: "L'identité visuelle s'intègre à votre abonnement, souvent couplée à la création du site. On en parle ensemble.",
+  },
+];
+
+const LINKS = [
+  { label: 'Création de site', href: '/creation-site-internet' },
+  { label: 'Supports imprimés', href: '/supports-print' },
+  { label: 'Habillage véhicule', href: '/habillage-vehicule-covering' },
+  { label: 'Réalisations', href: '/realisations' },
+];
+---
+
+<main>
+  {/* ── Héro ──────────────────────────────────────────────────────────────── */}
+  <section class="container-site max-w-205 pt-[clamp(150px,16vw,200px)] pb-[clamp(20px,3vw,36px)]">
+    <Eyebrow accent="menthe">Identité visuelle</Eyebrow>
+    <h1
+      class="mt-4 font-display text-[clamp(2.3rem,5vw,4rem)] font-medium leading-[1.02] tracking-display text-ink [&_em]:not-italic [&_em]:text-brand"
+    >
+      Une image qui vous fait <em>paraître pro</em>, partout.
+    </h1>
+    <p class="mt-[22px] max-w-[52ch] text-[clamp(1.0625rem,1.6vw,1.3rem)] leading-[1.55] text-ink-2">
+      Du devis au camion, en passant par le site : une marque cohérente inspire confiance avant
+      même le premier mot. On crée la vôtre — claire, solide, qui vous ressemble.
+    </p>
+    <div class="mt-7 flex flex-wrap gap-3.5">
+      <Button href="/contact" size="lg">Demander un devis gratuit</Button>
+      <Button href="/realisations" variant="outline" size="lg">Voir des réalisations</Button>
+    </div>
+  </section>
+
+  {/* ── Bento — mosaïque de livrables ─────────────────────────────────────── */}
+  <section class="container-site">
+    <div
+      class="grid grid-cols-2 gap-3.5 py-[clamp(32px,4vw,52px)] [grid-auto-rows:150px] md:grid-cols-3 md:[grid-auto-rows:180px]"
+    >
+      <div
+        class="reveal relative row-span-2 flex items-end overflow-hidden rounded-sm border border-line bg-paper p-[18px]"
+      >
+        <div class="absolute inset-0 bg-brand"></div>
+        <div
+          class="relative m-auto self-center text-center font-display text-[2rem] font-bold tracking-h2 text-paper"
+        >
+          votre<br />marque
+        </div>
+      </div>
+      <div
+        class="reveal relative col-span-2 flex items-end overflow-hidden rounded-sm border border-line bg-paper p-[18px]"
+      >
+        <div class="absolute inset-0 bg-brand-soft"></div>
+        <span class="relative text-[0.85rem] font-semibold text-ink">Charte couleurs &amp; typo</span>
+      </div>
+      <div
+        class="reveal relative flex items-end overflow-hidden rounded-sm border border-line bg-paper p-[18px]"
+      >
+        <div class="absolute inset-0" style={MOCKUP}></div>
+        <span class="relative text-[0.85rem] font-semibold text-ink">Carte de visite</span>
+      </div>
+      <div
+        class="reveal relative flex items-end overflow-hidden rounded-sm border border-line bg-paper p-[18px]"
+      >
+        <div class="absolute inset-0" style={MOCKUP}></div>
+        <span class="relative text-[0.85rem] font-semibold text-ink">Devis &amp; factures</span>
+      </div>
+      <div
+        class="reveal relative col-span-2 flex items-end overflow-hidden rounded-sm border border-line bg-paper p-[18px]"
+      >
+        <div class="absolute inset-0" style={MOCKUP}></div>
+        <span class="relative text-[0.85rem] font-semibold text-ink">Habillage du camion</span>
+      </div>
+      <div
+        class="reveal relative flex items-end overflow-hidden rounded-sm border border-line bg-paper p-[18px]"
+      >
+        <div class="absolute inset-0 bg-brand-soft"></div>
+        <span class="relative text-[0.85rem] font-semibold text-ink">Signature e-mail</span>
+      </div>
+    </div>
+  </section>
+
+  {/* ── Comment on procède ────────────────────────────────────────────────── */}
+  <section class="bg-parchment py-[clamp(48px,6vw,88px)]">
+    <div class="container-site">
+      <div class="reveal"><Eyebrow accent="menthe" class="mb-[18px]">Comment on procède</Eyebrow></div>
+      <h2
+        class="reveal m-0 max-w-[22ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink"
+      >
+        De votre métier à votre marque, en trois temps.
+      </h2>
+      <div class="mt-[clamp(28px,4vw,40px)] grid grid-cols-1 gap-3.5 md:grid-cols-3">
+        {
+          STEPS.map((s) => (
+            <div class="reveal rounded-sm border border-line bg-paper p-6">
+              <div class="font-mono text-[0.8rem] text-brand">{s.n}</div>
+              <div class="mt-3 font-display text-[1.15rem] font-semibold text-ink">{s.t}</div>
+              <div class="mt-2 text-[0.95rem] leading-[1.55] text-ink-soft">{s.p}</div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* ── FAQ ───────────────────────────────────────────────────────────────── */}
+  <section class="py-[clamp(48px,6vw,88px)]">
+    <div class="container-site">
+      <div class="reveal"><Eyebrow accent="menthe">Vos questions</Eyebrow></div>
+      <h2
+        class="reveal mt-3 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink"
+      >
+        L'identité visuelle, concrètement.
+      </h2>
+      <div class="mt-[clamp(28px,4vw,40px)] flex max-w-[780px] flex-col gap-2.5">
+        {
+          FAQ.map((f) => (
+            <div class="reveal rounded-sm border border-line bg-paper px-[22px] py-5">
+              <p class="m-0 font-display text-[1.1rem] font-medium text-ink">{f.q}</p>
+              <p class="mt-2.5 text-base leading-[1.6] text-ink-2">{f.a}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* ── Aussi pour vous — maillage interne ────────────────────────────────── */}
+  <section class="bg-parchment py-[clamp(48px,6vw,88px)]">
+    <div class="container-site">
+      <div class="reveal"><Eyebrow accent="menthe">Aussi pour vous</Eyebrow></div>
+      <h2
+        class="reveal mt-3 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink"
+      >
+        Une marque, déclinée partout.
+      </h2>
+      <div class="reveal mt-[clamp(24px,3vw,32px)] flex flex-wrap gap-[9px]">
+        {
+          LINKS.map((l) => (
+            <a
+              href={l.href}
+              class="whitespace-nowrap rounded-full border border-line-strong bg-paper px-[15px] py-2 text-[0.9rem] font-medium text-ink-2 transition-colors duration-200 ease-brand hover:border-brand hover:text-brand"
+            >
+              {l.label}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Donnons une image à la hauteur de votre travail."
+    lead="15 minutes pour en parler. Sans engagement, sans pression."
+    ctaLabel="Demander un devis gratuit"
+    ctaHref="/contact"
+  />
+</main>

@@ -1,0 +1,178 @@
+---
+/**
+ * Hub service · /production-video — portage fidèle de la maquette Design
+ * (templates/azelize/ui_kits/azelize-studio/production-video.html).
+ * Corps <main> complet : héro, grand player, formats, « pourquoi la vidéo »,
+ * FAQ (statique), liens connexes, bande CTA sombre.
+ * Le chrome (header/footer) est fourni par BaseLayout. Aucune interactivité
+ * (les blocs FAQ Design sont des cartes Q/R toujours ouvertes).
+ */
+import Section from '@components/ui/Section.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import CtaBand from '@components/blocks/CtaBand.astro';
+
+const FORMATS = [
+  { dur: '0:30', title: 'Le chantier', text: 'Avant/après filmé sur site : le résultat parle de lui-même.' },
+  { dur: '0:45', title: 'Le savoir-faire', text: 'Un geste, une technique : on montre que vous maîtrisez.' },
+  { dur: '0:25', title: 'Le témoignage', text: 'Un client satisfait face caméra : la meilleure des pubs.' },
+];
+
+const FAQ = [
+  {
+    q: 'Il faut que je passe à l’écran ?',
+    a: 'Pas obligatoire. On peut filmer uniquement vos chantiers et votre travail. Mais un mot face caméra rassure beaucoup — on vous met à l’aise.',
+  },
+  {
+    q: 'Vous vous déplacez sur le chantier ?',
+    a: 'Oui, on tourne sur place dans le Morbihan. Le vrai chantier, c’est ce qui fait la différence.',
+  },
+  {
+    q: 'Où sont diffusées les vidéos ?',
+    a: 'Sur votre site, votre fiche Google et vos réseaux. Format court, optimisé pour le mobile.',
+  },
+];
+
+const LINKS = [
+  { label: 'Création de site', href: '/creation-site-internet' },
+  { label: 'Référencement local', href: '/referencement-seo' },
+  { label: 'Réalisations', href: '/realisations' },
+];
+---
+
+{/* ── Héro ─────────────────────────────────────────────────────────────────── */}
+<section class="pt-[clamp(150px,16vw,196px)] pb-[clamp(28px,3vw,40px)]">
+  <div class="container-site">
+    <div class="mx-auto max-w-205 text-center">
+      <div class="reveal"><Eyebrow class="mb-4">Production vidéo</Eyebrow></div>
+      <h1
+        class="reveal m-0 font-display text-[clamp(2.3rem,5vw,4rem)] font-medium leading-[1.02] tracking-display text-ink [&_em]:not-italic [&_em]:text-brand"
+      >
+        Votre savoir-faire <em>se voit mieux en vidéo</em>.
+      </h1>
+      <p
+        class="reveal mx-auto mt-[22px] max-w-[50ch] text-[clamp(1.0625rem,1.6vw,1.3rem)] leading-[1.55] text-ink-2"
+      >
+        Un chantier filmé, un avant/après, un mot du patron : la vidéo crée la confiance plus vite que
+        n'importe quel texte. On tourne et on monte pour vous — format court, prêt pour le web.
+      </p>
+    </div>
+  </div>
+</section>
+
+{/* ── Grand player ─────────────────────────────────────────────────────────── */}
+<section>
+  <div class="container-site">
+    <div
+      class="reveal relative mt-[clamp(28px,4vw,44px)] flex aspect-[16/8] items-center justify-center overflow-hidden rounded-sm bg-gradient-to-br from-ink to-brand-900"
+      aria-hidden="true"
+    >
+      <div
+        class="flex h-[74px] w-[74px] items-center justify-center rounded-full border-[1.5px] border-paper/40 bg-paper/15 backdrop-blur-[4px]"
+      >
+        <span
+          class="ml-[5px] block h-0 w-0 border-y-[13px] border-l-[20px] border-y-transparent border-l-paper"
+        ></span>
+      </div>
+      <span class="absolute bottom-[18px] left-5 text-[0.78rem] uppercase tracking-[0.06em] text-paper/60">
+        Reel — chantier résine, Lanester · 0:38
+      </span>
+    </div>
+  </div>
+</section>
+
+{/* ── Les formats ──────────────────────────────────────────────────────────── */}
+<Section tone="parchment" pad="default">
+  <div class="reveal"><Eyebrow class="mb-4">Les formats</Eyebrow></div>
+  <h2 class="reveal m-0 max-w-[22ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink">
+    Des vidéos courtes, pensées pour vos clients.
+  </h2>
+  <div class="mt-[clamp(28px,4vw,40px)] grid grid-cols-1 gap-3.5 sm:grid-cols-3">
+    {
+      FORMATS.map((f) => (
+        <div class="reveal overflow-hidden rounded-sm border border-line bg-paper">
+          <div
+            class="relative aspect-[9/6]"
+            style="background:repeating-linear-gradient(135deg,var(--color-parchment) 0 14px,var(--color-line) 14px 28px);"
+          >
+            <span class="absolute bottom-2.5 right-2.5 rounded-xs bg-brand-900 px-2 py-[3px] font-mono text-[0.72rem] text-paper">
+              {f.dur}
+            </span>
+          </div>
+          <div class="px-5 py-4.5">
+            <h3 class="m-0 font-display text-[1.15rem] font-semibold text-ink">{f.title}</h3>
+            <p class="mt-[7px] text-[0.92rem] leading-[1.5] text-ink-soft">{f.text}</p>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</Section>
+
+{/* ── Pourquoi la vidéo ────────────────────────────────────────────────────── */}
+<Section pad="default">
+  <div class="grid grid-cols-1 items-center gap-6 md:grid-cols-2 md:gap-[clamp(28px,4vw,60px)]">
+    <div class="reveal">
+      <Eyebrow class="mb-4">Pourquoi la vidéo</Eyebrow>
+      <p class="mt-4 mb-3 text-[1.0625rem] leading-[1.7] text-ink-2 [&_strong]:font-semibold [&_strong]:text-ink">
+        Sur un site comme sur Google, <strong>une vignette vidéo attire l'œil</strong> et retient le
+        visiteur plus longtemps. Pour un artisan, c'est le moyen le plus direct de prouver son sérieux
+        sans avoir à se vendre.
+      </p>
+      <p class="mb-3 text-[1.0625rem] leading-[1.7] text-ink-2 [&_strong]:font-semibold [&_strong]:text-ink">
+        On garde des formats <strong>courts et concrets</strong> — pas de film d'entreprise pompeux.
+        Juste votre travail, bien filmé.
+      </p>
+    </div>
+    <div class="reveal border-l-[3px] border-brand pl-5">
+      <div class="font-display text-[2.6rem] font-semibold leading-none tracking-[-0.03em] text-brand">×2</div>
+      <div class="mt-2 max-w-[24ch] text-[0.95rem] text-ink-soft">
+        de temps passé sur une page avec vidéo, en moyenne.
+      </div>
+    </div>
+  </div>
+</Section>
+
+{/* ── Vos questions (FAQ statique) ─────────────────────────────────────────── */}
+<Section tone="parchment" pad="default">
+  <div class="reveal"><Eyebrow class="mb-4">Vos questions</Eyebrow></div>
+  <h2 class="reveal m-0 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink">
+    La vidéo, sans complications.
+  </h2>
+  <div class="mt-[clamp(28px,4vw,40px)] flex max-w-[780px] flex-col gap-2.5">
+    {
+      FAQ.map((item) => (
+        <div class="reveal rounded-sm border border-line bg-paper px-[22px] py-5">
+          <p class="m-0 font-display text-[1.1rem] font-medium text-ink">{item.q}</p>
+          <p class="mt-2.5 text-base leading-[1.6] text-ink-2">{item.a}</p>
+        </div>
+      ))
+    }
+  </div>
+</Section>
+
+{/* ── Aussi pour vous (liens connexes) ─────────────────────────────────────── */}
+<Section pad="default">
+  <div class="reveal"><Eyebrow class="mb-4">Aussi pour vous</Eyebrow></div>
+  <h2 class="reveal m-0 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink">
+    La vidéo nourrit tout le reste.
+  </h2>
+  <div class="reveal mt-[clamp(24px,3vw,32px)] flex flex-wrap gap-[9px]">
+    {
+      LINKS.map((l) => (
+        <a
+          href={l.href}
+          class="whitespace-nowrap rounded-full border border-line-strong bg-paper px-[15px] py-2 text-[0.9rem] font-medium text-ink-2 transition-colors duration-200 ease-brand hover:border-brand hover:text-brand"
+        >
+          {l.label}
+        </a>
+      ))
+    }
+  </div>
+</Section>
+
+<CtaBand
+  title="Montrons votre travail comme il le mérite."
+  lead="15 minutes pour en parler. Sans engagement."
+  ctaLabel="Demander un devis gratuit"
+  ctaHref="/contact"
+/>

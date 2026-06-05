@@ -1,0 +1,334 @@
+---
+/**
+ * /devis — portage fidèle de la maquette Design (devis.html).
+ * Formulaire en 3 étapes (gauche) + simulateur de palier indicatif (aside collante, droite).
+ *
+ * Le simulateur est une DÉMO : il bascule de palier selon le nombre de services choisis.
+ * Les paliers/prix viennent de la source unique `@data/pricing` (jamais codés en dur).
+ *
+ * ⚠️ Formulaire NON connecté (cf. brief §11) : la soumission n'affiche qu'un état
+ *    « envoyé » local, sans backend. Brancher un endpoint / service avant prod.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Button from '@components/ui/Button.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import { tiers, PRICE_UNIT } from '@data/pricing';
+
+// Services proposés en chips (libellés du méga-menu Services).
+const SERVICES = [
+  'Site internet',
+  'Référencement local',
+  'Identité visuelle',
+  'Supports imprimés',
+  'Habillage véhicule',
+  'Templates e-mail',
+  'Templates Canva',
+  'Catalogues produit',
+  'Production vidéo',
+  'SaaS & outils',
+  'Automatisations',
+];
+
+// Sélection par défaut (fidèle à la maquette : 2 services → palier « Visibilité »).
+const DEFAULT_PICKED = ['Site internet', 'Référencement local'];
+
+// Paliers du simulateur (source unique des prix). Notes : texte fidèle à la maquette.
+const PRESENCE = tiers.find((t) => t.name === 'Présence')!;
+const VISIBILITE = tiers.find((t) => t.name === 'Visibilité')!;
+const CROISSANCE = tiers.find((t) => t.name === 'Croissance')!;
+
+const SIM = {
+  presence: {
+    tier: PRESENCE.name,
+    price: PRESENCE.price,
+    fill: 33,
+    note: 'Idéal pour démarrer : site + fiche Google + entretien.',
+  },
+  visibilite: {
+    tier: VISIBILITE.name,
+    price: VISIBILITE.price,
+    fill: 66,
+    note: 'Le plus choisi : site + référencement actif + contenus + rapport.',
+  },
+  croissance: {
+    tier: CROISSANCE.name,
+    price: CROISSANCE.price,
+    fill: 100,
+    note: 'Plusieurs leviers activés : campagnes, supports, priorité.',
+  },
+};
+
+const REASSURE = [
+  'Devis gratuit, sans engagement',
+  'Réponse sous 48 h par un humain',
+  '1er mois offert, puis vous payez quand ça marche',
+  'Résiliable à tout moment',
+];
+
+// État initial = sélection par défaut → palier « Visibilité ».
+const initial = SIM.visibilite;
+---
+
+<BaseLayout
+  title="Votre devis gratuit"
+  description="Décrivez votre besoin en 2 minutes, on vous rappelle sous 48 h avec une proposition claire. Sans engagement."
+>
+  <script is:inline>document.documentElement.classList.add('anim');</script>
+
+  {/* Héro */}
+  <section id="top" class="pt-[clamp(150px,16vw,196px)] pb-[clamp(20px,3vw,32px)]">
+    <div class="container-site max-w-[760px]">
+      <Eyebrow class="anim-1">Devis gratuit</Eyebrow>
+      <h1
+        class="anim-2 mt-3.5 font-display text-[clamp(2.2rem,4.6vw,3.6rem)] font-medium leading-[1.03] tracking-[-0.03em] text-ink"
+      >
+        Décrivez votre besoin, on s'occupe du reste.
+      </h1>
+      <p class="anim-3 mt-5 max-w-[50ch] text-[clamp(1.0625rem,1.5vw,1.25rem)] leading-[1.55] text-ink-2">
+        2 minutes pour nous donner l'essentiel. On vous rappelle sous 48 h avec une proposition
+        claire — sans jargon, sans engagement.
+      </p>
+    </div>
+  </section>
+
+  {/* Corps : formulaire + aside */}
+  <section class="pb-[clamp(64px,8vw,110px)]">
+    <div class="container-site">
+      <div class="grid grid-cols-1 items-start gap-[clamp(28px,4vw,56px)] lg:grid-cols-[1.3fr_0.7fr]" data-devis-block>
+        {/* Formulaire */}
+        <form class="rounded-sm border border-line bg-paper p-[clamp(24px,3vw,38px)]" data-devis-form>
+          {/* Étape 1 */}
+          <fieldset class="m-0 mb-7 border-0 p-0">
+            <div class="font-mono text-[0.78rem] text-brand">Étape 1 / 3</div>
+            <legend class="mt-2 mb-4 p-0 font-display text-[1.15rem] font-semibold text-ink">Vous</legend>
+            <div class="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
+              <div>
+                <label for="dv-nom" class="mb-1.5 block text-[0.85rem] font-semibold text-ink-2">Nom</label>
+                <input id="dv-nom" name="nom" class="dv-input" placeholder="Jean Dupont" autocomplete="name" />
+              </div>
+              <div>
+                <label for="dv-tel" class="mb-1.5 block text-[0.85rem] font-semibold text-ink-2">Téléphone</label>
+                <input id="dv-tel" name="tel" type="tel" class="dv-input" placeholder="06 12 34 56 78" autocomplete="tel" />
+              </div>
+            </div>
+            <div class="mt-3.5 grid grid-cols-1 gap-3.5 sm:grid-cols-2">
+              <div>
+                <label for="dv-metier" class="mb-1.5 block text-[0.85rem] font-semibold text-ink-2">Métier</label>
+                <input id="dv-metier" name="metier" class="dv-input" placeholder="Plombier, électricien…" />
+              </div>
+              <div>
+                <label for="dv-ville" class="mb-1.5 block text-[0.85rem] font-semibold text-ink-2">Ville</label>
+                <input id="dv-ville" name="ville" class="dv-input" placeholder="Lorient, Vannes…" />
+              </div>
+            </div>
+          </fieldset>
+
+          {/* Étape 2 */}
+          <fieldset class="m-0 mb-7 border-0 p-0">
+            <div class="font-mono text-[0.78rem] text-brand">Étape 2 / 3</div>
+            <legend class="mt-2 mb-4 p-0 font-display text-[1.15rem] font-semibold text-ink">
+              Ce dont vous avez besoin
+            </legend>
+            <div class="flex flex-wrap gap-[9px]" data-devis-chips>
+              {SERVICES.map((s) => {
+                const on = DEFAULT_PICKED.includes(s);
+                return (
+                  <button
+                    type="button"
+                    class:list={[
+                      'cursor-pointer select-none whitespace-nowrap rounded-pill border-[1.5px] px-4 py-[9px] text-[0.9rem] font-medium transition-all',
+                      on
+                        ? 'border-brand bg-brand-soft text-brand'
+                        : 'border-line-strong bg-paper text-ink-2',
+                    ]}
+                    aria-pressed={on ? 'true' : 'false'}
+                    data-devis-chip
+                    data-service={s}
+                  >
+                    {s}
+                  </button>
+                );
+              })}
+            </div>
+          </fieldset>
+
+          {/* Étape 3 */}
+          <fieldset class="m-0 mb-7 border-0 p-0 last:mb-0">
+            <div class="font-mono text-[0.78rem] text-brand">Étape 3 / 3</div>
+            <legend class="mt-2 mb-4 p-0 font-display text-[1.15rem] font-semibold text-ink">Votre situation</legend>
+            <label for="dv-site" class="mb-1.5 block text-[0.85rem] font-semibold text-ink-2">
+              Avez-vous déjà un site ?
+            </label>
+            <select id="dv-site" name="site" class="dv-input">
+              <option>Non, pas encore</option>
+              <option>Oui, mais il est dépassé</option>
+              <option>Oui, mais introuvable sur Google</option>
+            </select>
+            <div class="mt-3.5">
+              <label for="dv-objectif" class="mb-1.5 block text-[0.85rem] font-semibold text-ink-2">
+                En deux mots, votre objectif
+              </label>
+              <textarea
+                id="dv-objectif"
+                name="objectif"
+                class="dv-input min-h-[90px] resize-y leading-[1.5]"
+                placeholder="Ex. être trouvé à Lorient, avoir plus de demandes de chantiers…"
+              ></textarea>
+            </div>
+          </fieldset>
+
+          <Button type="submit" size="lg" block class="mt-2">Envoyer ma demande</Button>
+          <p class="mt-3.5 text-[0.8125rem] text-ink-soft">
+            Sans engagement · Réponse sous 48 h · Vos données ne sont jamais revendues
+          </p>
+        </form>
+
+        {/* État « envoyé » (révélé en vanilla) */}
+        <div
+          class="hidden flex-col items-center gap-2.5 rounded-sm border border-line bg-paper p-[clamp(24px,3vw,38px)] py-[clamp(40px,5vw,60px)] text-center"
+          data-devis-sent
+        >
+          <div
+            class="flex h-[54px] w-[54px] items-center justify-center rounded-full bg-accent-2 text-[1.6rem] font-bold text-brand"
+            aria-hidden="true"
+          >
+            ✓
+          </div>
+          <h2 class="mt-2 font-display text-[1.6rem] font-medium tracking-h2 text-ink" data-devis-sent-title>
+            C'est noté.
+          </h2>
+          <p class="m-0 max-w-[34ch] text-base leading-[1.55] text-ink-soft">
+            On vous rappelle sous 48 h avec une proposition claire. En attendant, restez sur le chantier —
+            on s'occupe du reste.
+          </p>
+        </div>
+
+        {/* Aside : simulateur + réassurance */}
+        <aside class="flex flex-col gap-4 lg:sticky lg:top-32">
+          {/* Simulateur */}
+          <div class="overflow-hidden rounded-sm border border-line bg-paper">
+            <div class="bg-brand-900 px-5 py-[18px] text-on-dark">
+              <div class="text-[0.78rem] uppercase tracking-[0.08em] text-on-dark-soft">Estimation indicative</div>
+              <div class="mt-1 font-display text-[1.4rem] font-semibold text-on-dark-bright">
+                Formule <span data-sim-tier>{initial.tier}</span>
+              </div>
+            </div>
+            <div class="p-5">
+              <div class="flex items-baseline gap-1.5">
+                <span
+                  class="font-display text-[2.4rem] font-semibold leading-none tracking-[-0.03em] text-brand"
+                  data-sim-price>{initial.price}</span>
+                <span class="text-[0.9rem] text-ink-soft">{PRICE_UNIT} · dès le démarrage</span>
+              </div>
+              <div class="mt-4 h-1.5 overflow-hidden rounded-[3px] bg-parchment">
+                <div
+                  class="h-full rounded-[3px] bg-brand transition-[width] duration-[400ms] ease-brand"
+                  style={`width:${initial.fill}%`}
+                  data-sim-fill
+                ></div>
+              </div>
+              <p class="mt-3 text-[0.85rem] leading-[1.5] text-ink-soft">
+                <span data-sim-note>{initial.note}</span> Le 1er mois est offert et vous ne payez
+                qu'une fois que le site vous rapporte.
+              </p>
+            </div>
+          </div>
+
+          {/* Réassurance */}
+          <div class="rounded-sm border border-line bg-paper p-5">
+            {REASSURE.map((r) => (
+              <div class="flex items-start gap-[11px] py-2 text-[0.92rem] text-ink-2">
+                <span
+                  class="relative mt-px h-[18px] w-[18px] flex-none rounded-full bg-brand-soft after:absolute after:left-[5px] after:top-1 after:h-2 after:w-1 after:rotate-[40deg] after:border-b-2 after:border-r-2 after:border-brand after:content-['']"
+                  aria-hidden="true"></span>
+                {r}
+              </div>
+            ))}
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  {/* Données du simulateur (source unique des prix) → consommées par le script. */}
+  <script id="dv-sim-data" type="application/json" is:inline set:html={JSON.stringify(SIM)}></script>
+</BaseLayout>
+
+<style>
+  /* Champs du formulaire devis (input/select/textarea homogènes). */
+  .dv-input {
+    width: 100%;
+    box-sizing: border-box;
+    font-family: var(--font-sans);
+    font-size: 15px;
+    color: var(--color-ink);
+    background: var(--color-paper);
+    border: 1px solid var(--color-line-strong);
+    border-radius: var(--radius-xs);
+    padding: 11px 13px;
+    outline: none;
+    transition:
+      border-color 0.18s var(--ease),
+      box-shadow 0.18s var(--ease);
+  }
+  .dv-input::placeholder {
+    color: var(--color-ink-faint);
+  }
+  .dv-input:focus {
+    border-color: var(--color-brand);
+    box-shadow: var(--ring-focus);
+  }
+</style>
+
+<script>
+  // ── Simulateur de palier (démo) + chips multi-sélection ────────────────────
+  // Paliers/prix injectés par Astro (source unique @data/pricing), pas codés ici.
+  const SIM = JSON.parse(document.getElementById('dv-sim-data')!.textContent!);
+
+  const block = document.querySelector<HTMLElement>('[data-devis-block]');
+  const chips = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-devis-chip]'));
+  const tierEl = block?.querySelector<HTMLElement>('[data-sim-tier]');
+  const priceEl = block?.querySelector<HTMLElement>('[data-sim-price]');
+  const fillEl = block?.querySelector<HTMLElement>('[data-sim-fill]');
+  const noteEl = block?.querySelector<HTMLElement>('[data-sim-note]');
+
+  function pickedCount(): number {
+    return chips.filter((c) => c.getAttribute('aria-pressed') === 'true').length;
+  }
+
+  function refreshSim() {
+    const n = pickedCount();
+    const s = n >= 4 ? SIM.croissance : n >= 2 ? SIM.visibilite : SIM.presence;
+    if (tierEl) tierEl.textContent = s.tier;
+    if (priceEl) priceEl.textContent = String(s.price);
+    if (noteEl) noteEl.textContent = s.note;
+    if (fillEl) fillEl.style.width = s.fill + '%';
+  }
+
+  const ON = ['border-brand', 'bg-brand-soft', 'text-brand'];
+  const OFF = ['border-line-strong', 'bg-paper', 'text-ink-2'];
+
+  chips.forEach((chip) => {
+    chip.addEventListener('click', () => {
+      const on = chip.getAttribute('aria-pressed') === 'true';
+      const next = !on;
+      chip.setAttribute('aria-pressed', next ? 'true' : 'false');
+      chip.classList.remove(...(next ? OFF : ON));
+      chip.classList.add(...(next ? ON : OFF));
+      refreshSim();
+    });
+  });
+
+  // ── Formulaire provisoire : état « envoyé » local, sans backend (brief §11) ─
+  const form = block?.querySelector<HTMLFormElement>('[data-devis-form]');
+  const sent = block?.querySelector<HTMLElement>('[data-devis-sent]');
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const nom = (form.elements.namedItem('nom') as HTMLInputElement | null)?.value?.trim();
+    const title = block?.querySelector<HTMLElement>('[data-devis-sent-title]');
+    if (title) title.textContent = nom ? `C'est noté, ${nom}.` : "C'est noté.";
+    form.classList.add('hidden');
+    sent?.classList.remove('hidden');
+    sent?.classList.add('flex');
+  });
+</script>

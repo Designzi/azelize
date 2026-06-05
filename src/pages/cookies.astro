@@ -1,270 +1,445 @@
 ---
+/*
+ * /cookies — Gestion des cookies (page légale C0).
+ * Portage fidèle de la maquette Design : ui_kits/azelize-studio/cookies.html.
+ * Démo : bannière de consentement + préférences (états NON persistés, comme le Design).
+ * Interactivité 100% vanilla : toggles, boutons d'action, flash de confirmation,
+ * bannière fixe escamotable. Logique React du Design réécrite en JS natif (voir <script>).
+ */
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Section from '@components/ui/Section.astro';
 import Eyebrow from '@components/ui/Eyebrow.astro';
-import CtaBand from '@components/blocks/CtaBand.astro';
-/* Contenu PROVISOIRE — à faire valider par un juriste avant mise en ligne.
-   Aucun outil de mesure/audience précis n'est confirmé : formulations au
-   conditionnel + placeholders à compléter une fois les traitements arrêtés. */
-
-const sections = [
-  { id: 'definition', t: 'Qu’est-ce qu’un cookie' },
-  { id: 'types', t: 'Cookies utilisés' },
-  { id: 'gestion', t: 'Gérer ou refuser' },
-  { id: 'duree', t: 'Durée de conservation' },
-  { id: 'contact', t: 'Contact' },
-];
 ---
 
-<BaseLayout title="Politique de cookies" description="Politique de cookies du site Azelize." noindex>
-  <Section width="hero" pad="default" class="pb-6 md:pb-10">
-    <Eyebrow>Informations légales</Eyebrow>
-    <h1 class="mt-4 font-display text-h1 font-medium tracking-h1 text-ink">Politique de cookies</h1>
-    <p class="lg-updated mt-4">Dernière mise à jour : juin 2026</p>
+<BaseLayout
+  title="Gestion des cookies"
+  description="Choisissez les cookies que vous acceptez. Nécessaires, mesure d'audience, aucun cookie publicitaire sans votre accord."
+>
+  <Section width="site" pad="none" class="ck-hero">
+    <Eyebrow>Vos préférences</Eyebrow>
+    <h1 class="ck-h1">Gestion des cookies</h1>
+    <p class="ck-lead">
+      Vous gardez le contrôle. On n'utilise que le strict nécessaire, plus une
+      mesure d'audience anonymisée si vous l'acceptez. Aucun cookie publicitaire
+      sans votre accord.
+    </p>
   </Section>
 
-  <Section width="site" pad="default" class="pt-0">
-    <div class="lg-grid">
-      <nav class="lg-toc" aria-label="Sommaire">
-        <p class="lg-toc-t">Sommaire</p>
-        {sections.map((s) => <a href={`#${s.id}`}>{s.t}</a>)}
-      </nav>
+  <Section width="site" pad="none" class="ck-body">
+    <div class="ck-list">
+      <div class="ck-item">
+        <div>
+          <h2 class="ck-item-t">Nécessaires</h2>
+          <p class="ck-item-p">
+            Indispensables au fonctionnement du site (navigation, sécurité). Ils
+            ne peuvent pas être désactivés.
+          </p>
+        </div>
+        <span class="ck-req">Toujours actifs</span>
+      </div>
 
-      <div class="lg-content">
-        <section class="lg-sec" id="definition">
-          <h2 class="lg-h2">Qu’est-ce qu’un cookie</h2>
-          <p>
-            Un cookie est un petit fichier texte déposé sur votre terminal
-            (ordinateur, tablette, téléphone) lorsque vous consultez un site.
-            Il permet de mémoriser certaines informations le temps d’une visite
-            ou d’une visite à l’autre — par exemple pour assurer le bon
-            fonctionnement du site ou en mesurer la fréquentation.
+      <div class="ck-item">
+        <div>
+          <h2 class="ck-item-t">Mesure d'audience</h2>
+          <p class="ck-item-p">
+            Statistiques anonymisées (pages vues, durée) pour améliorer le site.
+            Aucune donnée personnelle revendue.
           </p>
-          <p>
-            Notre site est conçu pour rester sobre : il ne dépose pas de cookie
-            publicitaire et ne suit pas votre navigation à des fins commerciales.
-          </p>
-        </section>
+        </div>
+        <button class="ck-tog is-on" data-tog="audience" aria-pressed="true" aria-label="Mesure d'audience"></button>
+      </div>
 
-        <section class="lg-sec" id="types">
-          <h2 class="lg-h2">Cookies utilisés</h2>
-          <p>
-            Selon votre navigation et les fonctionnalités activées, le site est
-            susceptible d’utiliser les catégories de cookies suivantes :
-          </p>
-          <dl class="lg-dl">
-            <dt>Strictement nécessaires</dt>
-            <dd>
-              Indispensables au fonctionnement du site (affichage des pages,
-              sécurité, mémorisation de vos choix de consentement). Ils ne
-              requièrent pas votre accord préalable.
-            </dd>
-            <dt>Mesure d’audience</dt>
-            <dd>
-              Le cas échéant, des cookies de mesure d’audience anonymisée
-              pourraient être utilisés pour comprendre comment le site est
-              consulté et l’améliorer. {/* PROVISOIRE : préciser l’outil et le
-              caractère exempté/soumis au consentement une fois la solution
-              retenue. */}
-            </dd>
-            <dt>Tiers / fonctionnels</dt>
-            <dd>
-              Certains contenus ou services intégrés (cartes, vidéos,
-              formulaires) seraient susceptibles de déposer leurs propres
-              cookies. {/* PROVISOIRE : lister les services tiers réellement
-              intégrés et leurs finalités. */}
-            </dd>
-          </dl>
-          <p>
-            Aucun cookie publicitaire ni de partage sur les réseaux sociaux
-            n’est déposé sans votre consentement explicite.
-          </p>
-        </section>
-
-        <section class="lg-sec" id="gestion">
-          <h2 class="lg-h2">Gérer ou refuser les cookies</h2>
-          <p>
-            Vous restez maître des cookies déposés sur votre terminal. Vous
-            pouvez à tout moment les accepter, les refuser ou les supprimer,
-            sans que cela ne nuise au fonctionnement essentiel du site.
-          </p>
-          <p>
-            Le réglage le plus simple passe par votre navigateur, qui permet
-            d’afficher, de bloquer ou d’effacer les cookies enregistrés. La
-            marche à suivre est décrite dans l’aide de chaque navigateur
-            (Chrome, Firefox, Safari, Edge…).
-          </p>
-          <p>
-            {/* PROVISOIRE : si un bandeau de consentement est mis en place,
-            décrire ici comment revenir sur ses choix. */}
-            Le refus des cookies de mesure d’audience n’empêche pas l’accès au
-            site ni la consultation de ses contenus.
-          </p>
-        </section>
-
-        <section class="lg-sec" id="duree">
-          <h2 class="lg-h2">Durée de conservation</h2>
-          <p>
-            Les cookies ne sont conservés que pour la durée nécessaire à leur
-            finalité, puis sont supprimés ou anonymisés.
-          </p>
-          <p>
-            {/* PROVISOIRE : préciser la durée de vie de chaque catégorie une
-            fois les traitements arrêtés (en règle générale, 13 mois maximum
-            pour les cookies soumis au consentement, recommandation CNIL). */}
-            Durée maximale de conservation : à préciser.
-          </p>
-        </section>
-
-        <section class="lg-sec" id="contact">
-          <h2 class="lg-h2">Contact</h2>
-          <p>
-            Pour toute question relative aux cookies ou à l’exercice de vos
-            droits, écrivez-nous à
-            <a href="mailto:bonjour@azelize.fr">bonjour@azelize.fr</a>.
-          </p>
-          <p>
-            Le traitement de vos données personnelles est détaillé dans notre
-            <a href="/confidentialite">politique de confidentialité</a>.
-          </p>
-        </section>
+      <div class="ck-item">
+        <div>
+          <h2 class="ck-item-t">Personnalisation</h2>
+          <p class="ck-item-p">Mémorise vos préférences d'affichage. Désactivé par défaut.</p>
+        </div>
+        <button class="ck-tog" data-tog="perso" aria-pressed="false" aria-label="Personnalisation"></button>
       </div>
     </div>
+
+    <div class="ck-actions">
+      <button class="ed-btn ed-btn--lg" data-action="accept-all">Tout accepter</button>
+      <button class="ed-btn ed-btn--lg ed-btn--ghost" data-action="refuse-all">Tout refuser</button>
+      <button class="ed-btn ed-btn--lg ed-btn--ghost" data-action="save">Enregistrer mes choix</button>
+    </div>
+    <p class="ck-saved" role="status" aria-live="polite"></p>
   </Section>
 
-  <CtaBand />
+  <div class="ck-banner" data-banner>
+    <div class="ck-banner-main">
+      <div class="ck-banner-ico">
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.75"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5z"></path>
+          <circle cx="9.5" cy="11" r="1"></circle>
+          <circle cx="14.5" cy="15" r="1"></circle>
+          <circle cx="9" cy="16" r="1"></circle>
+        </svg>
+      </div>
+      <div>
+        <p class="ck-banner-t">
+          On utilise des cookies pour faire fonctionner le site et, avec votre
+          accord, mesurer l'audience. Aucun cookie publicitaire.
+          <a href="/confidentialite">En savoir plus</a>.
+        </p>
+      </div>
+    </div>
+    <div class="ck-banner-btns">
+      <button class="ck-banner-perso" data-action="perso-scroll">Personnaliser</button>
+      <button class="ed-btn ed-btn--sm ed-btn--ghost" data-action="banner-refuse">Refuser</button>
+      <button class="ed-btn ed-btn--sm" data-action="banner-accept">Tout accepter</button>
+    </div>
+  </div>
 </BaseLayout>
 
 <style>
-  .lg-updated {
-    font-size: 0.875rem;
-    color: var(--color-ink-soft);
+  .ck-hero {
+    padding-top: clamp(150px, 16vw, 200px);
+    padding-bottom: clamp(20px, 3vw, 32px);
+  }
+  .ck-hero :global(> div) {
+    max-width: 760px;
+  }
+  .ck-h1 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(2.2rem, 4.6vw, 3.4rem);
+    line-height: 1.03;
+    letter-spacing: -0.03em;
+    color: var(--color-ink);
+    margin: 14px 0 0;
+  }
+  .ck-lead {
+    font-size: clamp(1.0625rem, 1.5vw, 1.2rem);
+    line-height: 1.55;
+    color: var(--color-ink-2);
+    margin: 18px 0 0;
+    max-width: 54ch;
   }
 
-  /* 3 colonnes symétriques : le contenu (680px) reste centré sur la page,
-     le sommaire est calé à gauche dans la gouttière. */
-  .lg-grid {
-    display: grid;
-    grid-template-columns: 1fr min(680px, 100%) 1fr;
-    column-gap: clamp(32px, 5vw, 72px);
-    align-items: start;
+  .ck-body {
+    padding-bottom: clamp(56px, 7vw, 96px);
   }
-  @media (max-width: 780px) {
-    .lg-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  /* Sommaire sticky, dans la colonne de gauche */
-  .lg-toc {
-    grid-column: 1;
-    justify-self: end;
-    width: 220px;
-    position: sticky;
-    top: 130px;
+  .ck-list {
+    max-width: 760px;
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 12px;
+    margin-top: clamp(20px, 2.5vw, 30px);
   }
-  .lg-toc-t {
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--color-ink-faint);
-    margin: 0 0 10px;
+  .ck-item {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    justify-content: space-between;
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-sm);
+    padding: 20px 22px;
+    background: var(--color-paper);
   }
-  .lg-toc a {
-    font-size: 0.875rem;
-    color: var(--color-ink-2);
-    text-decoration: none;
-    padding: 6px 10px;
-    border-radius: var(--radius-xs);
-    transition: background 0.2s var(--ease), color 0.2s var(--ease);
+  .ck-item-t {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--color-ink);
+    margin: 0;
   }
-  .lg-toc a:hover {
-    background: var(--color-brand-soft);
-    color: var(--color-brand);
+  .ck-item-p {
+    font-size: 0.92rem;
+    line-height: 1.55;
+    color: var(--color-ink-soft);
+    margin: 6px 0 0;
+    max-width: 52ch;
   }
-  @media (max-width: 780px) {
-    .lg-toc {
-      display: none;
+  .ck-req {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-ink-soft);
+    white-space: nowrap;
+    padding-top: 3px;
+  }
+
+  /* Toggle */
+  .ck-tog {
+    flex: none;
+    width: 46px;
+    height: 26px;
+    border-radius: 999px;
+    background: var(--color-line-strong);
+    position: relative;
+    cursor: pointer;
+    border: 0;
+    transition: background 0.2s var(--ease);
+    margin-top: 2px;
+  }
+  .ck-tog.is-on {
+    background: var(--color-brand);
+  }
+  .ck-tog::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--color-on-dark-bright);
+    transition: transform 0.2s var(--ease);
+  }
+  .ck-tog.is-on::after {
+    transform: translateX(20px);
+  }
+  .ck-tog[disabled] {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ck-tog,
+    .ck-tog::after,
+    .ck-banner {
+      transition: none;
     }
   }
 
-  .lg-content {
-    grid-column: 2;
-    max-width: 680px;
+  .ck-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: clamp(20px, 2.5vw, 28px);
   }
-  @media (max-width: 780px) {
-    .lg-content {
-      grid-column: 1;
-    }
-  }
-  .lg-sec {
-    padding: clamp(24px, 3vw, 36px) 0;
-    border-top: 1px solid var(--color-line);
-  }
-  .lg-sec:first-child {
-    border-top: 0;
-    padding-top: 0;
-  }
-  .lg-h2 {
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 1.4rem;
-    letter-spacing: -0.015em;
-    color: var(--color-ink);
-    margin: 0 0 14px;
-  }
-  .lg-content :global(p) {
-    font-size: 1rem;
-    line-height: 1.65;
-    color: var(--color-ink-2);
-    margin: 0 0 12px;
-  }
-  .lg-content :global(p:last-child) {
-    margin-bottom: 0;
-  }
-  .lg-content :global(strong) {
-    color: var(--color-ink);
-    font-weight: 600;
-  }
-  .lg-content :global(a) {
+  .ck-saved {
+    font-size: 0.85rem;
     color: var(--color-brand);
     font-weight: 600;
-    text-decoration: none;
+    margin-top: 14px;
+    min-height: 1.2em;
   }
-  .lg-content :global(a:hover) {
-    text-decoration: underline;
-  }
-  .lg-dl {
-    margin: 0 0 12px;
-    display: grid;
-    grid-template-columns: max-content 1fr;
-    gap: 12px 20px;
-  }
-  .lg-dl dt {
-    font-size: 0.95rem;
-    color: var(--color-ink);
+
+  /* Boutons (repris du chrome .ed-btn — non liés au canon Button ici car la
+     bannière les restyle entièrement en blanc-sur-sombre). */
+  .ed-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: var(--font-sans);
     font-weight: 600;
+    line-height: 1;
+    border-radius: var(--radius-xs);
+    white-space: nowrap;
+    cursor: pointer;
+    border: 1px solid transparent;
+    background: var(--color-brand);
+    color: var(--color-paper);
+    transition: background 0.15s var(--ease), border-color 0.15s var(--ease), color 0.15s var(--ease);
   }
-  .lg-dl dd {
+  .ed-btn:hover {
+    background: var(--color-brand-deep);
+  }
+  .ed-btn--sm {
+    font-size: 0.9rem;
+    padding: 14px 18px;
+  }
+  .ed-btn--lg {
+    font-size: 1.0625rem;
+    padding: 20px 32px;
+  }
+  .ed-btn--ghost {
+    background: transparent;
+    color: var(--color-ink);
+    border-color: var(--color-line-strong);
+  }
+  .ed-btn--ghost:hover {
+    background: transparent;
+    border-color: var(--color-brand);
+    color: var(--color-brand);
+  }
+
+  /* Bannière — bande horizontale pleine largeur, fixée en bas. */
+  .ck-banner {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 90;
+    background: var(--color-brand-900);
+    color: var(--color-on-dark);
+    padding: 18px clamp(22px, 5vw, 72px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px 24px;
+    flex-wrap: wrap;
+    transform: translateY(0);
+    transition: transform 0.35s var(--ease);
+  }
+  .ck-banner.is-hidden {
+    transform: translateY(110%);
+  }
+  .ck-banner-main {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+    flex: 1 1 420px;
+  }
+  .ck-banner-ico {
+    flex: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--color-on-dark-bright) 12%, transparent);
+    color: var(--color-on-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ck-banner-h {
+    font-family: var(--font-display);
+    font-weight: 600;
     font-size: 1rem;
-    line-height: 1.65;
-    color: var(--color-ink-2);
-    margin: 0;
+    color: var(--color-on-dark-bright);
+    margin: 0 0 2px;
   }
-  @media (max-width: 440px) {
-    .lg-dl {
-      grid-template-columns: 1fr;
-      gap: 4px 0;
-    }
-    .lg-dl dt {
-      margin-top: 8px;
-    }
-    .lg-dl dd {
-      margin-bottom: 8px;
-    }
+  .ck-banner-t {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--color-on-dark-soft);
+    margin: 0;
+    max-width: 64ch;
+  }
+  .ck-banner-t a {
+    color: var(--color-on-dark-bright);
+  }
+  .ck-banner-btns {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .ck-banner-perso {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-on-dark-bright);
+    background: none;
+    border: 0;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    padding: 8px 4px;
+  }
+  .ck-banner-perso:hover {
+    opacity: 0.8;
+  }
+  .ck-banner .ed-btn {
+    background: var(--color-on-dark-bright);
+    color: var(--color-brand-900);
+  }
+  .ck-banner .ed-btn:hover {
+    background: var(--color-parchment);
+  }
+  .ck-banner .ed-btn--ghost {
+    background: transparent;
+    color: var(--color-on-dark-bright);
+    border-color: color-mix(in srgb, var(--color-on-dark-bright) 32%, transparent);
+  }
+  .ck-banner .ed-btn--ghost:hover {
+    background: color-mix(in srgb, var(--color-on-dark-bright) 10%, transparent);
+    border-color: var(--color-on-dark-bright);
+    color: var(--color-on-dark-bright);
   }
 </style>
+
+<script>
+  // ── Gestion des cookies — logique React Design réécrite en vanilla ──────────
+  // États NON persistés (démo, fidèle au Design).
+  const state = { audience: true, perso: false };
+
+  const toggles = Array.from(document.querySelectorAll<HTMLButtonElement>('.ck-tog[data-tog]'));
+  const banner = document.querySelector<HTMLElement>('[data-banner]');
+  const savedEl = document.querySelector<HTMLElement>('.ck-saved');
+
+  function syncToggle(btn: HTMLButtonElement) {
+    const key = btn.dataset.tog as 'audience' | 'perso';
+    const on = state[key];
+    btn.classList.toggle('is-on', on);
+    btn.setAttribute('aria-pressed', String(on));
+  }
+  function syncAll() {
+    toggles.forEach(syncToggle);
+  }
+
+  let flashTimer: number | undefined;
+  function flash(msg: string) {
+    if (!savedEl) return;
+    savedEl.textContent = msg;
+    if (flashTimer) window.clearTimeout(flashTimer);
+    flashTimer = window.setTimeout(() => {
+      savedEl.textContent = '';
+    }, 2600);
+  }
+
+  // Toggles individuels
+  toggles.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const key = btn.dataset.tog as 'audience' | 'perso';
+      state[key] = !state[key];
+      syncToggle(btn);
+    });
+  });
+
+  function hideBanner() {
+    banner?.classList.add('is-hidden');
+  }
+
+  // Actions
+  const handlers: Record<string, () => void> = {
+    'accept-all': () => {
+      state.audience = true;
+      state.perso = true;
+      syncAll();
+      flash('Tous les cookies acceptés.');
+    },
+    'refuse-all': () => {
+      state.audience = false;
+      state.perso = false;
+      syncAll();
+      flash('Cookies refusés (sauf nécessaires).');
+    },
+    save: () => flash('Vos préférences ont été enregistrées.'),
+    'perso-scroll': () => {
+      hideBanner();
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 200, behavior: reduce ? 'auto' : 'smooth' });
+    },
+    'banner-refuse': () => {
+      state.audience = false;
+      state.perso = false;
+      syncAll();
+      hideBanner();
+    },
+    'banner-accept': () => {
+      state.audience = true;
+      state.perso = true;
+      syncAll();
+      hideBanner();
+    },
+  };
+
+  document.querySelectorAll<HTMLElement>('[data-action]').forEach((el) => {
+    const fn = handlers[el.dataset.action ?? ''];
+    if (fn) el.addEventListener('click', fn);
+  });
+
+  syncAll();
+</script>

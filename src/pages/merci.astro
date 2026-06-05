@@ -1,0 +1,62 @@
+---
+/** C0 — Merci · confirmation post-formulaire (portage fidèle de merci.html). */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Button from '@components/ui/Button.astro';
+import { site } from '@data/site';
+
+const steps = [
+  { n: '01', t: 'On vous rappelle', p: 'Sous 48 h, pour comprendre votre besoin.' },
+  { n: '02', t: 'On vous propose', p: 'Une formule claire, adaptée à votre métier.' },
+  { n: '03', t: 'On construit', p: 'Si ça vous va — sans engagement.' },
+];
+---
+
+<BaseLayout
+  title="Merci"
+  description="Votre demande est bien reçue. Un interlocuteur vous rappelle sous 48 h avec une proposition claire."
+  noindex
+>
+  <div
+    class="flex min-h-[80vh] flex-col items-center justify-center px-5.5 pt-30 pb-15 text-center"
+  >
+    <!-- Pastille de validation (coche dessinée en CSS, fidèle au ::after Design) -->
+    <div class="relative h-18 w-18 rounded-full bg-brand-soft">
+      <span
+        class="absolute left-6.5 top-5 h-6.5 w-3.5 rotate-[40deg] border-r-[3px] border-b-[3px] border-brand"
+        aria-hidden="true"></span>
+    </div>
+
+    <h1
+      class="mt-6.5 font-display text-[clamp(1.9rem,3.6vw,2.8rem)] font-medium tracking-[-0.025em] text-ink"
+    >
+      Merci, c'est bien reçu.
+    </h1>
+    <p class="mt-4 max-w-[46ch] text-[1.0625rem] leading-[1.6] text-ink-2">
+      On a votre demande. Un interlocuteur vous rappelle <strong>sous 48 h</strong> avec une
+      proposition claire — pas de jargon, pas de pression.
+    </p>
+
+    <div class="mt-8.5 flex flex-wrap justify-center gap-3.5">
+      {
+        steps.map((s) => (
+          <div class="w-50 rounded-md border border-line bg-paper px-5 py-4.5 text-left">
+            <div class="font-mono text-[0.78rem] text-brand">{s.n}</div>
+            <div class="mt-2 text-[0.95rem] font-semibold text-ink">{s.t}</div>
+            <div class="mt-1 text-[0.85rem] leading-[1.45] text-ink-soft">{s.p}</div>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="mt-8.5">
+      <Button href="/" size="lg">Retour à l'accueil</Button>
+    </div>
+
+    <p class="mt-4.5 text-[0.9rem] text-ink-soft">
+      Une urgence ? Appelez-nous : <a
+        href={site.phoneHref}
+        class="font-semibold text-brand no-underline">{site.phone}</a
+      >
+    </p>
+  </div>
+</BaseLayout>

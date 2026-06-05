@@ -1,46 +1,161 @@
 ---
+/**
+ * Hub Réalisations (/realisations) — portage fidèle de la maquette Design
+ * (realisations.html). Portfolio = preuve sociale ; chaque carte renvoie vers
+ * une étude de cas. Les cartes « à venir » se remplacent par de vrais cas au
+ * fil de l'eau.
+ *
+ * Câblage : les cartes réelles viennent de getCollection('realisations')
+ * (triées par date décroissante). Les 2 placeholders « Bientôt » de la maquette
+ * sont conservés tels quels.
+ */
 import BaseLayout from '@layouts/BaseLayout.astro';
-import Section from '@components/ui/Section.astro';
-import Card from '@components/ui/Card.astro';
-import PageHeader from '@components/ui/PageHeader.astro';
+import CtaBand from '@components/blocks/CtaBand.astro';
 import Eyebrow from '@components/ui/Eyebrow.astro';
 import { getCollection } from 'astro:content';
+import { ogImage } from '@lib/og';
 
 const realisations = (await getCollection('realisations')).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
 );
 ---
 
-<BaseLayout title="Réalisations" description="Des projets concrets, livrés nets et rapides.">
-  <Section pad="default">
-    <PageHeader eyebrow="Réalisations">
-      Des résultats concrets
-      <Fragment slot="lead">Une sélection de projets, enrichie au fil de l'eau.</Fragment>
-    </PageHeader>
+<BaseLayout
+  title="Réalisations"
+  description="Les sites qu'on a créés et qu'on tient pour des artisans : résultats concrets, demandes en hausse, visibilité Google."
+  image={ogImage('realisations')}
+>
+  <script is:inline>document.documentElement.classList.add('anim');</script>
 
-    {
-      realisations.length > 0 ? (
-        <div class="mt-12 grid gap-6 md:grid-cols-2">
-          {realisations.map((r) => (
-            <Card href={`/realisations/${r.id}`}>
-              <Eyebrow>{r.data.client}</Eyebrow>
-              <p class="mt-3 text-body text-ink-2">{r.data.resume}</p>
-              {r.data.resultats && r.data.resultats.length > 0 && (
-                <ul class="mt-4 space-y-1.5">
-                  {r.data.resultats.map((res) => (
-                    <li class="flex gap-2 text-caption text-ink-soft">
-                      <span class="text-brand">—</span>
-                      <span>{res}</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </Card>
-          ))}
+  {/* Hero */}
+  <section class="pt-[clamp(150px,16vw,196px)] pb-[clamp(28px,3vw,44px)]">
+    <div class="container-site">
+      <div class="max-w-190">
+        <div class="reveal"><Eyebrow>Réalisations</Eyebrow></div>
+        <h1 class="reveal mt-4 font-display text-[clamp(2.3rem,5vw,3.8rem)] font-medium leading-[1.02] tracking-display text-ink [&_em]:not-italic [&_em]:text-brand">
+          Des sites qui <em>amènent des clients</em>.
+        </h1>
+        <p class="reveal mt-5 max-w-[52ch] text-[clamp(1.0625rem,1.5vw,1.25rem)] leading-[1.55] text-ink-2">
+          Pas de galerie pour faire joli : des artisans qu'on a rendus visibles, avec des résultats
+          concrets. Chaque cas, c'est un métier, un site, et des demandes en plus.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* Grille des cas */}
+  <section class="pb-[clamp(56px,7vw,96px)]">
+    <div class="container-site">
+      <div class="grid grid-cols-[repeat(auto-fill,minmax(330px,1fr))] gap-[clamp(18px,2.4vw,26px)]">
+        {
+          realisations.map((c) => (
+            <a
+              href={`/realisations/${c.id}`}
+              class="reveal group flex flex-col overflow-hidden rounded-md border border-line bg-paper no-underline transition-[border-color,transform] duration-150 ease-brand hover:-translate-y-[3px] hover:border-brand"
+            >
+              <div
+                class="flex aspect-[16/10] items-center justify-center"
+                style="background:linear-gradient(180deg,color-mix(in srgb,var(--color-brand) 7%,transparent),color-mix(in srgb,var(--color-brand) 2%,transparent)),repeating-linear-gradient(135deg,var(--color-parchment) 0 14px,var(--color-line) 14px 28px);"
+                aria-hidden="true"
+              >
+                <span class="text-[0.7rem] uppercase tracking-[0.08em] text-brand/40">
+                  {c.data.client}
+                </span>
+              </div>
+              <div class="px-[22px] pb-[22px] pt-5">
+                <h3 class="m-0 font-display text-[1.3rem] font-semibold tracking-[-0.01em] text-ink">
+                  {c.data.client}
+                </h3>
+                <p class="mt-[7px] text-[0.95rem] leading-[1.5] text-ink-soft">{c.data.resume}</p>
+                {c.data.resultats && c.data.resultats.length > 0 && (
+                  <ul class="mt-4 space-y-1.5 border-t border-line pt-3.5">
+                    {c.data.resultats.map((res) => (
+                      <li class="flex gap-2 text-[0.85rem] leading-[1.45] text-ink-soft">
+                        <span class="text-brand">—</span>
+                        <span>{res}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            </a>
+          ))
+        }
+
+        {/* Placeholders — à remplacer par de vrais cas au fil de l'eau */}
+        <div class="reveal flex flex-col overflow-hidden rounded-md border border-dashed border-line bg-paper">
+          <div
+            class="flex aspect-[16/10] items-center justify-center bg-parchment"
+            aria-hidden="true"
+          >
+            <span class="text-[0.78rem] font-semibold text-ink-soft">Bientôt</span>
+          </div>
+          <div class="px-[22px] pb-[22px] pt-5">
+            <div class="mb-[11px] flex flex-wrap gap-[7px]">
+              <span class="rounded-full bg-brand-soft px-[11px] py-1 text-[0.72rem] font-semibold text-brand">
+                À venir
+              </span>
+            </div>
+            <h3 class="m-0 font-display text-[1.3rem] font-semibold tracking-[-0.01em] text-ink">
+              Votre métier ici
+            </h3>
+            <p class="mt-[7px] text-[0.95rem] leading-[1.5] text-ink-soft">
+              On documente chaque nouveau chantier client. Le prochain cas, c'est peut-être le vôtre.
+            </p>
+          </div>
         </div>
-      ) : (
-        <p class="mt-8 text-body text-ink-soft">Les premières réalisations arrivent bientôt.</p>
-      )
-    }
-  </Section>
+
+        <div class="reveal flex flex-col overflow-hidden rounded-md border border-dashed border-line bg-paper">
+          <div
+            class="flex aspect-[16/10] items-center justify-center bg-parchment"
+            aria-hidden="true"
+          >
+            <span class="text-[0.78rem] font-semibold text-ink-soft">Bientôt</span>
+          </div>
+          <div class="px-[22px] pb-[22px] pt-5">
+            <div class="mb-[11px] flex flex-wrap gap-[7px]">
+              <span class="rounded-full bg-brand-soft px-[11px] py-1 text-[0.72rem] font-semibold text-brand">
+                À venir
+              </span>
+            </div>
+            <h3 class="m-0 font-display text-[1.3rem] font-semibold tracking-[-0.01em] text-ink">
+              Nouveau cas client
+            </h3>
+            <p class="mt-[7px] text-[0.95rem] leading-[1.5] text-ink-soft">
+              Site, référencement, résultats chiffrés — bientôt en ligne.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Le prochain résultat, c'est le vôtre."
+    lead="15 minutes pour voir comment on peut vous rendre visible. Sans engagement."
+    ctaLabel="Demander un devis gratuit"
+  />
 </BaseLayout>
+
+<script>
+  // ── Reveal au scroll (identique à la home) ─────────────────────────────────
+  document.documentElement.classList.add('anim');
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reveals = Array.from(document.querySelectorAll<HTMLElement>('.reveal'));
+  if (prefersReduced || !('IntersectionObserver' in window)) {
+    reveals.forEach((el) => el.classList.add('in'));
+  } else {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
+    );
+    reveals.forEach((el) => io.observe(el));
+  }
+</script>

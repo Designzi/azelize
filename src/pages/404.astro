@@ -1,0 +1,56 @@
+---
+/** C0 — 404 · page d'erreur sur-mesure (portage fidèle de 404.html). */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Button from '@components/ui/Button.astro';
+
+const chips = [
+  { label: 'Création de site', href: '/creation-site-internet' },
+  { label: 'Référencement', href: '/referencement-seo' },
+  { label: 'Réalisations', href: '/realisations' },
+  { label: 'Tarifs', href: '/tarifs' },
+];
+---
+
+<BaseLayout
+  title="Page introuvable"
+  description="La page que vous cherchez n'existe pas ou a été déplacée. On vous remet sur la bonne voie."
+  noindex
+>
+  <div
+    class="flex min-h-[80vh] flex-col items-center justify-center px-5.5 pt-30 pb-15 text-center"
+  >
+    <div
+      class="font-display text-[clamp(5rem,18vw,12rem)] font-bold leading-[0.9] tracking-[-0.05em] text-brand"
+    >
+      404
+    </div>
+
+    <h1
+      class="mt-4.5 font-display text-[clamp(1.6rem,3.2vw,2.4rem)] font-medium tracking-h2 text-ink"
+    >
+      Cette page a filé sur un chantier.
+    </h1>
+    <p class="mt-4 max-w-[42ch] text-[1.0625rem] leading-[1.55] text-ink-2">
+      La page que vous cherchez n'existe pas ou a été déplacée. Pas de panique — on vous remet sur
+      la bonne voie.
+    </p>
+
+    <div class="mt-7.5 flex flex-wrap justify-center gap-3.5">
+      <Button href="/" size="lg">Retour à l'accueil</Button>
+      <Button href="/contact" variant="outline" size="lg">Nous contacter</Button>
+    </div>
+
+    <div class="mt-9 flex flex-wrap justify-center gap-2">
+      {
+        chips.map((c) => (
+          <a
+            href={c.href}
+            class="rounded-full border border-line-strong bg-paper px-3.5 py-2 text-[0.9rem] font-medium text-ink-2 no-underline transition-colors duration-200 ease-brand hover:border-brand hover:text-brand"
+          >
+            {c.label}
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</BaseLayout>

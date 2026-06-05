@@ -1,27 +1,104 @@
 ---
+/**
+ * À propos / Le studio (/a-propos) — incarnation : qui est derrière Azelize,
+ * la promesse, la méthode. Porté fidèlement de la maquette Design (le-studio.html) :
+ * héro + portrait fondateur + 3 principes (bande teintée) + promesse + bande CTA.
+ * Le portrait est un placeholder visuel (à remplacer par une vraie photo).
+ */
 import BaseLayout from '@layouts/BaseLayout.astro';
-import Section from '@components/ui/Section.astro';
-import Eyebrow from '@components/ui/Eyebrow.astro';
-/* Contenu PROVISOIRE — à nourrir depuis azelize-arbre-narrative.md (le « pourquoi » de la marque). */
+import CtaBand from '@components/blocks/CtaBand.astro';
+
+const VALUES = [
+  {
+    n: '01',
+    title: 'Le résultat, pas le joli',
+    body: 'Un beau site qui dort ne sert à rien. On vise être trouvé et être appelé.',
+  },
+  {
+    n: '02',
+    title: 'On tient dans la durée',
+    body: 'On ne livre pas pour disparaître. On entretient et on fait vivre votre présence chaque mois.',
+  },
+  {
+    n: '03',
+    title: 'Le risque, c’est nous',
+    body: 'Vous ne payez qu’une fois que le site vous rapporte. Si on s’engage, c’est qu’on est sûrs.',
+  },
+];
 ---
 
 <BaseLayout
-  title="À propos"
-  description="Azelize, studio de prestations digitales : sobre, rapide, sans esbroufe."
+  title="Le studio"
+  description="Azelize, le studio digital pensé pour les artisans. Qui on est, comment on travaille, et pourquoi on ne vous facture qu'une fois que ça marche."
 >
-  <Section width="hero" pad="default">
-    <Eyebrow>À propos</Eyebrow>
-    <h1 class="mt-4 font-display text-h1 font-medium tracking-h1 text-ink">Le studio Azelize</h1>
-    <div class="prose-azelize mt-8 max-w-2xl">
-      <p>
-        Azelize conçoit et réalise des sites, identités et outils digitaux nets
-        et performants. Une approche sobre et directe : on resserre le périmètre,
-        on exécute avec soin, on livre vite.
-      </p>
-      <p>
-        Cette page sera enrichie avec le récit de marque (cf.
-        <code>azelize-arbre-narrative.md</code>).
+  <section class="container-site pt-[clamp(150px,16vw,200px)] pb-[clamp(32px,4vw,52px)]">
+    <div class="max-w-[820px]">
+      <p class="text-eyebrow font-semibold uppercase tracking-eyebrow text-brand">Le studio</p>
+      <h1
+        class="mt-4 font-display text-[clamp(2.3rem,5vw,4rem)] font-medium leading-[1.02] tracking-display text-ink [&_em]:not-italic [&_em]:text-brand"
+      >
+        Le studio digital pensé <em>pour les artisans</em>.
+      </h1>
+      <p class="mt-[22px] max-w-[54ch] text-[clamp(1.0625rem,1.6vw,1.3rem)] leading-[1.55] text-ink-2">
+        Les agences web ne sont pas faites pour les TPE : trop chères, trop de jargon, et une fois
+        le site livré, plus personne. Azelize fait l'inverse — un studio qui vous accompagne dans la
+        durée.
       </p>
     </div>
-  </Section>
+  </section>
+
+  <section class="container-site">
+    <div class="mx-auto grid max-w-[820px] grid-cols-1 items-center gap-7 py-[clamp(40px,5vw,72px)] md:grid-cols-[0.85fr_1.15fr] md:gap-[clamp(28px,4vw,60px)]">
+      <div
+        class="flex aspect-[4/5] max-w-[280px] items-end rounded-md border border-line p-[18px] md:max-w-none"
+        style="background:repeating-linear-gradient(135deg,var(--color-parchment) 0 16px,var(--color-line) 16px 32px);"
+        aria-hidden="true"
+      >
+        <span class="text-[0.7rem] uppercase tracking-[0.08em] text-brand/40">Portrait — le dirigeant</span>
+      </div>
+      <div>
+        <p class="m-0 font-display text-[clamp(1.4rem,2.6vw,2rem)] font-normal leading-[1.32] tracking-[-0.01em] text-ink">
+          « Je voulais un studio qui parle aux artisans comme à des pairs — pas comme à des clients
+          qu'on impressionne. »
+        </p>
+        <p class="mt-5 text-[0.95rem] text-ink-soft">
+          <b class="font-semibold text-ink">Taha Yasin Celik</b> — fondateur d'Azelize
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-parchment py-[clamp(48px,6vw,88px)]">
+    <div class="container-site">
+      <p class="text-eyebrow font-semibold uppercase tracking-eyebrow text-brand">Ce qui nous tient</p>
+      <h2 class="mt-4 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink">
+        Trois principes, pas de baratin.
+      </h2>
+      <div class="mt-[clamp(28px,4vw,40px)] grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          VALUES.map((v) => (
+            <div class="rounded-md border border-line bg-paper p-6">
+              <div class="font-mono text-[0.8rem] text-brand">{v.n}</div>
+              <div class="mt-3 font-display text-[1.2rem] font-semibold tracking-[-0.01em] text-ink">
+                {v.title}
+              </div>
+              <div class="mt-2 text-[0.95rem] leading-[1.55] text-ink-soft">{v.body}</div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="container-site py-[clamp(44px,5vw,72px)]">
+    <p class="mx-auto max-w-[20ch] text-center font-display text-[clamp(1.6rem,3.2vw,2.5rem)] font-medium leading-[1.2] tracking-h2 text-ink [&_em]:not-italic [&_em]:text-brand">
+      Votre site, <em>créé et tenu</em> — vous gardez les mains sur votre métier.
+    </p>
+  </section>
+
+  <CtaBand
+    title="Faisons connaissance."
+    lead="15 minutes pour parler de votre métier et voir si on peut vous aider. Sans engagement."
+    ctaLabel="Réserver un appel"
+  />
 </BaseLayout>

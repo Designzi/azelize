@@ -1,0 +1,211 @@
+---
+/**
+ * Hub service — /habillage-vehicule-covering. Portage FIDÈLE de la maquette
+ * Design (habillage-vehicule-covering.html) : corps <main> complet, CTA compris.
+ * Le chrome (header/footer) est fourni par BaseLayout.
+ * Interactivité : aucune (page statique) ; reveal au scroll via .reveal.
+ * Le « van » avant/après est reproduit en CSS pur (formes positionnées).
+ */
+import Button from '@components/ui/Button.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import CtaBand from '@components/blocks/CtaBand.astro';
+
+const TYPES = [
+  {
+    tag: 'Essentiel',
+    t: 'Lettrage',
+    p: 'Nom, logo, téléphone et métier sur les portières. Sobre et efficace.',
+  },
+  {
+    tag: 'Le plus choisi',
+    t: 'Semi-covering',
+    p: "Les flancs et l'arrière habillés. Bon équilibre visibilité / budget.",
+  },
+  {
+    tag: 'Maximal',
+    t: 'Covering total',
+    p: 'Le véhicule entièrement habillé : impossible à rater sur la route.',
+  },
+];
+
+const STATS = [
+  { n: '+1 500', l: 'vues par jour pour un véhicule en ville.' },
+  { n: '3–5 ans', l: "de durée de vie d'un covering de qualité." },
+  { n: '1 fois', l: 'payé, il travaille pour vous tous les jours.' },
+];
+
+const FAQ = [
+  {
+    q: 'Ça abîme la peinture du véhicule ?',
+    a: 'Non, au contraire : un covering de qualité protège la carrosserie et se retire sans laisser de trace.',
+  },
+  {
+    q: 'Ça tient combien de temps ?',
+    a: '3 à 5 ans pour un covering posé dans les règles. Un investissement qui travaille pour vous chaque jour.',
+  },
+  {
+    q: 'Vous concevez aussi le visuel ?',
+    a: "Oui : on part de votre identité pour créer un habillage lisible et marquant, même à vitesse de route.",
+  },
+];
+
+const LINKS = [
+  { label: 'Identité visuelle', href: '/identite-visuelle' },
+  { label: 'Supports imprimés', href: '/supports-print' },
+  { label: 'Création de site', href: '/creation-site-internet' },
+];
+---
+
+<main>
+  {/* ── Héro ──────────────────────────────────────────────────────────────── */}
+  <section class="container-site max-w-205 pt-[clamp(150px,16vw,196px)] pb-[clamp(28px,3vw,40px)]">
+    <Eyebrow accent="menthe">Habillage de véhicule</Eyebrow>
+    <h1
+      class="mt-4 font-display text-[clamp(2.3rem,5vw,4rem)] font-medium leading-[1.02] tracking-display text-ink [&_em]:not-italic [&_em]:text-brand"
+    >
+      Votre camion, <em>panneau publicitaire roulant</em>.
+    </h1>
+    <p class="mt-[22px] max-w-[52ch] text-[clamp(1.0625rem,1.6vw,1.3rem)] leading-[1.55] text-ink-2">
+      Un véhicule habillé, c'est votre nom vu des centaines de fois par jour — sur la route, devant
+      le chantier, en stationnement. Le support le plus rentable, et il roule déjà.
+    </p>
+    <div class="mt-7 flex flex-wrap gap-3.5">
+      <Button href="/contact" size="lg">Demander un devis gratuit</Button>
+      <Button href="/identite-visuelle" variant="outline" size="lg">Voir l'identité visuelle</Button>
+    </div>
+  </section>
+
+  {/* ── Avant / après ─────────────────────────────────────────────────────── */}
+  <section class="container-site">
+    <div class="mt-[clamp(32px,4vw,48px)] grid grid-cols-1 gap-3.5 sm:grid-cols-2">
+      {/* Avant — utilitaire anonyme */}
+      <div class="reveal overflow-hidden rounded-sm border border-line bg-paper">
+        <div class="flex aspect-[16/10] items-center justify-center bg-parchment p-6">
+          <div class="relative aspect-[2/1] w-4/5 rounded-[8px_14px_6px_6px] bg-line-strong">
+            <span class="absolute left-[8%] top-[14%] h-[34%] w-1/5 rounded-xs bg-paper/50"></span>
+            <span class="absolute -bottom-[9px] left-[16%] h-5 w-5 rounded-full bg-brand-900"></span>
+            <span class="absolute -bottom-[9px] right-[16%] h-5 w-5 rounded-full bg-brand-900"></span>
+          </div>
+        </div>
+        <div
+          class="border-t border-line px-4 py-3 text-[0.78rem] font-bold uppercase tracking-[0.06em] text-ink-soft"
+        >
+          Avant — un utilitaire anonyme
+        </div>
+      </div>
+      {/* Après — votre marque qui roule */}
+      <div class="reveal overflow-hidden rounded-sm border border-line bg-paper">
+        <div class="flex aspect-[16/10] items-center justify-center bg-brand-900 p-6">
+          <div class="relative aspect-[2/1] w-4/5 rounded-[8px_14px_6px_6px] bg-brand">
+            <span class="absolute left-[8%] top-[14%] h-[34%] w-1/5 rounded-xs bg-paper/50"></span>
+            <span
+              class="absolute right-[10%] top-1/2 -translate-y-1/2 font-display text-[1.4rem] font-bold text-paper"
+              >azelize</span
+            >
+            <span class="absolute -bottom-[9px] left-[16%] h-5 w-5 rounded-full bg-brand-900"></span>
+            <span class="absolute -bottom-[9px] right-[16%] h-5 w-5 rounded-full bg-brand-900"></span>
+          </div>
+        </div>
+        <div
+          class="border-t border-line px-4 py-3 text-[0.78rem] font-bold uppercase tracking-[0.06em] text-brand"
+        >
+          Après — votre marque qui roule
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ── Les formules ──────────────────────────────────────────────────────── */}
+  <section class="bg-parchment py-[clamp(48px,6vw,88px)]">
+    <div class="container-site">
+      <div class="reveal"><Eyebrow accent="menthe">Les formules</Eyebrow></div>
+      <h2
+        class="reveal mt-3 max-w-[22ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink"
+      >
+        Du simple lettrage au covering complet.
+      </h2>
+      <div class="mt-[clamp(28px,4vw,40px)] grid grid-cols-1 gap-3.5 md:grid-cols-3">
+        {
+          TYPES.map((ty) => (
+            <div class="reveal rounded-sm border border-line bg-paper p-6">
+              <span class="mb-3 inline-block rounded-full bg-brand-soft px-[11px] py-1 text-[0.72rem] font-semibold text-brand">
+                {ty.tag}
+              </span>
+              <h3 class="m-0 font-display text-[1.15rem] font-semibold text-ink">{ty.t}</h3>
+              <p class="mt-[7px] text-[0.92rem] leading-[1.55] text-ink-soft">{ty.p}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* ── Statistiques ──────────────────────────────────────────────────────── */}
+  <section class="py-[clamp(48px,6vw,88px)]">
+    <div class="container-site flex flex-wrap gap-[clamp(24px,5vw,64px)]">
+      {
+        STATS.map((s) => (
+          <div class="reveal">
+            <div class="font-display text-[clamp(2.2rem,3.6vw,3rem)] font-semibold leading-none tracking-[-0.03em] text-brand">
+              {s.n}
+            </div>
+            <div class="mt-2 max-w-[22ch] text-[0.95rem] text-ink-soft">{s.l}</div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  {/* ── FAQ ───────────────────────────────────────────────────────────────── */}
+  <section class="py-[clamp(48px,6vw,88px)]">
+    <div class="container-site">
+      <div class="reveal"><Eyebrow accent="menthe">Vos questions</Eyebrow></div>
+      <h2
+        class="reveal mt-3 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink"
+      >
+        L'habillage, en clair.
+      </h2>
+      <div class="mt-[clamp(28px,4vw,40px)] flex max-w-[780px] flex-col gap-2.5">
+        {
+          FAQ.map((f) => (
+            <div class="reveal rounded-sm border border-line bg-paper px-[22px] py-5">
+              <p class="m-0 font-display text-[1.1rem] font-medium text-ink">{f.q}</p>
+              <p class="mt-2.5 text-base leading-[1.6] text-ink-2">{f.a}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* ── Aussi pour vous — maillage interne ────────────────────────────────── */}
+  <section class="bg-parchment py-[clamp(48px,6vw,88px)]">
+    <div class="container-site">
+      <div class="reveal"><Eyebrow accent="menthe">Aussi pour vous</Eyebrow></div>
+      <h2
+        class="reveal mt-3 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink"
+      >
+        Votre marque, partout cohérente.
+      </h2>
+      <div class="reveal mt-[clamp(24px,3vw,32px)] flex flex-wrap gap-[9px]">
+        {
+          LINKS.map((l) => (
+            <a
+              href={l.href}
+              class="whitespace-nowrap rounded-full border border-line-strong bg-paper px-[15px] py-2 text-[0.9rem] font-medium text-ink-2 transition-colors duration-200 ease-brand hover:border-brand hover:text-brand"
+            >
+              {l.label}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Faisons rouler votre marque."
+    lead="15 minutes pour étudier votre véhicule. Sans engagement."
+    ctaLabel="Demander un devis gratuit"
+    ctaHref="/contact"
+  />
+</main>

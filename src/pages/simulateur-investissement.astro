@@ -1,0 +1,332 @@
+---
+/**
+ * /simulateur-investissement — portage fidèle de la maquette Design
+ * `simulateur-investissement.html` (C5 / outil). Projection mois par mois du CA
+ * sur 12 mois selon le panier moyen et le taux de transformation des devis.
+ *
+ * ⚠️ Outil INTERACTIF : toute la logique de calcul est portée en JS vanilla
+ * (input panier + boutons taux → recalcul live des 3 tableaux par formule).
+ * Les prix viennent de `pricing.ts` (source unique), jamais codés en dur.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Section from '@components/ui/Section.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import Button from '@components/ui/Button.astro';
+import CtaBand from '@components/blocks/CtaBand.astro';
+import { ogImage } from '@lib/og';
+import { chromeCta } from '@data/nav';
+import { tiers } from '@data/pricing';
+
+// Source unique des prix : on mappe les 3 formules sur les paliers de pricing.ts.
+const PLAN_FACTORS: Record<string, number> = { Présence: 0.7, Visibilité: 1.0, Croissance: 1.4 };
+const plans = ['Présence', 'Visibilité', 'Croissance'].map((name) => {
+  const tier = tiers.find((t) => t.name === name)!;
+  return { key: name, name, price: tier.price, factor: PLAN_FACTORS[name] };
+});
+
+// Taux : « sur 5 devis, combien j'en signe ».
+const rates = [
+  { accepted: 1, pct: 0.2 },
+  { accepted: 2, pct: 0.4 },
+  { accepted: 3, pct: 0.6 },
+  { accepted: 4, pct: 0.8 },
+];
+
+// Sérialisé pour le script client (calcul live).
+const config = { plans, rates };
+---
+
+<BaseLayout
+  title="Simulateur : ce que ça peut me rapporter en 12 mois"
+  description="Estimez ce que votre présence en ligne peut vous rapporter sur 12 mois. Entrez votre panier moyen, dites combien de devis vous transformez : on projette mois par mois."
+  image={ogImage('default')}
+>
+  <script is:inline>document.documentElement.classList.add('anim');</script>
+
+  {/* ── Hero ───────────────────────────────────────────────────────────────── */}
+  <Section pad="none" class="pt-[clamp(150px,16vw,196px)] pb-[clamp(20px,3vw,32px)]">
+    <div class="max-w-[780px]">
+      <div class="reveal"><Eyebrow>Simulateur</Eyebrow></div>
+      <h1 class="reveal mt-3.5 font-display text-[clamp(2.1rem,4.4vw,3.4rem)] font-medium leading-[1.04] tracking-[-0.03em] text-ink">
+        Ce que ça peut <em class="not-italic text-brand">me rapporter</em>, mois par mois.
+      </h1>
+      <p class="reveal mt-[18px] max-w-[56ch] text-[clamp(1.0625rem,1.6vw,1.25rem)] leading-[1.55] text-ink-2">
+        Deux infos suffisent : votre panier moyen et combien de devis vous transformez. On projette
+        les 12 premiers mois, honnêtement.
+      </p>
+    </div>
+  </Section>
+
+  {/* ── Outil : contrôles sticky + 3 tableaux ──────────────────────────────── */}
+  <Section pad="none" class="pb-[clamp(44px,6vw,80px)]">
+    <div
+      class="grid grid-cols-1 items-start gap-[clamp(24px,3vw,48px)] mt-[clamp(32px,3.6vw,44px)] lg:grid-cols-[360px_1fr]"
+    >
+      {/* COLONNE GAUCHE — contrôles */}
+      <aside class="flex flex-col gap-6 pt-2 lg:sticky lg:top-[126px] lg:pr-[clamp(16px,2vw,28px)]">
+        <div>
+          <h2 class="mb-3 font-display text-[1.25rem] font-semibold tracking-[-0.01em] text-ink">
+            Mon panier moyen
+          </h2>
+          <div class="flex flex-wrap items-center gap-3.5">
+            <input
+              id="si-panier"
+              type="number"
+              min="100"
+              step="50"
+              value="4850"
+              aria-label="Panier moyen en euros"
+              class="w-full min-w-0 flex-1 box-border rounded-lg border-[1.5px] border-line-strong bg-paper px-[18px] py-3.5 font-display text-[1.6rem] font-semibold text-ink outline-none transition-[border-color,box-shadow] duration-150 ease-brand focus:border-brand focus:shadow-[0_0_0_3px_var(--color-brand-soft)]"
+            />
+            <span class="font-display text-[1.3rem] font-semibold text-ink-soft">€</span>
+          </div>
+        </div>
+        <div>
+          <h2 class="mb-3 font-display text-[1.25rem] font-semibold tracking-[-0.01em] text-ink">
+            Sur 5 devis, combien j'en signe ?
+          </h2>
+          <div class="grid grid-cols-2 gap-2" id="si-rates" role="group" aria-label="Devis signés sur 5">
+            {rates.map((r, i) => (
+              <button
+                type="button"
+                class="si-rate-b cursor-pointer rounded-lg border-[1.5px] border-line-strong bg-paper px-2.5 py-3.5 font-display text-[1.15rem] font-bold text-ink-2 transition-all duration-150 ease-brand hover:border-brand hover:text-brand aria-pressed:border-brand aria-pressed:bg-brand-soft aria-pressed:text-brand"
+                data-idx={i}
+                data-pct={r.pct}
+                aria-pressed={i === 2 ? 'true' : 'false'}
+              >
+                {r.accepted}/5
+              </button>
+            ))}
+          </div>
+        </div>
+      </aside>
+
+      {/* COLONNE DROITE — un tableau par formule */}
+      <div class="flex flex-col gap-[clamp(28px,4vw,44px)]" id="si-tables">
+        {plans.map((p) => (
+          <div class="reveal" data-plan={p.key} data-price={p.price} data-factor={p.factor}>
+            <h2 class="m-0 font-display text-[clamp(1.4rem,2.4vw,1.9rem)] font-semibold tracking-h2 text-ink">
+              Projection · abonnement{' '}
+              <em class="not-italic text-brand shadow-[inset_0_-10px_0_var(--color-accent-2-soft)] px-0.5">
+                {p.name}
+              </em>
+            </h2>
+            <p class="mb-5 mt-1 text-base text-ink-soft" data-role="caption"></p>
+            <div class="overflow-x-auto rounded-lg border border-line">
+              <table class="w-full min-w-[560px] border-collapse bg-paper text-right">
+                <thead>
+                  <tr>
+                    {['Mois', 'Demandes reçues', 'Chantiers signés', 'CA généré', 'CA cumulé'].map(
+                      (h, hi) => (
+                        <th
+                          class:list={[
+                            'sticky top-0 border-b border-line bg-parchment px-4 py-[13px] font-display text-[0.9rem] font-semibold text-ink whitespace-nowrap',
+                            hi === 0 ? 'text-left' : 'text-right',
+                          ]}
+                        >
+                          {h}
+                        </th>
+                      ),
+                    )}
+                  </tr>
+                </thead>
+                <tbody data-role="rows"></tbody>
+                <tfoot data-role="foot"></tfoot>
+              </table>
+            </div>
+            <p class="mt-4 max-w-[70ch] text-[0.8rem] leading-[1.5] text-ink-faint">
+              Abonnement {p.name} ({p.price} €/mois) qui ne démarre qu'au 1er mois où un chantier est
+              signé — vous ne payez qu'une fois que ça marche. Estimation moyenne : les demandes
+              stagnent les 3 premiers mois, puis montent franchement.
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </Section>
+
+  {/* ── Réassurance ────────────────────────────────────────────────────────── */}
+  <Section pad="default">
+    <h2 class="reveal mb-[clamp(24px,3vw,32px)] font-display text-[clamp(1.6rem,3vw,2.3rem)] font-medium tracking-h2 text-ink">
+      Et le risque pour vous ? <em class="not-italic text-brand">Zéro.</em>
+    </h2>
+    <div class="grid grid-cols-1 gap-3.5 md:grid-cols-3">
+      {[
+        {
+          t: 'Vous payez quand ça marche',
+          p: "L'abonnement ne démarre qu'une fois que le site vous amène des clients.",
+        },
+        {
+          t: '1er mois offert',
+          p: 'Le temps que votre présence se mette en place, sans rien débourser.',
+        },
+        {
+          t: 'Sans engagement',
+          p: "Vous arrêtez quand vous voulez, d'un mois sur l'autre. Aucun piège.",
+        },
+      ].map((c) => (
+        <div class="reveal rounded-lg border border-line bg-paper p-6">
+          <div class="font-display text-[1.15rem] font-semibold text-ink">{c.t}</div>
+          <p class="mt-2 text-[0.95rem] leading-[1.55] text-ink-soft">{c.p}</p>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  {/* ── Preuve + CTA intermédiaire ─────────────────────────────────────────── */}
+  <Section pad="default">
+    <div class="grid grid-cols-1 items-center gap-6 md:grid-cols-[1.3fr_0.7fr] md:gap-[clamp(28px,4vw,56px)]">
+      <div class="reveal">
+        <Eyebrow>Du concret, pas juste des chiffres</Eyebrow>
+        <p class="mt-3.5 font-display text-[clamp(1.3rem,2.4vw,1.8rem)] font-normal leading-[1.35] text-ink">
+          « Moi non plus je n'y croyais pas. Aujourd'hui le site m'amène des chantiers tous les mois
+          — j'ai dû embaucher. »
+        </p>
+        <p class="mt-4 text-[0.9rem] text-ink-soft">Patron — FAR, résine &amp; sols, Lanester</p>
+      </div>
+      <div class="reveal rounded-lg bg-parchment p-[clamp(24px,3vw,32px)]">
+        <p class="m-0 font-display text-[1.25rem] font-semibold text-ink">
+          Ces chiffres vous parlent ?
+        </p>
+        <p class="mb-[18px] mt-2.5 text-[0.95rem] leading-[1.55] text-ink-2">
+          On affine la projection avec vos vrais chiffres en 15 minutes. Sans engagement, sans
+          pression.
+        </p>
+        <Button href={chromeCta.href} block>Réserver un appel</Button>
+      </div>
+    </div>
+  </Section>
+
+  <CtaBand
+    title="Une estimation avec vos vrais chiffres ?"
+    lead="15 minutes pour l'affiner ensemble. Sans engagement, vous ne payez qu'une fois que ça marche."
+    ctaLabel="Demander un devis gratuit"
+    ctaHref={chromeCta.href}
+  />
+
+  <script is:inline set:html={`window.__SI_CONFIG__ = ${JSON.stringify(config)};`}></script>
+</BaseLayout>
+
+<script>
+  // ── Reveal au scroll (calqué sur la home) ──────────────────────────────────
+  document.documentElement.classList.add('anim');
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reveals = Array.from(document.querySelectorAll<HTMLElement>('.reveal'));
+  if (prefersReduced || !('IntersectionObserver' in window)) {
+    reveals.forEach((el) => el.classList.add('in'));
+  } else {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
+    );
+    reveals.forEach((el) => io.observe(el));
+  }
+
+  // ── Simulateur ROI (logique portée depuis le React Design, en vanilla) ──────
+  type Plan = { key: string; name: string; price: number; factor: number };
+  const cfg = (window as any).__SI_CONFIG__ as { plans: Plan[]; rates: { accepted: number; pct: number }[] };
+
+  const fmt = (n: number) => Math.round(n).toLocaleString('fr-FR');
+  // Courbe de demandes (centre) / mois : quasi-plate les 3 premiers mois, puis accrue.
+  const CURVE = [0, 1.4, 2, 3, 4.5, 6, 8, 10, 12, 14, 16, 18];
+  // L'abonnement influence peu les 3 premiers mois, puis pleinement.
+  const planWeight = (m: number) => (m <= 3 ? 0.15 : 1);
+
+  let panier = 4850;
+  let pct = 0.6; // 3/5 par défaut
+  let accepted = 3;
+
+  const panierInput = document.getElementById('si-panier') as HTMLInputElement | null;
+  const rateBtns = Array.from(document.querySelectorAll<HTMLButtonElement>('#si-rates .si-rate-b'));
+  const planEls = Array.from(document.querySelectorAll<HTMLElement>('#si-tables [data-plan]'));
+
+  function buildRows(plan: Plan) {
+    const planFactor = plan.factor;
+    const PRICE = plan.price;
+    let totCA = 0,
+      totJobs = 0,
+      totLeads = 0,
+      cumNet = 0;
+    let billing = false;
+    const rows = CURVE.map((center, i) => {
+      const month = i + 1;
+      const f = 1 + (planFactor - 1) * planWeight(month);
+      const c = center * f;
+      const leadsMid = Math.round(c);
+      const jobsMid = Math.round(leadsMid * pct);
+      const caMid = jobsMid * panier;
+      // L'abonnement ne démarre qu'au 1er mois où un chantier est signé.
+      if (!billing && jobsMid >= 1) billing = true;
+      const cost = billing ? PRICE : 0;
+      cumNet += caMid - cost;
+      totCA += caMid;
+      totJobs += jobsMid;
+      totLeads += leadsMid;
+      return { month, leads: leadsMid, jobs: jobsMid, ca: caMid, caCum: totCA, free: cost === 0 };
+    });
+    return { rows, totCA, totJobs, totLeads, cumNet };
+  }
+
+  function render() {
+    planEls.forEach((el) => {
+      const plan = cfg.plans.find((p) => p.key === el.dataset.plan)!;
+      const d = buildRows(plan);
+
+      const caption = el.querySelector<HTMLElement>('[data-role="caption"]');
+      if (caption)
+        caption.textContent = `Panier de ${fmt(panier)} €, ${accepted} devis signé${accepted > 1 ? 's' : ''} sur 5.`;
+
+      const tbody = el.querySelector<HTMLElement>('[data-role="rows"]');
+      if (tbody) {
+        tbody.innerHTML = d.rows
+          .map((r) => {
+            const freeTag = r.free
+              ? ' <span class="font-medium text-[0.78rem] text-accent-2-ink bg-accent-2-soft px-[7px] py-px rounded-xs ml-2">· gratuit</span>'
+              : '';
+            return `<tr>
+              <td class="border-b border-line px-4 py-[13px] text-left text-[0.92rem] font-semibold text-ink whitespace-nowrap">Mois ${r.month}${freeTag}</td>
+              <td class="border-b border-line px-4 py-[13px] text-right text-[0.92rem] text-ink-2 whitespace-nowrap">${fmt(r.leads)}</td>
+              <td class="border-b border-line px-4 py-[13px] text-right text-[0.92rem] text-ink-2 whitespace-nowrap">${fmt(r.jobs)}</td>
+              <td class="border-b border-line px-4 py-[13px] text-right text-[0.92rem] font-display font-semibold text-ink whitespace-nowrap">${fmt(r.ca)} €</td>
+              <td class="border-b border-line px-4 py-[13px] text-right text-[0.92rem] font-semibold text-brand whitespace-nowrap">${fmt(r.caCum)} €</td>
+            </tr>`;
+          })
+          .join('');
+      }
+
+      const tfoot = el.querySelector<HTMLElement>('[data-role="foot"]');
+      if (tfoot) {
+        tfoot.innerHTML = `<tr>
+          <td class="border-t-2 border-line-strong bg-parchment px-4 py-[13px] text-left font-display text-base font-bold text-ink whitespace-nowrap">Total 12 mois</td>
+          <td class="border-t-2 border-line-strong bg-parchment px-4 py-[13px] text-right font-display text-base font-bold text-ink whitespace-nowrap">${fmt(d.totLeads)}</td>
+          <td class="border-t-2 border-line-strong bg-parchment px-4 py-[13px] text-right font-display text-base font-bold text-ink whitespace-nowrap">${fmt(d.totJobs)}</td>
+          <td class="border-t-2 border-line-strong bg-parchment px-4 py-[13px] text-right font-display text-base font-bold text-ink whitespace-nowrap">${fmt(d.totCA)} €</td>
+          <td class="border-t-2 border-line-strong bg-parchment px-4 py-[13px] text-right font-display text-base font-bold text-brand whitespace-nowrap">${fmt(d.totCA)} €</td>
+        </tr>`;
+      }
+    });
+  }
+
+  panierInput?.addEventListener('input', () => {
+    panier = Math.max(0, Number(panierInput.value) || 0);
+    render();
+  });
+
+  rateBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      pct = Number(btn.dataset.pct);
+      accepted = Number(btn.textContent?.trim().charAt(0)) || 0;
+      rateBtns.forEach((b) => b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'));
+      render();
+    });
+  });
+
+  render();
+</script>

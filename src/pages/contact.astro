@@ -1,47 +1,197 @@
 ---
-import BaseLayout from '@layouts/BaseLayout.astro';
-import Section from '@components/ui/Section.astro';
-import PageHeader from '@components/ui/PageHeader.astro';
-import Button from '@components/ui/Button.astro';
-import Field from '@components/ui/Field.astro';
-import { site } from '@data/site';
-
-/*
- * ⚠️ TODO (brief §11) — FORMULAIRE DEVIS : seul vrai bout dynamique.
- * Deux options à trancher AVANT mise en prod :
- *   1) Endpoint Astro (src/pages/api/devis.ts + `export const prerender = false`
- *      + adapter @astrojs/vercel) ;
- *   2) Service de formulaire externe (Formspree, Web3Forms, etc.).
- * Décider OÙ arrivent les demandes. En attendant, le formulaire est inerte.
+/**
+ * /contact — portage fidèle de la maquette Design (Contact.html + ContactPage.jsx).
+ * Héro + grille (formulaire VANILLA à gauche, coordonnées + « ce qui se passe ensuite » à droite).
+ *
+ * ⚠️ Formulaire NON connecté (cf. brief §11) : la soumission n'affiche qu'un état
+ *    « envoyé » local, sans backend. Brancher un endpoint / service avant prod.
  */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Button from '@components/ui/Button.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import Field from '@components/ui/Field.astro';
+import RiskNote from '@components/home/RiskNote.astro';
+
+const CP_NEXT: [string, string, string][] = [
+  ['01', 'On vous rappelle sous 48 h', 'Pas de standard ni de formulaire qui tombe dans le vide. On vous rappelle, vous.'],
+  ['02', 'On comprend votre métier', 'Un échange simple : ce que vous faites, vos clients, ce qui vous manque en ligne.'],
+  ['03', 'On vous dit concrètement quoi faire', 'Devis clair, sans jargon, sans engagement. Vous décidez ensuite, tranquillement.'],
+];
 ---
 
 <BaseLayout
-  title="Contact"
-  description="Parlez-nous de votre projet. Réponse sous 48 h, devis clair."
+  title="Contact · Demandez votre devis gratuit"
+  description="Laissez-nous votre numéro. On vous rappelle sous 48 h, sans engagement, pour comprendre votre métier et vous dire concrètement ce qu'on peut faire."
 >
-  <Section width="hero" pad="default">
-    <div class="grid gap-12 md:grid-cols-2">
-      <PageHeader eyebrow="Contact">
-        Parlons de votre projet
-        <Fragment slot="lead">
-          Dites-nous où vous en êtes. On revient vers vous sous 48 h avec un
-          premier regard et un devis clair.
-        </Fragment>
-      </PageHeader>
+  <script is:inline>document.documentElement.classList.add('anim');</script>
 
-      {/* Formulaire inerte — câbler un endpoint ou un service (cf. TODO §11). */}
-      <form action="#" method="post" class="flex flex-col gap-5" aria-label="Demande de devis">
-        <Field name="nom" label="Nom" autocomplete="name" required />
-        <Field name="email" label="E-mail" type="email" autocomplete="email" required />
-        <Field name="message" label="Votre projet" type="textarea" required />
-        <Button type="submit" size="lg" block>Envoyer la demande</Button>
-        <p class="text-caption text-ink-soft">
-          Par e-mail :
-          <a href={`mailto:${site.email}`} class="font-mono text-brand">{site.email}</a>
-          <br />Formulaire non encore connecté — voir TODO §11 du brief.
-        </p>
-      </form>
+  {/* Héro */}
+  <section id="top" class="pt-[clamp(158px,15vw,208px)] pb-[clamp(34px,4vw,52px)]">
+    <div class="container-site">
+      <Eyebrow class="anim-1 mb-[clamp(18px,2.4vw,28px)]">Parlons de votre projet</Eyebrow>
+      <h1
+        class="anim-2 m-0 font-display text-[clamp(2.4rem,5.4vw,4.2rem)] font-medium leading-none tracking-[-0.03em] text-ink [&_em]:text-brand"
+      >
+        Demandez votre <em>devis&nbsp;gratuit</em>.
+      </h1>
+      <p
+        class="anim-3 mt-[clamp(20px,2.4vw,30px)] max-w-[48ch] text-[clamp(1.0625rem,1.5vw,1.3rem)] leading-[1.5] text-ink-2"
+      >
+        Laissez-nous votre numéro. On vous rappelle sous 48 h, sans engagement —
+        pour comprendre votre métier et vous dire, concrètement, ce qu'on peut faire.
+      </p>
     </div>
-  </Section>
+  </section>
+
+  {/* Corps */}
+  <section class="pb-[clamp(72px,9vw,140px)]">
+    <div class="container-site">
+      <div class="grid grid-cols-1 items-start gap-10 md:grid-cols-[1.05fr_0.95fr] md:gap-[clamp(36px,5vw,80px)]">
+        {/* Colonne formulaire */}
+        <div class="reveal" data-contact-block>
+          <form
+            class="flex flex-col gap-[18px] rounded-sm border border-line bg-paper p-[clamp(26px,3vw,40px)]"
+            data-contact-form
+          >
+            <Field label="Votre nom" name="nom" placeholder="Jean Dupont" autocomplete="name" />
+            <Field label="Votre métier" name="metier" placeholder="Maçon, plombier, carreleur…" />
+            <Field
+              label="Votre téléphone"
+              name="tel"
+              type="tel"
+              placeholder="06 12 34 56 78"
+              autocomplete="tel"
+            />
+            <div class="flex flex-col gap-[7px]">
+              <label for="mot" class="text-[0.8125rem] font-semibold tracking-[0.01em] text-ink-2">
+                En deux mots, votre besoin
+                <span class="font-normal tracking-normal text-ink-faint">(optionnel)</span>
+              </label>
+              <textarea
+                id="mot"
+                name="mot"
+                rows="3"
+                placeholder="Ex. : je n'ai pas de site, ou le mien est vieux et invisible sur Google."
+                class="min-h-[84px] resize-y rounded-xs border border-line-strong bg-paper px-[15px] py-[13px] font-sans text-base leading-[1.5] text-ink outline-none transition-[border-color,box-shadow] placeholder:text-ink-faint focus:border-brand focus:shadow-[var(--ring-focus)]"
+              ></textarea>
+            </div>
+            <Button type="submit" size="sm" block class="mt-1">
+              <span>Demander mon devis gratuit</span>
+            </Button>
+            <div class="text-center">
+              <RiskNote kind="garantie" />
+            </div>
+          </form>
+
+          {/* État « envoyé » (révélé en vanilla) */}
+          <div
+            class="hidden flex-col items-center gap-2.5 rounded-sm border border-line bg-paper px-[clamp(26px,3vw,40px)] py-[clamp(48px,6vw,72px)] text-center"
+            data-contact-sent
+          >
+            <div
+              class="flex h-[54px] w-[54px] items-center justify-center rounded-full bg-accent-2 text-[1.6rem] font-bold text-brand"
+              aria-hidden="true"
+            >
+              ✓
+            </div>
+            <h2
+              class="mt-2 font-display text-[1.6rem] font-medium tracking-h2 text-ink"
+              data-contact-sent-title
+            >
+              C'est noté.
+            </h2>
+            <p class="m-0 max-w-[34ch] text-base leading-[1.55] text-ink-soft">
+              On vous rappelle sous 48 h. En attendant, restez sur le chantier — on s'occupe du reste.
+            </p>
+          </div>
+        </div>
+
+        {/* Colonne aside */}
+        <div class="reveal flex flex-col gap-[clamp(28px,3.4vw,44px)] pt-1.5">
+          <div>
+            <div class="mb-4 text-[0.75rem] uppercase tracking-[0.1em] text-ink-faint">Ou directement</div>
+            <a
+              href="tel:+33123456789"
+              class="block py-0 pb-0.5 font-display text-[clamp(1.6rem,2.6vw,2.1rem)] font-medium tracking-h2 text-ink transition-colors hover:text-brand"
+            >
+              01 23 45 67 89
+            </a>
+            <a
+              href="mailto:bonjour@azelize.fr"
+              class="block py-1 text-[1.0625rem] text-ink-2 transition-colors hover:text-brand"
+            >
+              bonjour@azelize.fr
+            </a>
+            <span class="block py-1 text-[0.95rem] text-ink-soft">12 rue de l'Atelier, 75011 Paris</span>
+            <span class="block py-1 text-[0.95rem] text-ink-soft">Lun – Ven · 9 h – 18 h</span>
+          </div>
+
+          <div>
+            <div class="mb-4 text-[0.75rem] uppercase tracking-[0.1em] text-ink-faint">
+              Ce qui se passe ensuite
+            </div>
+            <ol class="m-0 flex list-none flex-col p-0">
+              {CP_NEXT.map(([n, t, b], i) => (
+                <li
+                  class:list={[
+                    'flex gap-4 py-4',
+                    i > 0 && 'border-t border-line',
+                    i === 0 && 'pt-0',
+                  ]}
+                >
+                  <span class="flex-none pt-0.5 font-mono text-[0.8125rem] text-brand">{n}</span>
+                  <span class="flex flex-col gap-1">
+                    <span class="font-display text-[1.0625rem] font-medium tracking-tight text-ink">{t}</span>
+                    <span class="text-[0.9375rem] leading-[1.5] text-ink-soft">{b}</span>
+                  </span>
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          <p class="m-0 pt-[clamp(6px,1vw,12px)] text-[0.95rem] text-ink-soft [&_em]:text-brand">
+            Azelize, prononcez <em>a‑zé‑li‑zé</em>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
+
+<script>
+  // ── Reveal au scroll (calqué sur la home) ──────────────────────────────────
+  document.documentElement.classList.add('anim');
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reveals = Array.from(document.querySelectorAll<HTMLElement>('.reveal'));
+  if (prefersReduced || !('IntersectionObserver' in window)) {
+    reveals.forEach((el) => el.classList.add('in'));
+  } else {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
+    );
+    reveals.forEach((el) => io.observe(el));
+  }
+
+  // ── Formulaire provisoire : état « envoyé » local, sans backend (brief §11) ─
+  document.querySelectorAll<HTMLFormElement>('form[data-contact-form]').forEach((form) => {
+    const block = form.closest('[data-contact-block]');
+    const sent = block?.querySelector<HTMLElement>('[data-contact-sent]');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const nom = (form.elements.namedItem('nom') as HTMLInputElement | null)?.value?.trim();
+      const title = block?.querySelector<HTMLElement>('[data-contact-sent-title]');
+      if (title) title.textContent = nom ? `C'est noté, ${nom}.` : "C'est noté.";
+      form.classList.add('hidden');
+      sent?.classList.remove('hidden');
+      sent?.classList.add('flex');
+    });
+  });
+</script>

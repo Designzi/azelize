@@ -1,0 +1,148 @@
+---
+/**
+ * Hub service — Création de site internet (gabarit C1).
+ * Portage fidèle de templates/azelize/ui_kits/azelize-studio/creation-site-internet.html
+ * (corps du <main> : hero, « ce que comprend », maillage villes/métiers, CTA final).
+ * Le chrome (header/footer/topbar/tiroir) est fourni par BaseLayout — non porté ici.
+ */
+import Section from '@components/ui/Section.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import Button from '@components/ui/Button.astro';
+import { navCta } from '@data/nav';
+
+const VILLES: [string, string][] = [
+  ['Lanester', '/creation-site-internet/lanester'],
+  ['Lorient', '#'],
+  ['Vannes', '#'],
+  ['Hennebont', '#'],
+  ['Auray', '#'],
+];
+const METIERS = [
+  'Plombier',
+  'Électricien',
+  'Maçon',
+  'Peintre',
+  'Carreleur',
+  'Menuisier',
+  'Paysagiste',
+  'Entreprise de rénovation',
+];
+
+const INCLUS = [
+  ['01', 'Conçu sur-mesure', 'Un site rapide, mobile et soigné, à la hauteur de votre métier.'],
+  ['02', 'Référencé sur Google', "SEO local + fiche d'établissement pour que vos clients vous trouvent."],
+  ['03', 'Tenu chaque mois', "Mises à jour, nouveaux contenus, sécurité — on s'en occupe."],
+  ['04', 'Suivi clair', 'Un rapport mensuel : appels, visites, position sur Google.'],
+] as const;
+---
+
+{/* HERO */}
+<section class="container-site">
+  <div
+    class="max-w-[920px] pt-[clamp(150px,16vw,200px)] pb-[clamp(40px,5vw,64px)]"
+  >
+    <Eyebrow class="reveal">Création de site internet</Eyebrow>
+    <h1
+      class="reveal mt-[18px] m-0 font-display text-[clamp(2.3rem,5vw,4rem)] font-medium leading-[1.02] tracking-display text-ink [&_em]:not-italic [&_em]:text-brand"
+    >
+      Un site qui vous fait <em>paraître pro et trouver sur Google</em>.
+    </h1>
+    <p class="reveal mt-[22px] max-w-[56ch] text-[clamp(1.0625rem,1.6vw,1.3rem)] leading-[1.55] text-ink-2">
+      On conçoit votre site, on le référence localement et on le fait vivre chaque mois. Pensé pour
+      les artisans et les TPE du bâtiment — pas pour les designers.
+    </p>
+    <div class="reveal mt-[30px] flex flex-wrap gap-3.5">
+      <Button href={navCta.href} size="lg">Demander un devis gratuit</Button>
+      <Button href="/tarifs" variant="outline" size="lg">Voir les tarifs</Button>
+    </div>
+    <p class="reveal mt-4 text-[0.8125rem] text-ink-soft">
+      Sans engagement · Réponse sous 48 h · 1er mois offert
+    </p>
+  </div>
+</section>
+
+{/* CE QUE COMPREND LE SERVICE */}
+<Section tone="parchment" pad="none" class="py-[clamp(48px,6vw,88px)]">
+  <Eyebrow class="reveal">Ce que comprend votre site</Eyebrow>
+  <h2
+    class="reveal mt-[16px] m-0 max-w-[22ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink"
+  >
+    Bien plus qu'une vitrine : un site qui travaille pour vous.
+  </h2>
+  <div
+    class="mt-[clamp(28px,4vw,40px)] grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-3.5"
+  >
+    {
+      INCLUS.map(([n, t, p]) => (
+        <div class="reveal rounded-md border border-line bg-paper p-6">
+          <div class="font-mono text-[0.8rem] text-brand">{n}</div>
+          <div class="mt-3 font-display text-[1.2rem] font-semibold tracking-[-0.01em] text-ink">
+            {t}
+          </div>
+          <div class="mt-2 text-[0.95rem] leading-[1.55] text-ink-soft">{p}</div>
+        </div>
+      ))
+    }
+  </div>
+</Section>
+
+{/* MAILLAGE INTERNE — villes (C2) + métiers (C3) */}
+<Section tone="paper" pad="none" class="py-[clamp(48px,6vw,88px)]">
+  <Eyebrow class="reveal">Près de chez vous, dans votre métier</Eyebrow>
+  <h2
+    class="reveal mt-[16px] m-0 max-w-[22ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink"
+  >
+    Un studio local, qui connaît votre secteur.
+  </h2>
+  <div
+    class="reveal mt-[clamp(28px,4vw,40px)] grid grid-cols-1 gap-[clamp(28px,4vw,56px)] md:grid-cols-2"
+  >
+    <div>
+      <p class="m-0 mb-3.5 text-[0.95rem] font-semibold text-ink">Votre ville</p>
+      <div class="flex flex-wrap gap-[9px]">
+        {
+          VILLES.map(([v, href]) => (
+            <a
+              href={href}
+              class="inline-flex items-center rounded-full border border-line-strong bg-paper px-[15px] py-2 text-[0.9rem] font-medium text-ink-2 transition-colors duration-200 ease-brand hover:border-brand hover:text-brand"
+            >
+              Site internet à {v}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+    <div>
+      <p class="m-0 mb-3.5 text-[0.95rem] font-semibold text-ink">Votre métier</p>
+      <div class="flex flex-wrap gap-[9px]">
+        {
+          METIERS.map((m) => (
+            <a
+              href="#"
+              class="inline-flex items-center rounded-full border border-line-strong bg-paper px-[15px] py-2 text-[0.9rem] font-medium text-ink-2 transition-colors duration-200 ease-brand hover:border-brand hover:text-brand"
+            >
+              Site pour {m.toLowerCase()}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</Section>
+
+{/* CTA */}
+<Section tone="dark" pad="none" class="py-[clamp(48px,6vw,80px)] text-center">
+  <h2
+    class="reveal mx-auto m-0 max-w-[20ch] font-display text-[clamp(1.8rem,3.4vw,2.7rem)] font-medium leading-[1.06] tracking-h2 text-on-dark-bright"
+  >
+    Parlons de votre site, sans engagement.
+  </h2>
+  <p class="reveal mx-auto mt-[18px] max-w-[46ch] text-[1.0625rem] leading-[1.55] text-on-dark-soft">
+    15 minutes pour comprendre votre métier et voir comment on peut vous aider.
+  </p>
+  <div class="reveal mt-7">
+    <Button href={navCta.href} size="lg" class="bg-paper text-brand-900 hover:bg-parchment">
+      Réserver un appel
+    </Button>
+  </div>
+</Section>

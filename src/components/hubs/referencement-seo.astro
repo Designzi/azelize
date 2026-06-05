@@ -1,0 +1,272 @@
+---
+/**
+ * Hub service — Référencement local / SEO (gabarit C1).
+ * Portage fidèle de templates/azelize/ui_kits/azelize-studio/referencement-seo.html
+ * (corps du <main> : hero + mockup SERP, 3 leviers, timeline, « tout compris »,
+ * FAQ, maillage interne, requêtes ciblées, CTA final).
+ * Le chrome est fourni par BaseLayout — non porté ici.
+ */
+import Section from '@components/ui/Section.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import Button from '@components/ui/Button.astro';
+import CtaBand from '@components/blocks/CtaBand.astro';
+import { navCta } from '@data/nav';
+
+const LEVIERS = [
+  [
+    '01',
+    'Votre fiche Google',
+    "Gratuite et décisive : c'est elle qui vous place sur la carte. On la remplit entièrement — métier, zone, horaires, photos de chantiers — et on la tient à jour.",
+  ],
+  [
+    '02',
+    'Les mots-clés de votre métier',
+    'On vise les requêtes précises et locales (« dépannage chauffage Vannes »), pas les termes trop larges. Moins de volume, mais des gens qui veulent vraiment vous appeler.',
+  ],
+  [
+    '03',
+    'Vos avis clients',
+    "20 avis à 4,7/5 valent plus que n'importe quelle pub. On met en place la collecte automatique après chaque chantier — et ça compte aussi dans le classement Google.",
+  ],
+] as const;
+
+const TIMELINE = [
+  ['Semaine 1–2', 'Mise en place', 'Fiche Google, site en ligne, bases techniques.'],
+  ['Mois 1–2', 'Premières remontées', 'La fiche apparaît sur la carte locale.'],
+  ['Mois 3–4', 'Premières demandes', 'Le site se positionne sur vos requêtes métier.'],
+  ['Mois 5+', 'Régularité', "Un flux de demandes qui s'installe et grandit."],
+] as const;
+
+const INCLUS = [
+  ['Fiche Google optimisée', 'Catégories, zone, horaires, photos — tenue à jour.'],
+  ['Mots-clés locaux suivis', 'On cible vos requêtes métier + ville et on ajuste.'],
+  ['Contenus réguliers', 'Pages et articles qui vous font remonter.'],
+  ['Collecte d’avis', 'Après chaque chantier — décisif pour le classement.'],
+  ['Rapport mensuel', 'Position, visites, appels : vous voyez les progrès.'],
+  ['Suivi technique', 'Vitesse, mobile, balises : les bases qui comptent.'],
+] as const;
+
+const FAQ = [
+  [
+    'En combien de temps je remonte sur Google ?',
+    'La fiche Google peut remonter en quelques semaines. Le site gagne en position sur 3 à 6 mois selon la concurrence locale.',
+  ],
+  [
+    'Vous garantissez la 1ʳᵉ place ?',
+    'Personne ne peut garantir une position précise — méfiez-vous de ceux qui le promettent. On vise des requêtes locales atteignables et on travaille dans la durée.',
+  ],
+  [
+    "C'est inclus dans l'abonnement site ?",
+    'Oui, le référencement local fait partie des formules Visibilité et Croissance. Pas de surprise sur la facture.',
+  ],
+] as const;
+
+const LIENS_SITE: [string, string][] = [
+  ['Création de site', '/creation-site-internet'],
+  ['Site à Lorient', '#'],
+  ['Site pour plombier', '#'],
+  ['Guide SEO artisans', '#'],
+];
+
+const REQUETES: [string, string][] = [
+  ['plombier Lorient', '#'],
+  ['électricien Vannes', '#'],
+  ['dépannage électrique 56', '#'],
+  ['rénovation salle de bain Lanester', '#'],
+  ['artisan introuvable sur Google', '#'],
+];
+
+const chipClass =
+  'inline-flex items-center whitespace-nowrap rounded-full border border-line-strong bg-paper px-[15px] py-2 text-[0.9rem] font-medium text-ink-2 no-underline transition-colors duration-200 ease-brand hover:border-brand hover:text-brand';
+---
+
+{/* HERO + mockup SERP */}
+<section class="container-site">
+  <div class="max-w-[880px] pt-[clamp(150px,16vw,200px)] pb-[clamp(32px,4vw,48px)]">
+    <Eyebrow class="reveal">Référencement local</Eyebrow>
+    <h1
+      class="reveal mt-4 m-0 font-display text-[clamp(2.3rem,5vw,4rem)] font-medium leading-[1.02] tracking-display text-ink [&_em]:not-italic [&_em]:text-brand"
+    >
+      Quand un client cherche votre métier, <em>soyez le premier qu'il voit</em>.
+    </h1>
+    <p class="reveal mt-[22px] max-w-[54ch] text-[clamp(1.0625rem,1.6vw,1.3rem)] leading-[1.55] text-ink-2">
+      8 fois sur 10, votre futur client tape « votre métier + sa ville » sur son téléphone et appelle
+      l'un des premiers résultats. Notre travail : que ce soit vous.
+    </p>
+    <div class="reveal mt-7 flex flex-wrap gap-3.5">
+      <Button href={navCta.href} size="lg">Demander un devis gratuit</Button>
+      <Button href="/guides/seo-local-artisan-btp" variant="outline" size="lg">Lire le guide SEO</Button>
+    </div>
+
+    {/* mockup SERP */}
+    <div class="reveal mt-[clamp(32px,4vw,48px)] overflow-hidden rounded-md border border-line bg-paper">
+      <div class="flex items-center gap-2.5 border-b border-line bg-parchment px-[18px] py-3.5">
+        <span class="font-mono text-[0.85rem] text-ink-soft">🔍 électricien lorient</span>
+      </div>
+      <div class="flex flex-col gap-3 px-5 py-[18px]">
+        <div class="flex items-center gap-[13px] rounded-md border border-brand bg-brand-soft px-3.5 py-3">
+          <span
+            class="inline-flex h-[26px] w-[26px] flex-none items-center justify-center rounded-full border border-brand bg-brand font-mono text-[0.75rem] text-paper"
+            >1</span
+          >
+          <span>
+            <div class="text-[0.95rem] font-semibold text-brand">Votre entreprise — ★ 4,7 (32 avis)</div>
+            <div class="text-[0.8rem] text-ink-soft">votre-site.fr · Lorient</div>
+          </span>
+        </div>
+        <div class="flex items-center gap-[13px] rounded-md border border-line px-3.5 py-3">
+          <span
+            class="inline-flex h-[26px] w-[26px] flex-none items-center justify-center rounded-full border border-line-strong bg-paper font-mono text-[0.75rem] text-ink-soft"
+            >2</span
+          >
+          <span>
+            <div class="text-[0.95rem] font-semibold text-ink">Un concurrent</div>
+            <div class="text-[0.8rem] text-ink-soft">exemple.fr</div>
+          </span>
+        </div>
+        <div class="flex items-center gap-[13px] rounded-md border border-line px-3.5 py-3">
+          <span
+            class="inline-flex h-[26px] w-[26px] flex-none items-center justify-center rounded-full border border-line-strong bg-paper font-mono text-[0.75rem] text-ink-soft"
+            >3</span
+          >
+          <span>
+            <div class="text-[0.95rem] font-semibold text-ink">Un annuaire</div>
+            <div class="text-[0.8rem] text-ink-soft">pagesjaunes.fr</div>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{/* LES 3 LEVIERS */}
+<Section tone="parchment" pad="none" class="py-[clamp(48px,6vw,88px)]">
+  <Eyebrow class="reveal">Les 3 leviers</Eyebrow>
+  <h2
+    class="reveal mt-[16px] m-0 max-w-[22ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink"
+  >
+    Trois choses qui vous font monter.
+  </h2>
+  <div
+    class="reveal mt-[clamp(28px,4vw,40px)] flex flex-col gap-px overflow-hidden rounded-md border border-line bg-line"
+  >
+    {
+      LEVIERS.map(([n, t, p]) => (
+        <div class="grid grid-cols-1 items-start gap-2.5 bg-paper p-[clamp(22px,3vw,34px)] sm:grid-cols-[64px_1fr] sm:gap-6">
+          <div class="font-display text-[2rem] font-semibold leading-none tracking-[-0.03em] text-brand">
+            {n}
+          </div>
+          <div>
+            <h3 class="m-0 font-display text-[1.3rem] font-semibold tracking-[-0.01em] text-ink">
+              {t}
+            </h3>
+            <p class="mt-2 max-w-[60ch] text-base leading-[1.6] text-ink-2">{p}</p>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</Section>
+
+{/* TIMELINE */}
+<Section tone="paper" pad="none" class="py-[clamp(48px,6vw,88px)]">
+  <Eyebrow class="reveal">Soyons honnêtes</Eyebrow>
+  <h2
+    class="reveal mt-[16px] m-0 max-w-[22ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink"
+  >
+    Le SEO local prend quelques mois. Voici à quoi s'attendre.
+  </h2>
+  <div
+    class="reveal mt-[clamp(28px,4vw,40px)] grid grid-cols-2 gap-[clamp(14px,2vw,22px)] md:grid-cols-4"
+  >
+    {
+      TIMELINE.map(([when, t, p]) => (
+        <div class="border-t-2 border-brand pt-4">
+          <div class="font-mono text-[0.8rem] text-brand">{when}</div>
+          <div class="mt-2 mb-1 text-base font-semibold text-ink">{t}</div>
+          <div class="text-[0.9rem] leading-[1.5] text-ink-soft">{p}</div>
+        </div>
+      ))
+    }
+  </div>
+</Section>
+
+{/* TOUT COMPRIS */}
+<Section tone="parchment" pad="none" class="py-[clamp(48px,6vw,88px)]">
+  <Eyebrow class="reveal">Tout compris, chaque mois</Eyebrow>
+  <h2
+    class="reveal mt-[16px] m-0 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink"
+  >
+    Ce qu'on fait pour votre référencement.
+  </h2>
+  <div class="reveal mt-[clamp(28px,4vw,40px)] grid grid-cols-1 gap-x-10 md:grid-cols-2">
+    {
+      INCLUS.map(([t, p]) => (
+        <div class="flex items-start gap-3 border-b border-line py-4">
+          <span class="mt-2 h-2 w-2 flex-none rounded-full bg-brand" aria-hidden="true" />
+          <div>
+            <div class="text-base font-semibold text-ink">{t}</div>
+            <div class="mt-[3px] text-[0.9rem] leading-[1.5] text-ink-soft">{p}</div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</Section>
+
+{/* FAQ */}
+<Section tone="paper" pad="none" class="py-[clamp(48px,6vw,88px)]">
+  <Eyebrow class="reveal">Vos questions</Eyebrow>
+  <h2
+    class="reveal mt-[16px] m-0 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink"
+  >
+    Le référencement local, sans mystère.
+  </h2>
+  <div class="reveal mt-[clamp(28px,4vw,40px)] flex max-w-[780px] flex-col gap-2.5">
+    {
+      FAQ.map(([q, a]) => (
+        <div class="rounded-md border border-line bg-paper px-[22px] py-5">
+          <p class="m-0 font-display text-[1.1rem] font-medium text-ink">{q}</p>
+          <p class="mt-2.5 text-base leading-[1.6] text-ink-2">{a}</p>
+        </div>
+      ))
+    }
+  </div>
+</Section>
+
+{/* MAILLAGE — aussi pour vous */}
+<Section tone="parchment" pad="none" class="py-[clamp(48px,6vw,88px)]">
+  <Eyebrow class="reveal">Aussi pour vous</Eyebrow>
+  <h2
+    class="reveal mt-[16px] m-0 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink"
+  >
+    Le référencement va avec un bon site.
+  </h2>
+  <div class="reveal mt-[clamp(24px,3vw,32px)] flex flex-wrap gap-[9px]">
+    {LIENS_SITE.map(([label, href]) => <a href={href} class={chipClass}>{label}</a>)}
+  </div>
+</Section>
+
+{/* REQUÊTES CIBLÉES */}
+<Section tone="paper" pad="none" class="py-[clamp(48px,6vw,88px)]">
+  <Eyebrow class="reveal">Les recherches qu'on vise</Eyebrow>
+  <h2
+    class="reveal mt-[16px] m-0 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink"
+  >
+    On se positionne sur ce que vos clients tapent.
+  </h2>
+  <p class="reveal mt-4 max-w-[56ch] text-[1.0625rem] leading-[1.6] text-ink-2">
+    Pas les mots-clés flous : les requêtes locales et précises, celles qui amènent un appel.
+  </p>
+  <div class="reveal mt-[clamp(24px,3vw,32px)] flex flex-wrap gap-[9px]">
+    {REQUETES.map(([label, href]) => <a href={href} class={chipClass}>{label}</a>)}
+  </div>
+</Section>
+
+{/* CTA final */}
+<CtaBand
+  title="Faisons-vous remonter sur Google."
+  lead="15 minutes pour regarder où vous en êtes aujourd'hui. Sans engagement."
+  ctaLabel="Demander un devis gratuit"
+  ctaHref={navCta.href}
+/>

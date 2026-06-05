@@ -1,0 +1,258 @@
+---
+/**
+ * Page ville — Création de site internet à Lorient.
+ * Portage fidèle de la maquette Design `creation-site-internet-lorient.html`
+ * (layout ORIGINAL, distinct du gabarit générique) : héro centré, bandeau de
+ * quartiers, preuve locale (carte + témoignage), trois étapes, « tout compris »,
+ * objections, maillage villes/métiers, CtaBand.
+ * ⚠️ Composant autonome NON câblé à une route (règle anti-doorway).
+ * Classes Design `.lo-*` / `.az-*` / `.ed-*` rendues en utilitaires Tailwind tokenisés.
+ */
+import Button from '@components/ui/Button.astro';
+import CtaBand from '@components/blocks/CtaBand.astro';
+---
+
+<main>
+  {/* HERO centré */}
+  <section class="container-site">
+    <div
+      class="mx-auto max-w-[860px] pt-[clamp(150px,16vw,200px)] pb-[clamp(36px,4vw,56px)] text-center"
+    >
+      <div
+        class="inline-flex items-center gap-2 rounded-full bg-brand-soft px-[15px] py-[7px] text-[0.8125rem] font-semibold text-ink-2"
+      >
+        <span class="h-[7px] w-[7px] rounded-full bg-brand"></span>
+        Studio web · Lorient (Morbihan)
+      </div>
+      <h1
+        class="mt-5 font-display text-[clamp(2.3rem,5vw,4rem)] font-medium leading-[1.02] tracking-display text-ink [&_em]:not-italic [&_em]:text-brand"
+      >
+        Votre site internet à Lorient, <em>créé et suivi sur place</em>.
+      </h1>
+      <p
+        class="mx-auto mt-[22px] max-w-[52ch] text-[clamp(1.0625rem,1.6vw,1.3rem)] leading-[1.55] text-ink-2"
+      >
+        Du centre-ville au port, vos clients cherchent sur Google. On crée votre site, on le référence
+        localement et on le fait vivre — vous, vous gérez votre activité.
+      </p>
+      <div class="mt-7 flex flex-wrap justify-center gap-3.5">
+        <Button href="/contact" size="lg">Demander un devis gratuit</Button>
+        <Button href="/realisations" variant="outline" size="lg">Voir des réalisations</Button>
+      </div>
+    </div>
+  </section>
+
+  {/* BANDEAU DE QUARTIERS */}
+  <section class="border-y border-line py-[clamp(24px,3vw,36px)]">
+    <div class="container-site">
+      <div class="flex flex-wrap items-center justify-center gap-3.5">
+        <span class="text-[0.8rem] font-bold uppercase tracking-[0.08em] text-ink-faint">
+          On intervient à
+        </span>
+        <span class="text-[0.95rem] font-medium text-ink-2">Centre-ville</span>
+        <span class="text-line-strong">·</span>
+        <span class="text-[0.95rem] font-medium text-ink-2">Keryado</span>
+        <span class="text-line-strong">·</span>
+        <span class="text-[0.95rem] font-medium text-ink-2">Merville</span>
+        <span class="text-line-strong">·</span>
+        <span class="text-[0.95rem] font-medium text-ink-2">Nouvelle-Ville</span>
+        <span class="text-line-strong">·</span>
+        <span class="text-[0.95rem] font-medium text-ink-2">Kervénanec</span>
+        <span class="text-line-strong">·</span>
+        <span class="text-[0.95rem] font-medium text-ink-2">Lanester</span>
+      </div>
+    </div>
+  </section>
+
+  {/* PREUVE LOCALE — carte + témoignage */}
+  <section class="bg-parchment py-[clamp(48px,6vw,88px)]">
+    <div class="container-site">
+      <div class="reveal text-[12px] font-semibold uppercase tracking-eyebrow text-brand">
+        La preuve, près de chez vous
+      </div>
+      <div
+        class="mt-[clamp(28px,4vw,40px)] grid grid-cols-1 items-center gap-[clamp(28px,4vw,56px)] md:grid-cols-2"
+      >
+        <div class="reveal overflow-hidden rounded-sm border border-line bg-paper">
+          <div
+            class="relative aspect-[16/10]"
+            style="background:repeating-linear-gradient(135deg,var(--color-parchment) 0 14px,var(--color-line) 14px 28px);"
+            aria-hidden="true"
+          >
+            <span
+              class="absolute h-4.5 w-4.5 -rotate-45 rounded-[50%_50%_50%_0] bg-brand shadow-[0_2px_6px_rgba(45,40,18,0.3)]"
+              style="left:38%;top:44%;"
+            ></span>
+          </div>
+          <div
+            class="flex items-center gap-2.5 border-t border-line px-[18px] py-3.5 text-[0.85rem] text-ink-2"
+          >
+            <span class="h-[9px] w-[9px] rounded-full bg-brand"></span>
+            En 1ʳᵉ page sur « artisan + Lorient »
+          </div>
+        </div>
+        <div class="reveal">
+          <h2
+            class="mb-[18px] max-w-[22ch] font-display text-h2 font-medium leading-[1.08] tracking-h2 text-ink"
+          >
+            Des artisans du bassin déjà visibles.
+          </h2>
+          <p class="m-0 font-display text-[clamp(1.3rem,2.2vw,1.7rem)] font-normal leading-[1.35] text-ink">
+            « On me trouve depuis Lorient et tout autour. Les demandes arrivent toutes seules. »
+          </p>
+          <p class="mt-4 text-[0.9rem] text-ink-soft">Artisan accompagné — bassin lorientais</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* COMMENT ÇA SE PASSE — trois étapes */}
+  <section class="py-[clamp(48px,6vw,88px)]">
+    <div class="container-site">
+      <div class="reveal text-[12px] font-semibold uppercase tracking-eyebrow text-brand">
+        Comment ça se passe
+      </div>
+      <h2
+        class="reveal mt-3 max-w-[22ch] font-display text-h2 font-medium leading-[1.08] tracking-h2 text-ink"
+      >
+        Trois étapes, et on s'occupe du reste.
+      </h2>
+      <div class="mt-[clamp(28px,4vw,40px)] grid grid-cols-1 gap-3.5 md:grid-cols-3">
+        {[
+          ['01', 'On se rencontre', 'À Lorient ou en visio. On comprend votre activité, sans jargon.'],
+          ['02', 'On construit', 'Site + fiche Google + référencement local. Vous validez, on exécute.'],
+          ['03', 'On fait vivre', 'Chaque mois : mises à jour, contenus, suivi. Vous ne payez qu\'une fois que ça marche.'],
+        ].map(([n, t, p]) => (
+          <div class="reveal rounded-sm border border-line bg-paper p-6">
+            <div class="font-mono text-[0.8rem] text-brand">{n}</div>
+            <h3 class="mt-2.5 font-display text-[1.15rem] font-semibold text-ink">{t}</h3>
+            <p class="mt-[7px] text-[0.92rem] leading-[1.55] text-ink-soft">{p}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* TOUT COMPRIS, CHAQUE MOIS */}
+  <section class="bg-parchment py-[clamp(48px,6vw,88px)]">
+    <div class="container-site">
+      <div class="reveal text-[12px] font-semibold uppercase tracking-eyebrow text-brand">
+        Tout compris, chaque mois
+      </div>
+      <h2
+        class="reveal mt-3 max-w-[24ch] font-display text-h2 font-medium leading-[1.08] tracking-h2 text-ink"
+      >
+        On ne livre pas un site, on le fait vivre.
+      </h2>
+      <div
+        class="mt-[clamp(28px,4vw,40px)] grid grid-cols-1 gap-x-7 gap-y-3.5 sm:grid-cols-2 lg:grid-cols-3"
+      >
+        {[
+          ['Site tenu à jour & sécurisé', 'Hébergement, sauvegardes, corrections.'],
+          ['Référencement Lorient suivi', "Google et fiche d'établissement entretenus chaque mois."],
+          ['Modifications à la demande', "Nouveaux contenus, nouvelles photos : on s'en occupe."],
+          ['Suivi de vos avis', 'Collecte automatique après chaque client satisfait.'],
+          ['Rapport mensuel clair', 'Appels, visites, position sur Google.'],
+          ['Un interlocuteur unique', 'Quelqu\'un à Lorient qui connaît votre dossier.'],
+        ].map(([t, p]) => (
+          <div class="reveal flex items-start gap-3">
+            <span
+              class="relative mt-0.5 h-[22px] w-[22px] flex-none rounded-full bg-brand-soft after:absolute after:left-[7px] after:top-[5px] after:h-[9px] after:w-[5px] after:rotate-[40deg] after:border-b-2 after:border-r-2 after:border-brand after:content-['']"
+              aria-hidden="true"
+            ></span>
+            <div>
+              <div class="text-base font-semibold text-ink">{t}</div>
+              <div class="mt-1 text-[0.9rem] leading-[1.5] text-ink-soft">{p}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* POURQUOI AZELIZE — objections */}
+  <section class="py-[clamp(48px,6vw,88px)]">
+    <div class="container-site">
+      <div class="reveal text-[12px] font-semibold uppercase tracking-eyebrow text-brand">
+        Pourquoi Azelize
+      </div>
+      <h2
+        class="reveal mt-3 max-w-[24ch] font-display text-h2 font-medium leading-[1.08] tracking-h2 text-ink"
+      >
+        On lève les vraies objections.
+      </h2>
+      <div class="mt-[clamp(28px,4vw,40px)] flex max-w-[820px] flex-col">
+        {[
+          ['« Je n\'ai pas le temps. »', "C'est nous qui faisons tout. Vous validez, on exécute."],
+          ['« J\'ai déjà eu un site, sans résultat. »', "Un site sans référencement ni entretien, c'est normal. Nous, on le fait vivre."],
+          ['« J\'ai peur de m\'engager. »', "Aucun engagement, et vous ne payez qu'une fois que ça marche."],
+        ].map(([q, a]) => (
+          <div class="reveal grid grid-cols-1 gap-2 border-b border-line py-5 md:grid-cols-[minmax(0,16rem)_1fr] md:gap-10">
+            <div class="font-display text-[1.1rem] font-medium text-ink">{q}</div>
+            <div class="text-base leading-[1.6] text-ink-2">{a}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* AUSSI POUR VOUS — maillage */}
+  <section class="bg-parchment py-[clamp(48px,6vw,88px)]">
+    <div class="container-site">
+      <div class="reveal text-[12px] font-semibold uppercase tracking-eyebrow text-brand">
+        Aussi pour vous
+      </div>
+      <h2
+        class="reveal mt-3 max-w-[24ch] font-display text-h2 font-medium leading-[1.08] tracking-h2 text-ink"
+      >
+        D'autres villes, d'autres métiers.
+      </h2>
+      <div class="reveal mt-[clamp(24px,3vw,32px)] flex flex-wrap gap-[9px]">
+        {[
+          ['Site à Lanester', '/creation-site-internet'],
+          ['Site à Vannes', '/creation-site-internet'],
+          ['Site pour plombier', '/creation-site-internet'],
+          ['Site pour électricien', '/creation-site-internet'],
+          ['Référencement local', '/referencement-seo'],
+        ].map(([label, href]) => (
+          <a
+            class="whitespace-nowrap rounded-full border border-line-strong bg-paper px-[15px] py-2 text-[0.9rem] font-medium text-ink-2 transition-colors duration-200 ease-brand hover:border-brand hover:text-brand"
+            href={href}
+          >
+            {label}
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Rencontrons-nous à Lorient."
+    lead="15 minutes pour voir comment on peut vous rendre visible. Sans engagement."
+    ctaLabel="Demander un devis gratuit"
+    ctaHref="/contact"
+  />
+</main>
+
+<script>
+  // Reveal au scroll (vanilla) — pose .anim sur <html>, .in via IntersectionObserver.
+  document.documentElement.classList.add('anim');
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reveals = Array.from(document.querySelectorAll<HTMLElement>('.reveal'));
+  if (prefersReduced || !('IntersectionObserver' in window)) {
+    reveals.forEach((el) => el.classList.add('in'));
+  } else {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
+    );
+    reveals.forEach((el) => io.observe(el));
+  }
+</script>

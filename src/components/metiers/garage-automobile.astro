@@ -1,0 +1,266 @@
+---
+/**
+ * Page métier — Création de site internet pour garage & concessionnaire.
+ * Portage fidèle de la maquette Design `creation-site-internet-garage-automobile.html` :
+ * héro + mockup catalogue véhicules, « reprenez le contrôle » (3 cartes + intro),
+ * back-office cas Global Cars (liste « tout compris »), FAQ (4) + maillage, CtaBand.
+ * Markup + texte en dur. Classes Design `.az-*` / `.ed-*` → utilitaires Tailwind tokenisés.
+ */
+import Button from '@components/ui/Button.astro';
+import CtaBand from '@components/blocks/CtaBand.astro';
+import { tiers } from '@data/pricing';
+
+// Prix d'entrée importé de la source unique (jamais codé en dur dans la copie).
+const prixEntree = tiers[0].price;
+
+// Mockup catalogue — placeholders véhicules (dégradé parchemin, jamais de hex brut).
+const vehicules = [
+  { tag: 'Dispo', nom: 'Citadine · 2021', prix: '12 900 €' },
+  { tag: 'Dispo', nom: 'Berline · 2019', prix: '15 400 €' },
+  { tag: 'Réservé', nom: 'SUV · 2020', prix: '21 900 €' },
+];
+---
+
+<main>
+  {/* HERO */}
+  <section class="container-site">
+    <div class="max-w-[860px] pt-[clamp(150px,16vw,200px)] pb-[clamp(28px,3vw,44px)]">
+      <div class="text-[0.8125rem] font-semibold uppercase tracking-[0.06em] text-brand">
+        Site internet · Garages & concessionnaires
+      </div>
+      <h1
+        class="mt-3.5 font-display text-[clamp(2.2rem,4.8vw,3.8rem)] font-medium leading-[1.02] tracking-display text-ink [&_em]:not-italic [&_em]:text-brand"
+      >
+        Votre garage en ligne, <em>vos véhicules, vos clients</em>.
+      </h1>
+      <p
+        class="mt-[22px] max-w-[56ch] text-[clamp(1.0625rem,1.6vw,1.3rem)] leading-[1.55] text-ink-2"
+      >
+        Un site avec votre catalogue de véhicules à jour en quelques clics, et des contacts qui
+        arrivent en direct — moins de dépendance à leboncoin et AutoScout24, qui vous noient parmi
+        des centaines d'annonces.
+      </p>
+      <div class="mt-7 flex flex-wrap gap-3.5">
+        <Button href="/contact" size="lg">Demander un devis gratuit</Button>
+        <Button href="/creation-site-internet" variant="outline" size="lg">Voir le service</Button>
+      </div>
+
+      {/* mockup — catalogue véhicules */}
+      <div class="mt-[clamp(32px,4vw,48px)] overflow-hidden rounded-sm border border-line bg-paper">
+        <div class="flex items-center gap-[7px] border-b border-line bg-parchment px-4 py-[11px]">
+          <span class="h-[9px] w-[9px] rounded-full bg-line-strong"></span>
+          <span class="h-[9px] w-[9px] rounded-full bg-line-strong"></span>
+          <span class="h-[9px] w-[9px] rounded-full bg-line-strong"></span>
+          <span class="ml-2.5 font-mono text-[12px] text-ink-soft">votre-garage.fr/vehicules</span>
+        </div>
+        <div class="px-[clamp(18px,2.5vw,26px)] py-[clamp(18px,2.5vw,26px)]">
+          <div class="grid grid-cols-2 gap-3 min-[560px]:grid-cols-3">
+            {
+              vehicules.map((v) => (
+                <div class="overflow-hidden rounded-sm border border-line">
+                  <div
+                    class="relative aspect-[4/3]"
+                    style="background:repeating-linear-gradient(135deg,var(--color-parchment) 0 12px,var(--color-line) 12px 24px);"
+                  >
+                    <span class="absolute left-2 top-2 rounded-xs bg-brand px-2 py-[3px] text-[0.62rem] font-bold uppercase tracking-[0.04em] text-paper">
+                      {v.tag}
+                    </span>
+                  </div>
+                  <div class="px-3 py-2.5">
+                    <div class="text-[0.82rem] font-semibold text-ink">{v.nom}</div>
+                    <div class="mt-0.5 font-display text-[0.95rem] font-semibold text-brand">
+                      {v.prix}
+                    </div>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* LE VRAI SUJET — 3 cartes */}
+  <section class="bg-parchment py-[clamp(48px,6vw,88px)]">
+    <div class="container-site">
+      <div class="reveal text-[12px] font-semibold uppercase tracking-eyebrow text-brand">
+        Le vrai sujet
+      </div>
+      <h2
+        class="reveal m-0 mt-3 max-w-[24ch] font-display text-h2 font-medium leading-[1.08] tracking-h2 text-ink"
+      >
+        Reprenez le contrôle face aux portails.
+      </h2>
+      <p class="reveal mt-4 max-w-[56ch] text-[1.0625rem] leading-[1.6] text-ink-2">
+        Sur leboncoin ou AutoScout24, vous payez pour apparaître au milieu de vos concurrents, et le
+        client n'est jamais vraiment le vôtre. Votre site, lui, met votre garage en avant — et les
+        contacts arrivent directement chez vous.
+      </p>
+      <div class="mt-[clamp(28px,4vw,40px)] grid grid-cols-1 gap-3.5 md:grid-cols-3">
+        {
+          [
+            [
+              '01',
+              'Vos véhicules, votre vitrine',
+              'Votre stock présenté à votre image, pas noyé dans un portail.',
+            ],
+            [
+              '02',
+              'Des contacts directs',
+              'Le client vous appelle ou remplit un formulaire — sans intermédiaire.',
+            ],
+            [
+              '03',
+              'Moins de commissions',
+              'Moins de dépendance aux abonnements et options payantes des portails.',
+            ],
+          ].map(([n, t, p]) => (
+            <div class="reveal rounded-sm border border-line bg-paper p-6">
+              <div class="font-mono text-[0.8rem] text-brand">{n}</div>
+              <h3 class="mt-2.5 font-display text-[1.15rem] font-semibold tracking-tight text-ink">
+                {t}
+              </h3>
+              <p class="mt-2 text-[0.95rem] leading-[1.55] text-ink-soft">{p}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* NOTRE DIFFÉRENCE — back-office Global Cars */}
+  <section class="py-[clamp(48px,6vw,88px)]">
+    <div class="container-site">
+      <div class="reveal text-[12px] font-semibold uppercase tracking-eyebrow text-brand">
+        Notre différence · cas Global Cars
+      </div>
+      <h2
+        class="reveal m-0 mt-3 max-w-[24ch] font-display text-h2 font-medium leading-[1.08] tracking-h2 text-ink"
+      >
+        Un back-office sur-mesure, pas un simple template.
+      </h2>
+      <p class="reveal mt-4 max-w-[56ch] text-[1.0625rem] leading-[1.6] text-ink-2">
+        Pour Global Cars (Hennebont), on n'a pas livré qu'une vitrine : un véritable back-office
+        pour gérer le stock sans nous rappeler à chaque véhicule.
+      </p>
+      <div class="mt-[clamp(28px,4vw,40px)] grid grid-cols-1 gap-x-10 md:grid-cols-2">
+        {
+          [
+            [
+              'Catalogue véhicules autonome',
+              'Ajout, modification, suppression : vous gérez votre stock vous-même.',
+            ],
+            [
+              'Upload de photos simple',
+              'Quelques clics depuis le téléphone, et le véhicule est en ligne.',
+            ],
+            [
+              'Statuts en temps réel',
+              'Disponible, réservé, vendu : le site reflète votre stock réel.',
+            ],
+            ['Demandes centralisées', 'Formulaires et notifications : aucune demande ne se perd.'],
+            ['Référencement local', '« garage + votre ville » : on vous fait remonter sur Google.'],
+            ['Tenu chaque mois', "Sécurité, mises à jour, suivi : on s'occupe de tout."],
+          ].map(([t, p]) => (
+            <div class="reveal flex items-start gap-3 border-b border-line py-4">
+              <span class="mt-2 h-2 w-2 flex-none rounded-full bg-brand" aria-hidden="true" />
+              <div>
+                <div class="text-base font-semibold text-ink">{t}</div>
+                <div class="mt-[3px] text-[0.9rem] leading-[1.5] text-ink-soft">{p}</div>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* QUESTIONS DE GARAGISTES + MAILLAGE */}
+  <section class="bg-parchment py-[clamp(48px,6vw,88px)]">
+    <div class="container-site">
+      <div class="reveal text-[12px] font-semibold uppercase tracking-eyebrow text-brand">
+        Questions de garagistes
+      </div>
+      <h2
+        class="reveal m-0 mt-3 max-w-[24ch] font-display text-h2 font-medium leading-[1.08] tracking-h2 text-ink"
+      >
+        Ce qu'on nous demande souvent.
+      </h2>
+      <div class="mt-[clamp(28px,4vw,40px)] flex max-w-[780px] flex-col gap-2.5">
+        {
+          [
+            [
+              'Je peux gérer mon stock moi-même ?',
+              "Oui : c'est tout l'intérêt du back-office. Vous ajoutez, modifiez et marquez « vendu » en quelques clics, sans nous rappeler. On vous forme en une fois.",
+            ],
+            [
+              'Ça remplace leboncoin ?',
+              'Ça réduit votre dépendance : le portail reste un apport, mais votre site capte les clients qui vous cherchent directement — sans commission ni concurrents à côté de vous.',
+            ],
+            [
+              "J'ai beaucoup de véhicules, c'est gérable ?",
+              "Oui, le catalogue est pensé pour ça : stock illimité, filtres, photos multiples. C'est exactement ce qu'on a construit pour Global Cars.",
+            ],
+            [
+              "C'est combien pour un garage ?",
+              `À partir de ${prixEntree} €/mois, tout compris. Et vous ne commencez à payer qu'une fois que le site vous amène des contacts.`,
+            ],
+          ].map(([q, a]) => (
+            <div class="reveal rounded-sm border border-line bg-paper px-[22px] py-5">
+              <p class="m-0 font-display text-[1.1rem] font-medium text-ink">{q}</p>
+              <p class="mt-2.5 text-base leading-[1.6] text-ink-2">{a}</p>
+            </div>
+          ))
+        }
+      </div>
+      <div class="reveal mt-[clamp(24px,3vw,32px)] flex flex-wrap gap-[9px]">
+        {
+          [
+            ['Création de site', '/creation-site-internet'],
+            ['Référencement local', '/referencement-seo'],
+            ['Outils sur-mesure', '/saas-outils'],
+            ["Le prix d'un site", '/tarifs'],
+          ].map(([label, href]) => (
+            <a
+              class="whitespace-nowrap rounded-full border border-line-strong bg-paper px-[15px] py-2 text-[0.9rem] font-medium text-ink-2 transition-colors duration-200 ease-brand hover:border-brand hover:text-brand"
+              href={href}
+            >
+              {label}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Reprenez la main sur vos ventes."
+    lead="15 minutes pour voir comment un site avec catalogue peut vous rendre indépendant des portails. Sans engagement."
+    ctaLabel="Demander un devis gratuit"
+    ctaHref="/contact"
+  />
+</main>
+
+<script>
+  // Reveal au scroll (vanilla) — pose .anim sur <html>, .in via IntersectionObserver.
+  document.documentElement.classList.add('anim');
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reveals = Array.from(document.querySelectorAll<HTMLElement>('.reveal'));
+  if (prefersReduced || !('IntersectionObserver' in window)) {
+    reveals.forEach((el) => el.classList.add('in'));
+  } else {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
+    );
+    reveals.forEach((el) => io.observe(el));
+  }
+</script>

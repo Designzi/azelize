@@ -1,4 +1,10 @@
 ---
+/*
+ * /mentions-legales — Mentions légales (portage fidèle de la maquette Design
+ * mentions-legales.html). Contenu fictif, à valider juridiquement.
+ * Sommaire collant + sections numérotées par ancres. Interactivité : ancres
+ * internes lissées au scroll (script vanilla).
+ */
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Section from '@components/ui/Section.astro';
 import Eyebrow from '@components/ui/Eyebrow.astro';
@@ -43,7 +49,7 @@ const sections = [
             <dt>Siège / établissement</dt><dd>103 B rue Léon Blum, 56600 Lanester</dd>
             <dt>TVA intracom.</dt><dd>Non applicable — franchise en base (art. 293 B du CGI)</dd>
             <dt>Directeur de publication</dt><dd>Taha Yasin CELIK</dd>
-            <dt>Contact</dt><dd><a href="mailto:bonjour@azelize.fr">bonjour@azelize.fr</a> · 06 14 74 95 99</dd>
+            <dt>Contact</dt><dd><a href="mailto:bonjour@azelize.fr">bonjour@azelize.fr</a> · 01 23 45 67 89</dd>
           </dl>
         </section>
 
@@ -71,9 +77,10 @@ const sections = [
             intellectuelle.
           </p>
           <p>
-            Les sites réalisés pour les clients d'Azelize, ainsi que leurs noms de
-            domaine, restent la propriété du client dans les conditions prévues au
-            contrat d'abonnement.
+            Le site réalisé pour le client, son code et son nom de domaine
+            <strong>restent la propriété d'Azelize</strong>. Le client en dispose
+            en location pendant toute la durée de son abonnement ; il conserve les
+            contenus qu'il a lui-même fournis (photos, textes, logo).
           </p>
         </section>
 
@@ -130,6 +137,22 @@ const sections = [
     </div>
   </Section>
 </BaseLayout>
+
+<script>
+  // Défilement doux des ancres internes du sommaire (#id).
+  const OFFSET = 120;
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll<HTMLAnchorElement>('.lg-toc a[href^="#"]').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      const id = a.getAttribute('href')!.slice(1);
+      const el = document.getElementById(id);
+      if (!el) return;
+      e.preventDefault();
+      const y = el.getBoundingClientRect().top + window.scrollY - OFFSET;
+      window.scrollTo({ top: y, behavior: prefersReduced ? 'auto' : 'smooth' });
+    });
+  });
+</script>
 
 <style>
   .lg-updated {

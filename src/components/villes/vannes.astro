@@ -1,0 +1,256 @@
+---
+/**
+ * Page ville — Création de site internet à Vannes.
+ * Portage fidèle de la maquette Design `creation-site-internet-vannes.html`
+ * (layout ORIGINAL) : héro split asymétrique + encart stat, liste éditoriale
+ * numérotée, FAQ locale, « tout compris », preuve, objections, maillage, CtaBand.
+ * ⚠️ Composant autonome NON câblé à une route (règle anti-doorway).
+ * Classes Design `.va-*` / `.az-*` / `.ed-*` rendues en utilitaires Tailwind tokenisés.
+ */
+import Button from '@components/ui/Button.astro';
+import CtaBand from '@components/blocks/CtaBand.astro';
+---
+
+<main>
+  {/* HERO split asymétrique + encart stat */}
+  <section class="container-site">
+    <div
+      class="grid grid-cols-1 items-end gap-[clamp(32px,5vw,64px)] pt-[clamp(150px,16vw,200px)] pb-[clamp(36px,4vw,56px)] md:grid-cols-[1.3fr_0.7fr]"
+    >
+      <div>
+        <div
+          class="mb-[18px] inline-flex items-center gap-2 rounded-full bg-brand-soft px-[15px] py-[7px] text-[0.8125rem] font-semibold text-ink-2"
+        >
+          <span class="h-[7px] w-[7px] rounded-full bg-brand"></span>
+          Studio web · Vannes (Morbihan)
+        </div>
+        <h1
+          class="font-display text-[clamp(2.2rem,4.6vw,3.7rem)] font-medium leading-[1.03] tracking-[-0.03em] text-ink [&_em]:not-italic [&_em]:text-brand"
+        >
+          À Vannes, un site qui vous <em>démarque vraiment</em>.
+        </h1>
+        <p
+          class="mt-5 max-w-[48ch] text-[clamp(1.0625rem,1.5vw,1.2rem)] leading-[1.55] text-ink-2"
+        >
+          Vannes attire, donc la concurrence en ligne est réelle. Raison de plus pour un site soigné,
+          bien référencé, et tenu dans la durée — pas un site de plus qu'on ne trouve jamais.
+        </p>
+        <div class="mt-7 flex flex-wrap gap-3.5">
+          <Button href="/contact" size="lg">Demander un devis gratuit</Button>
+          <Button href="/realisations" variant="outline" size="lg">Voir des réalisations</Button>
+        </div>
+      </div>
+      <div class="rounded-sm border border-line bg-paper p-6">
+        <div class="font-display text-[2.6rem] font-semibold leading-none tracking-[-0.03em] text-brand">
+          54k
+        </div>
+        <div class="mt-2 text-[0.92rem] leading-[1.45] text-ink-soft">
+          habitants et un bassin qui cherche sur Google chaque jour. Soyez celui qu'on trouve.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* POURQUOI ÇA COMPTE — liste éditoriale numérotée */}
+  <section class="bg-parchment py-[clamp(48px,6vw,88px)]">
+    <div class="container-site">
+      <div class="reveal text-[12px] font-semibold uppercase tracking-eyebrow text-brand">
+        Pourquoi ça compte à Vannes
+      </div>
+      <h2
+        class="reveal mt-3 max-w-[24ch] font-display text-h2 font-medium leading-[1.08] tracking-h2 text-ink"
+      >
+        Plus de concurrence, donc plus besoin de bien faire.
+      </h2>
+      <div class="mt-[clamp(28px,4vw,40px)] border-t border-line">
+        {[
+          ['01', 'Se démarquer du « template »', "Beaucoup d'artisans ont un site qui se ressemble. Le vôtre, sur-mesure, inspire confiance dès le premier coup d'œil."],
+          ['02', 'Être trouvé sur les bonnes requêtes', '« Votre métier + Vannes », « + Séné », « + Theix » : on cible précisément, là où vos clients cherchent.'],
+          ['03', 'Rester devant, mois après mois', "Le référencement n'est pas figé. On l'entretient pour que vous ne redescendiez pas derrière un concurrent."],
+        ].map(([n, t, p]) => (
+          <div class="reveal grid grid-cols-[auto_1fr] items-baseline gap-[22px] border-b border-line py-6">
+            <div class="font-mono text-[0.85rem] text-brand">{n}</div>
+            <div>
+              <h3 class="mb-1.5 font-display text-[1.2rem] font-semibold text-ink">{t}</h3>
+              <p class="m-0 max-w-[62ch] text-base leading-[1.6] text-ink-2">{p}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* FAQ LOCALE */}
+  <section class="py-[clamp(48px,6vw,88px)]">
+    <div class="container-site">
+      <div class="reveal text-[12px] font-semibold uppercase tracking-eyebrow text-brand">
+        Questions fréquentes à Vannes
+      </div>
+      <h2
+        class="reveal mt-3 max-w-[24ch] font-display text-h2 font-medium leading-[1.08] tracking-h2 text-ink"
+      >
+        Ce qu'on nous demande dans le secteur.
+      </h2>
+      <div class="mt-[clamp(28px,4vw,40px)] flex max-w-[780px] flex-col gap-2.5">
+        {[
+          ['Vous travaillez avec des artisans de Vannes et autour ?', 'Oui — Vannes, Séné, Theix, Auray et tout le golfe. En visio ou sur place, comme vous préférez.'],
+          ['Combien de temps pour passer devant un concurrent déjà installé ?', "Comptez quelques mois sur les requêtes locales. On vise d'abord les recherches précises où la place est encore à prendre, puis on élargit."],
+          ['C\'est quoi le budget, à Vannes ?', "À partir de 390 €/mois, tout compris. Et vous ne commencez à payer qu'une fois que le site vous amène des clients."],
+        ].map(([q, a]) => (
+          <div class="reveal rounded-sm border border-line bg-paper px-[22px] py-5">
+            <p class="m-0 font-display text-[1.1rem] font-medium text-ink">{q}</p>
+            <p class="mt-2.5 text-base leading-[1.6] text-ink-2">{a}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* TOUT COMPRIS, CHAQUE MOIS */}
+  <section class="bg-parchment py-[clamp(48px,6vw,88px)]">
+    <div class="container-site">
+      <div class="reveal text-[12px] font-semibold uppercase tracking-eyebrow text-brand">
+        Tout compris, chaque mois
+      </div>
+      <h2
+        class="reveal mt-3 max-w-[24ch] font-display text-h2 font-medium leading-[1.08] tracking-h2 text-ink"
+      >
+        On ne livre pas un site, on le fait vivre.
+      </h2>
+      <div
+        class="mt-[clamp(28px,4vw,40px)] grid grid-cols-1 gap-x-7 gap-y-3.5 sm:grid-cols-2 lg:grid-cols-3"
+      >
+        {[
+          ['Site tenu à jour & sécurisé', 'Hébergement, sauvegardes, corrections.'],
+          ['Référencement Vannes suivi', "Google et fiche d'établissement entretenus chaque mois."],
+          ['Contenus à la demande', 'Nouvelles réalisations, nouvelles pages.'],
+          ['Suivi de vos avis', 'Collecte automatique après chaque client satisfait.'],
+          ['Rapport mensuel clair', 'Appels, visites, position sur Google.'],
+          ['Un interlocuteur unique', 'Quelqu\'un qui connaît votre dossier et répond.'],
+        ].map(([t, p]) => (
+          <div class="reveal flex items-start gap-3">
+            <span
+              class="relative mt-0.5 h-[22px] w-[22px] flex-none rounded-full bg-brand-soft after:absolute after:left-[7px] after:top-[5px] after:h-[9px] after:w-[5px] after:rotate-[40deg] after:border-b-2 after:border-r-2 after:border-brand after:content-['']"
+              aria-hidden="true"
+            ></span>
+            <div>
+              <div class="text-base font-semibold text-ink">{t}</div>
+              <div class="mt-1 text-[0.9rem] leading-[1.5] text-ink-soft">{p}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* LA PREUVE — visuel + citation */}
+  <section class="py-[clamp(48px,6vw,88px)]">
+    <div class="container-site">
+      <div
+        class="grid grid-cols-1 items-center gap-[clamp(28px,4vw,56px)] md:grid-cols-2"
+      >
+        <div
+          class="reveal aspect-[4/3] rounded-sm border border-line"
+          style="background:repeating-linear-gradient(135deg,var(--color-parchment) 0 16px,var(--color-line) 16px 32px);"
+          aria-hidden="true"
+        ></div>
+        <div class="reveal">
+          <div class="text-[12px] font-semibold uppercase tracking-eyebrow text-brand">
+            La preuve
+          </div>
+          <p class="mt-4 font-display text-[clamp(1.3rem,2.2vw,1.7rem)] font-normal leading-[1.35] text-ink">
+            « À Vannes la concurrence est forte. Mon site me démarque vraiment, et ça se voit dans les
+            demandes. »
+          </p>
+          <p class="mt-4 text-[0.9rem] text-ink-soft">Artisan accompagné — golfe du Morbihan</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* POURQUOI AZELIZE — objections */}
+  <section class="bg-parchment py-[clamp(48px,6vw,88px)]">
+    <div class="container-site">
+      <div class="reveal text-[12px] font-semibold uppercase tracking-eyebrow text-brand">
+        Pourquoi Azelize
+      </div>
+      <h2
+        class="reveal mt-3 max-w-[24ch] font-display text-h2 font-medium leading-[1.08] tracking-h2 text-ink"
+      >
+        On lève les vraies objections.
+      </h2>
+      <div class="mt-[clamp(28px,4vw,40px)] flex max-w-[820px] flex-col">
+        {[
+          ['« Je n\'ai pas le temps. »', "C'est nous qui faisons tout. Vous validez, on exécute."],
+          ['« Il y a déjà trop de concurrents en ligne. »', "Raison de plus pour un site soigné et bien référencé : c'est ce qui vous fait passer devant."],
+          ['« J\'ai peur de m\'engager. »', "Aucun engagement, et vous ne payez qu'une fois que ça marche."],
+        ].map(([q, a]) => (
+          <div class="reveal grid grid-cols-1 gap-2 border-b border-line py-5 md:grid-cols-[minmax(0,16rem)_1fr] md:gap-10">
+            <div class="font-display text-[1.1rem] font-medium text-ink">{q}</div>
+            <div class="text-base leading-[1.6] text-ink-2">{a}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* AUSSI POUR VOUS — maillage */}
+  <section class="py-[clamp(48px,6vw,88px)]">
+    <div class="container-site">
+      <div class="reveal text-[12px] font-semibold uppercase tracking-eyebrow text-brand">
+        Aussi pour vous
+      </div>
+      <h2
+        class="reveal mt-3 max-w-[24ch] font-display text-h2 font-medium leading-[1.08] tracking-h2 text-ink"
+      >
+        D'autres villes, d'autres métiers.
+      </h2>
+      <div class="reveal mt-[clamp(24px,3vw,32px)] flex flex-wrap gap-[9px]">
+        {[
+          ['Site à Lanester', '/creation-site-internet'],
+          ['Site à Lorient', '/creation-site-internet'],
+          ['Site pour plombier', '/creation-site-internet'],
+          ['Site pour électricien', '/creation-site-internet'],
+          ['Référencement local', '/referencement-seo'],
+        ].map(([label, href]) => (
+          <a
+            class="whitespace-nowrap rounded-full border border-line-strong bg-paper px-[15px] py-2 text-[0.9rem] font-medium text-ink-2 transition-colors duration-200 ease-brand hover:border-brand hover:text-brand"
+            href={href}
+          >
+            {label}
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Rencontrons-nous à Vannes."
+    lead="15 minutes pour voir comment vous démarquer. Sans engagement."
+    ctaLabel="Demander un devis gratuit"
+    ctaHref="/contact"
+  />
+</main>
+
+<script>
+  // Reveal au scroll (vanilla) — pose .anim sur <html>, .in via IntersectionObserver.
+  document.documentElement.classList.add('anim');
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reveals = Array.from(document.querySelectorAll<HTMLElement>('.reveal'));
+  if (prefersReduced || !('IntersectionObserver' in window)) {
+    reveals.forEach((el) => el.classList.add('in'));
+  } else {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
+    );
+    reveals.forEach((el) => io.observe(el));
+  }
+</script>

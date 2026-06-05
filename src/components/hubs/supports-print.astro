@@ -1,0 +1,195 @@
+---
+/**
+ * Hub service · /supports-print — portage fidèle de la maquette Design
+ * (templates/azelize/ui_kits/azelize-studio/supports-print.html).
+ * Corps <main> complet : héro + 2 CTA, catalogue produits (mini-maquettes CSS),
+ * note « même identité », FAQ (statique), liens connexes, bande CTA sombre.
+ * Le chrome (header/footer) est fourni par BaseLayout. Aucune interactivité.
+ *
+ * NB : la maquette définit des styles `.sp-cta` (bande CTA claire alternative)
+ * mais son markup rend le composant Design <CtaBand/> (bande sombre standard) —
+ * on porte donc la bande sombre via le bloc CtaBand canonique.
+ */
+import Section from '@components/ui/Section.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import Button from '@components/ui/Button.astro';
+import CtaBand from '@components/blocks/CtaBand.astro';
+
+const FAQ = [
+  {
+    q: 'Vous gérez aussi l’impression ?',
+    a: 'On conçoit les fichiers prêts à imprimer et on vous oriente vers un imprimeur, ou on gère l’impression pour vous — comme vous préférez.',
+  },
+  {
+    q: 'C’est cohérent avec mon site ?',
+    a: 'Oui : tout part de la même identité. Carte, flyer, panneau et site parlent le même langage visuel.',
+  },
+  {
+    q: 'Je peux commander au fur et à mesure ?',
+    a: 'Bien sûr. Une fois l’identité posée, on décline un nouveau support quand vous en avez besoin.',
+  },
+];
+
+const LINKS = [
+  { label: 'Identité visuelle', href: '/identite-visuelle' },
+  { label: 'Habillage véhicule', href: '/habillage-vehicule-covering' },
+  { label: 'Création de site', href: '/creation-site-internet' },
+];
+
+// Ombre douce des mini-maquettes (Design : élévation parchemin légère).
+// Pas de token équivalent exact ; on prend l'utilitaire tokenisé le plus proche.
+const mockShadow = 'shadow-sm';
+---
+
+{/* ── Héro ─────────────────────────────────────────────────────────────────── */}
+<section class="pt-[clamp(150px,16vw,200px)] pb-[clamp(20px,3vw,36px)]">
+  <div class="container-site">
+    <div class="max-w-205">
+      <div class="reveal"><Eyebrow class="mb-4">Supports imprimés</Eyebrow></div>
+      <h1
+        class="reveal m-0 font-display text-[clamp(2.3rem,5vw,4rem)] font-medium leading-[1.02] tracking-display text-ink [&_em]:not-italic [&_em]:text-brand"
+      >
+        Votre image, <em>jusque dans la poche du client</em>.
+      </h1>
+      <p class="reveal mt-[22px] max-w-[52ch] text-[clamp(1.0625rem,1.6vw,1.3rem)] leading-[1.55] text-ink-2">
+        Carte de visite, flyer, panneau de chantier, devis : tous vos supports déclinés à partir de
+        votre marque, cohérents avec le site. Prêts à imprimer, prêts à distribuer.
+      </p>
+      <div class="reveal mt-7 flex flex-wrap gap-3.5">
+        <Button href="/contact" size="lg">Demander un devis gratuit</Button>
+        <Button href="/identite-visuelle" variant="outline" size="lg">Voir l'identité visuelle</Button>
+      </div>
+    </div>
+  </div>
+</section>
+
+{/* ── Catalogue produits (mini-maquettes CSS pur) ──────────────────────────── */}
+<section>
+  <div class="container-site">
+    <div
+      class="grid gap-4 py-[clamp(32px,4vw,52px)]"
+      style="grid-template-columns:repeat(auto-fill,minmax(240px,1fr));"
+    >
+      {/* Cartes de visite */}
+      <div class="reveal overflow-hidden rounded-sm border border-line bg-paper">
+        <div class="relative flex aspect-[4/3] items-center justify-center bg-parchment">
+          <div
+            class:list={['flex aspect-[85/55] w-[58%] flex-col justify-between rounded-xs border border-line bg-paper p-[11px]', mockShadow]}
+          >
+            <div>
+              <div class="h-2 w-[42%] rounded-[2px] bg-brand"></div>
+              <div class="mt-1 h-[5px] w-[64%] rounded-[2px] bg-line-strong"></div>
+            </div>
+            <div class="h-[5px] w-1/2 rounded-[2px] bg-line-strong"></div>
+          </div>
+        </div>
+        <div class="px-4.5 py-4">
+          <h3 class="m-0 font-display text-[1.1rem] font-semibold text-ink">Cartes de visite</h3>
+          <p class="mt-1.5 text-[0.88rem] leading-[1.45] text-ink-soft">Le réflexe après chaque chantier. Recto-verso, pelliculées.</p>
+        </div>
+      </div>
+
+      {/* Flyers & dépliants */}
+      <div class="reveal overflow-hidden rounded-sm border border-line bg-paper">
+        <div class="relative flex aspect-[4/3] items-center justify-center bg-parchment">
+          <div
+            class:list={['aspect-[21/29.7] w-[46%] rounded-[3px] border border-line bg-paper p-2.5', mockShadow]}
+          >
+            <div class="h-[34%] w-full rounded-[2px] bg-brand-soft"></div>
+            <div class="mt-2 h-[5px] w-4/5 rounded-[2px] bg-line-strong"></div>
+            <div class="mt-1 h-[5px] w-3/5 rounded-[2px] bg-line-strong"></div>
+          </div>
+        </div>
+        <div class="px-4.5 py-4">
+          <h3 class="m-0 font-display text-[1.1rem] font-semibold text-ink">Flyers &amp; dépliants</h3>
+          <p class="mt-1.5 text-[0.88rem] leading-[1.45] text-ink-soft">Pour vos offres, vos zones d'intervention, vos services.</p>
+        </div>
+      </div>
+
+      {/* Panneaux de chantier */}
+      <div class="reveal overflow-hidden rounded-sm border border-line bg-paper">
+        <div class="relative flex aspect-[4/3] items-center justify-center bg-parchment">
+          <div class="flex aspect-[3/2] w-[66%] items-center justify-center rounded-[3px] bg-brand">
+            <span class="font-display text-[1.1rem] font-bold tracking-[-0.01em] text-paper">chantier</span>
+          </div>
+        </div>
+        <div class="px-4.5 py-4">
+          <h3 class="m-0 font-display text-[1.1rem] font-semibold text-ink">Panneaux de chantier</h3>
+          <p class="mt-1.5 text-[0.88rem] leading-[1.45] text-ink-soft">Votre nom visible sur place : la meilleure pub locale.</p>
+        </div>
+      </div>
+
+      {/* Devis & factures */}
+      <div class="reveal overflow-hidden rounded-sm border border-line bg-paper">
+        <div class="relative flex aspect-[4/3] items-center justify-center bg-parchment">
+          <div
+            class:list={['aspect-[21/29.7] w-[46%] rounded-[3px] border border-line bg-paper p-2.5', mockShadow]}
+          >
+            <div class="flex items-center justify-between">
+              <div class="h-3.5 w-3.5 rounded-[3px] bg-brand"></div>
+            </div>
+            <div class="mt-1.5 h-1 w-[70%] rounded-[2px] bg-line"></div>
+            <div class="mt-1.5 h-1 w-[90%] rounded-[2px] bg-line"></div>
+            <div class="mt-1.5 h-1 w-1/2 rounded-[2px] bg-line"></div>
+          </div>
+        </div>
+        <div class="px-4.5 py-4">
+          <h3 class="m-0 font-display text-[1.1rem] font-semibold text-ink">Devis &amp; factures</h3>
+          <p class="mt-1.5 text-[0.88rem] leading-[1.45] text-ink-soft">Des documents pro et lisibles, à votre image.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{/* ── Note « même identité » ───────────────────────────────────────────────── */}
+<Section tone="parchment" pad="none" class="py-[clamp(40px,5vw,64px)]">
+  <p class="reveal mx-auto max-w-[30ch] text-center font-display text-[clamp(1.4rem,2.6vw,2rem)] font-medium leading-[1.3] tracking-tight text-ink [&_em]:not-italic [&_em]:text-brand">
+    Tout part de la <em>même identité</em> : du site au panneau, vos clients vous reconnaissent.
+  </p>
+</Section>
+
+{/* ── Vos questions (FAQ statique) ─────────────────────────────────────────── */}
+<Section pad="default">
+  <div class="reveal"><Eyebrow class="mb-4">Vos questions</Eyebrow></div>
+  <h2 class="reveal m-0 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink">
+    Les supports imprimés, en clair.
+  </h2>
+  <div class="mt-[clamp(28px,4vw,40px)] flex max-w-[780px] flex-col gap-2.5">
+    {
+      FAQ.map((item) => (
+        <div class="reveal rounded-sm border border-line bg-paper px-[22px] py-5">
+          <p class="m-0 font-display text-[1.1rem] font-medium text-ink">{item.q}</p>
+          <p class="mt-2.5 text-base leading-[1.6] text-ink-2">{item.a}</p>
+        </div>
+      ))
+    }
+  </div>
+</Section>
+
+{/* ── Aussi pour vous (liens connexes) ─────────────────────────────────────── */}
+<Section tone="parchment" pad="default">
+  <div class="reveal"><Eyebrow class="mb-4">Aussi pour vous</Eyebrow></div>
+  <h2 class="reveal m-0 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink">
+    Du papier à l'écran, la même marque.
+  </h2>
+  <div class="reveal mt-[clamp(24px,3vw,32px)] flex flex-wrap gap-[9px]">
+    {
+      LINKS.map((l) => (
+        <a
+          href={l.href}
+          class="whitespace-nowrap rounded-full border border-line-strong bg-paper px-[15px] py-2 text-[0.9rem] font-medium text-ink-2 transition-colors duration-200 ease-brand hover:border-brand hover:text-brand"
+        >
+          {l.label}
+        </a>
+      ))
+    }
+  </div>
+</Section>
+
+<CtaBand
+  title="Des supports cohérents, prêts à distribuer."
+  lead="15 minutes pour faire le point sur vos besoins. Sans engagement."
+  ctaLabel="Demander un devis gratuit"
+  ctaHref="/contact"
+/>

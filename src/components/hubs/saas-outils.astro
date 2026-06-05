@@ -1,0 +1,224 @@
+---
+/**
+ * Hub service — /saas-outils. Portage fidèle de saas-outils.html (corps <main>).
+ * Design monochrome (Ocean Twilight) : accent = brand. Mockup app (sidebar +
+ * dashboard) reproduit en Tailwind tokenisé. CTA final = CtaBand (bande sombre).
+ */
+import Section from '@components/ui/Section.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import Button from '@components/ui/Button.astro';
+import CtaBand from '@components/blocks/CtaBand.astro';
+
+const CONSTRUIT = [
+  { n: '01', t: 'Logiciels métier', p: "Devis, planning, suivi de chantier : l'outil qui colle à votre façon de travailler." },
+  { n: '02', t: 'Espaces clients', p: 'Un portail où vos clients suivent, paient, échangent — en autonomie.' },
+  { n: '03', t: 'Tableaux de bord', p: 'Vos données réunies, lisibles, actionnables, en temps réel.' },
+];
+
+const PROCEDE = [
+  { t: "On cadre l'essentiel", p: "On part du vrai besoin, pas d'un cahier des charges à rallonge." },
+  { t: 'On livre une 1ʳᵉ version vite', p: "Un produit utilisable rapidement, qu'on améliore ensuite." },
+  { t: 'On itère avec vos retours', p: 'Vos utilisateurs guident les priorités, pas nos suppositions.' },
+  { t: 'On maintient dans la durée', p: 'Sécurité, évolutions, support : on reste à vos côtés.' },
+];
+
+const ASAFAZAM = [
+  { n: '01', t: 'Facturation', p: 'Devis et factures générés en quelques clics, modèles à votre charte.' },
+  { n: '02', t: 'Carnet clients', p: 'Historique, contacts, commandes liées — tout au même endroit.' },
+  { n: '03', t: 'Commandes & devis', p: 'Suivi de l’état, conversion devis → facture automatique.' },
+];
+
+const ASAFAZAM_INCL = [
+  { t: 'Mobile-first', p: 'Pensé pour le chantier, accessible depuis le téléphone.' },
+  { t: 'Données en France · RGPD', p: 'Hébergement souverain, conformité assurée.' },
+  { t: 'Onboarding en 2 h', p: 'Pris en main vite, sans techno-blabla.' },
+  { t: 'Tarif transparent', p: 'Pas de pièges, pas de frais cachés.' },
+];
+
+const FAQ = [
+  {
+    q: "Je n'ai qu'une idée, pas de cahier des charges. C'est suffisant ?",
+    a: "Oui. On part de votre idée et de vos utilisateurs pour cadrer ensemble. C'est notre métier de transformer ça en produit.",
+  },
+  {
+    q: 'Je serai dépendant de vous ?',
+    a: 'Non : vous êtes propriétaire du produit et du code. On vous accompagne tant que vous le souhaitez, pas plus.',
+  },
+  {
+    q: 'Combien de temps pour une première version ?',
+    a: 'Selon le projet, souvent quelques semaines pour une version utilisable. On avance par étapes concrètes.',
+  },
+];
+
+const LINKS = [
+  { label: 'Automatisations', href: '/automatisations' },
+  { label: 'Création de site', href: '/creation-site-internet' },
+  { label: 'Réalisations', href: '/realisations' },
+];
+
+const BARS = ['40%', '55%', '48%', '70%', '62%', '85%', '100%'];
+---
+
+{/* ── Héro + mockup app ─────────────────────────────────────────────── */}
+<section class="pt-[clamp(150px,16vw,200px)] pb-[clamp(28px,3vw,44px)]">
+  <div class="container-site">
+    <div class="max-w-[880px]">
+      <div class="reveal"><Eyebrow class="mb-[18px]">SaaS &amp; outils web</Eyebrow></div>
+      <h1
+        class="reveal m-0 mt-4 font-display text-[clamp(2.3rem,5vw,4rem)] font-medium leading-[1.02] tracking-display text-ink [&_em]:not-italic [&_em]:text-brand"
+      >
+        De l'idée au produit en ligne, <em>on construit votre outil</em>.
+      </h1>
+      <p class="reveal mt-[22px] max-w-[54ch] text-[clamp(1.0625rem,1.6vw,1.3rem)] leading-[1.55] text-ink-2">
+        Un logiciel métier, un espace client, un tableau de bord : on conçoit et développe des SaaS
+        sur-mesure, pensés pour vos utilisateurs réels — pas pour une démo.
+      </p>
+      <div class="reveal mt-7 flex flex-wrap gap-3.5">
+        <Button href="/contact" size="lg">Parler de votre projet</Button>
+        <Button href="/realisations" variant="outline" size="lg">Voir des réalisations</Button>
+      </div>
+
+      {/* mockup app : sidebar + dashboard */}
+      <div
+        class="reveal mt-[clamp(32px,4vw,48px)] grid min-h-[280px] grid-cols-1 overflow-hidden rounded-sm border border-line bg-paper md:grid-cols-[200px_1fr]"
+      >
+        <div
+          class="flex flex-row flex-wrap gap-[9px] bg-brand-900 px-4 py-[18px] md:flex-col md:flex-nowrap"
+        >
+          <div class="mb-2 font-display text-base font-bold text-on-dark-bright">VotreApp</div>
+          <div class="h-[9px] rounded-[3px] bg-brand"></div>
+          <div class="h-[9px] rounded-[3px] bg-on-dark/14"></div>
+          <div class="h-[9px] rounded-[3px] bg-on-dark/14"></div>
+          <div class="h-[9px] rounded-[3px] bg-on-dark/14"></div>
+        </div>
+        <div class="p-[22px]">
+          <div class="mb-3 flex gap-3">
+            <div class="flex-1 rounded-sm border border-line p-3.5">
+              <div class="font-display text-[1.5rem] font-semibold tracking-h2 text-brand">1&nbsp;284</div>
+              <div class="mt-[3px] text-[0.75rem] text-ink-soft">utilisateurs</div>
+            </div>
+            <div class="flex-1 rounded-sm border border-line p-3.5">
+              <div class="font-display text-[1.5rem] font-semibold tracking-h2 text-brand">98&nbsp;%</div>
+              <div class="mt-[3px] text-[0.75rem] text-ink-soft">satisfaction</div>
+            </div>
+            <div class="flex-1 rounded-sm border border-line p-3.5">
+              <div class="font-display text-[1.5rem] font-semibold tracking-h2 text-brand">12&nbsp;k€</div>
+              <div class="mt-[3px] text-[0.75rem] text-ink-soft">ce mois</div>
+            </div>
+          </div>
+          <div
+            class="flex h-[90px] items-end gap-1.5 rounded-sm border border-line p-2.5"
+            style="background:linear-gradient(180deg,var(--color-brand-soft),transparent);"
+          >
+            {BARS.map((h) => (
+              <div class="flex-1 rounded-t-[3px] bg-brand opacity-85" style={`height:${h}`}></div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{/* ── Ce qu'on construit ────────────────────────────────────────────── */}
+<Section tone="parchment" pad="default">
+  <div class="reveal"><Eyebrow class="mb-[18px]">Ce qu'on construit</Eyebrow></div>
+  <h2 class="reveal m-0 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink">
+    Des outils qui font gagner du temps.
+  </h2>
+  <div class="mt-[clamp(28px,4vw,40px)] grid grid-cols-1 gap-3.5 md:grid-cols-3">
+    {CONSTRUIT.map((c) => (
+      <div class="reveal rounded-sm border border-line bg-paper p-6">
+        <div class="font-mono text-[0.8rem] text-brand">{c.n}</div>
+        <h3 class="mt-2.5 font-display text-[1.15rem] font-semibold tracking-[-0.01em] text-ink">{c.t}</h3>
+        <p class="mt-2 text-[0.95rem] leading-[1.55] text-ink-soft">{c.p}</p>
+      </div>
+    ))}
+  </div>
+</Section>
+
+{/* ── Comment on procède ────────────────────────────────────────────── */}
+<Section pad="default">
+  <div class="reveal"><Eyebrow class="mb-[18px]">Comment on procède</Eyebrow></div>
+  <h2 class="reveal m-0 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink">
+    Par petits pas, jamais l'usine à gaz.
+  </h2>
+  <div class="mt-[clamp(28px,4vw,40px)] grid grid-cols-1 gap-x-10 md:grid-cols-2">
+    {PROCEDE.map((i) => (
+      <div class="reveal flex items-start gap-3 border-b border-line py-4">
+        <span class="mt-2 h-2 w-2 flex-none rounded-full bg-brand" aria-hidden="true"></span>
+        <div>
+          <div class="text-base font-semibold text-ink">{i.t}</div>
+          <div class="mt-[3px] text-[0.9rem] leading-[1.5] text-ink-soft">{i.p}</div>
+        </div>
+      </div>
+    ))}
+  </div>
+</Section>
+
+{/* ── Notre SaaS · Asafazam ─────────────────────────────────────────── */}
+<Section pad="default">
+  <div class="reveal"><Eyebrow class="mb-[18px]">Notre SaaS · cas concret</Eyebrow></div>
+  <h2 class="reveal m-0 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink">
+    Asafazam : l'arrière-boutique des micro-entrepreneurs.
+  </h2>
+  <p class="reveal mt-4 max-w-[56ch] text-[1.0625rem] leading-[1.6] text-ink-2">
+    On ne fait pas que prototyper : on a conçu et on fait vivre <strong>Asafazam</strong>, une SaaS de
+    gestion pour les TPE du BTP — facturation, clients, commandes, documents. La preuve qu'on livre du
+    réel.
+  </p>
+  <div class="mt-[clamp(28px,4vw,40px)] grid grid-cols-1 gap-3.5 md:grid-cols-3">
+    {ASAFAZAM.map((c) => (
+      <div class="reveal rounded-sm border border-line bg-paper p-6">
+        <div class="font-mono text-[0.8rem] text-brand">{c.n}</div>
+        <h3 class="mt-2.5 font-display text-[1.15rem] font-semibold tracking-[-0.01em] text-ink">{c.t}</h3>
+        <p class="mt-2 text-[0.95rem] leading-[1.55] text-ink-soft">{c.p}</p>
+      </div>
+    ))}
+  </div>
+  <div class="mt-[clamp(20px,2.5vw,30px)] grid grid-cols-1 gap-x-10 md:grid-cols-2">
+    {ASAFAZAM_INCL.map((i) => (
+      <div class="reveal flex items-start gap-3 border-b border-line py-4">
+        <span class="mt-2 h-2 w-2 flex-none rounded-full bg-brand" aria-hidden="true"></span>
+        <div>
+          <div class="text-base font-semibold text-ink">{i.t}</div>
+          <div class="mt-[3px] text-[0.9rem] leading-[1.5] text-ink-soft">{i.p}</div>
+        </div>
+      </div>
+    ))}
+  </div>
+</Section>
+
+{/* ── FAQ + maillage interne ────────────────────────────────────────── */}
+<Section tone="parchment" pad="default">
+  <div class="reveal"><Eyebrow class="mb-[18px]">Vos questions</Eyebrow></div>
+  <h2 class="reveal m-0 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink">
+    Le SaaS sur-mesure, en clair.
+  </h2>
+  <div class="mt-[clamp(28px,4vw,40px)] flex max-w-[780px] flex-col gap-2.5">
+    {FAQ.map((f) => (
+      <div class="reveal rounded-sm border border-line bg-paper px-[22px] py-5">
+        <p class="m-0 font-display text-[1.1rem] font-medium text-ink">{f.q}</p>
+        <p class="mt-2.5 text-base leading-[1.6] text-ink-2">{f.a}</p>
+      </div>
+    ))}
+  </div>
+  <div class="reveal mt-[clamp(24px,3vw,32px)] flex flex-wrap gap-[9px]">
+    {LINKS.map((l) => (
+      <a
+        href={l.href}
+        class="whitespace-nowrap rounded-full border border-line-strong bg-paper px-[15px] py-2 text-[0.9rem] font-medium text-ink-2 transition-[color,border-color] duration-200 ease-brand hover:border-brand hover:text-brand"
+      >
+        {l.label}
+      </a>
+    ))}
+  </div>
+</Section>
+
+{/* ── CTA final ─────────────────────────────────────────────────────── */}
+<CtaBand
+  title="Une idée d'outil ? Construisons-la."
+  lead="15 minutes pour en parler. Sans engagement."
+  ctaLabel="Parler de votre projet"
+  ctaHref="/contact"
+/>

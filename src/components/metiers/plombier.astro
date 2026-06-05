@@ -1,0 +1,429 @@
+---
+/**
+ * Métier — Création de site internet pour plombiers (C3, page riche / référence).
+ * Portage fidèle de la maquette Design `creation-site-internet-plombier.html`.
+ * Corps <main> complet : hero + mockup navigateur, bande de stats, douleurs,
+ * checklist, « chaque mois », étapes, preuve, objections, FAQ, chips de maillage, CTA.
+ *
+ * Autonome : markup et texte en dur repris de la maquette, aucune prop.
+ * Le chrome (header/footer) est fourni par BaseLayout.
+ * Le prix est importé depuis la source unique `@data/pricing`.
+ */
+import Button from '@components/ui/Button.astro';
+import CtaBand from '@components/blocks/CtaBand.astro';
+import { tiers } from '@data/pricing';
+
+const prixPresence = tiers[0].price;
+
+const STATS: { n: string; l: string }[] = [
+  { n: '5 s', l: 'pour convaincre un client pressé' },
+  { n: '8/10', l: 'recherches faites sur mobile' },
+  { n: '2 sem.', l: 'pour être en ligne' },
+  { n: '0 €', l: 'tant que ça ne rapporte pas' },
+];
+
+const PAINS: { t: string; p: string }[] = [
+  {
+    t: 'Invisible sur Google',
+    p: 'Vos concurrents apparaissent en urgence, pas vous. Les appels partent ailleurs.',
+  },
+  {
+    t: 'Un numéro introuvable',
+    p: 'Un site lent ou sans numéro cliquable, et le client referme avant d’appeler.',
+  },
+  {
+    t: 'Aucune preuve de sérieux',
+    p: 'Sans avis ni réalisations, difficile d’inspirer confiance à un inconnu.',
+  },
+];
+
+const CHECKS: { t: string; p: string }[] = [
+  {
+    t: 'Le numéro, visible partout',
+    p: 'Cliquable sur mobile — un client qui a une fuite appelle, il ne remplit pas de formulaire.',
+  },
+  {
+    t: 'Les urgences mises en avant',
+    p: '« Dépannage 7j/7 » rassure dès la première seconde.',
+  },
+  {
+    t: 'Vos garanties',
+    p: 'Assurance décennale, devis gratuit : les preuves qui lèvent le doute.',
+  },
+  {
+    t: 'Vos prestations',
+    p: 'Dépannage, chauffage, salle de bain : le client se reconnaît tout de suite.',
+  },
+  {
+    t: 'Votre zone d’intervention',
+    p: 'Les communes couvertes, clair et net — il sait que vous venez chez lui.',
+  },
+  {
+    t: 'Les avis clients',
+    p: 'Une note crédible rassure plus que n’importe quel argument commercial.',
+  },
+];
+
+const INCLUDES: { t: string; p: string }[] = [
+  {
+    t: 'Site tenu à jour & sécurisé',
+    p: 'Hébergement, sauvegardes, corrections : zéro souci technique pour vous.',
+  },
+  {
+    t: 'Référencement local suivi',
+    p: 'Google et fiche d’établissement entretenus mois après mois.',
+  },
+  {
+    t: 'Modifications à la demande',
+    p: 'Nouveau service, nouvelle photo de chantier : on s’en occupe.',
+  },
+  {
+    t: 'Suivi de vos avis',
+    p: 'On met en place la collecte après chaque intervention réussie.',
+  },
+  {
+    t: 'Rapport mensuel clair',
+    p: 'Appels, visites, position sur Google : vous voyez ce que ça donne.',
+  },
+  {
+    t: 'Un interlocuteur unique',
+    p: 'Quelqu’un qui connaît votre dossier et qui répond.',
+  },
+];
+
+const STEPS: { n: string; t: string; p: string }[] = [
+  {
+    n: '01',
+    t: 'On fait le point',
+    p: '15 minutes pour comprendre votre activité, vos urgences, votre zone. Sans jargon.',
+  },
+  {
+    n: '02',
+    t: 'On construit',
+    p: 'Site + fiche Google + référencement. Vous validez, on exécute. En ligne en 2 semaines.',
+  },
+  {
+    n: '03',
+    t: 'On fait vivre',
+    p: 'Chaque mois, on entretient et on améliore. Vous ne payez qu’une fois que ça rapporte.',
+  },
+];
+
+const OBJECTIONS: { q: string; a: string }[] = [
+  {
+    q: '« Je n’ai pas le temps de m’en occuper. »',
+    a: 'Justement — c’est nous qui faisons tout. Vous validez, on exécute. Vous restez sur vos interventions.',
+  },
+  {
+    q: '« J’ai déjà essayé un site, ça n’a rien donné. »',
+    a: 'Un site sans référencement ni entretien, c’est normal. Nous, on le fait vivre et on le rend visible localement.',
+  },
+  {
+    q: '« J’ai peur de m’engager. »',
+    a: 'Aucun engagement, et vous ne payez qu’une fois que le site vous amène des clients. Le risque, c’est nous.',
+  },
+];
+
+const FAQ: { q: string; a: string }[] = [
+  {
+    q: 'Mes clients appellent surtout en urgence. Le site sert vraiment ?',
+    a: 'Oui : en urgence, on tape « plombier + ville » et on appelle le premier rassurant. Avec une fiche Google tenue et un site clair, ce premier, c’est vous.',
+  },
+  {
+    q: 'Je n’ai pas de belles photos. C’est bloquant ?',
+    a: 'Non. Quelques photos prises au téléphone suffisent pour démarrer, on les met en valeur. On enrichit au fil des chantiers.',
+  },
+  {
+    q: 'En combien de temps je suis en ligne ?',
+    a: 'Environ 2 semaines pour le site. Le référencement local monte ensuite progressivement sur les premiers mois.',
+  },
+  {
+    q: 'C’est combien pour un plombier ?',
+    a: `À partir de ${prixPresence} €/mois, tout compris. Et vous ne commencez à payer qu’une fois que le site vous amène des appels.`,
+  },
+];
+
+const LINKS: { label: string; href: string }[] = [
+  { label: 'Site pour électricien', href: '/creation-site-internet/electricien' },
+  { label: 'Site à Lanester', href: '/creation-site-internet/lanester' },
+  { label: 'Site à Lorient', href: '/creation-site-internet/lorient' },
+  { label: 'Site à Vannes', href: '/creation-site-internet/vannes' },
+  { label: 'Référencement local', href: '/prestations/referencement-seo' },
+];
+---
+
+{/* HERO */}
+<section class="container-site mx-auto max-w-210 pt-[clamp(150px,16vw,200px)] pb-[clamp(28px,3vw,44px)]">
+  <div class="reveal">
+    <p class="text-[0.8125rem] font-semibold uppercase tracking-[0.06em] text-brand">
+      Site internet · Plombiers
+    </p>
+    <h1 class="mt-3.5 font-display text-[clamp(2.3rem,5vw,3.9rem)] font-medium leading-[1.02] tracking-display text-ink">
+      Un site de plombier qui <em class="not-italic text-brand">fait décrocher le téléphone</em>.
+    </h1>
+    <p class="mt-5.5 max-w-[52ch] text-[clamp(1.0625rem,1.6vw,1.3rem)] leading-[1.55] text-ink-2">
+      Fuite, chaudière en panne, dégât des eaux : vos clients cherchent dans l’urgence. Votre site doit
+      rassurer en 5 secondes et donner un seul réflexe — vous appeler, vous, et pas le concurrent.
+    </p>
+    <div class="mt-7 flex flex-wrap gap-3.5">
+      <Button href="/contact" size="lg">Demander un devis gratuit</Button>
+      <Button href="/prestations/creation-site-internet" variant="outline" size="lg">Voir le service</Button>
+    </div>
+  </div>
+
+  {/* mockup navigateur */}
+  <div class="reveal mt-[clamp(32px,4vw,48px)] overflow-hidden rounded-md border border-line bg-paper">
+    <div class="flex items-center gap-[7px] border-b border-line bg-parchment px-4 py-[11px]">
+      <span class="h-[9px] w-[9px] rounded-full bg-line-strong"></span>
+      <span class="h-[9px] w-[9px] rounded-full bg-line-strong"></span>
+      <span class="h-[9px] w-[9px] rounded-full bg-line-strong"></span>
+      <span class="ml-2.5 font-mono text-xs text-ink-soft">votre-plomberie.fr</span>
+    </div>
+    <div
+      class="flex flex-col items-center px-[clamp(24px,4vw,44px)] py-[clamp(24px,4vw,44px)] text-center"
+      style="background:linear-gradient(180deg,var(--color-brand-soft),transparent)"
+    >
+      <h2 class="m-0 font-display text-[clamp(1.3rem,2.4vw,1.9rem)] font-semibold tracking-h2 text-ink">
+        Dépannage plomberie 7j/7 — Morbihan
+      </h2>
+      <p class="mt-2 mb-4.5 text-[0.95rem] text-ink-soft">
+        Intervention rapide · Devis gratuit · Artisan assuré
+      </p>
+      <span class="pl-urgence inline-flex items-center gap-[9px] whitespace-nowrap rounded-xs bg-brand px-5.5 py-3 text-[0.95rem] font-semibold text-paper">
+        <span class="pl-urgence-dot h-2 w-2 rounded-full bg-paper"></span>Appeler maintenant
+      </span>
+    </div>
+  </div>
+</section>
+
+{/* BANDE DE CONFIANCE / STATS */}
+<section class="border-y border-line">
+  <div class="container-site grid grid-cols-2 gap-6 py-[clamp(28px,3vw,44px)] md:grid-cols-4 md:gap-[clamp(16px,3vw,40px)]">
+    {
+      STATS.map((s) => (
+        <div class="reveal">
+          <div class="font-display text-[clamp(1.7rem,3vw,2.4rem)] font-semibold leading-none tracking-[-0.03em] text-brand">
+            {s.n}
+          </div>
+          <div class="mt-2 text-[0.85rem] text-ink-soft">{s.l}</div>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+{/* PROBLÈME */}
+<section class="py-[clamp(48px,6vw,88px)]">
+  <div class="container-site">
+    <p class="reveal text-eyebrow font-semibold uppercase tracking-eyebrow text-brand">Le problème</p>
+    <h2 class="reveal mt-4 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink">
+      Sans site, l’urgence part chez le concurrent.
+    </h2>
+    <p class="reveal mt-4 max-w-[56ch] text-[1.0625rem] leading-[1.6] text-ink-2">
+      Quand une canalisation lâche un dimanche, le client ne cherche pas longtemps. Il appelle le premier
+      plombier qui le rassure. Si ce n’est pas vous, c’est un autre.
+    </p>
+    <div class="mt-[clamp(28px,4vw,40px)] grid grid-cols-1 gap-3.5 md:grid-cols-3">
+      {
+        PAINS.map((p) => (
+          <div class="reveal rounded-md border border-line bg-paper p-6">
+            <h3 class="m-0 font-display text-[1.15rem] font-semibold text-ink">{p.t}</h3>
+            <p class="mt-2 text-[0.95rem] leading-[1.55] text-ink-soft">{p.p}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+{/* CE QUE LE SITE DOIT MONTRER — checklist */}
+<section class="bg-parchment py-[clamp(48px,6vw,88px)]">
+  <div class="container-site">
+    <p class="reveal text-eyebrow font-semibold uppercase tracking-eyebrow text-brand">
+      Ce que votre site doit montrer
+    </p>
+    <h2 class="reveal mt-4 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink">
+      Les 6 choses qu’un client veut voir tout de suite.
+    </h2>
+    <div class="mt-[clamp(28px,4vw,40px)] grid grid-cols-1 gap-3.5 md:grid-cols-2 md:gap-x-7 md:gap-y-3.5">
+      {
+        CHECKS.map((c) => (
+          <div class="reveal flex items-start gap-[13px]">
+            <span class="pl-mark relative mt-0.5 h-6 w-6 flex-none rounded-full bg-brand-soft" />
+            <div>
+              <div class="text-[1.02rem] font-semibold text-ink">{c.t}</div>
+              <div class="mt-[3px] text-[0.92rem] leading-[1.5] text-ink-soft">{c.p}</div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+{/* CE QU’ON FAIT CHAQUE MOIS */}
+<section class="py-[clamp(48px,6vw,88px)]">
+  <div class="container-site">
+    <p class="reveal text-eyebrow font-semibold uppercase tracking-eyebrow text-brand">
+      Tout compris, chaque mois
+    </p>
+    <h2 class="reveal mt-4 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink">
+      On ne livre pas un site, on le fait vivre.
+    </h2>
+    <div class="mt-[clamp(28px,4vw,40px)] grid grid-cols-1 gap-x-10 md:grid-cols-2">
+      {
+        INCLUDES.map((i) => (
+          <div class="reveal flex items-start gap-3 border-b border-line py-4">
+            <span class="mt-2 h-2 w-2 flex-none rounded-full bg-brand" />
+            <div>
+              <div class="text-base font-semibold text-ink">{i.t}</div>
+              <div class="mt-[3px] text-[0.9rem] leading-[1.5] text-ink-soft">{i.p}</div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+{/* COMMENT ÇA SE PASSE — étapes */}
+<section class="bg-parchment py-[clamp(48px,6vw,88px)]">
+  <div class="container-site">
+    <p class="reveal text-eyebrow font-semibold uppercase tracking-eyebrow text-brand">Comment ça se passe</p>
+    <h2 class="reveal mt-4 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink">
+      Trois étapes, et on s’occupe du reste.
+    </h2>
+    <div class="mt-[clamp(28px,4vw,40px)] grid grid-cols-1 gap-3.5 md:grid-cols-3">
+      {
+        STEPS.map((s) => (
+          <div class="reveal rounded-md border border-line bg-paper p-6">
+            <div class="font-mono text-[0.8rem] text-brand">{s.n}</div>
+            <h3 class="mt-2.5 font-display text-[1.15rem] font-semibold text-ink">{s.t}</h3>
+            <p class="mt-[7px] text-[0.92rem] leading-[1.55] text-ink-soft">{s.p}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+{/* PREUVE */}
+<section class="py-[clamp(48px,6vw,88px)]">
+  <div class="container-site grid grid-cols-1 items-center gap-6 md:grid-cols-2 md:gap-[clamp(28px,4vw,56px)]">
+    <div
+      class="reveal aspect-[4/3] rounded-md border border-line"
+      style="background:repeating-linear-gradient(135deg,var(--color-parchment) 0 14px,var(--color-line) 14px 28px)"
+    >
+    </div>
+    <div class="reveal">
+      <p class="text-eyebrow font-semibold uppercase tracking-eyebrow text-brand">La preuve</p>
+      <p class="mt-4 font-display text-[clamp(1.3rem,2.2vw,1.7rem)] font-normal leading-[1.35] text-ink">
+        « Depuis le site, je reçois des appels d’urgence de clients que je n’aurais jamais touchés. »
+      </p>
+      <p class="mt-4 text-[0.9rem] text-ink-soft">Plombier accompagné — bassin de Lorient</p>
+    </div>
+  </div>
+</section>
+
+{/* POURQUOI AZELIZE — OBJECTIONS */}
+<section class="bg-parchment py-[clamp(48px,6vw,88px)]">
+  <div class="container-site">
+    <p class="reveal text-eyebrow font-semibold uppercase tracking-eyebrow text-brand">Pourquoi Azelize</p>
+    <h2 class="reveal mt-4 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink">
+      On lève les vraies objections.
+    </h2>
+    <div class="reveal mt-[clamp(28px,4vw,40px)] flex flex-col gap-px overflow-hidden rounded-md border border-line bg-line">
+      {
+        OBJECTIONS.map((o) => (
+          <div class="grid grid-cols-1 gap-2 bg-paper p-[clamp(20px,2.5vw,28px)] md:grid-cols-2 md:gap-6">
+            <div class="text-[1.02rem] font-semibold text-ink">{o.q}</div>
+            <div class="text-[0.97rem] leading-[1.55] text-ink-2">{o.a}</div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+{/* FAQ */}
+<section class="py-[clamp(48px,6vw,88px)]">
+  <div class="container-site">
+    <p class="reveal text-eyebrow font-semibold uppercase tracking-eyebrow text-brand">Questions de plombiers</p>
+    <h2 class="reveal mt-4 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink">
+      Ce qu’on nous demande souvent.
+    </h2>
+    <div class="mt-[clamp(28px,4vw,40px)] flex max-w-195 flex-col gap-2.5">
+      {
+        FAQ.map((f) => (
+          <div class="reveal rounded-md border border-line bg-paper px-5.5 py-5">
+            <p class="m-0 font-display text-[1.1rem] font-medium text-ink">{f.q}</p>
+            <p class="mt-2.5 text-base leading-[1.6] text-ink-2">{f.a}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+{/* MAILLAGE INTERNE — chips */}
+<section class="bg-parchment py-[clamp(48px,6vw,88px)]">
+  <div class="container-site">
+    <p class="reveal text-eyebrow font-semibold uppercase tracking-eyebrow text-brand">Aussi pour vous</p>
+    <h2 class="reveal mt-4 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink">
+      D’autres métiers, d’autres villes.
+    </h2>
+    <div class="reveal mt-[clamp(24px,3vw,32px)] flex flex-wrap gap-2.5">
+      {
+        LINKS.map((l) => (
+          <a
+            class="rounded-full border border-line-strong bg-paper px-[15px] py-2 text-[0.9rem] font-medium text-ink-2 transition-colors duration-200 ease-brand hover:border-brand hover:text-brand"
+            href={l.href}
+          >
+            {l.label}
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+{/* CTA FINAL */}
+<CtaBand
+  title="Faisons sonner votre téléphone."
+  lead="15 minutes pour en parler. Sans engagement, vous ne payez qu’une fois que ça marche."
+  ctaLabel="Demander un devis gratuit"
+  ctaHref="/contact"
+/>
+
+<style>
+  /* Coche dessinée du checklist (pseudo-élément ::after, comme la maquette). */
+  .pl-mark::after {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 6px;
+    width: 5px;
+    height: 10px;
+    border-right: 2px solid var(--color-brand);
+    border-bottom: 2px solid var(--color-brand);
+    transform: rotate(40deg);
+  }
+  /* Point clignotant du bouton « Appeler maintenant ». */
+  .pl-urgence-dot {
+    animation: pl-pulse 1.6s infinite;
+  }
+  @keyframes pl-pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.3;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pl-urgence-dot {
+      animation: none;
+    }
+  }
+</style>

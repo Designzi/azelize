@@ -1,96 +1,188 @@
 ---
 /**
- * Page FAQ (/faq) — questions de la home (source unique `homeFaq`) enrichies
- * de questions détaillées sur l'offre Azelize (abonnement, résiliation, délais,
- * propriété, hébergement, suivi mensuel, référencement local, paiement).
- * Réponses fidèles au modèle ; aucun chiffre de résultat promis.
+ * Page FAQ générale (/faq) — portage fidèle de la maquette Design (faq.html).
+ * Accordéon CATÉGORISÉ (3 catégories), 1er item ouvert par défaut, un seul
+ * ouvert à la fois — interactivité 100 % vanilla (classes is-open + max-height).
+ * JSON-LD FAQPage dérivé des Q/R réelles (faqJsonLd, contenu identique à l'affichage).
  */
 import BaseLayout from '@layouts/BaseLayout.astro';
-import Section from '@components/ui/Section.astro';
-import PageHeader from '@components/ui/PageHeader.astro';
-import FaqBlock from '@components/blocks/FaqBlock.astro';
 import CtaBand from '@components/blocks/CtaBand.astro';
-import { homeFaq, type FaqItem } from '@data/faq';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import { faqJsonLd } from '@lib/seo';
+import { ogImage } from '@lib/og';
 
-// Questions détaillées sur l'offre, à la suite de celles de la home.
-const offerFaq: FaqItem[] = [
+interface Cat {
+  cat: string;
+  items: [string, string][];
+}
+
+const DATA: Cat[] = [
   {
-    q: 'Comment marche l’abonnement, exactement ?',
-    a: 'On crée votre site, on le met en ligne, on le référence et on le tient à jour chaque mois. Vous payez un montant fixe mensuel, sans engagement. Vous gardez votre métier ; le site, c’est notre affaire.',
+    cat: 'Engagement & prix',
+    items: [
+      ["Quand est-ce que je commence à payer ?", "Le 1er mois est offert. Vous ne commencez l'abonnement qu'une fois que le site vous amène des clients — au plus tôt le 3e mois, et seulement si vous le souhaitez. Seuls frais au départ : 50 € pour le nom de domaine."],
+      ['Je suis engagé combien de temps ?', "Aucun engagement. Vous arrêtez quand vous voulez, d'un mois sur l'autre."],
+      ["C'est combien par mois ?", 'À partir de 390 €/mois, tout compris. Trois formules selon vos besoins, sans frais cachés.'],
+      ['Pourquoi pas juste payer un site une fois ?', "Un site livré puis abandonné se dégrade : Google le déclasse, la technique casse, les contenus vieillissent. L'abonnement, c'est l'assurance qu'il reste vivant et visible."],
+    ],
   },
   {
-    q: 'Le 1er mois est-il vraiment offert ?',
-    a: 'Oui. Le premier mois est offert, sans condition. Et tant que le site ne vous a pas amené au moins 2 demandes dans le mois, on vous offre le mois suivant : on ne facture rien tant que ça n’a pas décollé. Seuls frais au départ : 50 € pour le nom de domaine, une seule fois.',
+    cat: 'Le site & le délai',
+    items: [
+      ['En combien de temps je suis en ligne ?', 'Votre site est en ligne en 2 semaines environ. Le référencement local monte ensuite progressivement sur les premiers mois.'],
+      ["Si j'arrête, je garde mon site ?", "Non : le site reste notre propriété — l'abonnement, c'est une location. Si vous arrêtez, le site est mis hors ligne. Vous récupérez ce que vous nous avez fourni (photos, textes, logo). C'est ce qui nous permet de tout prendre en charge sans gros chèque de départ."],
+      ["Je n'ai pas de belles photos. C'est bloquant ?", "Non. Quelques photos prises au téléphone suffisent pour démarrer — on les met en valeur, et on enrichit au fil des chantiers."],
+    ],
   },
   {
-    q: 'Y a-t-il un engagement de durée ?',
-    a: 'Aucun. L’abonnement est mensuel, sans engagement. Vous décidez chaque mois de continuer ou non.',
-  },
-  {
-    q: 'Comment je résilie si je veux arrêter ?',
-    a: 'Un message suffit. On arrête à la fin du mois en cours, sans pénalité ni paperasse. Pas de période de préavis cachée.',
-  },
-  {
-    q: 'En combien de temps mon site est-il en ligne ?',
-    a: 'Comptez environ 2 semaines entre le point de départ et la mise en ligne. On vous donne une date précise dès le premier rendez-vous, et on s’y tient.',
-  },
-  {
-    q: 'L’hébergement est-il inclus ?',
-    a: 'Oui. L’hébergement, le nom de domaine, le certificat de sécurité (HTTPS) et la maintenance technique sont compris dans l’abonnement. Vous n’avez aucun outil à gérer ni aucune facture séparée à suivre.',
-  },
-  {
-    q: 'Puis-je demander des modifications chaque mois ?',
-    a: 'Oui, c’est le principe. Nouvelle prestation, photos d’un chantier récent, horaires, zone d’intervention : vous nous envoyez, on met à jour. Votre site reste fidèle à votre activité au fil des mois.',
-  },
-  {
-    q: 'Vous vous occupez du référencement local ?',
-    a: 'Oui. On structure le site pour vos recherches locales (votre métier + votre ville et les communes autour) et on l’entretient pour qu’il reste visible. On ne promet pas une position précise sur Google : personne ne peut la garantir honnêtement. Ce qu’on garantit, c’est un site soigné, à jour et travaillé pour être trouvé.',
-  },
-  // PROVISOIRE : préciser le moyen de paiement exact (prélèvement SEPA, carte…) une fois arrêté.
-  {
-    q: 'Comment se passe le paiement ?',
-    a: 'Par prélèvement mensuel, un montant fixe connu à l’avance. Pas de surprise, pas de frais cachés en cours de route.',
-  },
-  // PROVISOIRE : politique de reprise / restitution à confirmer.
-  {
-    q: 'Que se passe-t-il si j’arrête mon abonnement ?',
-    a: 'Le site cesse d’être hébergé et mis à jour par nos soins. Ce qu’il advient de votre site et de votre nom de domaine est à préciser ensemble selon votre formule — on en parle franchement dès le premier appel, sans piège.',
-  },
-  // PROVISOIRE : conditions de propriété à formaliser selon la formule.
-  {
-    q: 'Le site m’appartient-il ?',
-    a: 'On en parle clairement dès le départ : ce que vous gardez, ce qui reste lié à l’abonnement, et comment ça se passe si vous partez. Rien d’écrit en petits caractères.',
-  },
-  {
-    q: 'Pourquoi un abonnement plutôt qu’un site payé une seule fois ?',
-    a: 'Un site livré puis abandonné se dégrade : il décroche sur Google, ses infos datent, plus personne ne s’en occupe. L’abonnement le garde vivant, à jour et visible mois après mois — c’est là toute la différence.',
+    cat: 'Pour qui & comment',
+    items: [
+      ["C'est pour quels métiers ?", "Bâtiment, finitions, services techniques : maçons, électriciens, plombiers, peintres, carreleurs, applicateurs de résine… mais aussi commerçants et indépendants."],
+      ['Vous travaillez à distance ou sur place ?', 'Les deux. On se rencontre dans le bassin de Lorient/Vannes, ou en visio si vous préférez.'],
+      ["Je n'y connais rien en informatique. C'est un problème ?", "Au contraire, c'est notre raison d'être : on s'occupe de tout, vous restez sur votre métier. Zéro jargon."],
+    ],
   },
 ];
 
-const faqItems: FaqItem[] = [...homeFaq, ...offerFaq];
+// JSON-LD FAQPage — dérivé du même contenu que l'affichage (règle Google).
+const faqItems = DATA.flatMap((c) => c.items.map(([q, a]) => ({ q, a })));
 ---
 
 <BaseLayout
-  title="FAQ — questions fréquentes"
-  description="Abonnement, résiliation, 1er mois offert, délais, hébergement, propriété du site : les réponses concrètes sur l’offre Azelize."
+  title="Questions fréquentes"
+  description="Engagement, prix, délais, propriété du site : toutes les réponses à vos questions sur Azelize, en clair et sans jargon."
+  image={ogImage('faq')}
+  jsonLd={faqJsonLd(faqItems)}
 >
-  <Section width="hero" pad="default">
-    <PageHeader eyebrow="FAQ">
-      Vos questions, sans détour
-      <Fragment slot="lead">
-        L’essentiel sur l’abonnement : engagement, délais, ce qui est inclus et
-        ce qui se passe si vous arrêtez. Une question manque ? Posez-la au
-        premier appel — on répond franchement.
-      </Fragment>
-    </PageHeader>
+  <script is:inline>document.documentElement.classList.add('anim');</script>
 
-    <div class="mt-12 md:mt-16">
-      <FaqBlock items={faqItems} />
+  {/* Hero */}
+  <section class="pt-[clamp(150px,16vw,200px)] pb-[clamp(28px,4vw,44px)]">
+    <div class="container-site">
+      <div class="max-w-190">
+        <div class="reveal"><Eyebrow>Vos questions</Eyebrow></div>
+        <h1 class="reveal mt-3.5 font-display text-[clamp(2.3rem,5vw,3.8rem)] font-medium leading-[1.02] tracking-display text-ink">
+          Tout ce qu'on nous demande.
+        </h1>
+        <p class="reveal mt-5 max-w-[52ch] text-[clamp(1.0625rem,1.6vw,1.3rem)] leading-[1.55] text-ink-2">
+          Engagement, prix, délais, propriété du site : les réponses en clair. Une autre
+          question ? On y répond au téléphone, sans jargon.
+        </p>
+      </div>
     </div>
-  </Section>
+  </section>
+
+  {/* Accordéon catégorisé */}
+  <section class="pb-[clamp(56px,7vw,96px)]">
+    <div class="container-site">
+      <div class="max-w-205" id="faq-acc">
+        {
+          DATA.map((c, ci) => (
+            <div class="mt-[clamp(32px,4vw,52px)]">
+              <h2 class="reveal mb-3.5 border-b border-line pb-3 font-display text-[1.3rem] font-semibold tracking-[-0.01em] text-ink">
+                {c.cat}
+              </h2>
+              <div class="flex flex-col gap-2.5">
+                {c.items.map(([q, a], ii) => (
+                  <div
+                    class="fq-item reveal rounded-sm border border-line bg-paper transition-[border-color,background] duration-[250ms] ease-brand"
+                    data-key={`${ci}-${ii}`}
+                  >
+                    <button
+                      type="button"
+                      class="fq-q flex w-full items-start justify-between gap-4 px-5 py-[18px] text-left font-display text-[1.08rem] font-medium tracking-[-0.01em] text-ink transition-colors duration-200 ease-brand hover:text-brand"
+                      aria-expanded="false"
+                    >
+                      <span>{q}</span>
+                      <span class="fq-sign relative mt-2 h-[11px] w-[11px] flex-none transition-transform duration-300 ease-brand" aria-hidden="true" />
+                    </button>
+                    <div class="fq-a-wrap overflow-hidden transition-[max-height] duration-[350ms] ease-brand" style="max-height:0px">
+                      <p class="fq-a m-0 max-w-[64ch] px-5 pb-5 text-base leading-[1.65] text-ink-2">{a}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
 
   <CtaBand
-    title="Une question avant de vous lancer ?"
-    lead="Un appel de 15 minutes, sans jargon ni pression. On répond à tout, et on regarde si le site peut vraiment vous amener des clients."
+    title="Une question sans réponse ?"
+    lead="Appelez-nous 15 minutes — on répond sans jargon, sans pression."
+    ctaLabel="Réserver un appel"
   />
 </BaseLayout>
+
+<style>
+  /* Chevron de l'accordéon (équerre tournée), recréé en CSS comme dans le Design. */
+  .fq-sign::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    width: 9px;
+    height: 9px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg);
+  }
+  .fq-item.is-open {
+    background: var(--color-brand-soft);
+    border-color: transparent;
+  }
+  .fq-item.is-open .fq-q {
+    color: var(--color-brand);
+    padding-bottom: 12px;
+  }
+  .fq-item.is-open .fq-sign {
+    transform: rotate(-135deg);
+    margin-top: 11px;
+  }
+</style>
+
+<script>
+  // ── Accordéon FAQ catégorisé (vanilla) — un seul item ouvert à la fois ──────
+  const acc = document.getElementById('faq-acc');
+  if (acc) {
+    const items = Array.from(acc.querySelectorAll<HTMLElement>('.fq-item'));
+
+    const open = (item: HTMLElement) => {
+      const wrap = item.querySelector<HTMLElement>('.fq-a-wrap');
+      const btn = item.querySelector<HTMLButtonElement>('.fq-q');
+      item.classList.add('is-open');
+      btn?.setAttribute('aria-expanded', 'true');
+      if (wrap) wrap.style.maxHeight = wrap.scrollHeight + 30 + 'px';
+    };
+    const close = (item: HTMLElement) => {
+      const wrap = item.querySelector<HTMLElement>('.fq-a-wrap');
+      const btn = item.querySelector<HTMLButtonElement>('.fq-q');
+      item.classList.remove('is-open');
+      btn?.setAttribute('aria-expanded', 'false');
+      if (wrap) wrap.style.maxHeight = '0px';
+    };
+
+    items.forEach((item) => {
+      const btn = item.querySelector<HTMLButtonElement>('.fq-q');
+      btn?.addEventListener('click', () => {
+        const isOpen = item.classList.contains('is-open');
+        items.forEach(close);
+        if (!isOpen) open(item);
+      });
+    });
+
+    // 1er item ouvert par défaut (clé "0-0"), comme dans la maquette.
+    const first = acc.querySelector<HTMLElement>('.fq-item[data-key="0-0"]');
+    if (first) open(first);
+
+    // Recalcule la hauteur de l'item ouvert au redimensionnement (texte qui se replie).
+    window.addEventListener('resize', () => {
+      const current = acc.querySelector<HTMLElement>('.fq-item.is-open');
+      if (current) {
+        const wrap = current.querySelector<HTMLElement>('.fq-a-wrap');
+        if (wrap) wrap.style.maxHeight = wrap.scrollHeight + 30 + 'px';
+      }
+    });
+  }
+</script>

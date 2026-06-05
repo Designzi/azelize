@@ -727,14 +727,9 @@ export interface MetierCible {
 export const METIERS_CIBLES: MetierCible[] = [
   { slug: 'plombier', nom: 'Plombier', statut: 'ship' },
   { slug: 'electricien', nom: 'Électricien', statut: 'ship' },
-  { slug: 'paysagiste', nom: 'Paysagiste', statut: 'ship' },
-  { slug: 'menuisier', nom: 'Menuisier', statut: 'ship' },
   { slug: 'macon', nom: 'Maçon', statut: 'ship' },
-  { slug: 'peintre', nom: 'Peintre', statut: 'ship' },
-  { slug: 'carreleur', nom: 'Carreleur', statut: 'ship' },
-  { slug: 'couvreur', nom: 'Couvreur', statut: 'ship' },
-  { slug: 'plaquiste', nom: 'Plaquiste', statut: 'ship' },
-  { slug: 'entreprise-renovation', nom: 'Entreprise de rénovation', statut: 'ship' },
+  { slug: 'garage-automobile', nom: 'Garage automobile', statut: 'ship' },
+  { slug: 'vtc', nom: 'VTC', statut: 'ship' },
 ];
 
 /**

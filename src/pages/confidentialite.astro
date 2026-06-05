@@ -1,19 +1,228 @@
 ---
+/*
+ * /confidentialite — Politique de confidentialité (portage fidèle de la maquette
+ * Design confidentialite.html). Contenu fictif, à valider juridiquement.
+ * Sections numérotées en cartes (distinct du sommaire collant des mentions
+ * légales). Pas d'interactivité.
+ */
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Section from '@components/ui/Section.astro';
-/* Contenu PROVISOIRE — compléter avec la politique de confidentialité réelle. */
+import Eyebrow from '@components/ui/Eyebrow.astro';
+
+const rights = [
+  { t: 'Accès', p: "Savoir quelles données on détient." },
+  { t: 'Rectification', p: 'Corriger une information erronée.' },
+  { t: 'Suppression', p: "Demander l'effacement de vos données." },
+  { t: 'Opposition', p: 'Refuser un traitement à tout moment.' },
+];
 ---
 
-<BaseLayout title="Confidentialité" description="Politique de confidentialité du site Azelize." noindex>
-  <Section width="hero" pad="default">
-    <h1 class="font-display text-h1 font-medium tracking-h1 text-ink">Politique de confidentialité</h1>
-    <div class="prose-azelize mt-8 max-w-2xl">
-      <p>
-        Ce site est statique et ne dépose pas de cookies de suivi par défaut.
-        Les données transmises via le formulaire de contact servent uniquement à
-        répondre à votre demande.
-      </p>
-      <p>Document à finaliser (RGPD) une fois le traitement du formulaire arrêté (cf. §8).</p>
+<BaseLayout
+  title="Politique de confidentialité"
+  description="Comment Azelize collecte, utilise et protège vos données personnelles. Vos droits, vos données, en clair."
+  noindex
+>
+  <Section width="hero" pad="default" class="pb-6 md:pb-10">
+    <Eyebrow>Vos données</Eyebrow>
+    <h1 class="pc-h1">Politique de confidentialité</h1>
+    <p class="pc-updated">En vigueur au 1ᵉʳ juin 2026 · Conforme RGPD</p>
+  </Section>
+
+  <Section width="hero" pad="default" class="pc-body pt-0">
+    <div class="pc-sec">
+      <div class="pc-num">01</div>
+      <div>
+        <h2 class="pc-h2">Ce qu'on collecte</h2>
+        <p>
+          On garde les choses simples. On ne collecte que ce dont on a besoin
+          pour vous répondre et travailler avec vous :
+        </p>
+        <ul class="pc-list">
+          <li>
+            Les informations que vous nous donnez via le formulaire de contact :
+            <strong>nom, métier, téléphone, e-mail</strong>.
+          </li>
+          <li>Des données de navigation anonymisées (pages vues, durée), pour améliorer le site.</li>
+        </ul>
+        <p>Aucune donnée sensible, aucun profilage publicitaire.</p>
+      </div>
+    </div>
+
+    <div class="pc-sec">
+      <div class="pc-num">02</div>
+      <div>
+        <h2 class="pc-h2">À quoi ça sert</h2>
+        <p>
+          Vos informations servent uniquement à
+          <strong>vous recontacter et établir un devis</strong>. Si vous devenez
+          client, elles servent à gérer votre abonnement. C'est tout — on ne
+          revend rien, jamais.
+        </p>
+      </div>
+    </div>
+
+    <div class="pc-sec">
+      <div class="pc-num">03</div>
+      <div>
+        <h2 class="pc-h2">Combien de temps on les garde</h2>
+        <p>
+          Les données d'un prospect sont conservées
+          <strong>3 ans après le dernier contact</strong>. Les données d'un
+          client sont conservées le temps du contrat, puis archivées selon les
+          obligations légales (facturation : 10 ans).
+        </p>
+      </div>
+    </div>
+
+    <div class="pc-sec">
+      <div class="pc-num">04</div>
+      <div>
+        <h2 class="pc-h2">Vos droits</h2>
+        <p>
+          Vous gardez le contrôle. À tout moment, écrivez à
+          <strong>bonjour@azelize.fr</strong> pour exercer :
+        </p>
+        <div class="pc-rights">
+          {
+            rights.map((r) => (
+              <div class="pc-right">
+                <div class="pc-right-t">{r.t}</div>
+                <div class="pc-right-p">{r.p}</div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="pc-sec">
+      <div class="pc-num">05</div>
+      <div>
+        <h2 class="pc-h2">Cookies</h2>
+        <p>
+          Le site utilise uniquement les cookies
+          <strong>nécessaires à son fonctionnement</strong> et une mesure
+          d'audience anonymisée. Aucun cookie publicitaire sans votre accord.
+          Vous pouvez les refuser depuis votre navigateur.
+        </p>
+      </div>
+    </div>
+
+    <div class="pc-sec">
+      <div class="pc-num">06</div>
+      <div>
+        <h2 class="pc-h2">Qui est responsable</h2>
+        <p>
+          Le responsable de traitement est <strong>Taha Yasin Celik</strong>
+          (Fezilfeza), 103 B rue Léon Blum, 56600 Lanester. Une réclamation ?
+          Vous pouvez aussi saisir la <strong>CNIL</strong> (cnil.fr).
+        </p>
+      </div>
     </div>
   </Section>
 </BaseLayout>
+
+<style>
+  .pc-h1 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(2.2rem, 4.6vw, 3.4rem);
+    line-height: 1.03;
+    letter-spacing: -0.03em;
+    color: var(--color-ink);
+    margin: 14px 0 0;
+  }
+  .pc-updated {
+    font-size: 0.875rem;
+    color: var(--color-ink-soft);
+    margin: 16px 0 0;
+  }
+  .pc-body {
+    max-width: 760px;
+  }
+
+  /* sections numérotées en cartes (distinct du sommaire collant des mentions légales) */
+  .pc-sec {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: clamp(18px, 3vw, 40px);
+    padding: clamp(26px, 3vw, 38px) 0;
+    border-top: 1px solid var(--color-line);
+  }
+  .pc-num {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.6rem;
+    color: var(--color-brand);
+    line-height: 1;
+  }
+  .pc-h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.4rem;
+    letter-spacing: -0.015em;
+    color: var(--color-ink);
+    margin: 0 0 12px;
+  }
+  .pc-sec :global(p) {
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    color: var(--color-ink-2);
+    margin: 0 0 12px;
+    max-width: 64ch;
+  }
+  .pc-sec :global(strong) {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+  .pc-list {
+    list-style: none;
+    margin: 6px 0 0;
+    padding: 0;
+  }
+  .pc-list li {
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    color: var(--color-ink-2);
+    padding-left: 22px;
+    position: relative;
+    margin-bottom: 8px;
+  }
+  .pc-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 8px;
+    height: 1.5px;
+    background: var(--color-brand);
+  }
+  .pc-rights {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-top: 14px;
+  }
+  .pc-right {
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-sm);
+    padding: 16px 18px;
+  }
+  .pc-right-t {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--color-ink);
+  }
+  .pc-right-p {
+    font-size: 0.85rem;
+    line-height: 1.45;
+    color: var(--color-ink-soft);
+    margin: 5px 0 0;
+  }
+  @media (max-width: 600px) {
+    .pc-sec {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+  }
+</style>

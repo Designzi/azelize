@@ -12,9 +12,10 @@ export default defineConfig({
     '/site-internet': '/creation-site-internet',
     '/site-internet/plombier': '/creation-site-internet/plombier',
     '/site-internet/electricien': '/creation-site-internet/electricien',
-    '/site-internet/paysagiste': '/creation-site-internet/paysagiste',
-    '/site-internet/menuisier': '/creation-site-internet/menuisier',
     '/site-internet/macon': '/creation-site-internet/macon',
+    // Métiers retirés (hors maquette Design) : legacy → hub, jamais vers un 404.
+    '/site-internet/paysagiste': '/creation-site-internet',
+    '/site-internet/menuisier': '/creation-site-internet',
   },
   integrations: [
     mdx(),

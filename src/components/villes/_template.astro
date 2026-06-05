@@ -1,0 +1,300 @@
+---
+/**
+ * Gabarit ville — service × ville (« Création de site internet à {ville} »).
+ * Portage fidèle du gabarit générique Design `creation-site-internet-VILLE.html`
+ * (rempli pour Lanester, cas client FAR — résine sol). Paramétré par props pour
+ * être cloné par ville sans dupliquer le markup.
+ * ⚠️ Composant autonome NON câblé à une route. Règle anti-doorway : à n'instancier
+ * QUE si > 400 mots de contenu unique local + ≥ 1 cas réel (cf. brief).
+ * Classes Design `.lp-*` / `.ed-*` rendues en utilitaires Tailwind tokenisés.
+ */
+import Button from '@components/ui/Button.astro';
+import CtaBand from '@components/blocks/CtaBand.astro';
+import { tiers } from '@data/pricing';
+
+interface Props {
+  /** Nom de la ville (ex. « Lanester »). */
+  ville?: string;
+  /** Département (ex. « Morbihan »). */
+  dept?: string;
+}
+
+const { ville = 'Lanester', dept = 'Morbihan' } = Astro.props;
+
+// Prix d'entrée importé de la source unique (jamais codé en dur dans la copie).
+const prixEntree = tiers[0].price;
+
+const jobs: [string, string][] = [
+  ['Plombiers', 'chauffage, dépannage'],
+  ['Électriciens', 'installation, urgences'],
+  ['Maçons', 'gros œuvre, rénovation'],
+  ['Peintres', 'intérieur, façades'],
+  ['Carreleurs', 'sols, faïence'],
+  ['Applicateurs résine', 'sols industriels & résidentiels'],
+];
+
+const includes: [string, string][] = [
+  ['Un site pro sur-mesure', 'Rapide, mobile, à la hauteur de votre métier.'],
+  [`Référencement local ${ville}`, "Google + fiche d'établissement + avis suivis."],
+  ['Mises à jour à la demande', 'Nouveaux chantiers, photos, contenus.'],
+  ['Un rapport mensuel clair', 'Appels, visites, position sur Google.'],
+];
+
+const faq: [string, string][] = [
+  [
+    `Combien coûte un site pour un artisan du ${dept} ?`,
+    `À partir de ${prixEntree} €/mois, tout compris — création, référencement et entretien. Pas de gros chèque au départ, et vous ne commencez à payer qu'une fois que le site vous amène des clients.`,
+  ],
+  [
+    'En combien de temps mon site est en ligne ?',
+    `Votre site est en ligne en 2 semaines environ. Le référencement local sur ${ville}, lui, monte progressivement sur les premiers mois.`,
+  ],
+  [
+    `Vous travaillez avec des artisans hors de ${ville} ?`,
+    `Oui — ${ville}, Lorient et tout le bassin du ${dept}. On se rencontre sur place ou en visio, comme vous préférez.`,
+  ],
+];
+---
+
+<main>
+  {/* HERO LOCAL */}
+  <section class="container-site">
+    <div
+      class="grid grid-cols-1 items-center gap-[clamp(32px,5vw,72px)] pt-[clamp(150px,16vw,196px)] pb-[clamp(40px,5vw,64px)] lg:grid-cols-[1.15fr_0.85fr]"
+    >
+      <div>
+        <div
+          class="mb-5 inline-flex items-center gap-2 rounded-full bg-brand-soft px-3.5 py-[7px] text-[0.8125rem] font-semibold text-ink-2"
+        >
+          <span class="h-[7px] w-[7px] rounded-full bg-brand"></span>
+          Studio web local · {ville} ({dept})
+        </div>
+        <h1
+          class="font-display text-[clamp(2.1rem,4.2vw,3.3rem)] font-medium leading-[1.04] tracking-[-0.03em] text-ink [&_em]:not-italic [&_em]:text-brand"
+        >
+          Création de site internet à {ville}, <em>pour les artisans du bâtiment</em>.
+        </h1>
+        <p
+          class="mt-5 max-w-[46ch] text-[clamp(1.0625rem,1.5vw,1.2rem)] leading-[1.55] text-ink-2"
+        >
+          On crée votre site, on le référence sur Google et on le tient chaque mois. Vous restez sur
+          vos chantiers — nous, on s'occupe de votre présence en ligne à {ville} et alentours.
+        </p>
+        <div class="mt-[30px] flex flex-wrap gap-3.5">
+          <Button href="/contact" size="lg">Demander un devis gratuit</Button>
+          <Button href="#cas" variant="outline" size="lg">Voir un cas à {ville}</Button>
+        </div>
+        <p class="mt-4 text-[0.8125rem] text-ink-soft">
+          Sans engagement · Réponse sous 48 h · Vous ne payez qu'une fois que ça marche
+        </p>
+      </div>
+      <div class="overflow-hidden rounded-sm border border-line bg-paper">
+        <div
+          class="flex aspect-[4/3] items-center justify-center"
+          style="background:linear-gradient(180deg,var(--color-brand-soft),transparent),repeating-linear-gradient(135deg,var(--color-parchment) 0 14px,var(--color-line) 14px 28px);"
+          aria-hidden="true"
+        >
+          <span class="text-[0.7rem] uppercase tracking-[0.08em] text-brand/40">
+            Site client · {ville}
+          </span>
+        </div>
+        <div class="flex items-center gap-2.5 border-t border-line px-[18px] py-4">
+          <span class="h-[9px] w-[9px] flex-none rounded-full bg-brand"></span>
+          <span class="text-[0.85rem] text-ink-2">
+            En 1ʳᵉ page Google sur « résine sol {ville} »
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* CAS CLIENT LOCAL — obligatoire (anti-doorway) */}
+  <section id="cas" class="bg-parchment py-[clamp(48px,6vw,88px)]">
+    <div class="container-site">
+      <div class="reveal text-[12px] font-semibold uppercase tracking-eyebrow text-brand">
+        Un cas réel à {ville}
+      </div>
+      <div
+        class="mt-[clamp(28px,4vw,44px)] grid grid-cols-1 items-center gap-[clamp(24px,4vw,56px)] md:grid-cols-2"
+      >
+        <div class="reveal grid grid-cols-2 gap-2.5">
+          <div class="overflow-hidden rounded-sm border border-line bg-paper">
+            <div
+              class="aspect-square"
+              style="background:repeating-linear-gradient(135deg,var(--color-parchment) 0 12px,var(--color-line) 12px 24px);"
+              aria-hidden="true"
+            ></div>
+            <div class="px-3 py-[9px] text-[0.72rem] font-bold uppercase tracking-[0.06em] text-ink-soft">
+              Avant — invisible
+            </div>
+          </div>
+          <div class="overflow-hidden rounded-sm border border-line bg-paper">
+            <div
+              class="aspect-square"
+              style="background:repeating-linear-gradient(135deg,var(--color-parchment) 0 12px,var(--color-line) 12px 24px);"
+              aria-hidden="true"
+            ></div>
+            <div class="px-3 py-[9px] text-[0.72rem] font-bold uppercase tracking-[0.06em] text-brand">
+              Après — site FAR
+            </div>
+          </div>
+        </div>
+        <div class="reveal">
+          <h2
+            class="max-w-[20ch] font-display text-h2 font-medium leading-[1.08] tracking-h2 text-ink"
+          >
+            FAR — revêtement de sol résine, {ville}.
+          </h2>
+          <p class="mt-4 max-w-[54ch] text-[1.0625rem] leading-[1.6] text-ink-2">
+            Un applicateur de résine de {ville} sans présence en ligne. On a créé son site, référencé
+            sa fiche Google et publié son portfolio chantier. Aujourd'hui, ses futurs clients du {dept}
+            le trouvent et l'appellent.
+          </p>
+          <div class="mt-5 flex gap-7">
+            <div>
+              <div class="font-display text-[2rem] font-semibold leading-none tracking-[-0.03em] text-brand">
+                14
+              </div>
+              <div class="mt-[5px] text-[0.85rem] text-ink-soft">demandes / mois</div>
+            </div>
+            <div>
+              <div class="font-display text-[2rem] font-semibold leading-none tracking-[-0.03em] text-brand">
+                1ʳᵉ
+              </div>
+              <div class="mt-[5px] text-[0.85rem] text-ink-soft">page Google local</div>
+            </div>
+          </div>
+          <p class="mt-[22px] font-display text-[1.2rem] font-normal leading-[1.4] text-ink">
+            « On me trouve sur Google, et on m'appelle pour des chantiers. »
+          </p>
+          <p class="mt-2.5 text-[0.875rem] text-ink-soft">
+            Patron — FAR, résine & sols, {ville}
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* POUR QUI — métiers BTP locaux */}
+  <section class="py-[clamp(48px,6vw,88px)]">
+    <div class="container-site">
+      <div class="reveal text-[12px] font-semibold uppercase tracking-eyebrow text-brand">
+        Pour qui
+      </div>
+      <h2
+        class="reveal mt-3 max-w-[20ch] font-display text-h2 font-medium leading-[1.08] tracking-h2 text-ink"
+      >
+        Les artisans du bâtiment de {ville} et du {dept}.
+      </h2>
+      <div
+        class="mt-[clamp(28px,4vw,40px)] grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3"
+      >
+        {jobs.map(([t, s]) => (
+          <div
+            class="reveal rounded-sm border border-line bg-paper p-[18px] text-base font-semibold text-ink transition-colors duration-200 ease-brand hover:border-brand"
+          >
+            {t}
+            <span class="mt-1 block text-[0.85rem] font-normal text-ink-soft">{s}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* CE QU'ON FAIT CHAQUE MOIS */}
+  <section class="bg-parchment py-[clamp(48px,6vw,88px)]">
+    <div class="container-site">
+      <div class="reveal text-[12px] font-semibold uppercase tracking-eyebrow text-brand">
+        Tout compris, chaque mois
+      </div>
+      <h2
+        class="reveal mt-3 max-w-[20ch] font-display text-h2 font-medium leading-[1.08] tracking-h2 text-ink"
+      >
+        Créé, référencé et tenu à {ville}.
+      </h2>
+      <div
+        class="mt-[clamp(28px,4vw,40px)] grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-3.5"
+      >
+        {includes.map(([t, p]) => (
+          <div class="reveal flex items-start gap-3">
+            <span
+              class="relative mt-0.5 h-[22px] w-[22px] flex-none rounded-full bg-brand-soft after:absolute after:left-[7px] after:top-[5px] after:h-[9px] after:w-[5px] after:rotate-[40deg] after:border-b-2 after:border-r-2 after:border-brand after:content-['']"
+              aria-hidden="true"
+            ></span>
+            <div>
+              <div class="text-base font-semibold text-ink">{t}</div>
+              <div class="mt-1 text-[0.9rem] leading-[1.5] text-ink-soft">{p}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* FAQ LOCALE — distincte (anti-doorway) */}
+  <section class="py-[clamp(48px,6vw,88px)]">
+    <div class="container-site">
+      <div class="reveal text-center text-[12px] font-semibold uppercase tracking-eyebrow text-brand">
+        Questions fréquentes à {ville}
+      </div>
+      <h2
+        class="reveal mx-auto mt-3 max-w-[20ch] text-center font-display text-h2 font-medium leading-[1.08] tracking-h2 text-ink"
+      >
+        Ce que les artisans de {ville} nous demandent.
+      </h2>
+      <div class="mx-auto mt-[clamp(28px,4vw,40px)] flex max-w-[760px] flex-col gap-2.5">
+        {faq.map(([q, a]) => (
+          <div class="reveal rounded-sm border border-line bg-paper px-5 py-[18px]">
+            <p class="m-0 font-display text-[1.1rem] font-medium text-ink">{q}</p>
+            <p class="mt-2.5 text-base leading-[1.6] text-ink-2">{a}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* CTA LOCAL */}
+  <CtaBand
+    title={`Rencontrons-nous à ${ville}.`}
+    lead={`15 minutes pour voir comment on peut vous rendre visible dans le ${dept}. Sans jargon, sans pression.`}
+    ctaLabel="Réserver un appel"
+    ctaHref="/contact"
+  />
+</main>
+
+<script>
+  // Reveal au scroll (vanilla) — pose .anim sur <html>, .in via IntersectionObserver.
+  document.documentElement.classList.add('anim');
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reveals = Array.from(document.querySelectorAll<HTMLElement>('.reveal'));
+  if (prefersReduced || !('IntersectionObserver' in window)) {
+    reveals.forEach((el) => el.classList.add('in'));
+  } else {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
+    );
+    reveals.forEach((el) => io.observe(el));
+  }
+
+  // Défilement doux des ancres internes (#cas).
+  const OFFSET = 56;
+  document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((a) => {
+    a.addEventListener('click', (e) => {
+      const id = a.getAttribute('href')!.slice(1);
+      const el = id ? document.getElementById(id) : null;
+      if (el) {
+        e.preventDefault();
+        const y = el.getBoundingClientRect().top + window.scrollY - OFFSET;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    });
+  });
+</script>

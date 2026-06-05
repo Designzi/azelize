@@ -1,151 +1,307 @@
 ---
 /*
- * /cgv — Conditions Générales de Vente.
- *
- * {/* PROVISOIRE — à faire valider par un juriste */}
- * Trame neutre et générique : aucun montant, délai ni clause chiffrée n'est
- * inventé. Tous les éléments factuels (durées, prix, coordonnées, mentions
- * légales opposables) sont des placeholders à compléter après validation.
+ * /cgv — Conditions générales (page légale C0).
+ * Portage fidèle de la maquette Design : ui_kits/azelize-studio/cgv.html.
+ * Contenu fictif structurant — à valider juridiquement (cf. commentaire Design).
+ * Interactivité : sommaire sticky + ancres (défilement doux géré par BaseLayout).
  */
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Section from '@components/ui/Section.astro';
-import PageHeader from '@components/ui/PageHeader.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
 import CtaBand from '@components/blocks/CtaBand.astro';
+
+const sections: [string, string][] = [
+  ['objet', 'Objet'],
+  ['demarrage', 'Démarrage & période offerte'],
+  ['prix', 'Prix & paiement'],
+  ['frais', 'Frais de mise en place'],
+  ['duree', 'Durée & résiliation'],
+  ['propriete', 'Propriété du site'],
+  ['obligations', 'Nos engagements'],
+  ['responsabilite', 'Responsabilité'],
+  ['droit', 'Droit applicable'],
+];
 ---
 
 <BaseLayout
-  title="Conditions Générales de Vente"
-  description="Conditions générales de vente d’Azelize : abonnement mensuel sans engagement pour la création, le référencement et l’entretien de votre site."
+  title="Conditions générales"
+  description="Les conditions de l'abonnement Azelize : démarrage, frais, paiement, résiliation, propriété du site. En clair."
 >
-  <Section width="hero" pad="default">
-    <PageHeader eyebrow="Mentions">
-      Conditions Générales de Vente
-      <Fragment slot="lead">
-        Les conditions qui encadrent l’abonnement Azelize : ce que l’on fait,
-        comment se passe le paiement mensuel, et comment arrêter quand vous le
-        souhaitez.
-      </Fragment>
-    </PageHeader>
+  <Section width="hero" pad="default" class="cg-hero">
+    <Eyebrow>Conditions</Eyebrow>
+    <h1 class="cg-h1">Conditions générales</h1>
+    <p class="cg-updated">En vigueur au 1ᵉʳ juin 2026 · Azelize (Fezilfeza) — Lanester</p>
+  </Section>
 
-    {/* PROVISOIRE — à faire valider par un juriste */}
-    <aside
-      class="mt-10 max-w-2xl rounded-xs border border-line-strong bg-accent-2-soft p-5 md:p-6"
-      role="note"
-    >
-      <p class="text-eyebrow font-semibold uppercase tracking-eyebrow text-accent-2-ink-deep">
-        Document provisoire
-      </p>
-      <p class="mt-2 text-[0.95rem] leading-[1.55] text-accent-2-ink">
-        Ce texte est une trame en cours de validation juridique. Il n’a pas
-        encore de valeur contractuelle opposable et sera complété et vérifié par
-        un juriste avant publication définitive.
-      </p>
-    </aside>
+  <Section width="site" pad="none" class="cg-body">
+    <div class="cg-grid">
+      <nav class="cg-toc" aria-label="Sommaire">
+        <p class="cg-toc-t">Sommaire</p>
+        {sections.map((s) => <a href={`#${s[0]}`}>{s[1]}</a>)}
+      </nav>
 
-    <div class="prose-azelize mt-12 max-w-2xl">
-      <h2>1. Objet</h2>
-      <p>
-        Les présentes conditions générales de vente (les «&nbsp;CGV&nbsp;»)
-        définissent les modalités de souscription et d’exécution des prestations
-        d’abonnement proposées par Azelize (le «&nbsp;Prestataire&nbsp;») à toute
-        personne physique ou morale qui y souscrit (le «&nbsp;Client&nbsp;»).
-        Toute souscription emporte acceptation sans réserve des présentes CGV.
-      </p>
+      <div class="cg-content">
+        <section class="cg-sec" id="objet">
+          <h2 class="cg-h2"><span class="n">01</span>Objet</h2>
+          <p>
+            Les présentes conditions régissent l'abonnement Azelize : création,
+            hébergement, référencement local et entretien continu d'un site
+            internet, ainsi que les prestations associées (identité, supports,
+            contenus). Elles s'appliquent dès la signature du devis ou la
+            validation de la commande.
+          </p>
+        </section>
 
-      <h2>2. Prestations d’abonnement</h2>
-      <p>
-        Le Prestataire propose un abonnement couvrant la création, la mise en
-        ligne, le référencement et l’entretien régulier d’un site internet pour
-        le compte du Client. Le périmètre exact des prestations incluses est
-        précisé lors de la souscription et peut évoluer d’une formule à l’autre.
-      </p>
-      <p>
-        Les prestations sont fournies de manière continue pendant toute la durée
-        de l’abonnement. Le Client reste responsable du contenu qu’il fournit et
-        du choix des informations publiées sur son site.
-      </p>
+        <section class="cg-sec" id="demarrage">
+          <h2 class="cg-h2"><span class="n">02</span>Démarrage &amp; période offerte</h2>
+          <p>
+            Notre principe : <strong>vous ne payez l'abonnement qu'une fois que
+            le site vous rapporte</strong>.
+          </p>
+          <ul>
+            <li><strong>1er mois offert.</strong> Service gratuit, le temps que le site se mette en place.</li>
+            <li>
+              <strong>Seuil de démarrage.</strong> L'abonnement ne démarre que
+              lorsque le site a généré <strong>au moins 2 prises de contact</strong>
+              (« leads ») via le site ou la fiche Google.
+            </li>
+            <li>
+              <strong>Moins de 2 leads à la fin du 1er mois ?</strong> Un mois
+              supplémentaire vous est offert, en attendant d'atteindre le seuil.
+            </li>
+            <li>
+              <strong>2 leads ou plus avant la fin du 1er mois ?</strong> On vous
+              propose de continuer ; si vous acceptez, l'abonnement commence le
+              mois suivant.
+            </li>
+          </ul>
+          <p>Tant que le seuil n'est pas atteint, vous restez à 0 € d'abonnement.</p>
+        </section>
 
-      <h2>3. Prix et paiement mensuel</h2>
-      <p>
-        L’abonnement est facturé mensuellement. Le montant de l’abonnement, les
-        éventuelles options et les modalités de prélèvement sont indiqués au
-        moment de la souscription{/* PROVISOIRE : montants et options à compléter */}.
-      </p>
-      <p>
-        Sauf mention contraire, le premier mois est offert. Le paiement est dû à
-        échéance régulière, selon la périodicité et le moyen de paiement
-        convenus. En cas de défaut de paiement, le Prestataire se réserve le
-        droit de suspendre les prestations après information du Client{/* PROVISOIRE : délais de suspension / pénalités à préciser */}.
-      </p>
+        <section class="cg-sec" id="prix">
+          <h2 class="cg-h2"><span class="n">03</span>Prix &amp; paiement</h2>
+          <p>
+            L'abonnement débute <strong>à partir de 390 €/mois</strong>, selon la
+            formule choisie (Présence, Visibilité, Croissance). Le paiement est
+            mensuel, sans engagement de durée. Les prix sont indiqués hors taxes
+            le cas échéant ; Azelize relève de la franchise en base de TVA
+            (art. 293 B du CGI), TVA non applicable.
+          </p>
+        </section>
 
-      <h2>4. Durée et résiliation — sans engagement</h2>
-      <p>
-        L’abonnement est conclu sans durée d’engagement&nbsp;: il est reconduit
-        mois après mois et peut être résilié à tout moment par le Client.
-      </p>
-      <p>
-        La résiliation prend effet à l’issue de la période mensuelle en cours{/* PROVISOIRE : délai de préavis exact à confirmer */}.
-        Aucun frais de résiliation n’est appliqué. Les modalités de récupération
-        ou de transfert des éléments du site à la fin de l’abonnement sont
-        précisées au Client sur demande.
-      </p>
+        <section class="cg-sec" id="frais">
+          <h2 class="cg-h2"><span class="n">04</span>Frais de mise en place</h2>
+          <p>
+            Seuls frais dus au démarrage : <strong>50 € pour le nom de domaine</strong>
+            <span class="cg-note">une seule fois</span>. Aucun autre frais caché.
+            Ces 50 € sont réglés à la mise en place, indépendamment de la période
+            offerte.
+          </p>
+        </section>
 
-      <h2>5. Obligations des parties</h2>
-      <p>
-        Le Prestataire s’engage à exécuter les prestations avec soin et selon les
-        règles de l’art, et à informer le Client de toute difficulté susceptible
-        d’affecter le service.
-      </p>
-      <p>
-        Le Client s’engage à fournir, en temps utile, les informations, contenus
-        et accès nécessaires à la bonne réalisation des prestations, et à
-        garantir qu’il dispose des droits sur les éléments qu’il transmet.
-      </p>
+        <section class="cg-sec" id="duree">
+          <h2 class="cg-h2"><span class="n">05</span>Durée &amp; résiliation</h2>
+          <p>
+            <strong>Aucun engagement de durée.</strong> Vous pouvez résilier à
+            tout moment, d'un mois sur l'autre, par simple e-mail à
+            bonjour@azelize.fr. La résiliation prend effet à la fin du mois en
+            cours ; aucun mois entamé n'est dû au-delà.
+          </p>
+          <p>
+            Une garantie <strong>satisfait ou remboursé 30 jours</strong>
+            s'applique sur le premier mois facturé.
+          </p>
+        </section>
 
-      <h2>6. Propriété intellectuelle</h2>
-      <p>
-        Le Prestataire conserve la titularité des éléments, méthodes et outils
-        qu’il développe dans le cadre de son activité. Le Client dispose d’un
-        droit d’usage sur le site réalisé pour les besoins de son activité,
-        pendant la durée de l’abonnement, selon les conditions précisées lors de
-        la souscription{/* PROVISOIRE : étendue exacte des droits cédés à préciser */}.
-      </p>
-      <p>
-        Les contenus fournis par le Client (textes, images, marques, logos)
-        restent sa propriété et demeurent sous sa responsabilité.
-      </p>
+        <section class="cg-sec" id="propriete">
+          <h2 class="cg-h2"><span class="n">06</span>Propriété du site — location</h2>
+          <p>
+            <strong>Le site et le nom de domaine restent la propriété d'Azelize.</strong>
+            L'abonnement est une <strong>location</strong> : pendant toute sa
+            durée, le site est mis à votre disposition, hébergé et entretenu par
+            nos soins. C'est le principe même de l'offre — vous ne supportez pas
+            le coût d'un site sur-mesure, vous en louez l'usage et le suivi.
+          </p>
+          <p>
+            En cas d'arrêt, <strong>le site est mis hors ligne</strong> et n'est
+            pas cédé. Vous récupérez les éléments que vous nous avez fournis (vos
+            photos, vos textes, votre logo). Toute reprise éventuelle du site ou
+            du domaine fait l'objet d'un accord distinct, précisé au devis.
+          </p>
+        </section>
 
-      <h2>7. Données personnelles</h2>
-      <p>
-        Le traitement des données personnelles dans le cadre de la relation
-        contractuelle est décrit dans notre
-        <a href="/confidentialite">politique de confidentialité</a>, qui
-        complète les présentes CGV.
-      </p>
+        <section class="cg-sec" id="obligations">
+          <h2 class="cg-h2"><span class="n">07</span>Nos engagements</h2>
+          <ul>
+            <li>Créer, héberger et maintenir votre site en bon état de fonctionnement.</li>
+            <li>Assurer le suivi du référencement local et un reporting mensuel.</li>
+            <li>Traiter vos demandes de modification dans des délais raisonnables.</li>
+            <li>Un interlocuteur unique, joignable.</li>
+          </ul>
+        </section>
 
-      <h2>8. Responsabilité</h2>
-      <p>
-        Le Prestataire est tenu à une obligation de moyens dans l’exécution de
-        ses prestations. Sa responsabilité ne saurait être engagée en cas de
-        dommage résultant d’un fait du Client, d’un tiers, ou d’un cas de force
-        majeure. Les limitations de responsabilité applicables sont précisées
-        dans la version définitive des présentes CGV{/* PROVISOIRE : plafonds et exclusions à valider juridiquement */}.
-      </p>
+        <section class="cg-sec" id="responsabilite">
+          <h2 class="cg-h2"><span class="n">08</span>Responsabilité</h2>
+          <p>
+            Azelize est tenue à une obligation de moyens. Les résultats de
+            référencement (position Google, nombre de demandes) dépendent de
+            facteurs externes et ne constituent pas une garantie. Azelize ne
+            saurait être tenue responsable des contenus fournis par le client ni
+            des interruptions imputables à des tiers (hébergeur, Google).
+          </p>
+        </section>
 
-      <h2>9. Droit applicable et litiges</h2>
-      <p>
-        Les présentes CGV sont soumises au droit français. En cas de différend,
-        les parties s’efforceront de trouver une solution amiable avant toute
-        action contentieuse. À défaut d’accord, le litige sera porté devant les
-        juridictions compétentes{/* PROVISOIRE : juridiction compétente / médiation à préciser */}.
-      </p>
-
-      <p>
-        <strong>Dernière mise à jour&nbsp;:</strong>
-        {/* PROVISOIRE : date d’entrée en vigueur à compléter */} à compléter.
-      </p>
+        <section class="cg-sec" id="droit">
+          <h2 class="cg-h2"><span class="n">09</span>Droit applicable</h2>
+          <p>
+            Les présentes conditions sont régies par le droit français. En cas
+            de litige et à défaut de résolution amiable, les tribunaux compétents
+            seront ceux du ressort de Lorient.
+          </p>
+        </section>
+      </div>
     </div>
   </Section>
 
-  <CtaBand />
+  <CtaBand
+    title="Une question sur les conditions ?"
+    lead="On vous explique tout au téléphone, sans jargon. 15 minutes, sans engagement."
+    ctaLabel="Réserver un appel"
+    ctaHref="/contact"
+  />
 </BaseLayout>
+
+<style>
+  .cg-hero {
+    padding-top: clamp(150px, 16vw, 200px);
+    padding-bottom: clamp(24px, 3vw, 40px);
+  }
+  .cg-h1 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(2.2rem, 4.6vw, 3.4rem);
+    line-height: 1.03;
+    letter-spacing: -0.03em;
+    color: var(--color-ink);
+    margin: 14px 0 0;
+  }
+  .cg-updated {
+    font-size: 0.875rem;
+    color: var(--color-ink-soft);
+    margin: 16px 0 0;
+  }
+  .cg-body {
+    padding-bottom: clamp(64px, 8vw, 110px);
+  }
+
+  /* Sommaire (230px) + contenu (1fr), sommaire sticky. */
+  .cg-grid {
+    display: grid;
+    grid-template-columns: 230px 1fr;
+    gap: clamp(32px, 5vw, 72px);
+    align-items: start;
+  }
+  @media (max-width: 820px) {
+    .cg-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .cg-toc {
+    position: sticky;
+    top: 130px;
+  }
+  @media (max-width: 820px) {
+    .cg-toc {
+      display: none;
+    }
+  }
+  .cg-toc-t {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-ink-faint);
+    margin: 0 0 12px;
+  }
+  .cg-toc a {
+    display: block;
+    font-size: 0.875rem;
+    color: var(--color-ink-2);
+    text-decoration: none;
+    padding: 6px 10px;
+    border-radius: var(--radius-xs);
+    transition: background 0.2s var(--ease), color 0.2s var(--ease);
+  }
+  .cg-toc a:hover {
+    background: var(--color-hover);
+    color: var(--color-brand);
+  }
+
+  .cg-content {
+    max-width: 680px;
+  }
+  .cg-sec {
+    padding: clamp(24px, 3vw, 34px) 0;
+    border-top: 1px solid var(--color-line);
+  }
+  .cg-sec:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+  .cg-h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.4rem;
+    letter-spacing: -0.015em;
+    color: var(--color-ink);
+    margin: 0 0 12px;
+  }
+  .cg-h2 .n {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--color-brand);
+    margin-right: 10px;
+  }
+  .cg-content :global(p) {
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    color: var(--color-ink-2);
+    margin: 0 0 12px;
+  }
+  .cg-content :global(strong) {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+  .cg-content :global(ul) {
+    margin: 0 0 12px;
+    padding: 0;
+    list-style: none;
+  }
+  .cg-content :global(li) {
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    color: var(--color-ink-2);
+    padding-left: 22px;
+    position: relative;
+    margin-bottom: 8px;
+  }
+  .cg-content :global(li::before) {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.6em;
+    width: 8px;
+    height: 1.5px;
+    background: var(--color-brand);
+  }
+  .cg-note {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--color-accent-2-ink);
+    background: var(--color-accent-2);
+    border-radius: var(--radius-xs);
+    padding: 2px 9px;
+  }
+</style>

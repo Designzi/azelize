@@ -1,0 +1,237 @@
+---
+/**
+ * Page métier — Création de site internet pour maçons.
+ * Portage fidèle de la maquette Design `creation-site-internet-macon.html`
+ * (variante simple : héro + mockup, checklist « ce que votre site doit montrer »,
+ * liste « tout compris », FAQ + maillage, CtaBand). Markup + texte en dur.
+ * Classes Design `.az-*` / `.ed-*` rendues en utilitaires Tailwind tokenisés.
+ */
+import Button from '@components/ui/Button.astro';
+import CtaBand from '@components/blocks/CtaBand.astro';
+import { tiers } from '@data/pricing';
+
+// Prix d'entrée importé de la source unique (jamais codé en dur dans la copie).
+const prixEntree = tiers[0].price;
+---
+
+<main>
+  {/* HERO */}
+  <section class="container-site">
+    <div class="max-w-[840px] pt-[clamp(150px,16vw,200px)] pb-[clamp(28px,3vw,44px)]">
+      <div class="text-[0.8125rem] font-semibold uppercase tracking-[0.06em] text-brand">
+        Site internet · Maçons
+      </div>
+      <h1
+        class="mt-3.5 font-display text-[clamp(2.3rem,5vw,3.9rem)] font-medium leading-[1.02] tracking-display text-ink [&_em]:not-italic [&_em]:text-brand"
+      >
+        Un site de maçon qui <em>inspire confiance dès le devis</em>.
+      </h1>
+      <p
+        class="mt-[22px] max-w-[54ch] text-[clamp(1.0625rem,1.6vw,1.3rem)] leading-[1.55] text-ink-2"
+      >
+        Construction, rénovation, extension : vos clients confient des projets importants. Votre
+        site doit montrer votre sérieux et vos réalisations pour qu'on vous appelle plutôt qu'un
+        autre.
+      </p>
+      <div class="mt-7 flex flex-wrap gap-3.5">
+        <Button href="/contact" size="lg">Demander un devis gratuit</Button>
+        <Button href="/creation-site-internet" variant="outline" size="lg">Voir le service</Button>
+      </div>
+
+      {/* mockup — vitrine maçon */}
+      <div class="mt-[clamp(32px,4vw,48px)] overflow-hidden rounded-sm border border-line bg-paper">
+        <div class="flex items-center gap-[7px] border-b border-line bg-parchment px-4 py-[11px]">
+          <span class="h-[9px] w-[9px] rounded-full bg-line-strong"></span>
+          <span class="h-[9px] w-[9px] rounded-full bg-line-strong"></span>
+          <span class="h-[9px] w-[9px] rounded-full bg-line-strong"></span>
+          <span class="ml-2.5 font-mono text-[12px] text-ink-soft">votre-maconnerie.fr</span>
+        </div>
+        <div
+          class="px-[clamp(24px,4vw,44px)] py-[clamp(24px,4vw,44px)] text-center"
+          style="background:linear-gradient(180deg,var(--color-brand-soft),transparent);"
+        >
+          <h2
+            class="m-0 font-display text-[clamp(1.3rem,2.4vw,1.9rem)] font-semibold tracking-h2 text-ink"
+          >
+            Maçonnerie & gros œuvre — Morbihan
+          </h2>
+          <p class="mt-2 mb-[18px] text-[0.95rem] text-ink-soft">
+            Devis gratuit · Artisan assuré · Travaux soignés
+          </p>
+          <span
+            class="inline-flex items-center gap-[9px] whitespace-nowrap rounded-xs bg-brand px-[22px] py-3 text-[0.95rem] font-semibold text-paper"
+          >
+            Demander un devis
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* CE QUE VOTRE SITE DOIT MONTRER */}
+  <section class="bg-parchment py-[clamp(48px,6vw,88px)]">
+    <div class="container-site">
+      <div class="reveal text-[12px] font-semibold uppercase tracking-eyebrow text-brand">
+        Ce que votre site doit montrer
+      </div>
+      <h2
+        class="reveal m-0 mt-3 max-w-[24ch] font-display text-h2 font-medium leading-[1.08] tracking-h2 text-ink"
+      >
+        L'essentiel pour un maçon.
+      </h2>
+      <div class="mt-[clamp(28px,4vw,40px)] grid grid-cols-1 gap-x-7 gap-y-3.5 md:grid-cols-2">
+        {
+          [
+            [
+              'Vos réalisations en photo',
+              'Un mur, une extension, une rénovation : le résultat parle pour vous.',
+            ],
+            [
+              'Vos garanties',
+              'Assurance décennale, devis gratuit : les preuves qui rassurent sur un gros projet.',
+            ],
+            [
+              'Vos spécialités',
+              'Gros œuvre, rénovation, maçonnerie paysagère : le client se reconnaît.',
+            ],
+            ['Votre zone', 'Les communes couvertes, clair et net.'],
+            ['Les avis clients', 'Décisif quand on confie un chantier important.'],
+            ['Le numéro, visible partout', 'Cliquable sur mobile, pour un contact immédiat.'],
+          ].map(([t, p]) => (
+            <div class="reveal flex items-start gap-[13px]">
+              <span
+                class="relative mt-0.5 h-6 w-6 flex-none rounded-full bg-brand-soft after:absolute after:left-2 after:top-[6px] after:h-2.5 after:w-[5px] after:rotate-[40deg] after:border-b-2 after:border-r-2 after:border-brand after:content-['']"
+                aria-hidden="true"
+              />
+              <div>
+                <div class="text-[1.02rem] font-semibold text-ink">{t}</div>
+                <div class="mt-[3px] text-[0.92rem] leading-[1.5] text-ink-soft">{p}</div>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* TOUT COMPRIS, CHAQUE MOIS */}
+  <section class="py-[clamp(48px,6vw,88px)]">
+    <div class="container-site">
+      <div class="reveal text-[12px] font-semibold uppercase tracking-eyebrow text-brand">
+        Tout compris, chaque mois
+      </div>
+      <h2
+        class="reveal m-0 mt-3 max-w-[24ch] font-display text-h2 font-medium leading-[1.08] tracking-h2 text-ink"
+      >
+        On ne livre pas un site, on le fait vivre.
+      </h2>
+      <div class="mt-[clamp(28px,4vw,40px)] grid grid-cols-1 gap-x-10 md:grid-cols-2">
+        {
+          [
+            ['Site tenu à jour & sécurisé', 'Hébergement, sauvegardes, corrections.'],
+            [
+              'Référencement local suivi',
+              "Google et fiche d'établissement entretenus chaque mois.",
+            ],
+            ['Modifications à la demande', 'Nouvelles réalisations, nouvelles photos de chantier.'],
+            ['Suivi de vos avis', 'Collecte automatique après chaque chantier réussi.'],
+            ['Rapport mensuel clair', 'Appels, visites, position sur Google.'],
+            ['Un interlocuteur unique', "Quelqu'un qui connaît votre dossier et qui répond."],
+          ].map(([t, p]) => (
+            <div class="reveal flex items-start gap-3 border-b border-line py-4">
+              <span class="mt-2 h-2 w-2 flex-none rounded-full bg-brand" aria-hidden="true" />
+              <div>
+                <div class="text-base font-semibold text-ink">{t}</div>
+                <div class="mt-[3px] text-[0.9rem] leading-[1.5] text-ink-soft">{p}</div>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* QUESTIONS DE MAÇONS + MAILLAGE */}
+  <section class="bg-parchment py-[clamp(48px,6vw,88px)]">
+    <div class="container-site">
+      <div class="reveal text-[12px] font-semibold uppercase tracking-eyebrow text-brand">
+        Questions de maçons
+      </div>
+      <h2
+        class="reveal m-0 mt-3 max-w-[24ch] font-display text-h2 font-medium leading-[1.08] tracking-h2 text-ink"
+      >
+        Ce qu'on nous demande souvent.
+      </h2>
+      <div class="mt-[clamp(28px,4vw,40px)] flex max-w-[780px] flex-col gap-2.5">
+        {
+          [
+            [
+              'Mes chantiers sont longs, le site sert vraiment ?',
+              "Oui : c'est souvent là que se décide le choix de l'artisan. Un site sérieux avec vos réalisations fait pencher la balance avant même le premier rendez-vous.",
+            ],
+            [
+              "Je n'ai pas de photos pro de mes chantiers.",
+              'Quelques photos au téléphone suffisent pour démarrer, on les met en valeur. On enrichit au fil des chantiers.',
+            ],
+            [
+              "C'est combien pour un maçon ?",
+              `À partir de ${prixEntree} €/mois, tout compris. Vous ne commencez à payer qu'une fois que le site vous amène des demandes.`,
+            ],
+          ].map(([q, a]) => (
+            <div class="reveal rounded-sm border border-line bg-paper px-[22px] py-5">
+              <p class="m-0 font-display text-[1.1rem] font-medium text-ink">{q}</p>
+              <p class="mt-2.5 text-base leading-[1.6] text-ink-2">{a}</p>
+            </div>
+          ))
+        }
+      </div>
+      <div class="reveal mt-[clamp(24px,3vw,32px)] flex flex-wrap gap-[9px]">
+        {
+          [
+            ['Site à Lanester', '/creation-site-internet'],
+            ['Site à Lorient', '/creation-site-internet'],
+            ['Référencement local', '/referencement-seo'],
+            ["Le prix d'un site", '/tarifs'],
+          ].map(([label, href]) => (
+            <a
+              class="whitespace-nowrap rounded-full border border-line-strong bg-paper px-[15px] py-2 text-[0.9rem] font-medium text-ink-2 transition-colors duration-200 ease-brand hover:border-brand hover:text-brand"
+              href={href}
+            >
+              {label}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Montrons votre savoir-faire."
+    lead="15 minutes pour en parler. Sans engagement, vous ne payez qu'une fois que ça marche."
+    ctaLabel="Demander un devis gratuit"
+    ctaHref="/contact"
+  />
+</main>
+
+<script>
+  // Reveal au scroll (vanilla) — pose .anim sur <html>, .in via IntersectionObserver.
+  document.documentElement.classList.add('anim');
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reveals = Array.from(document.querySelectorAll<HTMLElement>('.reveal'));
+  if (prefersReduced || !('IntersectionObserver' in window)) {
+    reveals.forEach((el) => el.classList.add('in'));
+  } else {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
+    );
+    reveals.forEach((el) => io.observe(el));
+  }
+</script>

@@ -11,9 +11,11 @@ import { getService, SERVICE_AVEC_METIERS } from '@data/seo-architecture';
 import type { GetStaticPaths } from 'astro';
 
 /**
- * Couche 3 — page service × métier (/{service}/{metier}).
- * Aujourd'hui seul `creation-site-internet` ouvre une matrice métier (collection
- * `metiers`). Chaque page porte un contenu UNIQUE par métier (anti-doorway).
+ * Couche 3 — page service × métier (/{service}/{metier}). Portage FIDÈLE :
+ * si un composant dédié `components/metiers/{slug}.astro` existe, il reproduit la
+ * maquette Design telle quelle (corps complet, CTA + maillage compris). Sinon,
+ * repli sur le rendu historique (sections + corps MDX). Anti-doorway : un contenu
+ * unique par métier. Le BUILD suit la collection `metiers`.
  */
 export const getStaticPaths = (async () => {
   const service = getService(SERVICE_AVEC_METIERS)!;
@@ -25,7 +27,6 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const { service, entry } = Astro.props;
-const { Content } = await render(entry);
 const { titre, resume, seo, sections } = entry.data;
 const url = `/${service.slug}/${entry.id}`;
 
@@ -34,13 +35,22 @@ const breadcrumbs = [
   { name: service.court, url: `/${service.slug}` },
   { name: titre, url },
 ];
-// FAQPage dérivé des sections FAQ visibles (rich results) — contenu identique à l'affichage.
+// FAQPage dérivé des sections FAQ visibles (repli uniquement) — rich results.
 const faqItems = sections?.flatMap((s) => (s.type === 'faq' ? s.items : [])) ?? [];
 const jsonLd = [
   serviceJsonLd({ name: titre, description: seo?.description ?? resume, url }),
   breadcrumbJsonLd(breadcrumbs),
   ...(faqItems.length ? [faqJsonLd(faqItems)] : []),
 ];
+
+// Portage fidèle : composant dédié par métier (corps de la maquette Design).
+const metierModules = import.meta.glob('../../components/metiers/*.astro', { eager: true });
+const MetierComponent = (metierModules[`../../components/metiers/${entry.id}.astro`] as
+  | { default: any }
+  | undefined)?.default;
+
+// Repli seulement : corps éditorial MDX.
+const { Content } = MetierComponent ? { Content: null } : await render(entry);
 ---
 
 <BaseLayout
@@ -54,13 +64,21 @@ const jsonLd = [
     <Breadcrumbs items={breadcrumbs} />
   </Section>
 
-  {sections?.length && <Blocks sections={sections} />}
-
-  <Section width="hero" pad="default">
-    <div class="prose-azelize mx-auto max-w-2xl">
-      <Content />
-    </div>
-  </Section>
-
-  <FinalCta />
+  {
+    MetierComponent ? (
+      <MetierComponent />
+    ) : (
+      <Fragment>
+        {sections?.length && <Blocks sections={sections} />}
+        {Content && (
+          <Section width="hero" pad="default">
+            <div class="prose-azelize mx-auto max-w-2xl">
+              <Content />
+            </div>
+          </Section>
+        )}
+        <FinalCta />
+      </Fragment>
+    )
+  }
 </BaseLayout>

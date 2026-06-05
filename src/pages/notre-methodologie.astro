@@ -1,0 +1,179 @@
+---
+/**
+ * /notre-methodologie — portage fidèle de la maquette Design
+ * `notre-methodologie.html` (C1/C5, page de confiance). Méthode en 7 étapes :
+ * hero + timeline verticale + 3 principes + bande CTA.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Section from '@components/ui/Section.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import CtaBand from '@components/blocks/CtaBand.astro';
+import { ogImage } from '@lib/og';
+import { chromeCta } from '@data/nav';
+
+interface Step {
+  when: string;
+  title: string;
+  body: string;
+  who: string;
+  offert?: boolean;
+}
+
+const steps: Step[] = [
+  {
+    when: 'Étape 1 · 15 min',
+    title: 'On fait connaissance',
+    body:
+      "Un appel pour comprendre votre métier, vos clients, votre zone et vos objectifs. Sans jargon, sans pression. On regarde aussi où vous en êtes aujourd'hui sur Google.",
+    who: 'Vous : un échange',
+  },
+  {
+    when: 'Étape 2',
+    title: "On cadre l'essentiel",
+    body:
+      "On définit ensemble ce qu'il vous faut vraiment — pas un cahier des charges à rallonge. Vous validez la direction, on s'occupe du reste.",
+    who: 'Vous : un feu vert',
+  },
+  {
+    when: 'Étape 3 · Semaine 1',
+    title: 'On conçoit votre présence',
+    body:
+      'Site, structure, textes, mise en page à votre image. On prépare aussi votre fiche Google et les bases du référencement local.',
+    who: 'Nous : on construit',
+  },
+  {
+    when: 'Étape 4 · Semaine 2',
+    title: 'Vous validez, on met en ligne',
+    body:
+      'On ajuste selon vos retours, puis on publie. Votre site est en ligne en 2 semaines environ.',
+    who: 'Vous : un dernier regard',
+  },
+  {
+    when: 'Étape 5',
+    title: 'On vous rend visible',
+    body:
+      'Référencement local, fiche Google, premiers avis : on travaille votre présence pour que vos clients vous trouvent. Le 1er mois est offert.',
+    who: 'Offert',
+    offert: true,
+  },
+  {
+    when: 'Étape 6',
+    title: 'On fait vivre, chaque mois',
+    body:
+      "Mises à jour, nouveaux contenus, sécurité, suivi des avis, rapport mensuel clair. C'est le « tenu » — ce qui garde votre site utile dans la durée.",
+    who: 'Nous : on entretient',
+  },
+  {
+    when: 'Étape 7',
+    title: 'Vous payez quand ça marche',
+    body:
+      "L'abonnement ne démarre qu'une fois que le site vous amène vraiment des clients. Sinon, on continue jusqu'aux premiers résultats. Sans engagement.",
+    who: 'Vous : vous décidez',
+  },
+];
+
+const principles = [
+  { t: 'Un interlocuteur unique', p: 'La même personne suit votre dossier du début à la fin. Pas de standard.' },
+  { t: 'Vous validez, on exécute', p: 'Vous gardez la main sur les décisions ; nous, on fait le travail.' },
+  { t: 'On tient dans la durée', p: 'On ne livre pas pour disparaître. Votre présence reste vivante.' },
+];
+---
+
+<BaseLayout
+  title="Notre méthode : votre présence en ligne en 7 étapes"
+  description="Comment on crée et fait vivre votre présence en ligne, étape par étape : du premier appel à l'entretien mensuel. Transparent, sans jargon."
+  image={ogImage('default')}
+>
+  <script is:inline>document.documentElement.classList.add('anim');</script>
+
+  {/* ── Hero ───────────────────────────────────────────────────────────────── */}
+  <Section pad="none" class="pt-[clamp(150px,16vw,200px)] pb-[clamp(28px,3vw,44px)]">
+    <div class="max-w-[800px]">
+      <div class="reveal"><Eyebrow>Notre méthode</Eyebrow></div>
+      <h1 class="reveal mt-3.5 font-display text-[clamp(2.2rem,4.6vw,3.6rem)] font-medium leading-[1.03] tracking-[-0.03em] text-ink">
+        Votre présence en ligne, <em class="not-italic text-brand">en 7 étapes claires</em>.
+      </h1>
+      <p class="reveal mt-5 max-w-[56ch] text-[clamp(1.0625rem,1.6vw,1.3rem)] leading-[1.55] text-ink-2">
+        Pas de boîte noire : voici exactement comment on travaille, du premier appel à l'entretien
+        mensuel. Vous validez les moments clés, on exécute le reste.
+      </p>
+    </div>
+  </Section>
+
+  {/* ── Timeline 7 étapes ──────────────────────────────────────────────────── */}
+  <Section pad="none" class="pt-[clamp(20px,3vw,36px)] pb-[clamp(20px,3vw,32px)]">
+    <div class="relative mx-auto max-w-[820px] pl-[46px] before:absolute before:left-[15px] before:top-2.5 before:bottom-2.5 before:w-0.5 before:bg-line before:content-['']">
+      {steps.map((step, i) => (
+        <div class="reveal relative pb-[clamp(28px,3.4vw,42px)] last:pb-0">
+          <span class="absolute -left-[46px] top-0 flex h-8 w-8 items-center justify-center rounded-full bg-brand font-mono text-[0.8rem] text-paper">
+            {i + 1}
+          </span>
+          <div class="font-mono text-[0.78rem] text-brand">{step.when}</div>
+          <h2 class="mt-1 font-display text-[1.35rem] font-semibold tracking-tight text-ink">
+            {step.title}
+            {step.offert && (
+              <span class="ml-2 inline-block rounded-xs bg-accent-2-soft px-2.5 py-0.5 align-middle text-[0.7rem] font-bold text-accent-2-ink">
+                Offert
+              </span>
+            )}
+          </h2>
+          <p class="mt-2.5 max-w-[62ch] text-[1.0425rem] leading-[1.65] text-ink-2">{step.body}</p>
+          {!step.offert && (
+            <span class="mt-3 inline-flex items-center gap-[7px] rounded-pill bg-parchment px-[13px] py-[5px] text-[0.78rem] font-semibold text-ink-soft">
+              {step.who}
+            </span>
+          )}
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  {/* ── Trois principes ────────────────────────────────────────────────────── */}
+  <Section tone="parchment" pad="default">
+    <div class="reveal"><Eyebrow>Ce qui ne change jamais</Eyebrow></div>
+    <h2 class="reveal mb-2 mt-2 max-w-[24ch] font-display text-[clamp(1.5rem,2.6vw,2.1rem)] font-semibold tracking-tight text-ink">
+      Trois principes, à chaque étape.
+    </h2>
+    <p class="reveal mb-[clamp(22px,3vw,30px)] max-w-[60ch] text-[1.0625rem] leading-[1.6] text-ink-2">
+      Quel que soit le projet, notre façon de travailler reste la même.
+    </p>
+    <div class="grid grid-cols-1 gap-3.5 md:grid-cols-3">
+      {principles.map((c) => (
+        <div class="reveal rounded-md border border-line bg-paper p-6">
+          <h3 class="m-0 font-display text-[1.1rem] font-semibold text-ink">{c.t}</h3>
+          <p class="mt-2 text-[0.93rem] leading-[1.55] text-ink-soft">{c.p}</p>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <CtaBand
+    title="Commençons par l'étape 1."
+    lead="15 minutes pour faire connaissance. Sans engagement, sans pression."
+    ctaLabel="Réserver un appel"
+    ctaHref={chromeCta.href}
+  />
+</BaseLayout>
+
+<script>
+  // Reveal au scroll (calqué sur la home).
+  document.documentElement.classList.add('anim');
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reveals = Array.from(document.querySelectorAll<HTMLElement>('.reveal'));
+  if (prefersReduced || !('IntersectionObserver' in window)) {
+    reveals.forEach((el) => el.classList.add('in'));
+  } else {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
+    );
+    reveals.forEach((el) => io.observe(el));
+  }
+</script>

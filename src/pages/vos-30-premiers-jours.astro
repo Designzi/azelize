@@ -1,152 +1,165 @@
 ---
+/**
+ * /vos-30-premiers-jours — portage fidèle de la maquette Design
+ * `vos-30-premiers-jours.html` (C0, onboarding). Déroulé après signature :
+ * timeline verticale semaine par semaine + récap garanties + bande CTA.
+ */
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Section from '@components/ui/Section.astro';
-import PageHeader from '@components/ui/PageHeader.astro';
-import SectionHead from '@components/ui/SectionHead.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
 import CtaBand from '@components/blocks/CtaBand.astro';
+import { ogImage } from '@lib/og';
+import { chromeCta } from '@data/nav';
 
-/**
- * « Vos 30 premiers jours » — déroulé du 1er mois (offert).
- * Méthode Azelize : on cadre, on construit, on entretient.
- * Timeline semaine par semaine + « ce qu’on attend de vous » + réassurance.
- */
+interface Step {
+  dot: string;
+  when: string;
+  title: string;
+  body: string;
+  tag?: string;
+  who: string;
+}
 
-const timeline = [
+const steps: Step[] = [
   {
-    week: 'Semaine 1',
-    title: 'On cadre — l’appel de 15 minutes',
+    dot: '1',
+    when: 'Jour 1–2',
+    title: 'On fait le point ensemble',
     body:
-      'On démarre par un appel de cadrage, court et sans jargon. On parle de votre métier, de vos clients, de la zone que vous couvrez et de ce qui doit ressortir en premier. À la fin, on sait exactement quoi construire. Vous n’avez rien à préparer.',
+      "Un appel de cadrage : votre métier, vos clients, votre zone, vos concurrents. On récupère ce qu'on a besoin (logo, photos de chantiers, infos). Seuls frais à ce stade : 50 € pour le nom de domaine.",
+    who: 'Vous : 30 min d’échange',
   },
   {
-    week: 'Semaine 1',
-    title: 'On collecte ce qu’il faut, et rien de plus',
+    dot: '2',
+    when: 'Semaine 1',
+    title: 'On conçoit votre site',
     body:
-      'On récupère l’essentiel : vos prestations, vos zones d’intervention, vos horaires, quelques photos de vos chantiers ou réalisations. Si vous n’avez pas de visuels, on s’organise autrement. On vous guide à chaque étape — pas de formulaire interminable.',
+      'On prépare une première version : structure, textes, mise en page à votre image. Vous recevez un lien privé pour regarder et commenter.',
+    who: 'Nous : on construit',
   },
   {
-    week: 'Semaines 1 et 2',
-    title: 'On construit votre site',
+    dot: '3',
+    when: 'Semaine 2',
+    title: 'Vous validez, on met en ligne',
     body:
-      'On rédige les textes, on met en page, on intègre vos photos et vos coordonnées. Un site clair, rapide, qui se lit aussi bien sur un téléphone que sur un ordinateur. Vous le découvrez en aperçu et vous nous dites ce qui doit bouger.',
+      "On ajuste selon vos retours, puis on publie. En parallèle, on crée et on optimise votre fiche Google d'établissement.",
+    who: 'Vous : un dernier feu vert',
   },
   {
-    week: 'Vers la semaine 2',
-    title: 'On met en ligne',
+    dot: '4',
+    when: 'Semaines 3–4',
+    title: 'Le référencement démarre',
+    tag: 'Offert',
     body:
-      'Une fois votre accord obtenu, votre site passe en ligne — comptez environ deux semaines depuis le premier appel. À partir de là, vos clients vous trouvent, vous appellent et prennent contact directement.',
+      'Le site commence à remonter localement. Un site neuf met du temps à émerger : pendant cette phase, vous ne payez aucun abonnement.',
+    who: 'Nous : on travaille la visibilité',
   },
   {
-    week: 'Fin de mois',
-    title: 'On vous référence localement',
+    dot: '★',
+    when: 'À partir du jour 30',
+    title: 'Les premières demandes arrivent',
     body:
-      'On travaille votre visibilité sur votre secteur : fiche établissement, recherche locale, pages qui parlent de vos prestations près de chez vos clients. Le but est simple — qu’on vous trouve quand quelqu’un cherche votre métier dans votre ville.',
-  },
-  {
-    week: 'Ensuite, chaque mois',
-    title: 'On entretient — vous gardez votre métier',
-    body:
-      'Le site ne dort pas une fois en ligne. Chaque mois, on le tient à jour, on surveille qu’il reste rapide et sécurisé, et on l’ajuste quand votre activité évolue. Vous restez sur votre chantier ; nous, on s’occupe du site.',
+      "Dès que le site vous amène des clients, l'abonnement démarre — si vous le souhaitez. Sinon, on continue à 0 € jusqu'aux premiers résultats. Vous ne payez qu'une fois que ça marche.",
+    who: 'Vous : vous décidez',
   },
 ];
 
-const fromYou = [
-  'Quinze minutes pour l’appel de cadrage.',
-  'Vos prestations, vos zones et vos horaires — on vous aide à les lister.',
-  'Quelques photos de vos réalisations, si vous en avez.',
-  'Un retour rapide sur l’aperçu avant la mise en ligne.',
+const cards = [
+  { t: 'Un interlocuteur unique', p: 'La même personne suit votre dossier du début à la fin.' },
+  { t: 'Aucun engagement', p: 'Vous pouvez arrêter à tout moment, sans justification.' },
+  { t: 'Zéro mauvaise surprise', p: 'Le seul coût avant le démarrage : 50 € de nom de domaine.' },
 ];
 ---
 
 <BaseLayout
   title="Vos 30 premiers jours"
-  description="Le déroulé du premier mois, offert : appel de cadrage, construction, mise en ligne en deux semaines, puis référencement local et suivi mensuel."
+  description="Ce qui se passe concrètement après votre oui : semaine par semaine, de la mise en place à la mise en ligne. Vous validez, on exécute."
+  image={ogImage('default')}
 >
-  <Section width="hero" pad="default">
-    <PageHeader eyebrow="Le premier mois">
-      Vos 30 premiers jours
-      <Fragment slot="lead">
-        Le premier mois est offert. Voici, semaine par semaine, comment on passe
-        de votre premier appel à un site en ligne qui vous amène des clients —
-        pendant que vous restez sur votre métier.
-      </Fragment>
-    </PageHeader>
-  </Section>
+  <script is:inline>document.documentElement.classList.add('anim');</script>
 
-  <Section tone="parchment" width="hero" pad="default">
-    <SectionHead eyebrow="Le déroulé">
-      Du premier appel à votre site en ligne
-      <Fragment slot="intro">
-        On cadre, on construit, on entretient. Rien à gérer de votre côté :
-        on vous guide à chaque étape.
-      </Fragment>
-    </SectionHead>
-
-    <ol class="space-y-px">
-      {timeline.map((step, i) => (
-        <li class="reveal flex gap-6 border-t border-line py-8 first:border-t-0 first:pt-0">
-          <div
-            class="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand-soft font-display text-lg font-medium text-brand"
-            aria-hidden="true"
-          >
-            {i + 1}
-          </div>
-          <div class="max-w-2xl">
-            <p class="text-eyebrow font-semibold uppercase tracking-eyebrow text-brand">
-              {step.week}
-            </p>
-            <h3 class="mt-2 font-display text-xl font-medium tracking-h2 text-ink">
-              {step.title}
-            </h3>
-            <p class="mt-3 text-[1.0625rem] leading-[1.55] text-ink-soft">
-              {step.body}
-            </p>
-          </div>
-        </li>
-      ))}
-    </ol>
-  </Section>
-
-  <Section width="hero" pad="default">
-    <div class="grid gap-x-16 gap-y-10 md:grid-cols-2">
-      <SectionHead eyebrow="De votre côté" class="mb-0">
-        Ce qu’on attend de vous : presque rien
-        <Fragment slot="intro">
-          On a conçu la méthode pour ne pas vous voler de temps. Votre part
-          tient en quatre points.
-        </Fragment>
-      </SectionHead>
-
-      <ul class="space-y-4 md:pt-2">
-        {fromYou.map((item) => (
-          <li class="reveal flex gap-3 border-t border-line pt-4 first:border-t-0 first:pt-0">
-            <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand" aria-hidden="true"></span>
-            <span class="text-[1.0625rem] leading-[1.55] text-ink-2">{item}</span>
-          </li>
-        ))}
-      </ul>
+  {/* ── Hero ───────────────────────────────────────────────────────────────── */}
+  <Section pad="none" class="pt-[clamp(40px,8vw,72px)]">
+    <div class="max-w-[780px]">
+      <div class="reveal"><Eyebrow>Après votre oui</Eyebrow></div>
+      <h1 class="reveal mt-3.5 font-display text-[clamp(2.3rem,5vw,3.8rem)] font-medium leading-[1.02] tracking-display text-ink">
+        Vos <em class="not-italic text-brand">30 premiers jours</em>, sans stress.
+      </h1>
+      <p class="reveal mt-5 max-w-[54ch] text-[clamp(1.0625rem,1.6vw,1.3rem)] leading-[1.55] text-ink-2">
+        Pas de zone d'ombre : voici ce qui se passe concrètement, semaine par semaine.
+        Vous validez les étapes clés, on exécute le reste.
+      </p>
     </div>
   </Section>
 
-  <Section tone="brand-soft" width="hero" pad="default">
-    <div class="reveal mx-auto max-w-2xl text-center">
-      <p class="text-eyebrow font-semibold uppercase tracking-eyebrow text-brand">
-        Sans risque
-      </p>
-      <h2 class="mt-4 font-display text-h2 font-medium tracking-h2 text-ink text-balance">
-        Le premier mois est offert
-      </h2>
-      <p class="mx-auto mt-5 max-w-[52ch] text-[1.0625rem] leading-[1.55] text-ink-soft">
-        Vous découvrez votre site, vous le voyez en ligne, vous mesurez ce qu’il
-        change pour vous — avant le moindre paiement. Ensuite seulement, l’abonnement
-        mensuel démarre : sans engagement, résiliable quand vous voulez. On est payés
-        une fois que le site travaille pour vous.
-      </p>
+  {/* ── Timeline verticale ─────────────────────────────────────────────────── */}
+  <Section pad="none" class="pb-[clamp(20px,3vw,32px)]">
+    <div class="relative mx-auto mt-[clamp(8px,2vw,20px)] max-w-[760px] pl-[38px] before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-0.5 before:bg-line before:content-['']">
+      {steps.map((step) => (
+        <div class="reveal relative pb-[clamp(28px,3.4vw,40px)] last:pb-0">
+          <span class="absolute -left-[38px] top-0.5 flex h-6 w-6 items-center justify-center rounded-full bg-brand font-mono text-[0.72rem] text-paper">
+            {step.dot}
+          </span>
+          <div class="font-mono text-[0.78rem] text-brand">{step.when}</div>
+          <h2 class="mt-1 font-display text-[1.3rem] font-semibold tracking-tight text-ink">
+            {step.title}
+            {step.tag && (
+              <span class="ml-2 inline-block rounded-xs bg-accent-2 px-2.5 py-0.5 align-middle text-[0.72rem] font-bold text-accent-2-ink">
+                {step.tag}
+              </span>
+            )}
+          </h2>
+          <p class="mt-2 max-w-[60ch] text-base leading-[1.6] text-ink-2">{step.body}</p>
+          <span class="mt-2.5 inline-flex items-center gap-[7px] rounded-pill bg-parchment px-3 py-[5px] text-[0.8rem] font-semibold text-ink-soft">
+            {step.who}
+          </span>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  {/* ── Récap garanties ────────────────────────────────────────────────────── */}
+  <Section tone="parchment" pad="default">
+    <h2 class="reveal mb-[clamp(24px,3vw,34px)] max-w-[24ch] font-display text-h2 font-medium tracking-h2 text-ink">
+      Pendant tout ce temps, vous êtes tranquille.
+    </h2>
+    <div class="grid grid-cols-1 gap-3.5 md:grid-cols-3">
+      {cards.map((c) => (
+        <div class="reveal rounded-md border border-line bg-paper p-6">
+          <h3 class="m-0 font-display text-[1.15rem] font-semibold text-ink">{c.t}</h3>
+          <p class="mt-2 text-[0.95rem] leading-[1.55] text-ink-soft">{c.p}</p>
+        </div>
+      ))}
     </div>
   </Section>
 
   <CtaBand
-    title="Prêt à lancer vos 30 premiers jours ?"
-    lead="Un appel de 15 minutes, sans jargon ni pression. On regarde ensemble ce qui vous ferait avancer — le premier mois est offert."
+    title="Prêt à lancer vos 30 jours ?"
+    lead="15 minutes pour démarrer. Sans engagement, vous ne payez qu'une fois que ça marche."
+    ctaLabel="Demander un devis gratuit"
+    ctaHref={chromeCta.href}
   />
 </BaseLayout>
+
+<script>
+  // Reveal au scroll (calqué sur la home).
+  document.documentElement.classList.add('anim');
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reveals = Array.from(document.querySelectorAll<HTMLElement>('.reveal'));
+  if (prefersReduced || !('IntersectionObserver' in window)) {
+    reveals.forEach((el) => el.classList.add('in'));
+  } else {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('in');
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
+    );
+    reveals.forEach((el) => io.observe(el));
+  }
+</script>

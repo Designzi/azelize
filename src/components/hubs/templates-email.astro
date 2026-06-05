@@ -1,0 +1,285 @@
+---
+/**
+ * Hub service — /templates-email · « Templates e-mail & signatures ».
+ * Portage fidèle de templates-email.html (corps <main> complet, CTA compris).
+ * Contenu fictif (signatures + contenus mail). Interactivité : aucune (statique).
+ *
+ * Mapping Design → Astro :
+ * - .ed-wrap → container-site · .ed-eyebrow → surtitre brand
+ * - .az-sec / .az-sec--tint → Section (paper / parchment)
+ * - .az-h2 / .az-intro / .az-cards3 / .az-card / .az-incl / .az-links / .az-chip → utilitaires tokenisés
+ * - .em-* (hero mail mockup, avant/après, compat, package A→Z + schéma circulaire) → utilitaires + arbitraires
+ * - .ed-btn(--lg)(--ghost) → <Button size="lg" variant="solid|outline">
+ * - placeholders (lignes de mail) : bg-line · avatars : bg-line-strong / bg-accent-2-soft
+ */
+import Section from '@components/ui/Section.astro';
+import Button from '@components/ui/Button.astro';
+import CtaBand from '@components/blocks/CtaBand.astro';
+
+const PREPARE = [
+  { n: '01', t: 'Signature pro', p: "Logo, coordonnées, liens : une signature propre pour toute l'équipe." },
+  { n: '02', t: "Modèles d'e-mails", p: 'Devis, relance, remerciement : les messages courants, déjà rédigés.' },
+  { n: '03', t: 'Newsletters', p: 'Un gabarit à votre charte pour garder le contact avec vos clients.' },
+];
+
+const POURQUOI = [
+  { t: 'Cohérent avec votre marque', p: 'Même univers que votre site et vos supports.' },
+  { t: 'Lisible sur mobile', p: "La majorité des e-mails s'ouvrent sur téléphone." },
+  { t: 'Réutilisable en un clic', p: 'Vous remplissez, vous envoyez. Pas de mise en forme à refaire.' },
+  { t: 'Installé pour vous', p: 'On configure la signature dans votre messagerie.' },
+];
+
+const COMPAT = ['Gmail', 'Outlook', 'Apple Mail', 'Mobile', 'Mode sombre'];
+
+const NODES = [
+  { label: 'Identité visuelle', here: false, style: 'left:250px;top:60px;' },
+  { label: 'Site internet', here: false, style: 'left:431px;top:191px;' },
+  { label: 'E-mails', small: 'vous êtes ici', here: true, style: 'left:362px;top:404px;' },
+  { label: 'Supports imprimés', here: false, style: 'left:138px;top:404px;' },
+  { label: 'Référencement', here: false, style: 'left:69px;top:191px;' },
+];
+
+const CHIPS = [
+  { label: 'Identité visuelle', href: '/identite-visuelle' },
+  { label: 'Création de site', href: '/creation-site-internet' },
+  { label: 'Supports imprimés', href: '/supports-print' },
+];
+---
+
+<main>
+  {/* ── Hero : titre + mockup mail client ──────────────────────────────── */}
+  <section class="pt-[clamp(150px,16vw,200px)] pb-[clamp(28px,3vw,40px)]">
+    <div class="container-site">
+      <div class="grid grid-cols-1 items-center gap-[clamp(32px,5vw,56px)] md:grid-cols-[1.05fr_.95fr]">
+        <div class="reveal">
+          <p class="text-eyebrow font-semibold uppercase tracking-eyebrow text-brand">
+            Templates e-mail
+          </p>
+          <h1
+            class="mt-3.5 font-display text-[clamp(2.2rem,4.4vw,3.6rem)] font-medium leading-[1.03] tracking-[-0.03em] text-ink [&_em]:not-italic [&_em]:text-brand"
+          >
+            Chaque e-mail qui part <em>renforce votre image</em>.
+          </h1>
+          <p class="mt-5 max-w-[46ch] text-[clamp(1.0625rem,1.5vw,1.2rem)] leading-[1.55] text-ink-2">
+            Signature professionnelle, modèles de newsletter, relances, devis : on conçoit vos
+            e-mails pour qu'ils soient cohérents, lisibles et prêts à réutiliser en un clic.
+          </p>
+          <div class="mt-6.5 mb-[clamp(20px,3vw,40px)] flex flex-wrap gap-3.5">
+            <Button href="/contact" size="lg">Demander un devis gratuit</Button>
+            <Button href="/identite-visuelle" variant="outline" size="lg">
+              Voir l'identité visuelle
+            </Button>
+          </div>
+        </div>
+
+        {/* mockup mail client */}
+        <div class="reveal overflow-hidden rounded-sm border border-line bg-paper">
+          <div class="border-b border-line px-4.5 py-3.5">
+            <div class="text-[0.95rem] font-semibold text-ink">
+              Votre devis — rénovation salle de bain
+            </div>
+            <div class="mt-[3px] text-[0.8rem] text-ink-soft">de : contact@votre-entreprise.fr</div>
+          </div>
+          <div class="p-4.5">
+            <div class="mb-2 h-2 rounded-[3px] bg-line" style="width:90%;"></div>
+            <div class="mb-2 h-2 rounded-[3px] bg-line" style="width:75%;"></div>
+            <div class="mb-2 h-2 rounded-[3px] bg-line" style="width:82%;"></div>
+            <div class="mt-4.5 flex items-center gap-3 border-t border-line pt-4">
+              <div class="h-[42px] w-[42px] flex-none rounded-full bg-accent-2-soft"></div>
+              <div>
+                <div class="font-display text-[0.95rem] font-semibold text-ink">Jean Dupont</div>
+                <div class="text-[0.78rem] text-brand">Gérant · Votre Entreprise</div>
+                <div class="mt-0.5 text-[0.72rem] text-ink-soft">
+                  06 12 34 56 78 · votre-entreprise.fr
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ── Ce qu'on prépare : 3 cartes ────────────────────────────────────── */}
+  <Section tone="parchment" pad="default">
+    <p class="text-eyebrow font-semibold uppercase tracking-eyebrow text-brand">Ce qu'on prépare</p>
+    <h2 class="m-0 mt-3 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink">
+      Des e-mails prêts à l'emploi.
+    </h2>
+    <div class="mt-[clamp(28px,4vw,40px)] grid grid-cols-1 gap-3.5 md:grid-cols-3">
+      {
+        PREPARE.map((c) => (
+          <div class="reveal rounded-md border border-line bg-paper p-6">
+            <div class="font-mono text-[0.8rem] text-brand">{c.n}</div>
+            <h3 class="mt-2.5 font-display text-[1.15rem] font-semibold tracking-[-0.01em] text-ink">
+              {c.t}
+            </h3>
+            <p class="mt-2 text-[0.95rem] leading-[1.55] text-ink-soft">{c.p}</p>
+          </div>
+        ))
+      }
+    </div>
+  </Section>
+
+  {/* ── Pourquoi ça compte : liste 2 colonnes, puces brand ─────────────── */}
+  <Section tone="paper" pad="default">
+    <p class="text-eyebrow font-semibold uppercase tracking-eyebrow text-brand">Pourquoi ça compte</p>
+    <h2 class="m-0 mt-3 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink">
+      Un détail que tout le monde voit.
+    </h2>
+    <div class="mt-[clamp(28px,4vw,40px)] grid grid-cols-1 gap-x-10 md:grid-cols-2">
+      {
+        POURQUOI.map((i) => (
+          <div class="reveal flex items-start gap-3 border-b border-line py-4">
+            <span class="mt-2 h-2 w-2 flex-none rounded-full bg-brand" aria-hidden="true" />
+            <div>
+              <div class="text-base font-semibold text-ink">{i.t}</div>
+              <div class="mt-[3px] text-[0.9rem] leading-[1.5] text-ink-soft">{i.p}</div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </Section>
+
+  {/* ── Avant / après ──────────────────────────────────────────────────── */}
+  <Section tone="parchment" pad="default">
+    <p class="text-eyebrow font-semibold uppercase tracking-eyebrow text-brand">La différence</p>
+    <h2 class="m-0 mt-3 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink">
+      Avant / après.
+    </h2>
+    <div class="mt-[clamp(28px,4vw,40px)] grid max-w-[880px] grid-cols-1 gap-3.5 sm:grid-cols-2">
+      {/* avant */}
+      <div class="reveal overflow-hidden rounded-md border border-line bg-paper">
+        <div class="px-5 py-4.5">
+          <div class="text-[0.72rem] font-bold uppercase tracking-[0.06em] text-ink-soft">
+            Avant — e-mail brut
+          </div>
+          <div class="mt-3">
+            <div class="mb-[7px] h-2 rounded-[3px] bg-line" style="width:88%;"></div>
+            <div class="mb-[7px] h-2 rounded-[3px] bg-line" style="width:70%;"></div>
+            <div class="mt-3.5 flex items-center gap-2.5 border-t border-line pt-3">
+              <span class="h-8 w-8 flex-none rounded-full bg-line-strong"></span>
+              <span>
+                <div class="text-[0.82rem] font-semibold text-ink">Jean Dupont</div>
+                <div class="text-[0.72rem] text-ink-soft">Envoyé de mon iPhone</div>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* après */}
+      <div class="reveal overflow-hidden rounded-md border border-line bg-paper">
+        <div class="px-5 py-4.5">
+          <div class="text-[0.72rem] font-bold uppercase tracking-[0.06em] text-brand">
+            Après — à votre marque
+          </div>
+          <div class="mt-3">
+            <div class="mb-[7px] h-2 rounded-[3px] bg-line" style="width:88%;"></div>
+            <div class="mb-[7px] h-2 rounded-[3px] bg-line" style="width:70%;"></div>
+            <div class="mt-3.5 flex items-center gap-2.5 border-t border-line pt-3">
+              <span class="h-8 w-8 flex-none rounded-full bg-accent-2-soft"></span>
+              <span>
+                <div class="text-[0.82rem] font-semibold text-ink">Jean Dupont</div>
+                <div class="text-[0.72rem] text-brand">Gérant · Votre Entreprise</div>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  {/* ── Compatibilité messageries ──────────────────────────────────────── */}
+  <Section tone="paper" pad="default">
+    <p class="text-eyebrow font-semibold uppercase tracking-eyebrow text-brand">Un rendu fiable</p>
+    <h2 class="m-0 mt-3 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink">
+      Parfait sur toutes les messageries.
+    </h2>
+    <p class="mt-4 max-w-[56ch] text-[1.0625rem] leading-[1.6] text-ink-2">
+      Vos e-mails s'affichent comme prévu, partout — pas de mise en page cassée chez votre client.
+    </p>
+    <div class="mt-[clamp(24px,3vw,34px)] flex flex-wrap gap-2.5">
+      {
+        COMPAT.map((c) => (
+          <span class="whitespace-nowrap rounded-full border border-line-strong bg-paper px-4 py-2.5 text-[0.9rem] font-medium text-ink-2">
+            {c}
+          </span>
+        ))
+      }
+    </div>
+  </Section>
+
+  {/* ── Prestations connexes : package A→Z + schéma circulaire ─────────── */}
+  <Section tone="paper" pad="default">
+    <p class="text-eyebrow font-semibold uppercase tracking-eyebrow text-brand">Prestations connexes</p>
+    <h2 class="m-0 mt-3 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink">
+      L'e-mail, une pièce de votre image globale.
+    </h2>
+    <div class="mt-[clamp(24px,3vw,34px)] grid grid-cols-1 items-start gap-[clamp(24px,4vw,52px)] md:grid-cols-[1fr_auto]">
+      <div class="reveal">
+        <p class="m-0 max-w-[62ch] text-base leading-[1.6] text-ink-2">
+          Chez Azelize, on travaille surtout <strong>en package, de A à Z</strong> : votre présence
+          en ligne est cohérente sur tous les points de contact. L'e-mail en fait partie — au même
+          titre que votre site, votre identité et vos supports.
+        </p>
+        <p class="mt-3.5 max-w-[62ch] text-base leading-[1.6] text-ink-2">
+          On peut bien sûr ne traiter que vos e-mails. Mais le plus souvent, on prend tout en charge
+          pour une cohérence totale.
+        </p>
+      </div>
+
+      {/* schéma circulaire */}
+      <div class="reveal">
+        <div class="relative mx-auto h-[500px] w-[500px] max-w-full">
+          <div class="absolute inset-16 rounded-full border border-dashed border-line-strong"></div>
+          <div class="absolute left-1/2 top-1/2 w-[130px] -translate-x-1/2 -translate-y-1/2 text-center">
+            <div class="font-display text-[1.1rem] font-bold tracking-[-0.01em] text-brand">De A à Z</div>
+            <div class="mt-[3px] text-[0.72rem] leading-[1.4] text-ink-soft">une cohérence totale</div>
+          </div>
+          {
+            NODES.map((node) => (
+              <div
+                class:list={[
+                  'absolute w-28 -translate-x-1/2 -translate-y-1/2 rounded-lg border px-2 py-2.5 text-center text-[0.84rem] font-semibold leading-[1.25]',
+                  node.here
+                    ? 'border-accent-2-soft bg-accent-2-soft text-accent-2-ink'
+                    : 'border-line-strong bg-paper text-ink-2',
+                ]}
+                style={node.style}
+              >
+                {node.label}
+                {node.small && (
+                  <small class="mt-px block text-[0.66rem] font-semibold opacity-70">
+                    {node.small}
+                  </small>
+                )}
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-[clamp(24px,3vw,32px)] flex flex-wrap gap-2.5">
+      {
+        CHIPS.map((chip) => (
+          <a
+            href={chip.href}
+            class="whitespace-nowrap rounded-full border border-line-strong bg-paper px-[15px] py-2 text-[0.9rem] font-medium text-ink-2 no-underline transition-colors hover:border-brand hover:text-brand"
+          >
+            {chip.label}
+          </a>
+        ))
+      }
+    </div>
+  </Section>
+
+  {/* ── CTA final ──────────────────────────────────────────────────────── */}
+  <CtaBand
+    title="Soignons vos e-mails."
+    lead="15 minutes pour en parler. Sans engagement."
+    ctaLabel="Demander un devis gratuit"
+    ctaHref="/contact"
+  />
+</main>

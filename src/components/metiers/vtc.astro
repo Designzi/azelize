@@ -1,0 +1,234 @@
+---
+/**
+ * Page métier — Création de site internet pour VTC & chauffeur privé.
+ * Portage fidèle de creation-site-internet-vtc.html (corps <main> complet).
+ * Interactivité : aucune (page statique). Le chrome (header/footer) vient de BaseLayout.
+ */
+import Button from '@components/ui/Button.astro';
+import { tiers } from '@data/pricing';
+
+// Prix de base (source unique) — Design : « À partir de 390 €/mois ».
+const fromPrice = tiers[0].price;
+
+const cards = [
+  { n: '01', t: 'Réservation directe', p: 'Le client réserve sur votre site — vous gardez tout le tarif.' },
+  { n: '02', t: 'Vos clients fidèles', p: "Ceux qui aiment votre service vous rappellent, sans passer par l'appli." },
+  { n: '03', t: '0% de commission', p: 'Fini les 20-25% prélevés sur chaque course par la plateforme.' },
+];
+
+const includes = [
+  { t: 'Module de réservation / devis', p: 'Le client indique son trajet, vous recevez la demande.' },
+  { t: 'Numéro cliquable', p: 'Réservation au téléphone en un clic, sur mobile.' },
+  { t: 'Vos prestations mises en avant', p: 'Gare, aéroport, longue distance, événements, mise à disposition.' },
+  { t: 'Référencement local', p: '« VTC + votre ville », « chauffeur privé aéroport » : on vous fait remonter.' },
+  { t: 'Vos avis clients', p: 'La preuve qui rassure et fait choisir votre service.' },
+  { t: 'Tenu chaque mois', p: "Sécurité, mises à jour, suivi : on s'occupe de tout." },
+];
+
+const faq = [
+  {
+    q: 'Un site peut vraiment remplacer Uber ?',
+    a: 'Pas remplacer du jour au lendemain, mais réduire votre dépendance : vos clients réguliers et vos recommandations passent par votre site, sans commission. C’est votre marge qui grimpe.',
+  },
+  {
+    q: 'Comment les clients me trouvent ?',
+    a: 'Par le référencement local (« VTC + ville », « chauffeur aéroport »), vos cartes de visite, et le bouche-à-oreille qui renvoie vers votre site plutôt que vers l’appli.',
+  },
+  {
+    q: 'Je peux gérer les réservations facilement ?',
+    a: 'Oui : les demandes arrivent par mail/notification, et le client peut aussi vous appeler directement. Simple, sans logiciel compliqué.',
+  },
+  {
+    q: 'C’est combien pour un VTC ?',
+    a: `À partir de ${fromPrice} €/mois, tout compris. Et vous ne commencez à payer qu’une fois que le site vous amène des réservations.`,
+  },
+];
+
+const chips = [
+  { label: 'Création de site', href: '/creation-site-internet' },
+  { label: 'Référencement local', href: '/referencement-seo' },
+  { label: 'Site à Lorient', href: '/creation-site-internet-lorient' },
+  { label: 'Le prix d’un site', href: '/combien-coute-site-internet' },
+];
+---
+
+<main>
+  {/* ── Hero ────────────────────────────────────────────────────────────── */}
+  <section
+    class="container-site pt-[clamp(150px,16vw,200px)] pb-[clamp(28px,3vw,44px)]"
+  >
+    <div class="max-w-[860px]">
+      <div
+        class="text-[0.8125rem] font-semibold uppercase tracking-[0.06em] text-brand"
+      >
+        Site internet · VTC & chauffeurs privés
+      </div>
+      <h1
+        class="mt-3.5 m-0 font-display text-[clamp(2.2rem,4.8vw,3.8rem)] font-medium leading-[1.02] tracking-display text-ink [&_em]:not-italic [&_em]:text-brand"
+      >
+        Vos courses en direct, <em>0% de commission</em>.
+      </h1>
+      <p
+        class="mt-[22px] max-w-[56ch] text-[clamp(1.0625rem,1.6vw,1.3rem)] leading-[1.55] text-ink-2"
+      >
+        Uber, Bolt et Heetch prennent 20 à 25% sur chaque course — et le client ne devient jamais le
+        vôtre. Un site avec réservation directe vous rend vos clients, et votre marge.
+      </p>
+      <div class="mt-7 flex flex-wrap gap-3.5">
+        <Button href="/contact" size="lg">Demander un devis gratuit</Button>
+        <Button href="/creation-site-internet" variant="outline" size="lg">Voir le service</Button>
+      </div>
+
+      {/* mockup réservation */}
+      <div
+        class="mt-[clamp(32px,4vw,48px)] max-w-[520px] overflow-hidden rounded-md border border-line bg-paper"
+      >
+        <div class="flex items-center gap-[7px] border-b border-line bg-parchment px-4 py-[11px]">
+          <span class="h-[9px] w-[9px] rounded-full bg-line-strong"></span>
+          <span class="h-[9px] w-[9px] rounded-full bg-line-strong"></span>
+          <span class="h-[9px] w-[9px] rounded-full bg-line-strong"></span>
+          <span class="ml-2.5 font-mono text-[12px] text-ink-soft">votre-vtc.fr/reserver</span>
+        </div>
+        <div class="p-[clamp(20px,3vw,28px)]">
+          <div class="flex flex-col gap-2.5">
+            <div class="flex items-center gap-3 text-[0.9rem] text-ink">
+              <span class="h-[11px] w-[11px] flex-none rounded-full border-2 border-brand bg-brand"></span>
+              Lorient — Gare SNCF
+            </div>
+            <div class="ml-[5px] h-3.5 w-0.5 bg-line-strong"></div>
+            <div class="flex items-center gap-3 text-[0.9rem] text-ink">
+              <span class="h-[11px] w-[11px] flex-none rounded-full border-2 border-brand"></span>
+              Aéroport de Lorient Bretagne Sud
+            </div>
+          </div>
+          <div class="mt-4 flex items-baseline justify-between border-t border-line pt-3.5">
+            <span class="text-[0.85rem] text-ink-soft">Estimation course</span>
+            <span class="font-display text-2xl font-semibold text-brand">28 €</span>
+          </div>
+          <span
+            class="mt-4 block rounded-xs bg-brand py-[13px] text-center text-[0.95rem] font-semibold text-paper"
+          >
+            Réserver maintenant
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ── Le vrai sujet ───────────────────────────────────────────────────── */}
+  <section class="bg-parchment py-[clamp(48px,6vw,88px)]">
+    <div class="container-site">
+      <div class="text-[12px] font-semibold uppercase tracking-eyebrow text-brand">Le vrai sujet</div>
+      <h2
+        class="mt-4 m-0 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink"
+      >
+        Reprenez le contrôle face aux plateformes.
+      </h2>
+      <p class="mt-4 max-w-[56ch] text-[1.0625rem] leading-[1.6] text-ink-2">
+        Sur Uber ou Bolt, vous êtes un chauffeur interchangeable, noté par un algorithme, taxé sur
+        chaque course. Votre site vous redonne une marque, des clients fidèles et 100% de votre
+        tarif.
+      </p>
+      <div
+        class="mt-[clamp(28px,4vw,40px)] grid grid-cols-1 gap-3.5 md:grid-cols-3"
+      >
+        {
+          cards.map((c) => (
+            <div class="rounded-md border border-line bg-paper p-6">
+              <div class="font-mono text-[0.8rem] text-brand">{c.n}</div>
+              <h3 class="mt-2.5 font-display text-[1.15rem] font-semibold tracking-tight text-ink">
+                {c.t}
+              </h3>
+              <p class="mt-2 text-[0.95rem] leading-[1.55] text-ink-soft">{c.p}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* ── Notre différence · cas TransportConfort ─────────────────────────── */}
+  <section class="py-[clamp(48px,6vw,88px)]">
+    <div class="container-site">
+      <div class="text-[12px] font-semibold uppercase tracking-eyebrow text-brand">
+        Notre différence · cas TransportConfort
+      </div>
+      <h2
+        class="mt-4 m-0 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink"
+      >
+        Un site qui prend les réservations pour vous.
+      </h2>
+      <p class="mt-4 max-w-[56ch] text-[1.0625rem] leading-[1.6] text-ink-2">
+        Pour TransportConfort (Lorient), on a livré un site de service avec demande de course et
+        devis en ligne — pensé pour transformer un visiteur en réservation, sans intermédiaire.
+      </p>
+      <div class="mt-[clamp(28px,4vw,40px)] grid grid-cols-1 gap-x-10 md:grid-cols-2">
+        {
+          includes.map((i) => (
+            <div class="flex items-start gap-3 border-b border-line py-4">
+              <span class="mt-2 h-2 w-2 flex-none rounded-full bg-brand" />
+              <div>
+                <div class="text-base font-semibold text-ink">{i.t}</div>
+                <div class="mt-[3px] text-[0.9rem] leading-[1.5] text-ink-soft">{i.p}</div>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* ── Questions de chauffeurs ─────────────────────────────────────────── */}
+  <section class="bg-parchment py-[clamp(48px,6vw,88px)]">
+    <div class="container-site">
+      <div class="text-[12px] font-semibold uppercase tracking-eyebrow text-brand">
+        Questions de chauffeurs
+      </div>
+      <h2
+        class="mt-4 m-0 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink"
+      >
+        Ce qu'on nous demande souvent.
+      </h2>
+      <div class="mt-[clamp(28px,4vw,40px)] flex max-w-[780px] flex-col gap-2.5">
+        {
+          faq.map((f) => (
+            <div class="rounded-md border border-line bg-paper px-[22px] py-5">
+              <p class="m-0 font-display text-[1.1rem] font-medium text-ink">{f.q}</p>
+              <p class="mt-2.5 text-base leading-[1.6] text-ink-2">{f.a}</p>
+            </div>
+          ))
+        }
+      </div>
+      <div class="mt-[clamp(24px,3vw,32px)] flex flex-wrap gap-[9px]">
+        {
+          chips.map((c) => (
+            <a
+              href={c.href}
+              class="whitespace-nowrap rounded-full border border-line-strong bg-paper px-[15px] py-2 text-[0.9rem] font-medium text-ink-2 transition-colors duration-200 ease-brand hover:border-brand hover:text-brand"
+            >
+              {c.label}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {/* ── Bande CTA (brun-olive Design) ───────────────────────────────────── */}
+  <section class="bg-brand-900">
+    <div class="container-site py-[clamp(48px,6vw,80px)] text-center">
+      <h2
+        class="mx-auto m-0 max-w-[20ch] font-display text-[clamp(1.8rem,3.4vw,2.6rem)] font-medium leading-[1.06] tracking-h2 text-on-dark-bright"
+      >
+        Reprenez vos clients en main.
+      </h2>
+      <p
+        class="mx-auto mt-[18px] max-w-[46ch] text-[1.0625rem] leading-[1.55] text-on-dark-soft"
+      >
+        15 minutes pour voir comment un site de réservation directe peut vous libérer des
+        commissions. Sans engagement.
+      </p>
+      <Button href="/contact" size="lg" class="mt-7">Demander un devis gratuit</Button>
+    </div>
+  </section>
+</main>

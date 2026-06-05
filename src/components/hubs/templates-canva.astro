@@ -1,0 +1,176 @@
+---
+/**
+ * Hub service VEDETTE — /templates-canva. Portage fidèle de la maquette Design
+ * (templates-canva.html). Corps complet du <main> : héro centré + badge, bande
+ * de stats, galerie de formats, catégories, sur-mesure marque, bande CTA finale.
+ * Le chrome (header/footer) et les breadcrumbs sont fournis en amont.
+ */
+import Button from '@components/ui/Button.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import CtaBand from '@components/blocks/CtaBand.astro';
+
+const STATS = [
+  { n: '6 M+', l: 'téléchargements' },
+  { n: '1 200+', l: 'templates publiés' },
+  { n: '15', l: 'catégories couvertes' },
+  { n: '4,9 ★', l: 'note moyenne' },
+];
+
+// Galerie de formats variés. art = classe du mockup (aspect-ratio + fond).
+const GALLERY: { label: string; cap: string; art: string }[] = [
+  { label: 'Post Instagram', cap: 'Réseaux sociaux', art: 'aspect-square text-paper [background:linear-gradient(150deg,var(--color-brand),var(--color-brand-bright))]' },
+  { label: 'Story', cap: 'Format vertical', art: 'aspect-[9/16] text-paper [background:linear-gradient(160deg,var(--color-brand),var(--color-brand-deep))]' },
+  { label: 'Menu restaurant', cap: 'Print', art: 'aspect-square bg-brand-soft text-brand' },
+  { label: 'Présentation', cap: 'Slides', art: 'aspect-square text-paper [background:linear-gradient(150deg,var(--color-ink),var(--color-ink-soft))]' },
+  { label: 'Flyer A5', cap: 'Print', art: 'aspect-square bg-brand-soft text-brand' },
+  { label: 'Carrousel', cap: 'Réseaux sociaux', art: 'aspect-square text-paper [background:linear-gradient(150deg,var(--color-brand),var(--color-brand-bright))]' },
+  { label: 'Carte de visite', cap: 'Print', art: 'aspect-square text-paper [background:linear-gradient(150deg,var(--color-ink),var(--color-ink-soft))]' },
+  { label: 'Réel / TikTok', cap: 'Vidéo verticale', art: 'aspect-[9/16] text-paper [background:linear-gradient(160deg,var(--color-brand),var(--color-brand-deep))]' },
+];
+
+const CATS = [
+  { tag: '01', t: 'Réseaux sociaux', p: 'Posts, stories, carrousels, couvertures : des packs cohérents prêts à publier.' },
+  { tag: '02', t: 'Print', p: 'Flyers, affiches, cartes, brochures : calibrés pour l’impression.' },
+  { tag: '03', t: 'Menus & restauration', p: 'Cartes de menu, ardoises, sets de table — best-sellers du catalogue.' },
+  { tag: '04', t: 'Présentations', p: 'Decks pro et pédagogiques, structurés et faciles à éditer.' },
+  { tag: '05', t: 'Vidéo verticale', p: 'Réels, TikToks, stories animées prêtes à habiller.' },
+  { tag: '06', t: 'Sur-mesure marque', p: 'Des kits Canva personnalisés à votre charte, pour vos équipes.' },
+];
+
+const STEPS = [
+  { n: '01', t: 'On cadre vos besoins', p: 'Formats, charte, usages : on définit le kit qu’il vous faut.' },
+  { n: '02', t: 'On conçoit les gabarits', p: 'Des templates verrouillés là où il faut, libres ailleurs.' },
+  { n: '03', t: 'Vos équipes éditent', p: 'Chacun produit, dans le respect de votre identité.' },
+];
+---
+
+{/* ── Héro centré ─────────────────────────────────────────────────────────── */}
+<section
+  class="container-site mx-auto max-w-[900px] pt-[clamp(150px,16vw,200px)] pb-[clamp(28px,4vw,40px)] text-center"
+>
+  <div
+    class="inline-flex items-center gap-[9px] rounded-full bg-brand-soft px-4 py-2 text-[0.8125rem] font-semibold text-brand"
+  >
+    <span class="h-[7px] w-[7px] rounded-full bg-brand"></span>Leader du template Canva
+  </div>
+  <h1
+    class="mt-[22px] font-display text-[clamp(2.4rem,5.4vw,4.4rem)] font-medium leading-none tracking-[-0.04em] text-ink [&_em]:not-italic [&_em]:text-brand"
+  >
+    Des templates <em>téléchargés 6 millions de fois</em>.
+  </h1>
+  <p
+    class="mx-auto mt-[22px] max-w-[54ch] text-[clamp(1.0625rem,1.6vw,1.3rem)] leading-[1.55] text-ink-2"
+  >
+    Réseaux sociaux, print, menus, présentations : on conçoit des modèles Canva prêts à
+    personnaliser, utilisés par des créateurs et des marques partout dans le monde.
+  </p>
+  <div class="mt-[30px] flex flex-wrap justify-center gap-3.5">
+    <Button href="/contact" size="lg">Travailler avec nous</Button>
+    <Button href="#galerie" variant="outline" size="lg">Voir des exemples</Button>
+  </div>
+</section>
+
+{/* ── Bande de gros chiffres ──────────────────────────────────────────────── */}
+<section class="border-y border-line">
+  <div
+    class="container-site grid grid-cols-2 gap-7 py-[clamp(32px,4vw,52px)] text-center md:grid-cols-4 md:gap-[clamp(16px,3vw,40px)]"
+  >
+    {
+      STATS.map((s) => (
+        <div>
+          <div class="font-display text-[clamp(2rem,4vw,3.2rem)] font-bold leading-none tracking-[-0.04em] text-brand">
+            {s.n}
+          </div>
+          <div class="mt-2.5 text-[0.9rem] text-ink-soft">{s.l}</div>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+{/* ── Galerie de formats ──────────────────────────────────────────────────── */}
+<section id="galerie" class="py-[clamp(48px,6vw,88px)]">
+  <div class="container-site">
+    <Eyebrow>Un aperçu</Eyebrow>
+    <h2
+      class="mt-3 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.5rem)] font-medium leading-[1.06] tracking-h2 text-ink"
+    >
+      Des modèles pour chaque format.
+    </h2>
+    <div class="mt-[clamp(28px,4vw,40px)] grid grid-cols-2 gap-3.5 md:grid-cols-4">
+      {
+        GALLERY.map((g) => (
+          <div class="overflow-hidden rounded-md border border-line bg-paper">
+            <div class:list={['relative flex items-center justify-center', g.art]}>
+              <span class="px-2.5 text-center font-display text-base font-bold tracking-[-0.01em]">
+                {g.label}
+              </span>
+            </div>
+            <div class="border-t border-line px-3.5 py-3 text-[0.82rem] text-ink-soft">{g.cap}</div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+{/* ── Catégories ──────────────────────────────────────────────────────────── */}
+<section class="bg-parchment py-[clamp(48px,6vw,88px)]">
+  <div class="container-site">
+    <Eyebrow>Les catégories</Eyebrow>
+    <h2
+      class="mt-3 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.5rem)] font-medium leading-[1.06] tracking-h2 text-ink"
+    >
+      Tout ce dont une marque a besoin pour communiquer.
+    </h2>
+    <div class="mt-[clamp(28px,4vw,40px)] grid grid-cols-1 gap-3.5 md:grid-cols-3">
+      {
+        CATS.map((c) => (
+          <div class="rounded-md border border-line bg-paper p-6">
+            <span class="mb-2.5 inline-block font-mono text-[0.72rem] text-brand">{c.tag}</span>
+            <h3 class="font-display text-[1.2rem] font-semibold text-ink">{c.t}</h3>
+            <p class="mt-[7px] text-[0.93rem] leading-[1.5] text-ink-soft">{c.p}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+{/* ── Sur-mesure marque ───────────────────────────────────────────────────── */}
+<section class="py-[clamp(48px,6vw,88px)]">
+  <div class="container-site">
+    <Eyebrow>Travailler avec nous</Eyebrow>
+    <h2
+      class="mt-3 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.5rem)] font-medium leading-[1.06] tracking-h2 text-ink"
+    >
+      Pour les marques, on crée du sur-mesure.
+    </h2>
+    <p class="mt-4 max-w-[56ch] text-[1.0625rem] leading-[1.6] text-ink-2">
+      Au-delà du catalogue public, on conçoit des kits Canva propriétaires : vos gabarits, à votre
+      charte, que vos équipes éditent en autonomie. La cohérence d’une agence, l’autonomie d’un
+      outil.
+    </p>
+    <div class="mt-[clamp(28px,4vw,40px)] grid grid-cols-1 gap-3.5 md:grid-cols-3">
+      {
+        STEPS.map((s) => (
+          <div class="rounded-md border border-line bg-paper p-6">
+            <div class="font-mono text-[0.8rem] text-brand">{s.n}</div>
+            <h3 class="mt-2.5 font-display text-[1.15rem] font-semibold tracking-[-0.01em] text-ink">
+              {s.t}
+            </h3>
+            <p class="mt-2 text-[0.95rem] leading-[1.55] text-ink-soft">{s.p}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+{/* ── Bande CTA finale ────────────────────────────────────────────────────── */}
+<CtaBand
+  title="Un projet de templates ? Parlons-en."
+  lead="Catalogue, kit de marque ou collaboration : 15 minutes pour en discuter."
+  ctaLabel="Travailler avec nous"
+  ctaHref="/contact"
+/>

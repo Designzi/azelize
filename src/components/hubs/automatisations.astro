@@ -1,0 +1,160 @@
+---
+/**
+ * Hub service — /automatisations. Portage fidèle de automatisations.html (corps <main>).
+ * Design monochrome (Ocean Twilight) : accent = brand. Flow visuel (trigger →
+ * étapes → résultat) reproduit en Tailwind tokenisé. CTA final = CtaBand.
+ */
+import Section from '@components/ui/Section.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import Button from '@components/ui/Button.astro';
+import CtaBand from '@components/blocks/CtaBand.astro';
+
+const AUTOMATISE = [
+  { n: '01', t: 'Devis & factures', p: 'Générés, envoyés, relancés automatiquement. Fini les oublis.' },
+  { n: '02', t: 'Prise de rendez-vous', p: 'Vos clients réservent un créneau, votre agenda se remplit seul.' },
+  { n: '03', t: 'Synchronisation d’outils', p: 'Vos logiciels se parlent : plus de double saisie, plus d’erreurs.' },
+];
+
+const STATS = [
+  { n: '~6 h', l: 'économisées par semaine' },
+  { n: '0', l: 'relance oubliée' },
+  { n: '24/7', l: 'vos clients servis' },
+  { n: '-90 %', l: 'de double saisie' },
+];
+
+const FAQ = [
+  {
+    q: 'Il faut changer tous mes outils ?',
+    a: "Non. On connecte ce que vous utilisez déjà (agenda, mail, logiciel de devis) — on ajoute juste l'automatisation entre les deux.",
+  },
+  {
+    q: 'C’est compliqué à utiliser ?',
+    a: "Justement, l'idée c'est que vous n'ayez rien à faire : ça tourne tout seul en arrière-plan. On vous montre une fois, et c'est tout.",
+  },
+  {
+    q: 'Ça remplace mes salariés ?',
+    a: 'Non, ça les libère des tâches ingrates pour qu’ils se concentrent sur le client et le métier.',
+  },
+];
+
+const LINKS = [
+  { label: 'SaaS & outils', href: '/saas-outils' },
+  { label: 'Création de site', href: '/creation-site-internet' },
+  { label: 'Réalisations', href: '/realisations' },
+];
+---
+
+{/* ── Héro + flow visuel ────────────────────────────────────────────── */}
+<section class="pt-[clamp(150px,16vw,200px)] pb-[clamp(28px,3vw,44px)]">
+  <div class="container-site">
+    <div class="max-w-[860px]">
+      <div class="reveal"><Eyebrow class="mb-[18px]">Automatisations</Eyebrow></div>
+      <h1
+        class="reveal m-0 mt-4 font-display text-[clamp(2.3rem,5vw,4rem)] font-medium leading-[1.02] tracking-display text-ink [&_em]:not-italic [&_em]:text-brand"
+      >
+        Arrêtez de faire <em>ce qu'une machine peut faire</em>.
+      </h1>
+      <p class="reveal mt-[22px] max-w-[54ch] text-[clamp(1.0625rem,1.6vw,1.3rem)] leading-[1.55] text-ink-2">
+        Devis à renvoyer, relances, prise de rendez-vous, données à recopier d'un outil à l'autre :
+        on automatise vos tâches répétitives. Vous récupérez du temps, vos clients une réponse
+        immédiate.
+      </p>
+      <div class="reveal mt-7 flex flex-wrap gap-3.5">
+        <Button href="/contact" size="lg">Automatiser mon activité</Button>
+        <Button href="/saas-outils" variant="outline" size="lg">Voir les outils</Button>
+      </div>
+
+      {/* flow : trigger → étapes → résultat */}
+      <div
+        class="reveal mt-[clamp(32px,4vw,48px)] flex flex-col items-stretch rounded-sm border border-line bg-paper p-[clamp(20px,2.5vw,30px)] md:flex-row md:flex-nowrap"
+      >
+        <div class="flex flex-1 flex-col gap-1.5 rounded-sm bg-brand p-4">
+          <span class="font-mono text-[0.68rem] uppercase tracking-[0.06em] text-on-dark-bright/70">Déclencheur</span>
+          <span class="font-display text-base font-semibold text-on-dark-bright">Nouveau formulaire</span>
+          <span class="text-[0.82rem] leading-[1.4] text-on-dark-bright/90">Un client remplit votre devis en ligne.</span>
+        </div>
+        <div class="flex flex-none rotate-90 items-center self-center px-0 py-2 text-[1.2rem] text-brand md:rotate-0 md:px-2 md:py-0">→</div>
+        <div class="flex flex-1 flex-col gap-1.5 rounded-sm bg-parchment p-4">
+          <span class="font-mono text-[0.68rem] uppercase tracking-[0.06em] text-ink-soft/70">Étape</span>
+          <span class="font-display text-base font-semibold text-ink">Devis généré</span>
+          <span class="text-[0.82rem] leading-[1.4] text-ink-soft">Le PDF se crée tout seul, à votre charte.</span>
+        </div>
+        <div class="flex flex-none rotate-90 items-center self-center px-0 py-2 text-[1.2rem] text-brand md:rotate-0 md:px-2 md:py-0">→</div>
+        <div class="flex flex-1 flex-col gap-1.5 rounded-sm bg-parchment p-4">
+          <span class="font-mono text-[0.68rem] uppercase tracking-[0.06em] text-ink-soft/70">Étape</span>
+          <span class="font-display text-base font-semibold text-ink">Email envoyé</span>
+          <span class="text-[0.82rem] leading-[1.4] text-ink-soft">Le client le reçoit en quelques secondes.</span>
+        </div>
+        <div class="flex flex-none rotate-90 items-center self-center px-0 py-2 text-[1.2rem] text-brand md:rotate-0 md:px-2 md:py-0">→</div>
+        <div class="flex flex-1 flex-col gap-1.5 rounded-sm bg-brand-soft p-4">
+          <span class="font-mono text-[0.68rem] uppercase tracking-[0.06em] text-ink-soft/70">Résultat</span>
+          <span class="font-display text-base font-semibold text-ink">Relance auto</span>
+          <span class="text-[0.82rem] leading-[1.4] text-ink-soft">Sans réponse sous 3 jours, on relance pour vous.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{/* ── Ce qu'on automatise ───────────────────────────────────────────── */}
+<Section tone="parchment" pad="default">
+  <div class="reveal"><Eyebrow class="mb-[18px]">Ce qu'on automatise</Eyebrow></div>
+  <h2 class="reveal m-0 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink">
+    Les tâches qui vous mangent vos soirées.
+  </h2>
+  <div class="mt-[clamp(28px,4vw,40px)] grid grid-cols-1 gap-3.5 md:grid-cols-3">
+    {AUTOMATISE.map((c) => (
+      <div class="reveal rounded-sm border border-line bg-paper p-6">
+        <div class="font-mono text-[0.8rem] text-brand">{c.n}</div>
+        <h3 class="mt-2.5 font-display text-[1.15rem] font-semibold tracking-[-0.01em] text-ink">{c.t}</h3>
+        <p class="mt-2 text-[0.95rem] leading-[1.55] text-ink-soft">{c.p}</p>
+      </div>
+    ))}
+  </div>
+</Section>
+
+{/* ── Bande de confiance / stats ────────────────────────────────────── */}
+<Section pad="default">
+  <div class="reveal grid grid-cols-2 gap-6 border-y border-line py-[clamp(28px,3vw,44px)] md:grid-cols-4 md:gap-[clamp(16px,3vw,40px)]">
+    {STATS.map((s) => (
+      <div>
+        <div class="font-display text-[clamp(1.7rem,3vw,2.4rem)] font-semibold leading-none tracking-[-0.03em] text-brand">{s.n}</div>
+        <div class="mt-2 text-[0.85rem] text-ink-soft">{s.l}</div>
+      </div>
+    ))}
+  </div>
+</Section>
+
+{/* ── FAQ + maillage interne ────────────────────────────────────────── */}
+<Section tone="parchment" pad="default">
+  <div class="reveal"><Eyebrow class="mb-[18px]">Vos questions</Eyebrow></div>
+  <h2 class="reveal m-0 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink">
+    L'automatisation, sans technique.
+  </h2>
+  <div class="mt-[clamp(28px,4vw,40px)] flex max-w-[780px] flex-col gap-2.5">
+    {FAQ.map((f) => (
+      <div class="reveal rounded-sm border border-line bg-paper px-[22px] py-5">
+        <p class="m-0 font-display text-[1.1rem] font-medium text-ink">{f.q}</p>
+        <p class="mt-2.5 text-base leading-[1.6] text-ink-2">{f.a}</p>
+      </div>
+    ))}
+  </div>
+  <div class="reveal mt-[clamp(24px,3vw,32px)] flex flex-wrap gap-[9px]">
+    {LINKS.map((l) => (
+      <a
+        href={l.href}
+        class="whitespace-nowrap rounded-full border border-line-strong bg-paper px-[15px] py-2 text-[0.9rem] font-medium text-ink-2 transition-[color,border-color] duration-200 ease-brand hover:border-brand hover:text-brand"
+      >
+        {l.label}
+      </a>
+    ))}
+  </div>
+</Section>
+
+{/* ── CTA final ─────────────────────────────────────────────────────── */}
+<CtaBand
+  title="Récupérons votre temps."
+  lead="15 minutes pour repérer ce qu'on peut automatiser chez vous. Sans engagement."
+  ctaLabel="Automatiser mon activité"
+  ctaHref="/contact"
+/>
