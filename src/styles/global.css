@@ -90,6 +90,15 @@
   padding-inline: var(--container-px);
 }
 
+/* Rythme vertical du hero des pages service (hubs/métiers/villes) — POINT DE
+   CONTRÔLE UNIQUE. Le décalage sous le header fixe est déjà assuré par BaseLayout
+   (padding-top du <main>) + le fil d'Ariane : pas de clearance ici. pt = 2× pb.
+   Modifier ces deux valeurs s'applique à tous les heros qui portent `hero-pad`. */
+@utility hero-pad {
+  padding-top: clamp(40px, 6vw, 72px);
+  padding-bottom: clamp(20px, 3vw, 36px);
+}
+
 /* ----------------------------------------------------------------------------
    Contenu d'article (MDX) — prose minimaliste, fidèle au système.
    Exception assumée : on ne peut pas poser d'utilitaires sur du Markdown rendu.
