@@ -12,13 +12,14 @@
    ========================================================================== */
 
 :root {
-  /* — BRAND (Ocean Twilight — palette Design réelle, Q1). Site monochrome :
-     marque + neutres + jaune accent-2 ponctuel. Le système fruit a été élagué. — */
+  /* — BRAND (Ocean Twilight bleu, Q1) — la marque reste bleue. L'encre et les
+     bandes sombres sont WARM (brun-olive #403D30, texte crème). Jaune accent-2
+     ponctuel. Fruit élagué ; plus aucun #2D3138 (Jet) dans le système. — */
   --brand:        #2347B8;   /* Ocean Twilight — primaire */
   --brand-deep:   #1C39A0;   /* hover / pressé */
   --brand-bright: #2F57D0;   /* clair */
   --brand-soft:   #E6EBF9;   /* wash bleu clair — surfaces, badges */
-  --brand-900:    #2D3138;   /* Jet Black — bandes sombres, footer */
+  --brand-900:    #403D30;   /* Brun-olive sombre — bandes sombres, footer (encre chaude marque) */
   --brand-line:   #C9CDD2;   /* Pale Slate — filet sur surface douce */
 
   /* — ACCENT (= brand ; bouton plein) — */
@@ -30,7 +31,7 @@
   --paper:        #FFFFFF;
   --paper-2:      #F5F1E8;   /* Parchemin — surfaces secondaires */
   --surface:      #FFFFFF;
-  --ink:          #2D3138;
+  --ink:          #403D30;   /* Brun-olive — encre chaude de la marque */
   --ink-2:        #4A4F57;
   --ink-soft:     #6F747C;
   --ink-faint:    #A7ABB2;
@@ -38,10 +39,10 @@
   --line-strong:  #C9CDD2;
   --line-soft:    #F1EEE5;
 
-  /* — SUR FOND SOMBRE — */
-  --on-dark:        #E8EAED;
-  --on-dark-bright: #FFFFFF;
-  --on-dark-soft:   #C9CDD2;
+  /* — SUR FOND SOMBRE (crème sur bande brun-olive) — */
+  --on-dark:        #F4F1E6;                   /* crème clair — titres/texte sur sombre */
+  --on-dark-bright: #FFFFFF;                   /* blanc — survol du bouton crème */
+  --on-dark-soft:   rgba(244, 241, 230, 0.78); /* crème 78% — sous-titres */
   --on-dark-line:   rgba(255,255,255,0.16);
 
   /* — ÉTATS — */
@@ -106,7 +107,7 @@
   --color-brand-deep:   #1C39A0;
   --color-brand-bright: #2F57D0;
   --color-brand-soft:   #E6EBF9;
-  --color-brand-900:    #2D3138;   /* Jet Black */
+  --color-brand-900:    #403D30;   /* Brun-olive sombre — bandes/footer */
 
   /* — Accent jaune ponctuel (topbar + carte contact FAQ) — Design réel, Q2 — */
   --color-accent-2:          #FFD500;
@@ -116,12 +117,12 @@
 
   /* — Chrome (méga-menu / tiroir mobile) — */
   --color-hover:   #F2F2F2;               /* survol neutre du méga-menu (jamais brand) */
-  --color-overlay: rgba(45, 49, 56, 0.42); /* voile du tiroir mobile */
+  --color-overlay: rgba(64, 61, 48, 0.42); /* voile du tiroir mobile (brun-olive) */
   --shadow-mega:   0 34px 60px -34px rgba(45, 40, 18, 0.34);
 
   --color-paper:       #FFFFFF;
   --color-parchment:   #F5F1E8;
-  --color-ink:         #2D3138;
+  --color-ink:         #403D30;   /* Brun-olive — encre chaude de la marque */
   --color-ink-2:       #4A4F57;
   --color-ink-soft:    #6F747C;
   --color-ink-faint:   #A7ABB2;
@@ -134,9 +135,9 @@
   --color-danger: #E11D2E;  --color-danger-soft: #FEE2E2;
 
   /* — sur fond sombre (bande finale, footer) — */
-  --color-on-dark:        #E8EAED;
+  --color-on-dark:        #F4F1E6;
   --color-on-dark-bright: #FFFFFF;
-  --color-on-dark-soft:   #C9CDD2;
+  --color-on-dark-soft:   rgba(244, 241, 230, 0.78);
 
   --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
   --font-sans:    'Hanken Grotesk', system-ui, sans-serif;

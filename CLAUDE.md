@@ -12,10 +12,13 @@ Toujours préférer une classe canonique à une valeur arbitraire `[...]` quand 
 
 ## Couleurs
 
-Palette **Ocean Twilight** — couleurs réelles de la maquette Design (décision Q1 : on se fie au Design réel, pas aux `.md`/commentaires) :
+Palette **marque Ocean Twilight bleue + encre/bandes WARM brun-olive** (décision Q1 : on se fie au Design réel, pas aux `.md`/commentaires) :
 
-- marque `brand` `#2347B8` (+ `brand-deep` / `-bright` / `-soft`), encre `ink` `#2D3138`, bande sombre `brand-900` (Jet), neutres/parchemin (`paper`, `parchment`), filets `line` / `-strong` / `-soft` ;
+- **marque** `brand` `#2347B8` bleu (Ocean Twilight, + `brand-deep` / `-bright` / `-soft`) — la marque reste bleue ;
+- **encre** `ink` `#403D30` (brun-olive chaud, « l'encre chaude de la marque ») et **bande sombre** `brand-900` `#403D30` (même brun-olive) — sur fond sombre le texte est crème : `on-dark` `#F4F1E6`, `on-dark-soft` `rgba(244,241,230,.78)`, `on-dark-bright` `#FFFFFF` ; bouton crème = `<Button variant="cream">` (fond `on-dark`, label `ink`, survol `paper`) ;
+- neutres/parchemin (`paper`, `parchment`), filets `line` / `-strong` / `-soft` ;
+- ⚠️ **Jet `#2D3138` retiré du système** (warm pivot) — ne jamais le réintroduire ;
 - **jaune `accent-2`** seul accent coloré, ponctuel : `accent-2-soft` (topbar + carte FAQ), `accent-2-ink` / `-ink-deep` (texte/bouton sur jaune) ;
 - chrome : `hover` (survol neutre du méga-menu), `overlay` (voile du tiroir), `shadow-mega`.
 
-Le **système fruit / 17 combinaisons** (`docs/familles/charte-couleur.md`, `menthe/fraise/miel/citron/kiwi`) est **superseded et élagué** : les tokens fruit ont été retirés de `design-tokens.css` (ne reste que marque + neutres + jaune `accent-2`). `lib/accents.ts` renvoie `brand` pour tout accent ; le type `Accent` et les props `accent: …` subsistent comme labels inertes (compat schéma), sans effet visuel. Le site est **monochrome** (marque + neutres + jaune ponctuel). Jamais `ok`/`warn`/`danger` en surface, jamais de couleur en dur (`check:tokens`).
+Le **système fruit / 17 combinaisons** (`docs/familles/charte-couleur.md`, `menthe/fraise/miel/citron/kiwi`) est **superseded et élagué** : les tokens fruit ont été retirés de `design-tokens.css` (ne reste que marque + neutres + jaune `accent-2`). `lib/accents.ts` renvoie `brand` pour tout accent ; le type `Accent` et les props `accent: …` subsistent comme labels inertes (compat schéma), sans effet visuel. Le site reste **sobre** : marque bleue + encre/bandes brun-olive warm + crème + jaune `accent-2` ponctuel. Jamais `ok`/`warn`/`danger` en surface, jamais de couleur en dur (`check:tokens`).

@@ -7,7 +7,7 @@
  */
 interface Props {
   href?: string;
-  variant?: 'solid' | 'outline' | 'ghost';
+  variant?: 'solid' | 'outline' | 'ghost' | 'cream';
   size?: 'sm' | 'md' | 'lg';
   /** Pleine largeur (formulaire, colonnes de prix). */
   block?: boolean;
@@ -39,6 +39,8 @@ const variants = {
   solid: 'bg-brand text-paper hover:bg-brand-deep border border-transparent',
   outline: 'bg-transparent text-ink border border-line-strong hover:border-brand hover:text-brand',
   ghost: 'bg-transparent text-brand hover:bg-brand-soft border border-transparent',
+  // Bouton crème pour les bandes sombres (brun-olive) : fond crème, label encre, survol blanc.
+  cream: 'bg-on-dark text-ink hover:bg-paper border border-transparent',
 };
 
 const classes = [base, sizes[size], variants[variant], block && 'w-full', className];
