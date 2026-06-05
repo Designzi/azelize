@@ -1,0 +1,180 @@
+---
+/**
+ * Guide — Bien choisir qui s'occupe de votre site web (C5, guide d'achat / confiance).
+ * Portage fidèle de la maquette Design `bien-choisir-prestataire-web.html`.
+ * Corps <main> : hero + méta, 6 questions (liste numérotée éditoriale), points
+ * d'attention (cartes 2 col), notre façon de faire (cartes 3 col + carte mise en avant), CTA.
+ *
+ * Autonome : markup et texte en dur repris de la maquette, aucune prop.
+ * Le chrome (header/footer) + fil d'Ariane sont fournis par la route guides.
+ */
+import CtaBand from '@components/blocks/CtaBand.astro';
+
+const QUESTIONS: { n: string; t: string; p: string }[] = [
+  {
+    n: '01',
+    t: 'Que se passe-t-il après la mise en ligne ?',
+    p: 'Un site se dégrade sans entretien. Demandez qui assure les mises à jour, la sécurité et le suivi dans le temps.',
+  },
+  {
+    n: '02',
+    t: 'Le référencement est-il prévu ?',
+    p: "Un beau site qu'on ne trouve pas ne sert à rien. Vérifiez que la visibilité sur Google fait partie de l'offre.",
+  },
+  {
+    n: '03',
+    t: "Qu'est-ce qui est compris, exactement ?",
+    p: "Hébergement, modifications, contenus : demandez le détail pour éviter les frais qui s'ajoutent.",
+  },
+  {
+    n: '04',
+    t: 'Comment ça se passe si je veux arrêter ?',
+    p: 'Engagement, résiliation, ce que vous gardez ou louez : tout doit être clair et écrit dès le départ.',
+  },
+  {
+    n: '05',
+    t: 'Puis-je voir des résultats réels ?',
+    p: 'Des cas clients concrets et chiffrés valent mieux que de jolies maquettes de démonstration.',
+  },
+  {
+    n: '06',
+    t: 'Qui sera mon interlocuteur ?',
+    p: 'Une personne joignable, qui connaît votre dossier — pas un service client anonyme.',
+  },
+];
+
+const WATCH: { t: string; p: string }[] = [
+  {
+    t: "Un gros budget d'un coup, sans suite",
+    p: 'Payer cher une seule fois, puis se retrouver seul avec un site qui vieillit. Demandez ce qui est prévu après.',
+  },
+  {
+    t: 'Un devis trop vague',
+    p: 'Si vous ne savez pas ce qui est inclus, vous le découvrirez sur la facture. Demandez le détail.',
+  },
+  {
+    t: 'Un engagement long et rigide',
+    p: "Un contrat qu'on ne peut pas quitter, même si ça ne marche pas. Préférez la souplesse.",
+  },
+  {
+    t: 'Une promesse de 1ʳᵉ place « garantie »',
+    p: 'Personne ne peut garantir une position exacte sur Google. La prudence est meilleur signe que la promesse.',
+  },
+];
+
+const US: { t: string; p: string; hl?: boolean }[] = [
+  {
+    t: 'Vous payez quand ça marche',
+    p: "1er mois offert, l'abonnement ne démarre qu'une fois que le site vous amène des clients.",
+    hl: true,
+  },
+  {
+    t: 'Sans engagement',
+    p: "Vous arrêtez quand vous voulez, d'un mois sur l'autre. C'est écrit, c'est simple.",
+  },
+  {
+    t: 'On reste dans la durée',
+    p: 'On ne livre pas pour disparaître : on entretient et on fait vivre votre site chaque mois.',
+  },
+];
+---
+
+{/* HERO */}
+<section class="container-site max-w-200 pt-[clamp(28px,4vw,48px)] pb-[clamp(24px,3vw,40px)]">
+  <div class="reveal">
+    <p class="text-[0.8125rem] text-ink-soft">Guides · Bien choisir</p>
+    <h1 class="mt-3.5 font-display text-[clamp(2.1rem,4.4vw,3.4rem)] font-medium leading-[1.04] tracking-[-0.03em] text-ink">
+      Bien choisir qui s'occupe de <em class="not-italic text-brand">votre site web</em>.
+    </h1>
+    <p class="mt-5 max-w-[58ch] text-[clamp(1.0625rem,1.6vw,1.3rem)] leading-[1.6] text-ink-2">
+      Confier sa présence en ligne, c'est un peu comme choisir un artisan : on veut quelqu'un de clair, de
+      fiable, qui reste joignable. Voici les bonnes questions à poser — pour partir sur de bonnes bases, avec
+      nous ou avec un autre.
+    </p>
+    <div class="mt-5.5 flex items-center gap-3.5 text-[0.85rem] text-ink-soft">
+      <span>Guide honnête</span>
+      <span class="h-1 w-1 rounded-full bg-ink-faint"></span>
+      <span>~5 min</span>
+      <span class="h-1 w-1 rounded-full bg-ink-faint"></span>
+      <span>Sans jargon</span>
+    </div>
+  </div>
+</section>
+
+{/* LES 6 QUESTIONS */}
+<section class="container-site py-[clamp(40px,5vw,72px)]">
+  <h2 class="reveal max-w-[26ch] font-display text-[clamp(1.5rem,2.6vw,2.1rem)] font-semibold tracking-tight text-ink">
+    Les 6 questions à poser avant de vous décider
+  </h2>
+  <p class="reveal mt-2 mb-[clamp(24px,3vw,32px)] max-w-[62ch] text-[1.0625rem] leading-[1.6] text-ink-2">
+    Quel que soit le prestataire, ces réponses vous diront l'essentiel. Notez-les, et comparez.
+  </p>
+  <div class="reveal max-w-220 border-t border-line">
+    {
+      QUESTIONS.map((q) => (
+        <div class="grid grid-cols-[auto_1fr] items-baseline gap-5.5 border-b border-line py-5.5">
+          <div class="font-mono text-[0.85rem] text-brand">{q.n}</div>
+          <div>
+            <h3 class="m-0 font-display text-[1.2rem] font-semibold text-ink">{q.t}</h3>
+            <p class="mt-1.5 max-w-[62ch] text-base leading-[1.6] text-ink-2">{q.p}</p>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+{/* CE QUI MÉRITE VOTRE ATTENTION */}
+<section class="bg-parchment py-[clamp(40px,5vw,72px)]">
+  <div class="container-site">
+    <h2 class="reveal max-w-[26ch] font-display text-[clamp(1.5rem,2.6vw,2.1rem)] font-semibold tracking-tight text-ink">
+      Ce qui mérite votre attention
+    </h2>
+    <p class="reveal mt-2 mb-[clamp(24px,3vw,32px)] max-w-[62ch] text-[1.0625rem] leading-[1.6] text-ink-2">
+      Rien d'alarmant — juste des points à clarifier avant de signer, pour éviter les malentendus.
+    </p>
+    <div class="grid max-w-220 grid-cols-1 gap-3.5 md:grid-cols-2">
+      {
+        WATCH.map((w) => (
+          <div class="reveal rounded-md border border-line bg-paper px-6 py-5.5">
+            <h3 class="m-0 font-display text-[1.1rem] font-semibold text-ink">{w.t}</h3>
+            <p class="mt-2 text-[0.95rem] leading-[1.55] text-ink-soft">{w.p}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+{/* NOTRE FAÇON DE FAIRE */}
+<section class="container-site py-[clamp(40px,5vw,72px)]">
+  <h2 class="reveal max-w-[26ch] font-display text-[clamp(1.5rem,2.6vw,2.1rem)] font-semibold tracking-tight text-ink">
+    Notre façon de faire
+  </h2>
+  <p class="reveal mt-2 mb-[clamp(24px,3vw,32px)] max-w-[62ch] text-[1.0625rem] leading-[1.6] text-ink-2">
+    On a bâti notre offre autour de ces questions — pour que vous n'ayez jamais à vous méfier.
+  </p>
+  <div class="grid max-w-220 grid-cols-1 gap-3.5 md:grid-cols-3">
+    {
+      US.map((u) => (
+        <div
+          class:list={[
+            'reveal rounded-md bg-paper p-6',
+            u.hl ? 'border-2 border-brand' : 'border border-line',
+          ]}
+        >
+          <h3 class="m-0 font-display text-[1.1rem] font-semibold text-ink">{u.t}</h3>
+          <p class="mt-2 text-[0.93rem] leading-[1.55] text-ink-soft">{u.p}</p>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+{/* CTA FINAL */}
+<CtaBand
+  title="Posez-nous toutes vos questions."
+  lead="15 minutes, sans jargon ni pression. On vous répond franchement, même si la réponse n'est pas à notre avantage."
+  ctaLabel="Demander un devis gratuit"
+  ctaHref="/contact"
+/>

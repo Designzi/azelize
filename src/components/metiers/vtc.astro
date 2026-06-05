@@ -5,6 +5,7 @@
  * Interactivité : aucune (page statique). Le chrome (header/footer) vient de BaseLayout.
  */
 import Button from '@components/ui/Button.astro';
+import CtaBand from '@components/blocks/CtaBand.astro';
 import { tiers } from '@data/pricing';
 
 // Prix de base (source unique) — Design : « À partir de 390 €/mois ».
@@ -81,7 +82,7 @@ const chips = [
 
       {/* mockup réservation */}
       <div
-        class="mt-[clamp(32px,4vw,48px)] max-w-[520px] overflow-hidden rounded-md border border-line bg-paper"
+        class="mt-[clamp(32px,4vw,48px)] max-w-[520px] overflow-hidden rounded-sm border border-line bg-paper"
       >
         <div class="flex items-center gap-[7px] border-b border-line bg-parchment px-4 py-[11px]">
           <span class="h-[9px] w-[9px] rounded-full bg-line-strong"></span>
@@ -134,7 +135,7 @@ const chips = [
       >
         {
           cards.map((c) => (
-            <div class="rounded-md border border-line bg-paper p-6">
+            <div class="rounded-sm border border-line bg-paper p-6">
               <div class="font-mono text-[0.8rem] text-brand">{c.n}</div>
               <h3 class="mt-2.5 font-display text-[1.15rem] font-semibold tracking-tight text-ink">
                 {c.t}
@@ -192,7 +193,7 @@ const chips = [
       <div class="mt-[clamp(28px,4vw,40px)] flex max-w-[780px] flex-col gap-2.5">
         {
           faq.map((f) => (
-            <div class="rounded-md border border-line bg-paper px-[22px] py-5">
+            <div class="rounded-sm border border-line bg-paper px-[22px] py-5">
               <p class="m-0 font-display text-[1.1rem] font-medium text-ink">{f.q}</p>
               <p class="mt-2.5 text-base leading-[1.6] text-ink-2">{f.a}</p>
             </div>
@@ -214,21 +215,11 @@ const chips = [
     </div>
   </section>
 
-  {/* ── Bande CTA (brun-olive Design) ───────────────────────────────────── */}
-  <section class="bg-brand-900">
-    <div class="container-site py-[clamp(48px,6vw,80px)] text-center">
-      <h2
-        class="mx-auto m-0 max-w-[20ch] font-display text-[clamp(1.8rem,3.4vw,2.6rem)] font-medium leading-[1.06] tracking-h2 text-on-dark-bright"
-      >
-        Reprenez vos clients en main.
-      </h2>
-      <p
-        class="mx-auto mt-[18px] max-w-[46ch] text-[1.0625rem] leading-[1.55] text-on-dark-soft"
-      >
-        15 minutes pour voir comment un site de réservation directe peut vous libérer des
-        commissions. Sans engagement.
-      </p>
-      <Button href="/contact" size="lg" class="mt-7">Demander un devis gratuit</Button>
-    </div>
-  </section>
+  {/* ── Bande CTA finale ────────────────────────────────────────────────── */}
+  <CtaBand
+    title="Reprenez vos clients en main."
+    lead="15 minutes pour voir comment un site de réservation directe peut vous libérer des commissions. Sans engagement."
+    ctaLabel="Demander un devis gratuit"
+    ctaHref="/contact"
+  />
 </main>

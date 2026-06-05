@@ -18,6 +18,22 @@ import { ogImage } from '@lib/og';
 const realisations = (await getCollection('realisations')).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
 );
+
+/**
+ * .rz-card-stat de la maquette = UN chiffre mis en avant + son libellé.
+ * On dérive ce couple du 1ᵉ `resultats` quand il débute par une figure
+ * (« 14 demandes / mois » → b:"14", span:"demandes / mois »). Sinon : pas de
+ * stat (fidèle à la maquette dont les cartes sans chiffre n'affichent rien).
+ */
+function leadStat(resultats?: string[]): { b: string; label: string } | null {
+  const first = resultats?.[0];
+  if (!first) return null;
+  const m = first.match(
+    /^([×\-+]?\s?\d[\d.,\s]*(?:\s?(?:%|h|sem\.|min|j))?|\d+(?:ʳᵉ|ᵉ|er|e))\s+(.+)$/u,
+  );
+  if (!m) return null;
+  return { b: m[1].trim(), label: m[2].trim() };
+}
 ---
 
 <BaseLayout
@@ -48,38 +64,48 @@ const realisations = (await getCollection('realisations')).sort(
     <div class="container-site">
       <div class="grid grid-cols-[repeat(auto-fill,minmax(330px,1fr))] gap-[clamp(18px,2.4vw,26px)]">
         {
-          realisations.map((c) => (
-            <a
-              href={`/realisations/${c.id}`}
-              class="reveal group flex flex-col overflow-hidden rounded-md border border-line bg-paper no-underline transition-[border-color,transform] duration-150 ease-brand hover:-translate-y-[3px] hover:border-brand"
-            >
-              <div
-                class="flex aspect-[16/10] items-center justify-center"
-                style="background:linear-gradient(180deg,color-mix(in srgb,var(--color-brand) 7%,transparent),color-mix(in srgb,var(--color-brand) 2%,transparent)),repeating-linear-gradient(135deg,var(--color-parchment) 0 14px,var(--color-line) 14px 28px);"
-                aria-hidden="true"
+          realisations.map((c) => {
+            const stat = leadStat(c.data.resultats);
+            return (
+              <a
+                href={`/realisations/${c.id}`}
+                class="reveal group flex flex-col overflow-hidden rounded-md border border-line bg-paper no-underline transition-[border-color,transform] duration-150 ease-brand hover:-translate-y-[3px] hover:border-brand"
               >
-                <span class="text-[0.7rem] uppercase tracking-[0.08em] text-brand/40">
-                  {c.data.client}
-                </span>
-              </div>
-              <div class="px-[22px] pb-[22px] pt-5">
-                <h3 class="m-0 font-display text-[1.3rem] font-semibold tracking-[-0.01em] text-ink">
-                  {c.data.client}
-                </h3>
-                <p class="mt-[7px] text-[0.95rem] leading-[1.5] text-ink-soft">{c.data.resume}</p>
-                {c.data.resultats && c.data.resultats.length > 0 && (
-                  <ul class="mt-4 space-y-1.5 border-t border-line pt-3.5">
-                    {c.data.resultats.map((res) => (
-                      <li class="flex gap-2 text-[0.85rem] leading-[1.45] text-ink-soft">
-                        <span class="text-brand">—</span>
-                        <span>{res}</span>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            </a>
-          ))
+                <div
+                  class="flex aspect-[16/10] items-center justify-center"
+                  style="background:linear-gradient(180deg,color-mix(in srgb,var(--color-brand) 7%,transparent),color-mix(in srgb,var(--color-brand) 2%,transparent)),repeating-linear-gradient(135deg,var(--color-parchment) 0 14px,var(--color-line) 14px 28px);"
+                  aria-hidden="true"
+                >
+                  <span class="text-[0.7rem] uppercase tracking-[0.08em] text-brand/40">
+                    {c.data.couverture ?? c.data.client}
+                  </span>
+                </div>
+                <div class="px-[22px] pb-[22px] pt-5">
+                  {c.data.tags && c.data.tags.length > 0 && (
+                    <div class="mb-[11px] flex flex-wrap gap-[7px]">
+                      {c.data.tags.map((tag) => (
+                        <span class="rounded-full bg-brand-soft px-[11px] py-1 text-[0.72rem] font-semibold text-brand">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                  <h3 class="m-0 font-display text-[1.3rem] font-semibold tracking-[-0.01em] text-ink">
+                    {c.data.client}
+                  </h3>
+                  <p class="mt-[7px] text-[0.95rem] leading-[1.5] text-ink-soft">{c.data.resume}</p>
+                  {stat && (
+                    <div class="mt-4 flex items-baseline gap-2 border-t border-line pt-3.5">
+                      <b class="font-display text-[1.4rem] font-semibold tracking-h2 text-brand">
+                        {stat.b}
+                      </b>
+                      <span class="text-[0.85rem] text-ink-soft">{stat.label}</span>
+                    </div>
+                  )}
+                </div>
+              </a>
+            );
+          })
         }
 
         {/* Placeholders — à remplacer par de vrais cas au fil de l'eau */}

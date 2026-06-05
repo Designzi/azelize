@@ -15,7 +15,29 @@ const guides = (await getCollection('guides')).sort(
     a.data.titre.localeCompare(b.data.titre, 'fr'),
 );
 
-const [feature, ...rest] = guides;
+/**
+ * Fidélité maquette (guides.html) : le guide « à la une » est le SEO
+ * (tag « À la une · Référencement »), et la grille démarre par le comparatif
+ * « faire soi-même vs studio » (tag « Bien démarrer »). On épingle donc l'ordre
+ * d'affichage par id plutôt que de se reposer sur le tri générique.
+ */
+const FEATURE_ID = 'guide-seo-tpe-btp';
+const LEAD_ID = 'guide-agence-web-vs-diy';
+
+const feature = guides.find((g) => g.id === FEATURE_ID) ?? guides[0];
+const rest = guides
+  .filter((g) => g.id !== feature.id)
+  .sort((a, b) => (a.id === LEAD_ID ? -1 : b.id === LEAD_ID ? 1 : 0));
+
+/**
+ * Tag de carte = 1re étiquette `tags` du guide (Title Case), avec un libellé
+ * verbatim de la maquette pour la carte de tête. Évite le « Guide » générique.
+ */
+const cardTag = (g: (typeof guides)[number]): string => {
+  if (g.id === LEAD_ID) return 'Bien démarrer';
+  const t = g.data.tags?.[0];
+  return t ? t.charAt(0).toUpperCase() + t.slice(1) : 'Guide';
+};
 
 // Placeholders « Bientôt » repris de la maquette (pas d'entrée de collection).
 const soon: { tag: string; titre: string; resume: string }[] = [
@@ -36,8 +58,9 @@ const soon: { tag: string; titre: string; resume: string }[] = [
   },
 ];
 
+// Mockup carte = dégradé parchemin rayé (pas 14px de la maquette `.gx-card-shot`).
 const shot =
-  'background:repeating-linear-gradient(135deg,var(--color-parchment) 0 16px,var(--color-line) 16px 32px);';
+  'background:repeating-linear-gradient(135deg,var(--color-parchment) 0 14px,var(--color-line) 14px 28px);';
 ---
 
 <BaseLayout
@@ -84,15 +107,18 @@ const shot =
                 {feature.data.titre}
               </h2>
               <p class="mt-3 text-[1rem] leading-[1.6] text-ink-soft">{feature.data.resume}</p>
-              {feature.data.updated && (
-                <p class="mt-4 text-[0.85rem] text-ink-faint">
-                  Mis à jour{' '}
-                  {feature.data.updated.toLocaleDateString('fr-FR', {
-                    month: 'long',
-                    year: 'numeric',
-                  })}
-                </p>
-              )}
+              <p class="mt-4 text-[0.85rem] text-ink-faint">
+                ~8 min
+                {(feature.data.updated ?? feature.data.date) && (
+                  <>
+                    {' · Mis à jour '}
+                    {(feature.data.updated ?? feature.data.date)!.toLocaleDateString('fr-FR', {
+                      month: 'long',
+                      year: 'numeric',
+                    })}
+                  </>
+                )}
+              </p>
             </div>
           </a>
         )
@@ -108,7 +134,7 @@ const shot =
               <div class="aspect-[16/9]" style={shot} aria-hidden="true" />
               <div class="px-6 py-5.5">
                 <span class="text-caption font-bold uppercase tracking-[0.08em] text-brand">
-                  Guide
+                  {cardTag(g)}
                 </span>
                 <h3 class="mt-2 m-0 font-display text-[1.25rem] font-semibold tracking-tight text-ink">
                   {g.data.titre}

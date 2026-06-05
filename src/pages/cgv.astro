@@ -27,10 +27,12 @@ const sections: [string, string][] = [
   title="Conditions générales"
   description="Les conditions de l'abonnement Azelize : démarrage, frais, paiement, résiliation, propriété du site. En clair."
 >
-  <Section width="hero" pad="default" class="cg-hero">
-    <Eyebrow>Conditions</Eyebrow>
-    <h1 class="cg-h1">Conditions générales</h1>
-    <p class="cg-updated">En vigueur au 1ᵉʳ juin 2026 · Azelize (Fezilfeza) — Lanester</p>
+  <Section width="site" pad="default" class="cg-hero">
+    <div class="cg-narrow">
+      <Eyebrow>Conditions</Eyebrow>
+      <h1 class="cg-h1">Conditions générales</h1>
+      <p class="cg-updated">En vigueur au 1ᵉʳ juin 2026 · Azelize (Fezilfeza) — Lanester</p>
+    </div>
   </Section>
 
   <Section width="site" pad="none" class="cg-body">
@@ -175,6 +177,10 @@ const sections: [string, string][] = [
   .cg-hero {
     padding-top: clamp(150px, 16vw, 200px);
     padding-bottom: clamp(24px, 3vw, 40px);
+  }
+  /* Hero en colonne étroite (ed-wrap--narrow Design = 820px). */
+  .cg-narrow {
+    max-width: 820px;
   }
   .cg-h1 {
     font-family: var(--font-display);

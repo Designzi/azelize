@@ -22,13 +22,16 @@ const rights = [
   description="Comment Azelize collecte, utilise et protège vos données personnelles. Vos droits, vos données, en clair."
   noindex
 >
-  <Section width="hero" pad="default" class="pb-6 md:pb-10">
-    <Eyebrow>Vos données</Eyebrow>
-    <h1 class="pc-h1">Politique de confidentialité</h1>
-    <p class="pc-updated">En vigueur au 1ᵉʳ juin 2026 · Conforme RGPD</p>
+  <Section width="site" pad="default" class="pb-6 md:pb-10">
+    <div class="pc-narrow">
+      <Eyebrow>Vos données</Eyebrow>
+      <h1 class="pc-h1">Politique de confidentialité</h1>
+      <p class="pc-updated">En vigueur au 1ᵉʳ juin 2026 · Conforme RGPD</p>
+    </div>
   </Section>
 
-  <Section width="hero" pad="default" class="pc-body pt-0">
+  <Section width="site" pad="default" class="pc-body pt-0">
+    <div class="pc-narrow">
     <div class="pc-sec">
       <div class="pc-num">01</div>
       <div>
@@ -119,6 +122,7 @@ const rights = [
         </p>
       </div>
     </div>
+    </div>
   </Section>
 </BaseLayout>
 
@@ -137,8 +141,9 @@ const rights = [
     color: var(--color-ink-soft);
     margin: 16px 0 0;
   }
-  .pc-body {
-    max-width: 760px;
+  /* Colonne étroite (ed-wrap--narrow Design = 820px) pour le hero et le corps. */
+  .pc-narrow {
+    max-width: 820px;
   }
 
   /* sections numérotées en cartes (distinct du sommaire collant des mentions légales) */

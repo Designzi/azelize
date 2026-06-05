@@ -94,14 +94,14 @@ const initial = SIM.visibilite;
   {/* Corps : formulaire + aside */}
   <section class="pb-[clamp(64px,8vw,110px)]">
     <div class="container-site">
-      <div class="grid grid-cols-1 items-start gap-[clamp(28px,4vw,56px)] lg:grid-cols-[1.3fr_0.7fr]" data-devis-block>
+      <div class="grid grid-cols-1 items-start gap-[clamp(28px,4vw,56px)] min-[861px]:grid-cols-[1.3fr_0.7fr]" data-devis-block>
         {/* Formulaire */}
         <form class="rounded-sm border border-line bg-paper p-[clamp(24px,3vw,38px)]" data-devis-form>
           {/* Étape 1 */}
           <fieldset class="m-0 mb-7 border-0 p-0">
             <div class="font-mono text-[0.78rem] text-brand">Étape 1 / 3</div>
             <legend class="mt-2 mb-4 p-0 font-display text-[1.15rem] font-semibold text-ink">Vous</legend>
-            <div class="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
+            <div class="grid grid-cols-1 gap-3.5 min-[521px]:grid-cols-2">
               <div>
                 <label for="dv-nom" class="mb-1.5 block text-[0.85rem] font-semibold text-ink-2">Nom</label>
                 <input id="dv-nom" name="nom" class="dv-input" placeholder="Jean Dupont" autocomplete="name" />
@@ -111,7 +111,7 @@ const initial = SIM.visibilite;
                 <input id="dv-tel" name="tel" type="tel" class="dv-input" placeholder="06 12 34 56 78" autocomplete="tel" />
               </div>
             </div>
-            <div class="mt-3.5 grid grid-cols-1 gap-3.5 sm:grid-cols-2">
+            <div class="mt-3.5 grid grid-cols-1 gap-3.5 min-[521px]:grid-cols-2">
               <div>
                 <label for="dv-metier" class="mb-1.5 block text-[0.85rem] font-semibold text-ink-2">Métier</label>
                 <input id="dv-metier" name="metier" class="dv-input" placeholder="Plombier, électricien…" />
@@ -204,7 +204,7 @@ const initial = SIM.visibilite;
         </div>
 
         {/* Aside : simulateur + réassurance */}
-        <aside class="flex flex-col gap-4 lg:sticky lg:top-32">
+        <aside class="flex flex-col gap-4 min-[861px]:sticky min-[861px]:top-32">
           {/* Simulateur */}
           <div class="overflow-hidden rounded-sm border border-line bg-paper">
             <div class="bg-brand-900 px-5 py-[18px] text-on-dark">

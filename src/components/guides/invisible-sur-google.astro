@@ -1,0 +1,138 @@
+---
+/**
+ * Pain-point landing — « Vous tapez votre métier sur Google… et vous n’y êtes pas ? »
+ * Portage fidèle de `invisible-sur-google.html` (gabarit C5, problème → solution).
+ * Corps <main> : hero (h1 em, lead, 2 CTA, mockup SERP « vous absent »),
+ * 4 raisons → solution, 3 étapes (tint), CTA. Chrome + breadcrumbs par la route.
+ *
+ * Note : la maquette colore la ligne « vous » en rouge (--danger). La charte
+ * Azelize bannit ok/warn/danger en surface → on rend ce repère en `brand`.
+ */
+import Button from '@components/ui/Button.astro';
+import CtaBand from '@components/blocks/CtaBand.astro';
+
+const REASONS: { q: string; a: string; sol: string }[] = [
+  {
+    q: 'Vous n’avez pas de fiche Google',
+    a: 'Sans fiche d’établissement, impossible d’apparaître sur la carte. ',
+    sol: 'Solution : on la crée et on l’optimise.',
+  },
+  {
+    q: 'Votre site n’est pas référencé',
+    a: 'Avoir un site ne suffit pas : sans travail SEO, Google ne le montre pas. ',
+    sol: 'Solution : référencement local actif.',
+  },
+  {
+    q: 'Vous visez les mauvais mots-clés',
+    a: 'Trop large (« rénovation ») = noyé. ',
+    sol: 'Solution : on cible « votre métier + votre ville ».',
+  },
+  {
+    q: 'Vous n’avez pas (ou peu) d’avis',
+    a: 'Les avis pèsent dans le classement local. ',
+    sol: 'Solution : on met en place la collecte automatique.',
+  },
+];
+
+const STEPS: { n: string; t: string; p: string }[] = [
+  { n: '01', t: 'On diagnostique', p: 'On regarde où vous en êtes : fiche, site, position, concurrents.' },
+  { n: '02', t: 'On corrige les bases', p: 'Fiche Google, site optimisé, mots-clés locaux, premiers avis.' },
+  { n: '03', t: 'On entretient', p: 'Chaque mois, on travaille la visibilité pour que vous restiez devant.' },
+];
+---
+
+{/* HERO + mockup SERP */}
+<section class="container-site mx-auto max-w-205 pt-[clamp(150px,16vw,200px)] pb-[clamp(28px,4vw,44px)]">
+  <div class="text-[0.8125rem] text-ink-soft">Guides · Visibilité</div>
+  <h1 class="mt-3.5 font-display text-[clamp(2.1rem,4.6vw,3.5rem)] font-medium leading-[1.03] tracking-[-0.03em] text-ink">
+    Vous tapez votre métier sur Google… <em class="not-italic text-brand">et vous n’y êtes pas ?</em>
+  </h1>
+  <p class="mt-5 max-w-[56ch] text-[clamp(1.0625rem,1.6vw,1.3rem)] leading-[1.6] text-ink-2">
+    C’est le problème n°1 des artisans : invisible sur Google, les appels partent chez les concurrents. Voici
+    pourquoi — et comment y remédier, étape par étape.
+  </p>
+  <div class="mt-7 flex flex-wrap gap-3.5">
+    <Button href="/contact" size="lg">Diagnostic gratuit</Button>
+    <Button href="/prestations/referencement-seo" variant="outline" size="lg">Voir le référencement local</Button>
+  </div>
+
+  <div class="mt-[clamp(28px,4vw,44px)] max-w-140 overflow-hidden rounded-md border border-line bg-paper">
+    <div class="flex items-center gap-2.5 border-b border-line bg-parchment px-4 py-[13px]">
+      <span class="font-mono text-[0.85rem] text-ink-soft">🔍 votre métier + votre ville</span>
+    </div>
+    <div class="flex flex-col gap-2.5 px-4.5 py-4">
+      {
+        ['1', '2', '3'].map((r) => (
+          <div class="flex items-center gap-3">
+            <span class="flex h-5.5 w-5.5 flex-none items-center justify-center rounded-full bg-parchment font-mono text-[0.72rem] text-ink-soft">
+              {r}
+            </span>
+            <div class="flex-1">
+              <div class="h-[9px] w-[60%] rounded-[3px] bg-line-strong"></div>
+              <div class="mt-[5px] h-[7px] w-[42%] rounded-[3px] bg-line"></div>
+            </div>
+          </div>
+        ))
+      }
+      <div class="flex items-center gap-3 rounded-md border border-dashed border-brand bg-brand-soft px-3 py-2.5">
+        <span class="flex h-5.5 w-5.5 flex-none items-center justify-center rounded-full bg-brand font-mono text-[0.72rem] text-paper">
+          ?
+        </span>
+        <span class="text-[0.88rem] font-semibold text-brand">Vous : introuvable…</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+{/* POURQUOI — raisons → solution */}
+<section class="container-site py-[clamp(40px,5vw,72px)]">
+  <h2 class="m-0 mb-2 max-w-[26ch] font-display text-[clamp(1.5rem,2.6vw,2.1rem)] font-semibold tracking-tight text-ink">
+    Pourquoi vous n’apparaissez pas
+  </h2>
+  <p class="m-0 mb-[clamp(24px,3vw,32px)] max-w-[60ch] text-[1.0625rem] leading-[1.6] text-ink-2">
+    Dans 9 cas sur 10, c’est l’une de ces raisons. La bonne nouvelle : toutes se corrigent.
+  </p>
+  <div class="flex max-w-220 flex-col gap-3.5">
+    {
+      REASONS.map((r) => (
+        <div class="rounded-md border border-line bg-paper px-6 py-5.5">
+          <h3 class="m-0 font-display text-[1.15rem] font-semibold text-ink">{r.q}</h3>
+          <p class="mt-2 text-[0.97rem] leading-[1.6] text-ink-2">
+            {r.a}
+            <strong class="font-semibold text-brand">{r.sol}</strong>
+          </p>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+{/* SOLUTION — étapes */}
+<section class="bg-parchment py-[clamp(40px,5vw,72px)]">
+  <div class="container-site">
+    <h2 class="m-0 mb-2 max-w-[26ch] font-display text-[clamp(1.5rem,2.6vw,2.1rem)] font-semibold tracking-tight text-ink">
+      Comment on vous rend visible
+    </h2>
+    <p class="m-0 mb-[clamp(24px,3vw,32px)] max-w-[60ch] text-[1.0625rem] leading-[1.6] text-ink-2">
+      En quelques mois, on vous fait remonter là où vos clients cherchent.
+    </p>
+    <div class="grid max-w-220 grid-cols-1 gap-3.5 md:grid-cols-3">
+      {
+        STEPS.map((s) => (
+          <div class="rounded-md border border-line bg-paper p-6">
+            <div class="font-mono text-[0.8rem] text-brand">{s.n}</div>
+            <h3 class="mt-2.5 font-display text-[1.1rem] font-semibold text-ink">{s.t}</h3>
+            <p class="mt-[7px] text-[0.93rem] leading-[1.55] text-ink-soft">{s.p}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<CtaBand
+  title="Faisons-vous apparaître sur Google."
+  lead="15 minutes pour regarder votre situation. Sans engagement, vous ne payez qu’une fois que ça marche."
+  ctaLabel="Diagnostic gratuit"
+  ctaHref="/contact"
+/>

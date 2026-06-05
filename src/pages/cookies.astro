@@ -107,8 +107,10 @@ import Eyebrow from '@components/ui/Eyebrow.astro';
     padding-top: clamp(150px, 16vw, 200px);
     padding-bottom: clamp(20px, 3vw, 32px);
   }
+  /* Hero : colonne 760px centrée (Design : .ck-hero max-width:760 + ed-wrap margin auto). */
   .ck-hero :global(> div) {
     max-width: 760px;
+    margin-inline: auto;
   }
   .ck-h1 {
     font-family: var(--font-display);

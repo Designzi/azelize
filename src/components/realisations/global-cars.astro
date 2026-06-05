@@ -1,0 +1,316 @@
+---
+/**
+ * Étude de cas — Global Cars (C0, portage fidèle de `realisation-global-cars.html`).
+ * Corps <main> complet : hero + emblème, problème, stratégie (3 lectures),
+ * terrain (3 véhicules), système (split + table), preuve (split inversé),
+ * digital (2 captures), fonctionnalités (grille), conclusion, CTA.
+ *
+ * Visuels absents → placeholders dégradé parchemin (mission A/B).
+ * Le chrome (header/footer) et le fil d'Ariane sont fournis par la route.
+ */
+import CtaBand from '@components/blocks/CtaBand.astro';
+
+const PARCH = 'background:repeating-linear-gradient(135deg,var(--color-parchment) 0 16px,var(--color-line) 16px 32px);';
+
+const TAGS = ['Identité', 'Logo', 'Print', 'Site vitrine', 'Back-office'];
+
+const READS: { n: string; t: string; p: string }[] = [
+  {
+    n: '01',
+    t: 'Le regard',
+    p: 'Deux formes symétriques au centre. Le cerveau les lit comme deux yeux qui fixent — avant même d’identifier un logo. Instinctif, archaïque, impossible à ignorer.',
+  },
+  {
+    n: '02',
+    t: 'La transmission',
+    p: 'Isolez les deux moitiés : deux mains tendues, l’une qui donne, l’autre qui reçoit. Le geste fondateur du métier — la remise des clés, encodée dans le logo.',
+  },
+  {
+    n: '03',
+    t: 'L’objet',
+    p: 'Le creux entre les deux formes dessine une poignée de portière. Un détail que personne ne cherche — et que personne n’oublie une fois qu’il l’a vu.',
+  },
+];
+
+const FLEET: string[] = [
+  'Véhicule bleu avec emblème Global Cars',
+  'Utilitaire jaune avec emblème Global Cars',
+  'Véhicule rouge avec emblème Global Cars',
+];
+
+const TABLE: { c: string; u: string }[] = [
+  { c: 'Ligne d’horizon', u: 'Séparateur document, en-tête' },
+  { c: 'Onde triple', u: 'Fond de communication, texture' },
+  { c: 'Aile unique', u: 'Application latérale véhicule' },
+  { c: 'Emblème complet', u: 'Enseigne, façade, tampon' },
+  { c: 'GLOBALCARS logotype', u: 'Documents, digital, communication' },
+];
+
+const SHOTS: { t: string; p: string }[] = [
+  {
+    t: 'Site vitrine',
+    p: '— emblème en navigation, animation de véhicule flottant, catalogue de véhicules.',
+  },
+  {
+    t: 'Back-office sur-mesure',
+    p: '— gestion du catalogue, des statuts et des images, sans dépendre d’un outil tiers.',
+  },
+];
+
+const FEATS: { t: string; p: string }[] = [
+  { t: 'Fiche véhicule', p: 'Marque, modèle, année, km, carburant, boîte, prix, statut — tout structuré.' },
+  { t: 'Notifications temps réel', p: 'Chaque message ou demande remonte instantanément.' },
+  { t: 'Filtres avancés', p: 'Prix, marque, carburant : le client trouve vite.' },
+  { t: 'Upload d’images', p: 'Jusqu’à 20 photos, glisser-déposer, formats modernes (WebP, AVIF…).' },
+  { t: 'Gestion des formulaires', p: 'Contact, reprise, dépôt-vente centralisés et triés.' },
+  { t: 'Espace admin sécurisé', p: 'Authentification dédiée, accès réservé aux gérants.' },
+];
+---
+
+{/* HERO */}
+<section class="container-site mx-auto max-w-215 pb-[clamp(28px,3vw,44px)]">
+  <div class="reveal flex flex-wrap gap-2">
+    {
+      TAGS.map((t) => (
+        <span class="rounded-full bg-brand-soft px-[13px] py-[5px] text-[0.78rem] font-semibold text-brand">
+          {t}
+        </span>
+      ))
+    }
+  </div>
+  <h1 class="reveal mt-4.5 max-w-[16ch] font-display text-[clamp(2.3rem,5.4vw,4.2rem)] font-medium leading-none tracking-[-0.04em] text-ink">
+    Un logo qui capte <em class="not-italic text-brand">avant d’être lu</em>.
+  </h1>
+  <p class="reveal mt-5.5 max-w-[56ch] text-[clamp(1.0625rem,1.6vw,1.3rem)] leading-[1.55] text-ink-2">
+    Global Cars ne voulait pas un logo. Ils voulaient qu’on s’arrête. Qu’on retienne leur nom avant de
+    l’avoir lu. Qu’un emblème fasse le travail qu’aucune publicité ne peut faire : rester dans la tête.
+  </p>
+  <figure
+    class="reveal mt-[clamp(30px,4vw,48px)] flex aspect-[21/9] items-center justify-center overflow-hidden rounded-lg border border-line"
+    style={PARCH}
+  >
+    <span class="font-display text-[clamp(2rem,5vw,4rem)] font-bold tracking-wide text-brand">
+      GLOBAL<b class="font-normal text-brand/50">CARS</b>
+    </span>
+  </figure>
+</section>
+
+{/* PROBLÈME */}
+<section class="py-[clamp(48px,6vw,88px)]">
+  <div class="container-site max-w-190">
+    <p class="reveal text-eyebrow font-semibold uppercase tracking-eyebrow text-brand">Le problème</p>
+    <h2 class="reveal mt-3.5 max-w-[22ch] font-display text-[clamp(1.8rem,3.4vw,2.7rem)] font-medium leading-[1.08] tracking-h2 text-ink">
+      Sortir de la pile des logos qu’on oublie.
+    </h2>
+    <p class="reveal mt-4 max-w-[62ch] text-[1.0625rem] leading-[1.7] text-ink-2">
+      Ouvrez Google Images, tapez « logo automobile occasion » : la même route, la même silhouette de
+      voiture, le même bleu générique, répétés à l’infini. Des logos qu’on oublie en les regardant.
+    </p>
+    <p class="reveal mt-4 max-w-[62ch] text-[1.0625rem] leading-[1.7] text-ink-2">
+      Global Cars refusait de rejoindre cette pile. L’objectif, clair dès le premier brief : un emblème
+      assez fort pour capter l’attention <strong>avant même qu’on lise le nom</strong>. Un logo qu’on
+      retient, pas qu’on déchiffre.
+    </p>
+  </div>
+</section>
+
+{/* STRATÉGIE — 3 lectures */}
+<section class="bg-parchment py-[clamp(48px,6vw,88px)]">
+  <div class="container-site">
+    <div class="max-w-190">
+      <p class="reveal text-eyebrow font-semibold uppercase tracking-eyebrow text-brand">Stratégie</p>
+      <h2 class="reveal mt-3.5 max-w-[22ch] font-display text-[clamp(1.8rem,3.4vw,2.7rem)] font-medium leading-[1.08] tracking-h2 text-ink">
+        Ce qu’un logo doit faire avant d’être compris.
+      </h2>
+      <p class="reveal mt-4 max-w-[62ch] text-[1.0625rem] leading-[1.7] text-ink-2">
+        Un logo efficace ne communique pas un message, il provoque une réaction. Le cerveau réagit à une
+        forme ~13 millisecondes avant que la conscience ne l’analyse. C’est dans cet intervalle que tout se
+        joue. L’emblème agit sur trois niveaux de lecture simultanés — aucun explicite, tous actifs.
+      </p>
+    </div>
+    <div class="mt-[clamp(28px,4vw,44px)] grid grid-cols-1 gap-4 sm:grid-cols-3">
+      {
+        READS.map((r) => (
+          <div class="reveal rounded-lg border border-line bg-paper p-6.5">
+            <div class="font-mono text-[0.85rem] text-brand">{r.n}</div>
+            <h3 class="mt-2.5 font-display text-[1.25rem] font-semibold text-ink">{r.t}</h3>
+            <p class="mt-2 text-[0.95rem] leading-[1.6] text-ink-soft">{r.p}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+{/* TERRAIN */}
+<section class="py-[clamp(48px,6vw,88px)]">
+  <div class="container-site">
+    <div class="max-w-190">
+      <p class="reveal text-eyebrow font-semibold uppercase tracking-eyebrow text-brand">Terrain</p>
+      <h2 class="reveal mt-3.5 max-w-[22ch] font-display text-[clamp(1.8rem,3.4vw,2.7rem)] font-medium leading-[1.08] tracking-h2 text-ink">
+        Un emblème ne vit pas dans un PDF.
+      </h2>
+      <p class="reveal mt-4 max-w-[62ch] text-[1.0625rem] leading-[1.7] text-ink-2">
+        Trois époques de véhicules, trois univers chromatiques. Le même emblème qui tient à chaque fois —
+        parce qu’un bon logo ne dépend jamais d’une couleur pour exister.
+      </p>
+    </div>
+    <div class="mt-[clamp(28px,4vw,44px)] grid grid-cols-1 gap-3.5 sm:grid-cols-3">
+      {
+        FLEET.map((alt) => (
+          <figure
+            class="reveal aspect-square overflow-hidden rounded-lg border border-line"
+            style={PARCH}
+            aria-label={alt}
+          />
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+{/* SYSTÈME */}
+<section class="bg-parchment py-[clamp(48px,6vw,88px)]">
+  <div class="container-site">
+    <div class="grid grid-cols-1 items-center gap-6 md:grid-cols-2 md:gap-[clamp(28px,4vw,56px)]">
+      <div class="reveal">
+        <p class="text-eyebrow font-semibold uppercase tracking-eyebrow text-brand">Système</p>
+        <h2 class="mt-3.5 max-w-[22ch] font-display text-[clamp(1.8rem,3.4vw,2.7rem)] font-medium leading-[1.08] tracking-h2 text-ink">
+          Un logo. Un langage.
+        </h2>
+        <p class="mt-4 max-w-[62ch] text-[1.0625rem] leading-[1.7] text-ink-2">
+          Un logo, c’est un fichier. Une identité, c’est un système qui se décompose et se recompose sans
+          jamais perdre son ADN. Chaque élément est né de la même courbe fondatrice — fragmentée, étirée,
+          réarticulée, mais toujours reconnaissable.
+        </p>
+      </div>
+      <figure
+        class="reveal aspect-[4/3] overflow-hidden rounded-lg border border-line"
+        style={PARCH}
+        aria-label="Carte de remerciement Global Cars"
+      />
+    </div>
+    <div class="reveal mt-[clamp(24px,3vw,36px)] overflow-x-auto">
+      <table class="w-full overflow-hidden rounded-lg border border-line bg-paper">
+        <thead>
+          <tr>
+            <th class="border-b border-line bg-parchment px-4.5 py-3.5 text-left font-display text-[0.95rem] font-semibold text-ink">Composant</th>
+            <th class="border-b border-line bg-parchment px-4.5 py-3.5 text-left font-display text-[0.95rem] font-semibold text-ink">Usage</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            TABLE.map((row, i) => (
+              <tr>
+                <td class:list={['px-4.5 py-3.5 text-left text-[0.95rem] font-semibold text-ink', i < TABLE.length - 1 && 'border-b border-line']}>{row.c}</td>
+                <td class:list={['px-4.5 py-3.5 text-left text-[0.95rem] text-ink-soft', i < TABLE.length - 1 && 'border-b border-line']}>{row.u}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+{/* PREUVE */}
+<section class="py-[clamp(48px,6vw,88px)]">
+  <div class="container-site grid grid-cols-1 items-center gap-6 md:grid-cols-2 md:gap-[clamp(28px,4vw,56px)]">
+    <figure
+      class="reveal aspect-[4/3] overflow-hidden rounded-lg md:order-1"
+      style={PARCH}
+      aria-label="Affiche verte Global Cars — remise de clés"
+    />
+    <div class="reveal md:order-2">
+      <p class="text-eyebrow font-semibold uppercase tracking-eyebrow text-brand">Preuve</p>
+      <h2 class="mt-3.5 max-w-[22ch] font-display text-[clamp(1.8rem,3.4vw,2.7rem)] font-medium leading-[1.08] tracking-h2 text-ink">
+        Le test final : le réel.
+      </h2>
+      <p class="mt-4 max-w-[62ch] text-[1.0625rem] leading-[1.7] text-ink-2">
+        L’emblème en arrière-plan, le geste de transmission au premier plan. Rien à lire, tout à comprendre.
+      </p>
+      <p class="mt-4 max-w-[62ch] text-[1.0625rem] leading-[1.7] text-ink-2">
+        Pourquoi du vert ? Parce qu’un logo mature ne dépend pas de « sa » couleur. S’il tient sur un fond
+        inattendu sans rien perdre, c’est qu’il est prêt. Peu de logos passent ce test.
+      </p>
+    </div>
+  </div>
+</section>
+
+{/* DIGITAL */}
+<section class="py-[clamp(48px,6vw,88px)]">
+  <div class="container-site">
+    <div class="max-w-190">
+      <p class="reveal text-eyebrow font-semibold uppercase tracking-eyebrow text-brand">Digital</p>
+      <h2 class="reveal mt-3.5 max-w-[22ch] font-display text-[clamp(1.8rem,3.4vw,2.7rem)] font-medium leading-[1.08] tracking-h2 text-ink">
+        Le système en ligne.
+      </h2>
+      <p class="reveal mt-4 max-w-[62ch] text-[1.0625rem] leading-[1.7] text-ink-2">
+        L’identité ne s’arrête pas au print. Le site reprend l’emblème, les codes chromatiques et la
+        typographie du système — et derrière la vitrine, un vrai produit pour piloter l’activité.
+      </p>
+    </div>
+    <div class="mt-[clamp(28px,4vw,44px)] grid grid-cols-1 gap-[clamp(20px,3vw,32px)]">
+      {
+        SHOTS.map((s) => (
+          <figure class="reveal overflow-hidden rounded-lg border border-line">
+            <div class="aspect-[16/9]" style={PARCH} />
+            <figcaption class="bg-parchment px-4.5 py-3.5 text-[0.9rem] text-ink-soft">
+              <b class="font-semibold text-ink">{s.t}</b> {s.p}
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+{/* FONCTIONNALITÉS */}
+<section class="py-[clamp(48px,6vw,88px)]">
+  <div class="container-site">
+    <div class="max-w-190">
+      <p class="reveal text-eyebrow font-semibold uppercase tracking-eyebrow text-brand">Fonctionnalités</p>
+      <h2 class="reveal mt-3.5 max-w-[22ch] font-display text-[clamp(1.8rem,3.4vw,2.7rem)] font-medium leading-[1.08] tracking-h2 text-ink">
+        Sous le capot, un vrai produit.
+      </h2>
+      <p class="reveal mt-4 max-w-[62ch] text-[1.0625rem] leading-[1.7] text-ink-2">
+        Un site vitrine ne suffit pas. Global Cars avait besoin d’outils concrets pour piloter son activité
+        au quotidien. Voici ce qui a été construit.
+      </p>
+    </div>
+    <div class="mt-[clamp(28px,4vw,44px)] grid grid-cols-1 gap-3.5 min-[480px]:grid-cols-2 md:grid-cols-3">
+      {
+        FEATS.map((f) => (
+          <div class="reveal rounded-lg border border-line bg-paper p-5.5">
+            <h3 class="m-0 font-display text-[1.05rem] font-semibold text-ink">{f.t}</h3>
+            <p class="mt-[7px] text-[0.9rem] leading-[1.55] text-ink-soft">{f.p}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+{/* CONCLUSION */}
+<section class="bg-parchment py-[clamp(48px,6vw,88px)]">
+  <div class="container-site max-w-190">
+    <p class="reveal text-eyebrow font-semibold uppercase tracking-eyebrow text-brand">Conclusion</p>
+    <h2 class="reveal mt-3.5 max-w-[22ch] font-display text-[clamp(1.8rem,3.4vw,2.7rem)] font-medium leading-[1.08] tracking-h2 text-ink">
+      Un logo qui travaille.
+    </h2>
+    <p class="reveal mt-4 max-w-[62ch] text-[1.0625rem] leading-[1.7] text-ink-2">
+      Ce que vous venez de voir n’est pas un exercice de style, mais un système pensé pour durer : chaque
+      forme, chaque déclinaison, chaque support prolonge le même geste initial. Global Cars dispose
+      aujourd’hui d’un langage visuel complet, extensible et cohérent — un actif qui continue de travailler.
+      Votre marque mérite la même rigueur.
+    </p>
+  </div>
+</section>
+
+{/* CTA */}
+<CtaBand
+  title="Votre marque mérite la même rigueur."
+  lead="De l’emblème au back-office : on construit un système qui travaille pour vous. 15 minutes pour en parler."
+  ctaLabel="Démarrer un projet"
+  ctaHref="/contact"
+/>

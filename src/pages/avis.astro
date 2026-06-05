@@ -2,7 +2,7 @@
 /**
  * Page « Avis clients » (/avis) — portage fidèle de la maquette Design (avis.html).
  * Note globale crédible (~4,6, jamais 5,0) + grille masonry de témoignages.
- * Étoiles via une petite fonction locale (★/☆), mockup d'avatar en parchemin rayé.
+ * Étoiles via une petite fonction locale (★/☆), avatar en pastille brand-soft (comme le Design).
  */
 import BaseLayout from '@layouts/BaseLayout.astro';
 import CtaBand from '@components/blocks/CtaBand.astro';
@@ -81,11 +81,7 @@ const stars = (n: number) => '★'.repeat(n) + '☆'.repeat(5 - n);
               <span class="text-[0.9rem] tracking-[1px] text-brand">{stars(r.s)}</span>
               <p class="mt-3 text-[1.02rem] leading-[1.55] text-ink">« {r.q} »</p>
               <div class="mt-4 flex items-center gap-[11px] border-t border-line pt-3.5">
-                <span
-                  class="h-[38px] w-[38px] flex-none rounded-full"
-                  style="background:repeating-linear-gradient(135deg,var(--color-parchment) 0 16px,var(--color-line) 16px 32px);"
-                  aria-hidden="true"
-                ></span>
+                <span class="h-[38px] w-[38px] flex-none rounded-full bg-brand-soft" aria-hidden="true" />
                 <span>
                   <span class="block text-[0.88rem] font-semibold text-ink">{r.n}</span>
                   <span class="mt-px block text-[0.78rem] text-ink-soft">{r.m}</span>

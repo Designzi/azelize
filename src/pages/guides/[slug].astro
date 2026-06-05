@@ -2,6 +2,7 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 import ArticleLayout from '@layouts/ArticleLayout.astro';
 import Section from '@components/ui/Section.astro';
+import Breadcrumbs from '@components/ui/Breadcrumbs.astro';
 import Blocks from '@components/blocks/Blocks.astro';
 import { getCollection, render } from 'astro:content';
 import { articleJsonLd, breadcrumbJsonLd, faqJsonLd } from '@lib/seo';
@@ -14,7 +15,6 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const { entry } = Astro.props;
-const { Content } = await render(entry);
 const { titre, description, date, updated, seo, sections } = entry.data;
 const url = `/guides/${entry.id}`;
 const image = seo?.ogImage ?? ogImage(`guides/${entry.id}`);
@@ -31,10 +31,31 @@ const jsonLd = [
   breadcrumbJsonLd(breadcrumbs),
   ...(faqItems.length ? [faqJsonLd(faqItems)] : []),
 ];
+
+// Portage fidèle : composant guide dédié si la prose ne suffit pas (corps Design complet).
+const guideModules = import.meta.glob('../../components/guides/*.astro', { eager: true });
+const GuideComponent = (guideModules[`../../components/guides/${entry.id}.astro`] as
+  | { default: any }
+  | undefined)?.default;
+
+const { Content } = await render(entry);
 ---
 
 {
-  sections?.length ? (
+  GuideComponent ? (
+    <BaseLayout
+      title={seo?.title ?? titre}
+      description={seo?.description ?? description}
+      image={image}
+      type="article"
+      jsonLd={jsonLd}
+    >
+      <Section pad="none" class="pt-6">
+        <Breadcrumbs items={breadcrumbs} />
+      </Section>
+      <GuideComponent />
+    </BaseLayout>
+  ) : sections?.length ? (
     <BaseLayout
       title={seo?.title ?? titre}
       description={seo?.description ?? description}

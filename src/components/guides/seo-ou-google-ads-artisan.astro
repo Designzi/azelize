@@ -1,0 +1,198 @@
+---
+/**
+ * Guide objection — « SEO ou Google Ads : que choisir quand on est artisan ? »
+ * Portage fidèle de `seo-ou-google-ads-artisan.html` (gabarit C5, objection).
+ * Corps <main> : hero (h1 em, lead, méta, TL;DR), face-off 2 colonnes, bande
+ * verdict, article (notre position) + CTA inline, chips « À lire aussi », CTA.
+ * Chrome + breadcrumbs fournis par la route /guides/[slug].
+ */
+import CtaBand from '@components/blocks/CtaBand.astro';
+
+const ADS: { plus: boolean; t: string }[] = [
+  { plus: true, t: 'Des appels dès le premier jour.' },
+  { plus: true, t: 'Idéal pour un lancement ou un coup de chaud (hiver, urgence).' },
+  { plus: false, t: 'Ça s’arrête net dès que vous coupez le budget.' },
+  { plus: false, t: 'Vous payez chaque clic, tout le temps.' },
+];
+
+const SEO: { plus: boolean; t: string }[] = [
+  { plus: true, t: 'Un actif qui rapporte sans payer chaque clic.' },
+  { plus: true, t: 'La confiance : on clique plus volontiers sur un résultat « naturel ».' },
+  { plus: true, t: 'S’installe et grandit dans la durée.' },
+  { plus: false, t: 'Met 3 à 6 mois avant les premiers résultats.' },
+];
+
+const LINKS: { label: string; href: string }[] = [
+  { label: 'Le référencement local', href: '/prestations/referencement-seo' },
+  { label: 'Invisible sur Google ?', href: '/guides/invisible-sur-google' },
+  { label: 'Le prix d’un site', href: '/guides/combien-coute-site-internet' },
+  { label: 'Bien choisir', href: '/guides/bien-choisir-prestataire-web' },
+];
+---
+
+{/* HERO + TL;DR */}
+<section class="container-site mx-auto max-w-200 pt-[clamp(150px,16vw,200px)] pb-[clamp(24px,3vw,40px)]">
+  <div class="text-[0.8125rem] text-ink-soft">Guides · On répond franchement</div>
+  <h1 class="mt-3.5 font-display text-[clamp(2.1rem,4.4vw,3.4rem)] font-medium leading-[1.04] tracking-[-0.03em] text-ink">
+    SEO ou Google Ads : <em class="not-italic text-brand">que choisir</em> quand on est artisan ?
+  </h1>
+  <p class="mt-5 max-w-[56ch] text-[clamp(1.0625rem,1.6vw,1.3rem)] leading-[1.6] text-ink-2">
+    C’est une vraie question, et la réponse honnête n’est pas « tout l’un » ou « tout l’autre ». Voici ce que
+    chacun apporte vraiment — et le bon mix selon votre situation.
+  </p>
+  <div class="mt-5.5 flex items-center gap-3.5 text-[0.85rem] text-ink-soft">
+    <span>Réponse honnête</span>
+    <span class="h-1 w-1 rounded-full bg-ink-faint"></span>
+    <span>~5 min</span>
+  </div>
+  <div class="mt-[clamp(28px,4vw,40px)] max-w-200 rounded-lg bg-parchment p-[clamp(22px,3vw,30px)]">
+    <div class="mb-2.5 text-[0.78rem] font-bold uppercase tracking-[0.08em] text-brand">La réponse courte</div>
+    <p class="m-0 text-[1.0625rem] leading-[1.6] text-ink">
+      <strong class="text-brand">Google Ads</strong> donne des appels tout de suite, mais s’arrête dès que
+      vous coupez le budget. <strong class="text-brand">Le SEO</strong> met quelques mois, mais devient un
+      actif qui rapporte durablement. Pour un artisan : <strong class="text-brand">le SEO en fond, des Ads en
+      sprint</strong> sur les périodes clés.
+    </p>
+  </div>
+</section>
+
+{/* CE QUE CHACUN FAIT — face-off */}
+<section class="container-site py-[clamp(40px,5vw,72px)]">
+  <h2 class="m-0 mb-2 max-w-[26ch] font-display text-[clamp(1.5rem,2.6vw,2.1rem)] font-semibold tracking-tight text-ink">
+    Ce que chacun fait vraiment
+  </h2>
+  <p class="m-0 mb-[clamp(24px,3vw,32px)] max-w-[60ch] text-[1.0625rem] leading-[1.6] text-ink-2">
+    Pas de favori a priori : chacun a sa place. Le tout est de savoir quand.
+  </p>
+  <div class="grid max-w-220 grid-cols-1 gap-3.5 md:grid-cols-2">
+    <div class="rounded-md border border-line bg-paper p-[clamp(22px,3vw,30px)]">
+      <div class="text-[0.72rem] font-bold uppercase tracking-[0.08em] text-brand">Google Ads</div>
+      <div class="mt-2 mb-4 font-display text-[1.35rem] font-semibold tracking-tight text-ink">La publicité payante</div>
+      <ul class="m-0 flex list-none flex-col gap-[11px] p-0">
+        {
+          ADS.map((p) => (
+            <li class="flex items-start gap-[11px] text-[0.95rem] leading-[1.45] text-ink-2">
+              <span class:list={['ob-mark', p.plus ? 'ob-mark--plus bg-brand-soft' : 'ob-mark--minus bg-parchment', 'relative mt-px h-4.5 w-4.5 flex-none rounded-full']} />
+              {p.t}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <div class="rounded-md border border-line bg-paper p-[clamp(22px,3vw,30px)]">
+      <div class="text-[0.72rem] font-bold uppercase tracking-[0.08em] text-brand">Référencement (SEO)</div>
+      <div class="mt-2 mb-4 font-display text-[1.35rem] font-semibold tracking-tight text-ink">La visibilité naturelle</div>
+      <ul class="m-0 flex list-none flex-col gap-[11px] p-0">
+        {
+          SEO.map((p) => (
+            <li class="flex items-start gap-[11px] text-[0.95rem] leading-[1.45] text-ink-2">
+              <span class:list={['ob-mark', p.plus ? 'ob-mark--plus bg-brand-soft' : 'ob-mark--minus bg-parchment', 'relative mt-px h-4.5 w-4.5 flex-none rounded-full']} />
+              {p.t}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+{/* VERDICT */}
+<section class="bg-parchment py-[clamp(40px,5vw,72px)]">
+  <div class="container-site">
+    <p class="mx-auto max-w-[34ch] text-center font-display text-[clamp(1.4rem,2.6vw,2rem)] font-medium leading-[1.3] tracking-tight text-ink">
+      Le bon réflexe : <em class="not-italic text-brand">construire le SEO comme un actif</em>, et utiliser les
+      Ads comme un accélérateur ponctuel.
+    </p>
+  </div>
+</section>
+
+{/* NOTRE POSITION + CTA inline */}
+<section class="container-site py-[clamp(40px,5vw,72px)]">
+  <div class="max-w-170">
+    <h2 class="m-0 mb-2 max-w-[26ch] font-display text-[clamp(1.5rem,2.6vw,2.1rem)] font-semibold tracking-tight text-ink">
+      Notre position, concrètement
+    </h2>
+    <p class="m-0 mb-3.5 text-[1.0625rem] leading-[1.7] text-ink-2">
+      Pour un artisan du Morbihan, on privilégie <strong class="font-semibold text-ink">le référencement
+      local</strong> : fiche Google, site optimisé, avis. C’est ce qui amène des appels mois après mois
+      <strong class="font-semibold text-ink"> sans payer chaque clic</strong>. C’est la base d’une présence saine.
+    </p>
+    <p class="m-0 mb-3.5 text-[1.0625rem] leading-[1.7] text-ink-2">
+      On ajoute des <strong class="font-semibold text-ink">Google Ads en sprint</strong> quand ça a du sens :
+      au lancement (le temps que le SEO monte), ou sur une saison forte (le gel en plomberie, par exemple).
+      Pas en permanence — ce serait jeter de l’argent.
+    </p>
+    <p class="m-0 mb-3.5 text-[1.0625rem] leading-[1.7] text-ink-2">
+      L’erreur fréquente : tout miser sur les Ads et ne jamais construire le SEO. Le jour où vous coupez, vous
+      redevenez invisible. <strong class="font-semibold text-ink">Le SEO, lui, vous appartient.</strong>
+    </p>
+    <div class="mt-2 rounded-md border border-line px-6.5 py-6">
+      <p class="m-0 font-display text-[1.2rem] font-semibold text-ink">
+        On s’occupe du référencement, vous gardez votre métier.
+      </p>
+      <p class="mt-2 mb-4 text-[0.95rem] leading-[1.55] text-ink-soft">
+        Fiche Google, site, avis, mots-clés locaux : créé et tenu chaque mois. On vous conseille aussi sur les
+        Ads quand c’est utile.
+      </p>
+      <a
+        class="inline-flex items-center justify-center rounded-xs bg-brand px-5 py-[11px] text-[0.9375rem] font-semibold text-paper transition-colors duration-200 ease-brand hover:bg-brand-deep"
+        href="/contact"
+      >
+        Demander un devis gratuit
+      </a>
+    </div>
+  </div>
+</section>
+
+{/* À LIRE AUSSI — chips */}
+<section class="bg-parchment py-[clamp(40px,5vw,72px)]">
+  <div class="container-site">
+    <div class="text-eyebrow font-semibold uppercase tracking-eyebrow text-brand">À lire aussi</div>
+    <h2 class="mt-2 mb-[clamp(20px,2.5vw,28px)] font-display text-[clamp(1.5rem,2.6vw,2.1rem)] font-semibold tracking-tight text-ink">
+      D’autres réponses franches.
+    </h2>
+    <div class="flex flex-wrap gap-2.5">
+      {
+        LINKS.map((l) => (
+          <a
+            class="rounded-full border border-line-strong bg-paper px-[15px] py-2 text-[0.9rem] font-medium whitespace-nowrap text-ink-2 transition-colors duration-200 ease-brand hover:border-brand hover:text-brand"
+            href={l.href}
+          >
+            {l.label}
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<CtaBand
+  title="Le bon mix pour votre métier ?"
+  lead="15 minutes pour en parler. On vous dit la vérité, même si ce n’est pas pour nous."
+  ctaLabel="Demander un devis gratuit"
+  ctaHref="/contact"
+/>
+
+<style>
+  /* Marques face-off : coche (plus) et tiret (minus). */
+  .ob-mark--plus::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 4px;
+    width: 5px;
+    height: 9px;
+    border-right: 2px solid var(--color-brand);
+    border-bottom: 2px solid var(--color-brand);
+    transform: rotate(40deg);
+  }
+  .ob-mark--minus::after {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 8px;
+    width: 10px;
+    height: 2px;
+    background: var(--color-ink-faint);
+  }
+</style>

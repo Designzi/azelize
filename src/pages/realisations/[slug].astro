@@ -2,6 +2,7 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 import ArticleLayout from '@layouts/ArticleLayout.astro';
 import Section from '@components/ui/Section.astro';
+import Breadcrumbs from '@components/ui/Breadcrumbs.astro';
 import Blocks from '@components/blocks/Blocks.astro';
 import { getCollection, render } from 'astro:content';
 import { creativeWorkJsonLd, breadcrumbJsonLd } from '@lib/seo';
@@ -14,7 +15,6 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const { entry } = Astro.props;
-const { Content } = await render(entry);
 const { client, resume, date, seo, sections } = entry.data;
 const url = `/realisations/${entry.id}`;
 
@@ -27,10 +27,32 @@ const jsonLd = [
   creativeWorkJsonLd({ name: client, description: seo?.description ?? resume, url, date }),
   breadcrumbJsonLd(breadcrumbs),
 ];
+
+// Portage fidèle : composant étude-de-cas dédié par réalisation (corps Design complet).
+const caseModules = import.meta.glob('../../components/realisations/*.astro', { eager: true });
+const CaseComponent = (caseModules[`../../components/realisations/${entry.id}.astro`] as
+  | { default: any }
+  | undefined)?.default;
+
+// Corps éditorial MDX (rendu toujours valide ; ignoré si un composant dédié prime).
+const { Content } = await render(entry);
 ---
 
 {
-  sections?.length ? (
+  CaseComponent ? (
+    <BaseLayout
+      title={seo?.title ?? client}
+      description={seo?.description ?? resume}
+      image={seo?.ogImage ?? ogImage(`realisations/${entry.id}`)}
+      type="article"
+      jsonLd={jsonLd}
+    >
+      <Section pad="none" class="pt-6">
+        <Breadcrumbs items={breadcrumbs} />
+      </Section>
+      <CaseComponent />
+    </BaseLayout>
+  ) : sections?.length ? (
     <BaseLayout
       title={seo?.title ?? client}
       description={seo?.description ?? resume}

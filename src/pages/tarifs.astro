@@ -8,13 +8,15 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Section from '@components/ui/Section.astro';
 import Eyebrow from '@components/ui/Eyebrow.astro';
-import PricingBlock from '@components/blocks/PricingBlock.astro';
+import Button from '@components/ui/Button.astro';
 import CtaBand from '@components/blocks/CtaBand.astro';
 import { ogImage } from '@lib/og';
 import { tiers, compareRows } from '@data/pricing';
 import { chromeCta } from '@data/nav';
 
-// Drapeau « ● / — » du comparatif (libellé littéral pour Tailwind).
+// Puce-filet des features (libellé littéral pour Tailwind).
+const bulletFeat =
+  "relative pl-[22px] before:absolute before:left-0 before:top-[0.5em] before:h-[1.5px] before:w-2 before:bg-brand before:content-['']";
 ---
 
 <BaseLayout
@@ -44,14 +46,51 @@ import { chromeCta } from '@data/nav';
 
   {/* ── Paliers ────────────────────────────────────────────────────────────── */}
   <Section pad="none" class="pt-[clamp(32px,4vw,52px)] pb-[clamp(40px,5vw,64px)]">
-    <PricingBlock tiers={tiers} ctaHref={chromeCta.href} engagementNote="sans engagement" />
+    <div class="grid grid-cols-1 gap-[clamp(16px,2vw,22px)] max-w-[420px] mx-auto md:max-w-none md:grid-cols-3">
+      {tiers.map((tier) => (
+        <div
+          class:list={[
+            'reveal flex flex-col rounded-md bg-paper px-6.5 py-7',
+            tier.featured ? 'border-2 border-brand' : 'border border-line',
+          ]}
+        >
+          {tier.featured && (
+            <span class="mb-3.5 self-start rounded-xs bg-brand px-2.75 py-1 text-[0.72rem] font-bold uppercase tracking-[0.06em] text-paper">
+              Le plus choisi
+            </span>
+          )}
+          <h3 class="m-0 font-display text-[1.35rem] font-semibold tracking-[-0.01em] text-ink">{tier.name}</h3>
+          <p class="mt-2 min-h-[3em] text-[0.92rem] leading-[1.5] text-ink-soft">{tier.line}</p>
+          <div class="mb-1 mt-[18px] flex items-baseline gap-1.5">
+            <span class="font-display text-[2.4rem] font-semibold leading-none tracking-[-0.03em] text-ink">{tier.price}</span>
+            <span class="text-[0.9rem] text-ink-soft">{tier.unit}</span>
+          </div>
+          <span class="text-[0.8rem] text-ink-faint">sans engagement</span>
+          <ul class="m-0 mb-6 mt-5 flex flex-1 list-none flex-col gap-[9px] p-0">
+            {tier.feats.map((f, i) => (
+              <li
+                class:list={[
+                  'text-[0.92rem] leading-[1.45]',
+                  i === 0 && tier.rolloverFirst ? 'font-semibold text-ink' : `text-ink-2 ${bulletFeat}`,
+                ]}
+              >
+                {f}
+              </li>
+            ))}
+          </ul>
+          <Button href={chromeCta.href} size="sm" variant={tier.featured ? 'solid' : 'outline'} block>
+            Choisir {tier.name}
+          </Button>
+        </div>
+      ))}
+    </div>
     <p class="reveal mt-[clamp(20px,3vw,32px)] text-center text-[0.9rem] text-ink-soft">
       Sans engagement<span class="mx-2 text-ink-faint">·</span>Résiliable à tout moment<span class="mx-2 text-ink-faint">·</span>Satisfait ou remboursé 30&nbsp;jours
     </p>
   </Section>
 
   {/* ── Comparatif détaillé ────────────────────────────────────────────────── */}
-  <Section tone="parchment" pad="default">
+  <Section tone="parchment" pad="none" class="py-[clamp(48px,6vw,88px)]">
     <div class="reveal"><Eyebrow>Le détail</Eyebrow></div>
     <h2 class="reveal mt-3 mb-[clamp(28px,4vw,40px)] max-w-[22ch] font-display text-h2 font-medium leading-[1.08] tracking-h2 text-ink">
       Ce qui est compris dans chaque formule.

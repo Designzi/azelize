@@ -1,0 +1,179 @@
+---
+/**
+ * Guide éditorial long — « SEO pour les artisans du bâtiment ».
+ * Portage fidèle de `guide-seo-tpe-btp.html` (gabarit C5, article + sommaire collant).
+ * Corps <main> : hero (kicker, h1, méta), grille 230px/1fr avec TOC sticky,
+ * article (lead, h2 ancrés, listes à tiret, callout données locales, CTA inline).
+ * Chrome + breadcrumbs fournis par la route /guides/[slug].
+ */
+
+const TOC: { id: string; t: string }[] = [
+  { id: 'pourquoi', t: 'Pourquoi le SEO local change tout' },
+  { id: 'fiche', t: 'Votre fiche Google d’abord' },
+  { id: 'mots', t: 'Les mots-clés de votre métier' },
+  { id: 'avis', t: 'Les avis : votre meilleur argument' },
+  { id: 'temps', t: 'Combien de temps avant des résultats ?' },
+];
+
+const STATS: { n: string; l: string }[] = [
+  { n: '8 / 10', l: 'recherches de service local faites sur mobile' },
+  { n: '3', l: 'fiches seulement dans le pack Google' },
+  { n: '48 h', l: 'délai moyen attendu pour un rappel' },
+];
+---
+
+{/* HERO */}
+<section class="container-site mx-auto max-w-190 pt-[clamp(150px,16vw,200px)] pb-[clamp(24px,3vw,40px)]">
+  <div class="text-[0.8125rem] text-ink-soft">Guides · Référencement local</div>
+  <h1 class="mt-3.5 font-display text-[clamp(2.1rem,4.4vw,3.4rem)] font-medium leading-[1.04] tracking-[-0.03em] text-ink">
+    SEO pour les artisans du bâtiment : être trouvé sur Google.
+  </h1>
+  <div class="mt-5.5 flex items-center gap-3.5 text-[0.875rem] text-ink-soft">
+    <span>Guide pratique</span>
+    <span class="h-1 w-1 rounded-full bg-ink-faint"></span>
+    <span>~8 min de lecture</span>
+    <span class="h-1 w-1 rounded-full bg-ink-faint"></span>
+    <span>Mis à jour juin 2026</span>
+  </div>
+</section>
+
+{/* CORPS — sommaire collant + article */}
+<section class="pb-[clamp(64px,8vw,110px)]">
+  <div class="container-site grid grid-cols-1 items-start gap-[clamp(32px,5vw,72px)] md:grid-cols-[230px_1fr]">
+    <nav class="sticky top-[130px] hidden md:block">
+      <div class="mb-3 text-[0.72rem] font-bold uppercase tracking-[0.1em] text-ink-faint">Sommaire</div>
+      {
+        TOC.map((s) => (
+          <a
+            href={`#${s.id}`}
+            class="block rounded-xs px-2.5 py-1.5 text-[0.875rem] text-ink-2 transition-colors duration-200 ease-brand hover:bg-brand-soft hover:text-brand"
+          >
+            {s.t}
+          </a>
+        ))
+      }
+    </nav>
+
+    <article class="gd-article max-w-170">
+      <p class="m-0 mb-2 text-[1.2rem] leading-[1.6] text-ink">
+        Quand un particulier cherche un plombier ou un maçon, il tape « plombier + sa ville » sur son
+        téléphone et appelle l’un des premiers résultats. Si vous n’y êtes pas, l’appel part chez un
+        concurrent. Voici comment y être — sans jargon.
+      </p>
+
+      <h2 id="pourquoi" class="mt-10 mb-3.5 scroll-mt-[130px] font-display text-[1.55rem] font-semibold tracking-tight text-ink">
+        Pourquoi le SEO local change tout
+      </h2>
+      <p>
+        Le référencement local, c’est l’art d’apparaître quand quelqu’un près de chez vous cherche votre
+        métier. Pour un artisan, c’est <strong>le seul SEO qui compte</strong> : vous ne visez pas la France
+        entière, vous visez votre bassin — votre ville et les communes autour.
+      </p>
+      <p>Concrètement, trois choses se jouent quand on tape « électricien Lorient » :</p>
+      <ul>
+        <li>La <strong>carte Google</strong> avec 3 fiches d’établissement (le « pack local »).</li>
+        <li>Les <strong>résultats classiques</strong> en dessous.</li>
+        <li>Les <strong>avis</strong> qui s’affichent sous chaque nom.</li>
+      </ul>
+
+      <div class="my-6.5 rounded-md bg-parchment px-6.5 py-6">
+        <div class="mb-3 text-[0.78rem] font-bold uppercase tracking-[0.08em] text-brand">Le marché en Bretagne</div>
+        <div class="flex flex-wrap gap-8">
+          {
+            STATS.map((s) => (
+              <div>
+                <div class="font-display text-[1.9rem] font-semibold leading-none tracking-[-0.03em] text-ink">{s.n}</div>
+                <div class="mt-[5px] max-w-[18ch] text-[0.85rem] text-ink-soft">{s.l}</div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <h2 id="fiche" class="mt-10 mb-3.5 scroll-mt-[130px] font-display text-[1.55rem] font-semibold tracking-tight text-ink">
+        Votre fiche Google d’abord
+      </h2>
+      <p>
+        Avant même le site, votre <strong>fiche d’établissement Google</strong> est gratuite et décisive.
+        Renseignez-la entièrement : métier exact, zone d’intervention, horaires, photos de chantiers. C’est
+        elle qui vous fait apparaître sur la carte.
+      </p>
+
+      <h2 id="mots" class="mt-10 mb-3.5 scroll-mt-[130px] font-display text-[1.55rem] font-semibold tracking-tight text-ink">
+        Les mots-clés de votre métier
+      </h2>
+      <p>
+        Inutile de viser « rénovation » tout court — trop large, trop concurrentiel. Visez les requêtes
+        <strong> précises et locales</strong> : « carreleur salle de bain Vannes », « dépannage plomberie
+        Lorient ». Moins de volume, mais des gens qui veulent vraiment vous appeler.
+      </p>
+
+      <h2 id="avis" class="mt-10 mb-3.5 scroll-mt-[130px] font-display text-[1.55rem] font-semibold tracking-tight text-ink">
+        Les avis : votre meilleur argument
+      </h2>
+      <p>
+        Un artisan avec 20 avis à 4,7/5 sera toujours choisi avant un concurrent sans avis. Demandez
+        systématiquement un avis après chaque chantier réussi. C’est le levier le plus rentable, et
+        <strong> il pèse aussi dans le classement Google</strong>.
+      </p>
+
+      <h2 id="temps" class="mt-10 mb-3.5 scroll-mt-[130px] font-display text-[1.55rem] font-semibold tracking-tight text-ink">
+        Combien de temps avant des résultats ?
+      </h2>
+      <p>
+        Soyons honnêtes : le SEO local prend <strong>quelques mois</strong>. La fiche Google peut remonter en
+        quelques semaines ; le site, lui, gagne en position sur 3 à 6 mois. C’est un actif qui se construit —
+        pas un interrupteur.
+      </p>
+
+      <div class="mt-8.5 rounded-md border border-line px-6.5 py-6">
+        <p class="m-0 font-display text-[1.2rem] font-semibold text-ink">On s’occupe de tout ça pour vous.</p>
+        <p class="mt-2 mb-4 text-[0.95rem] leading-[1.55] text-ink-soft">
+          Fiche Google, site, avis, mots-clés : créé et tenu chaque mois. Vous restez sur le chantier.
+        </p>
+        <a
+          class="inline-flex items-center justify-center rounded-xs bg-brand px-5 py-[11px] text-[0.9375rem] font-semibold text-paper transition-colors duration-200 ease-brand hover:bg-brand-deep"
+          href="/contact"
+        >
+          Demander un devis gratuit
+        </a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<style>
+  /* Article : paragraphes, fortes, listes à tiret (calque .gd-article). */
+  .gd-article p {
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--color-ink-2);
+    margin: 0 0 0.875rem;
+  }
+  .gd-article strong {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+  .gd-article ul {
+    margin: 0 0 0.875rem;
+    padding-left: 0;
+    list-style: none;
+  }
+  .gd-article li {
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--color-ink-2);
+    padding-left: 22px;
+    position: relative;
+    margin-bottom: 9px;
+  }
+  .gd-article li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 8px;
+    height: 1.5px;
+    background: var(--color-brand);
+  }
+</style>

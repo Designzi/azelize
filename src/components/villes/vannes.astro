@@ -118,7 +118,7 @@ import CtaBand from '@components/blocks/CtaBand.astro';
         On ne livre pas un site, on le fait vivre.
       </h2>
       <div
-        class="mt-[clamp(28px,4vw,40px)] grid grid-cols-1 gap-x-7 gap-y-3.5 sm:grid-cols-2 lg:grid-cols-3"
+        class="mt-[clamp(28px,4vw,40px)] grid grid-cols-1 gap-x-10 md:grid-cols-2"
       >
         {[
           ['Site tenu à jour & sécurisé', 'Hébergement, sauvegardes, corrections.'],
@@ -128,14 +128,11 @@ import CtaBand from '@components/blocks/CtaBand.astro';
           ['Rapport mensuel clair', 'Appels, visites, position sur Google.'],
           ['Un interlocuteur unique', 'Quelqu\'un qui connaît votre dossier et répond.'],
         ].map(([t, p]) => (
-          <div class="reveal flex items-start gap-3">
-            <span
-              class="relative mt-0.5 h-[22px] w-[22px] flex-none rounded-full bg-brand-soft after:absolute after:left-[7px] after:top-[5px] after:h-[9px] after:w-[5px] after:rotate-[40deg] after:border-b-2 after:border-r-2 after:border-brand after:content-['']"
-              aria-hidden="true"
-            ></span>
+          <div class="reveal flex items-start gap-3 border-b border-line py-4">
+            <span class="mt-2 h-2 w-2 flex-none rounded-full bg-brand" aria-hidden="true"></span>
             <div>
               <div class="text-base font-semibold text-ink">{t}</div>
-              <div class="mt-1 text-[0.9rem] leading-[1.5] text-ink-soft">{p}</div>
+              <div class="mt-[3px] text-[0.9rem] leading-[1.5] text-ink-soft">{p}</div>
             </div>
           </div>
         ))}
@@ -179,15 +176,15 @@ import CtaBand from '@components/blocks/CtaBand.astro';
       >
         On lève les vraies objections.
       </h2>
-      <div class="mt-[clamp(28px,4vw,40px)] flex max-w-[820px] flex-col">
+      <div class="reveal mt-[clamp(28px,4vw,40px)] flex flex-col gap-px overflow-hidden rounded-md border border-line bg-line">
         {[
           ['« Je n\'ai pas le temps. »', "C'est nous qui faisons tout. Vous validez, on exécute."],
           ['« Il y a déjà trop de concurrents en ligne. »', "Raison de plus pour un site soigné et bien référencé : c'est ce qui vous fait passer devant."],
           ['« J\'ai peur de m\'engager. »', "Aucun engagement, et vous ne payez qu'une fois que ça marche."],
         ].map(([q, a]) => (
-          <div class="reveal grid grid-cols-1 gap-2 border-b border-line py-5 md:grid-cols-[minmax(0,16rem)_1fr] md:gap-10">
-            <div class="font-display text-[1.1rem] font-medium text-ink">{q}</div>
-            <div class="text-base leading-[1.6] text-ink-2">{a}</div>
+          <div class="grid grid-cols-1 gap-2 bg-paper p-[clamp(20px,2.5vw,28px)] md:grid-cols-2 md:gap-6">
+            <div class="text-[1.02rem] font-semibold text-ink">{q}</div>
+            <div class="text-[0.97rem] leading-[1.55] text-ink-2">{a}</div>
           </div>
         ))}
       </div>

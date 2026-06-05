@@ -8,6 +8,7 @@
 import Section from '@components/ui/Section.astro';
 import Eyebrow from '@components/ui/Eyebrow.astro';
 import Button from '@components/ui/Button.astro';
+import CtaBand from '@components/blocks/CtaBand.astro';
 import { navCta } from '@data/nav';
 
 const VILLES: [string, string][] = [
@@ -131,18 +132,9 @@ const INCLUS = [
 </Section>
 
 {/* CTA */}
-<Section tone="dark" pad="none" class="py-[clamp(48px,6vw,80px)] text-center">
-  <h2
-    class="reveal mx-auto m-0 max-w-[20ch] font-display text-[clamp(1.8rem,3.4vw,2.7rem)] font-medium leading-[1.06] tracking-h2 text-on-dark-bright"
-  >
-    Parlons de votre site, sans engagement.
-  </h2>
-  <p class="reveal mx-auto mt-[18px] max-w-[46ch] text-[1.0625rem] leading-[1.55] text-on-dark-soft">
-    15 minutes pour comprendre votre métier et voir comment on peut vous aider.
-  </p>
-  <div class="reveal mt-7">
-    <Button href={navCta.href} size="lg" class="bg-paper text-brand-900 hover:bg-parchment">
-      Réserver un appel
-    </Button>
-  </div>
-</Section>
+<CtaBand
+  title="Parlons de votre site, sans engagement."
+  lead="15 minutes pour comprendre votre métier et voir comment on peut vous aider."
+  ctaLabel="Réserver un appel"
+  ctaHref={navCta.href}
+/>
