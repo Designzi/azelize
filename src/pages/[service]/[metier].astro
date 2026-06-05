@@ -12,7 +12,7 @@ import type { GetStaticPaths } from 'astro';
 
 /**
  * Couche 3 — page service × métier (/{service}/{metier}). Portage FIDÈLE :
- * si un composant dédié `components/metiers/{slug}.astro` existe, il reproduit la
+ * si un composant dédié `views/metiers/{slug}.astro` existe, il reproduit la
  * maquette Design telle quelle (corps complet, CTA + maillage compris). Sinon,
  * repli sur le rendu historique (sections + corps MDX). Anti-doorway : un contenu
  * unique par métier. Le BUILD suit la collection `metiers`.
@@ -44,8 +44,8 @@ const jsonLd = [
 ];
 
 // Portage fidèle : composant dédié par métier (corps de la maquette Design).
-const metierModules = import.meta.glob('../../components/metiers/*.astro', { eager: true });
-const MetierComponent = (metierModules[`../../components/metiers/${entry.id}.astro`] as
+const metierModules = import.meta.glob('../../views/metiers/*.astro', { eager: true });
+const MetierComponent = (metierModules[`../../views/metiers/${entry.id}.astro`] as
   | { default: any }
   | undefined)?.default;
 

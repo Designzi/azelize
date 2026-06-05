@@ -29,8 +29,8 @@ const jsonLd = [
 ];
 
 // Portage fidèle : composant étude-de-cas dédié par réalisation (corps Design complet).
-const caseModules = import.meta.glob('../../components/realisations/*.astro', { eager: true });
-const CaseComponent = (caseModules[`../../components/realisations/${entry.id}.astro`] as
+const caseModules = import.meta.glob('../../views/realisations/*.astro', { eager: true });
+const CaseComponent = (caseModules[`../../views/realisations/${entry.id}.astro`] as
   | { default: any }
   | undefined)?.default;
 

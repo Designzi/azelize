@@ -13,7 +13,7 @@ import type { GetStaticPaths } from 'astro';
 
 /**
  * Couche 1 — hub de service (/{service}). Portage FIDÈLE page par page :
- * si un composant dédié `components/hubs/{slug}.astro` existe, il reproduit la
+ * si un composant dédié `views/hubs/{slug}.astro` existe, il reproduit la
  * maquette Design telle quelle (corps complet, CTA compris). Sinon, repli sur le
  * rendu éditorial historique (registre `seo-architecture.ts` → Blocks). Seuls les
  * services `ship` sont générés.
@@ -37,8 +37,8 @@ const jsonLd = [
 ];
 
 // Portage fidèle : composant dédié par service (corps de la maquette Design).
-const hubModules = import.meta.glob('../../components/hubs/*.astro', { eager: true });
-const HubComponent = (hubModules[`../../components/hubs/${service.slug}.astro`] as
+const hubModules = import.meta.glob('../../views/hubs/*.astro', { eager: true });
+const HubComponent = (hubModules[`../../views/hubs/${service.slug}.astro`] as
   | { default: any }
   | undefined)?.default;
 

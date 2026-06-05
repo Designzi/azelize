@@ -33,8 +33,8 @@ const jsonLd = [
 ];
 
 // Portage fidèle : composant guide dédié si la prose ne suffit pas (corps Design complet).
-const guideModules = import.meta.glob('../../components/guides/*.astro', { eager: true });
-const GuideComponent = (guideModules[`../../components/guides/${entry.id}.astro`] as
+const guideModules = import.meta.glob('../../views/guides/*.astro', { eager: true });
+const GuideComponent = (guideModules[`../../views/guides/${entry.id}.astro`] as
   | { default: any }
   | undefined)?.default;
 
