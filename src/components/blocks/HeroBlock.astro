@@ -14,7 +14,7 @@ const hasLead = Astro.slots.has('lead');
 const hasCta = Astro.slots.has('cta');
 ---
 
-<div id={id} class:list={['pt-[clamp(146px,14vw,190px)] pb-[clamp(48px,7vw,90px)] text-center', className]}>
+<div id={id} class:list={['hero-pad text-center', className]}>
   <div class="container-site">
     <div class="mx-auto flex max-w-[1080px] flex-col items-center">
       <h1 class="anim-2 m-0 mt-[clamp(22px,3vw,34px)] max-w-[22ch] font-display text-display font-medium tracking-display text-ink [&_em]:text-brand">
