@@ -67,7 +67,7 @@ hors des tokens.**
 
 - `/` — landing one-page (sections mono-usage dans `sections/home/` : Hero, Problem,
   HowItWorks, WhatsIncluded, WhySubscription, Proof, Pricing, Faq ; le CTA final
-  réutilisé est `components/sections/FinalCta.astro`).
+  réutilisé est `sections/shared/FinalCta.astro`).
 - `/mentions-legales`, `/confidentialite` — pages légales (provisoires).
 - `prestations/`, `realisations/`, `blog/`, `a-propos`, `contact` —
   **échafaudage** (collections + routes) pour un déploiement progressif. Non
@@ -75,7 +75,7 @@ hors des tokens.**
 
 ## ⚠️ À fournir / trancher (cf. brief §8)
 
-- **Formulaire de prise de RDV** (`components/sections/FinalCta.astro`) —
+- **Formulaire de prise de RDV** (`sections/shared/FinalCta.astro`) —
   actuellement **inerte** (état « envoyé » géré en JS local). Brancher un
   endpoint Astro (`+ @astrojs/vercel`, `prerender = false`) ou un service
   externe, et décider **où arrivent les demandes**.
