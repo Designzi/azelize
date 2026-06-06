@@ -4,7 +4,7 @@
  * Mobile-first : titre fluide (clamp), CTA empilés/centrés, frame 16/8.
  */
 import Button from '@components/ui/Button.astro';
-import RiskNote from '@components/ui/RiskNote.astro';
+import TabletMockup from '@components/blocks/TabletMockup.astro';
 import { navCta } from '@data/nav';
 ---
 
@@ -17,7 +17,7 @@ import { navCta } from '@data/nav';
         Un site qui vous <em>amène des&nbsp;clients</em>.
       </h1>
       <p
-        class="anim-3 mt-[clamp(18px,2.4vw,28px)] max-w-[62ch] text-[clamp(1.0625rem,1.6vw,1.3rem)] leading-[1.5] text-ink-2"
+        class="anim-3 mt-[clamp(18px,2.4vw,28px)] max-w-[72ch] text-balance text-[clamp(1.0625rem,1.6vw,1.3rem)] leading-[1.5] text-ink-2"
       >
         On crée votre site et votre référencement local, et on s'en occupe chaque mois. Vous ne
         commencez l'abonnement qu'une fois que le site vous rapporte vraiment.
@@ -27,20 +27,19 @@ import { navCta } from '@data/nav';
           <Button href={navCta.href} size="sm">Réserver un appel</Button>
           <Button href="#preuve" variant="outline" size="sm">Voir nos réalisations</Button>
         </div>
-        <RiskNote class="mt-4" />
       </div>
     </div>
   </div>
 
-  <div class="container-site">
-    <div
-      class="anim-5 mt-[clamp(40px,5vw,72px)] flex aspect-[16/8] items-center justify-center rounded-sm border border-line-strong"
-      style="background:repeating-linear-gradient(135deg,var(--color-parchment) 0 16px,var(--color-line) 16px 32px);"
-      aria-hidden="true"
-    >
-      <span class="text-caption font-semibold uppercase tracking-[0.1em] text-ink-faint">
-        Visuel à venir
-      </span>
-    </div>
+  {/* Mobile : la tablette déborde volontairement à droite (plus grande, décalée),
+      rognée par `overflow-x: hidden` du body → pas de scroll horizontal.
+      Dès `md` : recadrée dans les marges du site et centrée. */}
+  <div class="pl-21 pt-8 md:pt-0 md:mx-auto md:w-full md:max-w-[1240px] md:px-[clamp(22px,5vw,72px)]">
+    {/* Maquette tablette encadrant une réalisation : resinefar.fr (FAR). */}
+    <TabletMockup
+      src="/realisations/resinefar-home.png"
+      alt="Site resinefar.fr — page d'accueil, réalisation Azelize"
+      class="anim-5 mt-[clamp(40px,5vw,72px)] scale-140 max-w-none md:mx-auto md:scale-100 md:max-w-[880px]"
+    />
   </div>
 </section>

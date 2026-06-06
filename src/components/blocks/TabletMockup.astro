@@ -1,0 +1,213 @@
+---
+/**
+ * TabletMockup — maquette tablette (chrome métal + verre) encadrant un visuel.
+ * Réutilisable (hero home, études de cas, pages services…) : on lui passe le
+ * screenshot d'une réalisation via `src`, ou on laisse le placeholder sobre.
+ *
+ * Porté fidèlement d'une maquette de référence, mais :
+ *  - responsive (largeur fluide + aspect-ratio, plus de scale fixe) ;
+ *  - tokenisé : tout le chrome matériel vient de var(--tablet-*) (design-tokens.css),
+ *    aucune couleur en dur ici (garde-fou check:tokens).
+ * `white`/`black`/`transparent` employés ci-dessous sont des mots-clés CSS, pas
+ * des littéraux hex/rgba — ils passent le garde-fou.
+ */
+interface Props {
+  /** Visuel de l'écran (screenshot d'une réalisation). Sans `src` → placeholder. */
+  src?: string;
+  /** Texte alternatif de l'image (obligatoire dès qu'il y a un `src`). */
+  alt?: string;
+  /** Légende du placeholder tant que le visuel n'est pas fourni. */
+  label?: string;
+  /** Classe(s) sur le conteneur externe (largeur, marges…). */
+  class?: string;
+}
+const { src, alt = '', label = 'Visuel à venir', class: className } = Astro.props;
+---
+
+<div class:list={['tablet', className]}>
+  {/* Boutons matériels (tranche haute) */}
+  <span class="tablet__btn tablet__btn--a" aria-hidden="true"></span>
+  <span class="tablet__btn tablet__btn--b" aria-hidden="true"></span>
+
+  {/* Châssis métal */}
+  <div class="tablet__casing">
+    {/* Bezel verre noir */}
+    <div class="tablet__bezel">
+      {/* Reflet diagonal sur le verre */}
+      <span class="tablet__glare" aria-hidden="true"></span>
+
+      {/* Capteurs / caméra (bord gauche, orientation paysage) */}
+      <span class="tablet__sensors" aria-hidden="true">
+        <span class="tablet__dot"></span>
+        <span class="tablet__camera"><span class="tablet__lens"></span></span>
+        <span class="tablet__dot tablet__dot--sm"></span>
+      </span>
+
+      {/* Écran */}
+      <div class="tablet__screen">
+        {
+          src ? (
+            <img src={src} alt={alt} class="tablet__img" loading="lazy" decoding="async" />
+          ) : (
+            <span class="tablet__placeholder">{label}</span>
+          )
+        }
+        <span class="tablet__screen-glare" aria-hidden="true"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .tablet {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 24 / 16;
+    isolation: isolate;
+  }
+
+  /* — Boutons tranche haute — */
+  .tablet__btn {
+    position: absolute;
+    top: -3px;
+    height: 4px;
+    width: 5%;
+    background: var(--tablet-button);
+    border: 1px solid var(--tablet-button-border);
+    border-bottom: 0;
+    border-radius: 6px 6px 0 0;
+    box-shadow: var(--tablet-button-shadow);
+    z-index: 0;
+  }
+  .tablet__btn--a {
+    left: 12%;
+  }
+  .tablet__btn--b {
+    left: 18%;
+  }
+
+  /* — Châssis métal — */
+  .tablet__casing {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+    padding: clamp(3px, 0.6vw, 5px);
+    background: var(--tablet-casing);
+    border-radius: clamp(28px, 5vw, 54px);
+    box-shadow: var(--tablet-casing-shadow);
+  }
+
+  /* — Bezel verre — */
+  .tablet__bezel {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    padding: clamp(12px, 2.6vw, 28px);
+    background: var(--tablet-bezel);
+    border-radius: clamp(24px, 4.5vw, 49px);
+    box-shadow: var(--tablet-bezel-shadow);
+    overflow: hidden;
+  }
+
+  /* — Reflet diagonal du verre — */
+  .tablet__glare {
+    position: absolute;
+    inset: -50% -20% auto;
+    height: 150%;
+    width: 150%;
+    background: linear-gradient(180deg, var(--tablet-glare), transparent 60%);
+    transform: rotate(25deg);
+    pointer-events: none;
+    z-index: 3;
+  }
+
+  /* — Capteurs / caméra — */
+  .tablet__sensors {
+    position: absolute;
+    left: clamp(5px, 1.4vw, 14px);
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(7px, 1.4vw, 14px);
+    z-index: 4;
+  }
+  .tablet__dot {
+    height: 8px;
+    width: 8px;
+    border-radius: 999px;
+    background: var(--tablet-sensor);
+    border: 1px solid var(--tablet-sensor-border);
+    box-shadow: var(--tablet-sensor-shadow);
+  }
+  .tablet__dot--sm {
+    height: 6px;
+    width: 6px;
+  }
+  .tablet__camera {
+    display: grid;
+    place-items: center;
+    height: 12px;
+    width: 12px;
+    border-radius: 999px;
+    background: var(--tablet-camera);
+    border: 1px solid var(--tablet-sensor-border);
+    box-shadow: var(--tablet-camera-shadow);
+  }
+  .tablet__lens {
+    height: 6px;
+    width: 6px;
+    border-radius: 999px;
+    background: var(--tablet-lens);
+    box-shadow: var(--tablet-lens-shadow);
+  }
+
+  /* — Écran — */
+  .tablet__screen {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    border-radius: clamp(12px, 2.2vw, 24px);
+    overflow: hidden;
+    background: var(--color-parchment);
+    box-shadow: var(--tablet-screen-shadow);
+  }
+  .tablet__img {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: top center;
+  }
+  .tablet__placeholder {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    padding: 1rem;
+    text-align: center;
+    font-size: var(--text-caption);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-ink-faint);
+    background: repeating-linear-gradient(
+      135deg,
+      var(--color-parchment) 0 16px,
+      var(--color-line) 16px 32px
+    );
+  }
+  .tablet__screen-glare {
+    position: absolute;
+    inset: -50% -20% auto;
+    height: 150%;
+    width: 150%;
+    background: linear-gradient(180deg, var(--tablet-glare), transparent 55%);
+    transform: rotate(25deg);
+    pointer-events: none;
+    z-index: 2;
+  }
+</style>

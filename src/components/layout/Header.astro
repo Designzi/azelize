@@ -67,7 +67,11 @@ const caret =
       }
     </nav>
 
-    <Button href={chromeCta.href} size="sm" class="hidden lg:inline-flex">{chromeCta.label}</Button>
+    {/* CTA desktop uniquement. Le wrapper porte le `hidden` : sur le Button lui-même
+        il serait neutralisé par `inline-flex` (même spécificité, l'ordre CSS gagne). */}
+    <div class="hidden lg:block">
+      <Button href={chromeCta.href} size="sm">{chromeCta.label}</Button>
+    </div>
 
     {/* Burger — sous lg */}
     <button

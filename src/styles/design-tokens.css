@@ -4,7 +4,7 @@
 
    Une seule couche fait foi pour les couleurs/échelles : @theme (mapping
    Tailwind v4 → utilitaires bg-brand, text-ink, text-h2, rounded-md…, et
-   variables var(--color-*) consommées par les rares blocs CSS scoped .ed-*/.az-*).
+   variables var(--color-*) consommées par les rares blocs CSS scoped .ed-* et .az-*.
    :root ne conserve QUE les primitives réellement lues en CSS brut et qui n'ont
    pas d'équivalent utilitaire : courbe/durées de motion (--ease), anneau de
    focus (--ring-focus), familles de police, conteneurs (--container-*) et les
@@ -39,6 +39,32 @@
 
   /* — MOTION — courbe consommée par .reveal / animations (global.css) — */
   --ease: cubic-bezier(0.22, 0.68, 0.18, 1);
+
+  /* — DEVICE MOCKUP (composant TabletMockup) —
+     Chrome matériel d'une tablette (métal brossé + verre). Ces couleurs ne sont
+     PAS de la palette de marque : elles imitent un objet physique et n'ont aucun
+     équivalent token sémantique. Primitives lues uniquement par le bloc scoped
+     `.tablet-*` du composant ; tenues ici pour respecter le garde-fou
+     check:tokens (aucun hex/rgba hors de ce fichier). */
+  --tablet-casing:        linear-gradient(135deg, #ffffff 0%, #dcdede 55%, #b8babb 100%);
+  --tablet-casing-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.3),
+                          inset 0 2px 4px rgba(255, 255, 255, 0.9),
+                          inset 0 -3px 5px rgba(0, 0, 0, 0.2),
+                          0 0 0 1px rgba(0, 0, 0, 0.1);
+  --tablet-bezel:         linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 55%, #000000 100%);
+  --tablet-bezel-shadow:  inset 0 1px 2px rgba(255, 255, 255, 0.2), 0 0 0 1px #000000;
+  --tablet-screen-shadow: inset 0 0 6px rgba(0, 0, 0, 0.4), 0 0 0 2px #000000;
+  --tablet-glare:         rgba(255, 255, 255, 0.07);
+  --tablet-sensor:        linear-gradient(180deg, #111111, #222222);
+  --tablet-sensor-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.8), 0 1px 1px rgba(255, 255, 255, 0.06);
+  --tablet-sensor-border: #1a1a1a;
+  --tablet-camera:        #050505;
+  --tablet-camera-shadow: inset 0 0 4px rgba(0, 0, 0, 1), 0 1px 1px rgba(255, 255, 255, 0.06);
+  --tablet-lens:          #0d2138;
+  --tablet-lens-shadow:   inset 0 0 2px #345985;
+  --tablet-button:        linear-gradient(180deg, #e8e8e8, #bebebe);
+  --tablet-button-border: #999999;
+  --tablet-button-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8);
 }
 
 /* — Mapping Tailwind v4 (utilitaires pour les pages hors landing) — */
