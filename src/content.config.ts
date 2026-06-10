@@ -14,6 +14,12 @@ const base = z.object({
       ogImage: z.string().optional(),
     })
     .optional(),
+  /**
+   * Masque la page des moteurs (<meta robots="noindex">) sans la retirer du site :
+   * elle reste accessible/navigable. Pour un vrai retrait du sitemap, synchroniser
+   * aussi le filtre dans astro.config.mjs. Usage : pages pas encore prêtes au SEO.
+   */
+  noindex: z.boolean().optional(),
   updated: z.coerce.date().optional(),
   tags: z.array(z.string()).optional(),
   sections: z.array(sectionSchema).optional(),

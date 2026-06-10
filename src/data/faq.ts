@@ -19,7 +19,7 @@ export const homeFaq: FaqItem[] = [
   },
   {
     q: "Si j'arrête, je garde mon site ?",
-    a: 'À préciser ensemble selon votre formule — on en parle franchement dès le premier appel, sans piège. (Politique définitive à confirmer.)',
+    a: 'À préciser ensemble selon votre formule — on en parle franchement dès le premier appel, sans piège.',
   },
   {
     q: 'En combien de temps je suis en ligne ?',

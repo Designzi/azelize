@@ -6,6 +6,7 @@
  * Interactivité : sommaire sticky + ancres (défilement doux géré par BaseLayout).
  */
 import BaseLayout from '@layouts/BaseLayout.astro';
+import { breadcrumbJsonLd } from '@lib/seo';
 import Section from '@components/ui/Section.astro';
 import Eyebrow from '@components/ui/Eyebrow.astro';
 import CtaBand from '@components/blocks/CtaBand.astro';
@@ -26,6 +27,10 @@ const sections: [string, string][] = [
 <BaseLayout
   title="Conditions générales"
   description="Les conditions de l'abonnement Azelize : démarrage, frais, paiement, résiliation, propriété du site. En clair."
+  jsonLd={breadcrumbJsonLd([
+    { name: 'Accueil', url: '/' },
+    { name: 'Conditions générales', url: '/cgv' },
+  ])}
 >
   <Section width="site" pad="default" class="cg-hero">
     <div class="cg-narrow">
@@ -46,35 +51,36 @@ const sections: [string, string][] = [
         <section class="cg-sec" id="objet">
           <h2 class="cg-h2"><span class="n">01</span>Objet</h2>
           <p>
-            Les présentes conditions régissent l'abonnement Azelize : création,
-            hébergement, référencement local et entretien continu d'un site
-            internet, ainsi que les prestations associées (identité, supports,
-            contenus). Elles s'appliquent dès la signature du devis ou la
-            validation de la commande.
+            Les présentes conditions régissent l'abonnement Azelize : création, hébergement,
+            référencement local et entretien continu d'un site internet, ainsi que les prestations
+            associées (identité, supports, contenus). Elles s'appliquent dès la signature du devis
+            ou la validation de la commande.
           </p>
         </section>
 
         <section class="cg-sec" id="demarrage">
           <h2 class="cg-h2"><span class="n">02</span>Démarrage &amp; période offerte</h2>
           <p>
-            Notre principe : <strong>vous ne payez l'abonnement qu'une fois que
-            le site vous rapporte</strong>.
+            Notre principe : <strong
+              >vous ne payez l'abonnement qu'une fois que le site vous rapporte</strong
+            >.
           </p>
           <ul>
-            <li><strong>1er mois offert.</strong> Service gratuit, le temps que le site se mette en place.</li>
             <li>
-              <strong>Seuil de démarrage.</strong> L'abonnement ne démarre que
-              lorsque le site a généré <strong>au moins 2 prises de contact</strong>
+              <strong>1er mois offert.</strong> Service gratuit, le temps que le site se mette en place.
+            </li>
+            <li>
+              <strong>Seuil de démarrage.</strong> L'abonnement ne démarre que lorsque le site a généré
+              <strong>au moins 2 prises de contact</strong>
               (« leads ») via le site ou la fiche Google.
             </li>
             <li>
-              <strong>Moins de 2 leads à la fin du 1er mois ?</strong> Un mois
-              supplémentaire vous est offert, en attendant d'atteindre le seuil.
+              <strong>Moins de 2 leads à la fin du 1er mois ?</strong> Un mois supplémentaire vous est
+              offert, en attendant d'atteindre le seuil.
             </li>
             <li>
-              <strong>2 leads ou plus avant la fin du 1er mois ?</strong> On vous
-              propose de continuer ; si vous acceptez, l'abonnement commence le
-              mois suivant.
+              <strong>2 leads ou plus avant la fin du 1er mois ?</strong> On vous propose de continuer
+              ; si vous acceptez, l'abonnement commence le mois suivant.
             </li>
           </ul>
           <p>Tant que le seuil n'est pas atteint, vous restez à 0 € d'abonnement.</p>
@@ -83,11 +89,10 @@ const sections: [string, string][] = [
         <section class="cg-sec" id="prix">
           <h2 class="cg-h2"><span class="n">03</span>Prix &amp; paiement</h2>
           <p>
-            L'abonnement débute <strong>à partir de 390 €/mois</strong>, selon la
-            formule choisie (Présence, Visibilité, Croissance). Le paiement est
-            mensuel, sans engagement de durée. Les prix sont indiqués hors taxes
-            le cas échéant ; Azelize relève de la franchise en base de TVA
-            (art. 293 B du CGI), TVA non applicable.
+            L'abonnement débute <strong>à partir de 390 €/mois</strong>, selon la formule choisie
+            (Présence, Visibilité, Croissance). Le paiement est mensuel, sans engagement de durée.
+            Les prix sont indiqués hors taxes le cas échéant ; Azelize relève de la franchise en
+            base de TVA (art. 293 B du CGI), TVA non applicable.
           </p>
         </section>
 
@@ -95,19 +100,17 @@ const sections: [string, string][] = [
           <h2 class="cg-h2"><span class="n">04</span>Frais de mise en place</h2>
           <p>
             Seuls frais dus au démarrage : <strong>50 € pour le nom de domaine</strong>
-            <span class="cg-note">une seule fois</span>. Aucun autre frais caché.
-            Ces 50 € sont réglés à la mise en place, indépendamment de la période
-            offerte.
+            <span class="cg-note">une seule fois</span>. Aucun autre frais caché. Ces 50 € sont
+            réglés à la mise en place, indépendamment de la période offerte.
           </p>
         </section>
 
         <section class="cg-sec" id="duree">
           <h2 class="cg-h2"><span class="n">05</span>Durée &amp; résiliation</h2>
           <p>
-            <strong>Aucun engagement de durée.</strong> Vous pouvez résilier à
-            tout moment, d'un mois sur l'autre, par simple e-mail à
-            bonjour@azelize.fr. La résiliation prend effet à la fin du mois en
-            cours ; aucun mois entamé n'est dû au-delà.
+            <strong>Aucun engagement de durée.</strong> Vous pouvez résilier à tout moment, d'un mois
+            sur l'autre, par simple e-mail à bonjour@azelize.fr. La résiliation prend effet à la fin du
+            mois en cours ; aucun mois entamé n'est dû au-delà.
           </p>
           <p>
             Une garantie <strong>satisfait ou remboursé 30 jours</strong>
@@ -119,16 +122,14 @@ const sections: [string, string][] = [
           <h2 class="cg-h2"><span class="n">06</span>Propriété du site — location</h2>
           <p>
             <strong>Le site et le nom de domaine restent la propriété d'Azelize.</strong>
-            L'abonnement est une <strong>location</strong> : pendant toute sa
-            durée, le site est mis à votre disposition, hébergé et entretenu par
-            nos soins. C'est le principe même de l'offre — vous ne supportez pas
-            le coût d'un site sur-mesure, vous en louez l'usage et le suivi.
+            L'abonnement est une <strong>location</strong> : pendant toute sa durée, le site est mis à
+            votre disposition, hébergé et entretenu par nos soins. C'est le principe même de l'offre —
+            vous ne supportez pas le coût d'un site sur-mesure, vous en louez l'usage et le suivi.
           </p>
           <p>
-            En cas d'arrêt, <strong>le site est mis hors ligne</strong> et n'est
-            pas cédé. Vous récupérez les éléments que vous nous avez fournis (vos
-            photos, vos textes, votre logo). Toute reprise éventuelle du site ou
-            du domaine fait l'objet d'un accord distinct, précisé au devis.
+            En cas d'arrêt, <strong>le site est mis hors ligne</strong> et n'est pas cédé. Vous récupérez
+            les éléments que vous nous avez fournis (vos photos, vos textes, votre logo). Toute reprise
+            éventuelle du site ou du domaine fait l'objet d'un accord distinct, précisé au devis.
           </p>
         </section>
 
@@ -145,20 +146,18 @@ const sections: [string, string][] = [
         <section class="cg-sec" id="responsabilite">
           <h2 class="cg-h2"><span class="n">08</span>Responsabilité</h2>
           <p>
-            Azelize est tenue à une obligation de moyens. Les résultats de
-            référencement (position Google, nombre de demandes) dépendent de
-            facteurs externes et ne constituent pas une garantie. Azelize ne
-            saurait être tenue responsable des contenus fournis par le client ni
-            des interruptions imputables à des tiers (hébergeur, Google).
+            Azelize est tenue à une obligation de moyens. Les résultats de référencement (position
+            Google, nombre de demandes) dépendent de facteurs externes et ne constituent pas une
+            garantie. Azelize ne saurait être tenue responsable des contenus fournis par le client
+            ni des interruptions imputables à des tiers (hébergeur, Google).
           </p>
         </section>
 
         <section class="cg-sec" id="droit">
           <h2 class="cg-h2"><span class="n">09</span>Droit applicable</h2>
           <p>
-            Les présentes conditions sont régies par le droit français. En cas
-            de litige et à défaut de résolution amiable, les tribunaux compétents
-            seront ceux du ressort de Lorient.
+            Les présentes conditions sont régies par le droit français. En cas de litige et à défaut
+            de résolution amiable, les tribunaux compétents seront ceux du ressort de Lorient.
           </p>
         </section>
       </div>
@@ -237,7 +236,9 @@ const sections: [string, string][] = [
     text-decoration: none;
     padding: 6px 10px;
     border-radius: var(--radius-xs);
-    transition: background 0.2s var(--ease), color 0.2s var(--ease);
+    transition:
+      background 0.2s var(--ease),
+      color 0.2s var(--ease);
   }
   .cg-toc a:hover {
     background: var(--color-hover);

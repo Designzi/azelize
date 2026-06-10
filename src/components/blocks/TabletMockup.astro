@@ -11,17 +11,33 @@
  * `white`/`black`/`transparent` employés ci-dessous sont des mots-clés CSS, pas
  * des littéraux hex/rgba — ils passent le garde-fou.
  */
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
 interface Props {
-  /** Visuel de l'écran (screenshot d'une réalisation). Sans `src` → placeholder. */
-  src?: string;
+  /**
+   * Visuel de l'écran (screenshot d'une réalisation). Sans `src` → placeholder.
+   * Import `astro:assets` (optimisé WebP + dimensions intrinsèques) ou chemin public.
+   */
+  src?: ImageMetadata | string;
   /** Texte alternatif de l'image (obligatoire dès qu'il y a un `src`). */
   alt?: string;
   /** Légende du placeholder tant que le visuel n'est pas fourni. */
   label?: string;
   /** Classe(s) sur le conteneur externe (largeur, marges…). */
   class?: string;
+  /**
+   * true quand la maquette est au-dessus du fold (hero) : l'image est alors
+   * l'élément LCP → chargement prioritaire, jamais lazy.
+   */
+  eager?: boolean;
 }
-const { src, alt = '', label = 'Visuel à venir', class: className } = Astro.props;
+const { src, alt = '', label = 'Visuel à venir', class: className, eager = false } = Astro.props;
+
+/** lazy par défaut (sous le fold) ; eager + fetchpriority=high pour le LCP. */
+const imgPerf = eager
+  ? ({ loading: 'eager', fetchpriority: 'high', decoding: 'async' } as const)
+  : ({ loading: 'lazy', decoding: 'async' } as const);
 ---
 
 <div class:list={['tablet', className]}>
@@ -46,8 +62,18 @@ const { src, alt = '', label = 'Visuel à venir', class: className } = Astro.pro
       {/* Écran */}
       <div class="tablet__screen">
         {
-          src ? (
-            <img src={src} alt={alt} class="tablet__img" loading="lazy" decoding="async" />
+          src && typeof src === 'object' ? (
+            <Image
+              src={src}
+              alt={alt}
+              class="tablet__img"
+              widths={[480, 880, 1320]}
+              sizes="(min-width: 768px) 880px, 140vw"
+              format="webp"
+              {...imgPerf}
+            />
+          ) : src ? (
+            <img src={src} alt={alt} class="tablet__img" {...imgPerf} />
           ) : (
             <span class="tablet__placeholder">{label}</span>
           )
@@ -64,6 +90,12 @@ const { src, alt = '', label = 'Visuel à venir', class: className } = Astro.pro
     width: 100%;
     aspect-ratio: 24 / 16;
     isolation: isolate;
+
+    /* Épaisseurs des bords + rayon extérieur. Les rayons intérieurs en dérivent
+       (rayon - padding) pour des coins parfaitement concentriques/parallèles. */
+    --t-pad-casing: clamp(3px, 0.6vw, 5px);
+    --t-pad-bezel: clamp(7px, 1.5vw, 15px);
+    --t-radius: clamp(28px, 5vw, 54px);
   }
 
   /* — Boutons tranche haute — */
@@ -92,9 +124,9 @@ const { src, alt = '', label = 'Visuel à venir', class: className } = Astro.pro
     z-index: 1;
     height: 100%;
     width: 100%;
-    padding: clamp(3px, 0.6vw, 5px);
+    padding: var(--t-pad-casing);
     background: var(--tablet-casing);
-    border-radius: clamp(28px, 5vw, 54px);
+    border-radius: var(--t-radius);
     box-shadow: var(--tablet-casing-shadow);
   }
 
@@ -103,9 +135,9 @@ const { src, alt = '', label = 'Visuel à venir', class: className } = Astro.pro
     position: relative;
     height: 100%;
     width: 100%;
-    padding: clamp(12px, 2.6vw, 28px);
+    padding: var(--t-pad-bezel);
     background: var(--tablet-bezel);
-    border-radius: clamp(24px, 4.5vw, 49px);
+    border-radius: calc(var(--t-radius) - var(--t-pad-casing));
     box-shadow: var(--tablet-bezel-shadow);
     overflow: hidden;
   }
@@ -125,7 +157,7 @@ const { src, alt = '', label = 'Visuel à venir', class: className } = Astro.pro
   /* — Capteurs / caméra — */
   .tablet__sensors {
     position: absolute;
-    left: clamp(5px, 1.4vw, 14px);
+    left: clamp(2px, 0.7vw, 6px);
     top: 50%;
     transform: translateY(-50%);
     display: flex;
@@ -169,7 +201,7 @@ const { src, alt = '', label = 'Visuel à venir', class: className } = Astro.pro
     position: relative;
     height: 100%;
     width: 100%;
-    border-radius: clamp(12px, 2.2vw, 24px);
+    border-radius: calc(var(--t-radius) - var(--t-pad-casing) - var(--t-pad-bezel));
     overflow: hidden;
     background: var(--color-parchment);
     box-shadow: var(--tablet-screen-shadow);

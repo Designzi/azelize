@@ -23,7 +23,13 @@ export interface SeoResolved {
 
 /** Compose les métadonnées SEO finales en s'appuyant sur les défauts du site. */
 export function resolveSeo(input: SeoInput = {}): SeoResolved {
-  const title = input.title ? `${input.title} — ${site.name}` : `${site.name} — ${site.tagline}`;
+  // Garde-fou anti « — Azelize — Azelize » : pas de suffixe marque si le titre
+  // la contient déjà (ex. « Bonjour, Azelize »).
+  const title = input.title
+    ? input.title.includes(site.name)
+      ? input.title
+      : `${input.title} — ${site.name}`
+    : `${site.name} — ${site.tagline}`;
   const description = input.description ?? site.description;
   const canonical = new URL(input.pathname ?? '/', site.url).toString();
   const image = new URL(input.image ?? site.defaultOgImage, site.url).toString();
@@ -42,6 +48,22 @@ type JsonLd = Record<string, unknown>;
 /** Résout un chemin relatif en URL absolue (requis par schema.org). */
 const abs = (path: string) => new URL(path, site.url).toString();
 
+/**
+ * JSON-LD WebSite — homepage uniquement (règle Google « site names » : le nom de
+ * site est lu sur la home ; ne pas l'émettre ailleurs).
+ */
+export function websiteJsonLd(): JsonLd {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': abs('/#website'),
+    name: site.name,
+    url: site.url,
+    inLanguage: site.lang,
+    publisher: { '@id': abs('/#organization') },
+  };
+}
+
 /** JSON-LD Organization pour la home / les pages clés. */
 export function organizationJsonLd(): JsonLd {
   return {
@@ -53,7 +75,8 @@ export function organizationJsonLd(): JsonLd {
     url: site.url,
     description: site.description,
     email: site.email,
-    logo: abs('/favicon.svg'),
+    // PNG raster ≥ 112×112 (exigence logo Google) — généré depuis favicon.svg.
+    logo: abs('/icons/icon-512.png'),
     // TODO sameAs : ajouter ici les URLs de profils réels (fiche Google Business,
     // réseaux sociaux) dès qu'elles existent dans site.ts. Ne pas inventer d'URLs.
   };
@@ -70,14 +93,13 @@ export function localBusinessJsonLd(): JsonLd {
     url: site.url,
     description: site.description,
     email: site.email,
-    telephone: site.phone,
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: site.address[0],
-      addressLocality: site.address[1],
-      addressCountry: 'FR',
-    },
+    telephone: site.phoneInternational,
+    image: abs(site.defaultOgImage),
+    address: { '@type': 'PostalAddress', ...site.postalAddress },
+    priceRange: '390-890 € / mois',
     areaServed: 'FR',
+    // TODO geo / openingHoursSpecification : à ajouter quand les coordonnées GPS
+    // et horaires réels seront confirmés. Ne pas inventer de données.
   };
 }
 
@@ -142,9 +164,12 @@ export function faqJsonLd(items: { q: string; a: string }[]): JsonLd {
  * pour les moteurs de réponse (« c'est quoi … »). Le contenu doit être identique à
  * l'affichage, d'où la dérivation directe depuis la liste de termes rendue.
  */
-export function definedTermSetJsonLd(
-  set: { name: string; description: string; url: string; terms: { term: string; def: string }[] },
-): JsonLd {
+export function definedTermSetJsonLd(set: {
+  name: string;
+  description: string;
+  url: string;
+  terms: { term: string; def: string }[];
+}): JsonLd {
   const id = abs(`${set.url}#glossaire`);
   return {
     '@context': 'https://schema.org',

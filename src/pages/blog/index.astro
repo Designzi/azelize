@@ -10,7 +10,7 @@ const articles = (await getCollection('blog'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
-<BaseLayout title="Blog" description="Notes et coulisses du studio Azelize.">
+<BaseLayout title="Blog" description="Notes et coulisses du studio Azelize." noindex>
   <Section pad="default">
     <PageHeader eyebrow="Blog">Notes &amp; coulisses</PageHeader>
 
@@ -19,12 +19,20 @@ const articles = (await getCollection('blog'))
         <ul class="mt-12 divide-y divide-line border-t border-line">
           {articles.map((a) => (
             <li>
-              <a href={`/blog/${a.id}`} class="group flex flex-col gap-2 py-6 md:flex-row md:items-baseline md:justify-between">
+              <a
+                href={`/blog/${a.id}`}
+                class="group flex flex-col gap-2 py-6 md:flex-row md:items-baseline md:justify-between"
+              >
                 <div class="max-w-2xl">
-                  <h2 class="font-display text-h3 font-medium tracking-tight text-ink group-hover:text-brand">{a.data.titre}</h2>
+                  <h2 class="font-display text-h3 font-medium tracking-tight text-ink group-hover:text-brand">
+                    {a.data.titre}
+                  </h2>
                   <p class="mt-2 text-body text-ink-2">{a.data.description}</p>
                 </div>
-                <time class="shrink-0 font-mono text-caption text-ink-soft" datetime={a.data.date.toISOString()}>
+                <time
+                  class="shrink-0 font-mono text-caption text-ink-soft"
+                  datetime={a.data.date.toISOString()}
+                >
                   {formatDate(a.data.date)}
                 </time>
               </a>

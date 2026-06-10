@@ -5,6 +5,7 @@
  * timeline verticale semaine par semaine + récap garanties + bande CTA.
  */
 import BaseLayout from '@layouts/BaseLayout.astro';
+import { breadcrumbJsonLd } from '@lib/seo';
 import Section from '@components/ui/Section.astro';
 import Eyebrow from '@components/ui/Eyebrow.astro';
 import CtaBand from '@components/blocks/CtaBand.astro';
@@ -25,24 +26,21 @@ const steps: Step[] = [
     dot: '1',
     when: 'Jour 1–2',
     title: 'On fait le point ensemble',
-    body:
-      "Un appel de cadrage : votre métier, vos clients, votre zone, vos concurrents. On récupère ce qu'on a besoin (logo, photos de chantiers, infos). Seuls frais à ce stade : 50 € pour le nom de domaine.",
+    body: "Un appel de cadrage : votre métier, vos clients, votre zone, vos concurrents. On récupère ce qu'on a besoin (logo, photos de chantiers, infos). Seuls frais à ce stade : 50 € pour le nom de domaine.",
     who: 'Vous : 30 min d’échange',
   },
   {
     dot: '2',
     when: 'Semaine 1',
     title: 'On conçoit votre site',
-    body:
-      'On prépare une première version : structure, textes, mise en page à votre image. Vous recevez un lien privé pour regarder et commenter.',
+    body: 'On prépare une première version : structure, textes, mise en page à votre image. Vous recevez un lien privé pour regarder et commenter.',
     who: 'Nous : on construit',
   },
   {
     dot: '3',
     when: 'Semaine 2',
     title: 'Vous validez, on met en ligne',
-    body:
-      "On ajuste selon vos retours, puis on publie. En parallèle, on crée et on optimise votre fiche Google d'établissement.",
+    body: "On ajuste selon vos retours, puis on publie. En parallèle, on crée et on optimise votre fiche Google d'établissement.",
     who: 'Vous : un dernier feu vert',
   },
   {
@@ -50,16 +48,14 @@ const steps: Step[] = [
     when: 'Semaines 3–4',
     title: 'Le référencement démarre',
     tag: 'Offert',
-    body:
-      'Le site commence à remonter localement. Un site neuf met du temps à émerger : pendant cette phase, vous ne payez aucun abonnement.',
+    body: 'Le site commence à remonter localement. Un site neuf met du temps à émerger : pendant cette phase, vous ne payez aucun abonnement.',
     who: 'Nous : on travaille la visibilité',
   },
   {
     dot: '★',
     when: 'À partir du jour 30',
     title: 'Les premières demandes arrivent',
-    body:
-      "Dès que le site vous amène des clients, l'abonnement démarre — si vous le souhaitez. Sinon, on continue à 0 € jusqu'aux premiers résultats. Vous ne payez qu'une fois que ça marche.",
+    body: "Dès que le site vous amène des clients, l'abonnement démarre — si vous le souhaitez. Sinon, on continue à 0 € jusqu'aux premiers résultats. Vous ne payez qu'une fois que ça marche.",
     who: 'Vous : vous décidez',
   },
 ];
@@ -75,61 +71,79 @@ const cards = [
   title="Vos 30 premiers jours"
   description="Ce qui se passe concrètement après votre oui : semaine par semaine, de la mise en place à la mise en ligne. Vous validez, on exécute."
   image={ogImage('default')}
+  jsonLd={breadcrumbJsonLd([
+    { name: 'Accueil', url: '/' },
+    { name: 'Vos 30 premiers jours', url: '/vos-30-premiers-jours' },
+  ])}
 >
-  <script is:inline>document.documentElement.classList.add('anim');</script>
+  <script is:inline>
+    document.documentElement.classList.add('anim');
+  </script>
 
   {/* ── Hero ───────────────────────────────────────────────────────────────── */}
   <Section pad="none" class="pt-[clamp(40px,8vw,72px)]">
     <div class="max-w-[780px]">
       <div class="reveal"><Eyebrow>Après votre oui</Eyebrow></div>
-      <h1 class="reveal mt-3.5 font-display text-[clamp(2.3rem,5vw,3.8rem)] font-medium leading-[1.02] tracking-display text-ink">
+      <h1
+        class="reveal mt-3.5 font-display text-[clamp(2.3rem,5vw,3.8rem)] font-medium leading-[1.02] tracking-display text-ink"
+      >
         Vos <em class="not-italic text-brand">30 premiers jours</em>, sans stress.
       </h1>
-      <p class="reveal mt-5 max-w-[54ch] text-[clamp(1.0625rem,1.6vw,1.3rem)] leading-[1.55] text-ink-2">
-        Pas de zone d'ombre : voici ce qui se passe concrètement, semaine par semaine.
-        Vous validez les étapes clés, on exécute le reste.
+      <p
+        class="reveal mt-5 max-w-[54ch] text-[clamp(1.0625rem,1.6vw,1.3rem)] leading-[1.55] text-ink-2"
+      >
+        Pas de zone d'ombre : voici ce qui se passe concrètement, semaine par semaine. Vous validez
+        les étapes clés, on exécute le reste.
       </p>
     </div>
   </Section>
 
   {/* ── Timeline verticale ─────────────────────────────────────────────────── */}
   <Section pad="none" class="pb-[clamp(20px,3vw,32px)]">
-    <div class="relative mx-auto mt-[clamp(8px,2vw,20px)] max-w-[760px] pl-[38px] before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-0.5 before:bg-line before:content-['']">
-      {steps.map((step) => (
-        <div class="reveal relative pb-[clamp(28px,3.4vw,40px)] last:pb-0">
-          <span class="absolute -left-[38px] top-0.5 flex h-6 w-6 items-center justify-center rounded-full bg-brand font-mono text-[0.72rem] text-paper">
-            {step.dot}
-          </span>
-          <div class="font-mono text-[0.78rem] text-brand">{step.when}</div>
-          <h2 class="mt-1 font-display text-[1.3rem] font-semibold tracking-tight text-ink">
-            {step.title}
-            {step.tag && (
-              <span class="ml-2 inline-block rounded-xs bg-accent-2 px-2.5 py-0.5 align-middle text-[0.72rem] font-bold text-accent-2-ink">
-                {step.tag}
-              </span>
-            )}
-          </h2>
-          <p class="mt-2 max-w-[60ch] text-base leading-[1.6] text-ink-2">{step.body}</p>
-          <span class="mt-2.5 inline-flex items-center gap-[7px] rounded-pill bg-parchment px-3 py-[5px] text-[0.8rem] font-semibold text-ink-soft">
-            {step.who}
-          </span>
-        </div>
-      ))}
+    <div
+      class="relative mx-auto mt-[clamp(8px,2vw,20px)] max-w-[760px] pl-[38px] before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-0.5 before:bg-line before:content-['']"
+    >
+      {
+        steps.map((step) => (
+          <div class="reveal relative pb-[clamp(28px,3.4vw,40px)] last:pb-0">
+            <span class="absolute -left-[38px] top-0.5 flex h-6 w-6 items-center justify-center rounded-full bg-brand font-mono text-[0.72rem] text-paper">
+              {step.dot}
+            </span>
+            <div class="font-mono text-[0.78rem] text-brand">{step.when}</div>
+            <h2 class="mt-1 font-display text-[1.3rem] font-semibold tracking-tight text-ink">
+              {step.title}
+              {step.tag && (
+                <span class="ml-2 inline-block rounded-xs bg-accent-2 px-2.5 py-0.5 align-middle text-[0.72rem] font-bold text-accent-2-ink">
+                  {step.tag}
+                </span>
+              )}
+            </h2>
+            <p class="mt-2 max-w-[60ch] text-base leading-[1.6] text-ink-2">{step.body}</p>
+            <span class="mt-2.5 inline-flex items-center gap-[7px] rounded-pill bg-parchment px-3 py-[5px] text-[0.8rem] font-semibold text-ink-soft">
+              {step.who}
+            </span>
+          </div>
+        ))
+      }
     </div>
   </Section>
 
   {/* ── Récap garanties ────────────────────────────────────────────────────── */}
   <Section tone="parchment" pad="none" class="py-[clamp(40px,5vw,72px)]">
-    <h2 class="reveal mb-[clamp(24px,3vw,34px)] max-w-[24ch] font-display text-h2 font-medium tracking-h2 text-ink">
+    <h2
+      class="reveal mb-[clamp(24px,3vw,34px)] max-w-[24ch] font-display text-h2 font-medium tracking-h2 text-ink"
+    >
       Pendant tout ce temps, vous êtes tranquille.
     </h2>
     <div class="grid grid-cols-1 gap-3.5 md:grid-cols-3">
-      {cards.map((c) => (
-        <div class="reveal rounded-md border border-line bg-paper p-6">
-          <h3 class="m-0 font-display text-[1.15rem] font-semibold text-ink">{c.t}</h3>
-          <p class="mt-2 text-[0.95rem] leading-[1.55] text-ink-soft">{c.p}</p>
-        </div>
-      ))}
+      {
+        cards.map((c) => (
+          <div class="reveal rounded-md border border-line bg-paper p-6">
+            <h3 class="m-0 font-display text-[1.15rem] font-semibold text-ink">{c.t}</h3>
+            <p class="mt-2 text-[0.95rem] leading-[1.55] text-ink-soft">{c.p}</p>
+          </div>
+        ))
+      }
     </div>
   </Section>
 

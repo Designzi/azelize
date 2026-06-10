@@ -15,7 +15,7 @@ export const getStaticPaths = (async () => {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
-const { titre, description, date, updated, seo } = entry.data;
+const { titre, description, date, updated, seo, noindex } = entry.data;
 const url = `/blog/${entry.id}`;
 const image = seo?.ogImage ?? ogImage(`blog/${entry.id}`);
 
@@ -37,6 +37,7 @@ const jsonLd = [
   date={date}
   description={seo?.description ?? description}
   image={image}
+  noindex={noindex}
   breadcrumbs={breadcrumbs}
   jsonLd={jsonLd}
 >

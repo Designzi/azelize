@@ -7,7 +7,7 @@
  */
 import BaseLayout from '@layouts/BaseLayout.astro';
 import CtaBand from '@components/blocks/CtaBand.astro';
-import { definedTermSetJsonLd } from '@lib/seo';
+import { breadcrumbJsonLd, definedTermSetJsonLd } from '@lib/seo';
 
 /**
  * Termes du glossaire. `link` (optionnel) injecte un lien inline dans la
@@ -20,17 +20,50 @@ type Term = {
 };
 
 const TERMS: Term[] = [
-  { term: 'Avis Google', def: 'Les notes et commentaires laissés par vos clients sur votre fiche. Décisifs : ils rassurent et pèsent dans le classement local.' },
-  { term: 'Backlink', def: "Un lien d'un autre site vers le vôtre. Plus vous en avez de qualité, plus Google vous juge crédible." },
-  { term: 'CMS', def: "« Système de gestion de contenu » : le logiciel qui fait tourner le site (ex. WordPress). Vous n'avez pas à vous en occuper, c'est notre travail." },
-  { term: 'Conversion', def: 'Le moment où un visiteur devient client : il appelle, remplit un formulaire, demande un devis.' },
-  { term: 'Fiche Google', def: "Votre fiche d'établissement (Google Business Profile). Gratuite et essentielle : c'est elle qui vous place sur la carte." },
-  { term: 'Hébergement', def: "L'espace où vit votre site sur internet, accessible 24/7. Inclus dans l'abonnement, vous n'y pensez jamais." },
-  { term: 'Indexation', def: 'Le fait que Google « connaisse » vos pages et puisse les afficher. Sans indexation, le site est invisible.' },
-  { term: 'Lead', def: 'Une prise de contact : un client potentiel qui vous appelle ou écrit via le site. Notre vrai objectif.' },
-  { term: 'Mot-clé', def: 'Ce que les gens tapent sur Google (ex. « plombier Lorient »). On vise les mots-clés précis et locaux.' },
-  { term: 'Nom de domaine', def: 'Votre adresse sur le web (ex. votre-entreprise.fr). Chez nous : 50 € à la mise en place, puis il est géré pour vous pendant l’abonnement.' },
-  { term: 'Pack local', def: 'Les 3 fiches affichées sur la carte Google pour une recherche locale. Y figurer = beaucoup d’appels.' },
+  {
+    term: 'Avis Google',
+    def: 'Les notes et commentaires laissés par vos clients sur votre fiche. Décisifs : ils rassurent et pèsent dans le classement local.',
+  },
+  {
+    term: 'Backlink',
+    def: "Un lien d'un autre site vers le vôtre. Plus vous en avez de qualité, plus Google vous juge crédible.",
+  },
+  {
+    term: 'CMS',
+    def: "« Système de gestion de contenu » : le logiciel qui fait tourner le site (ex. WordPress). Vous n'avez pas à vous en occuper, c'est notre travail.",
+  },
+  {
+    term: 'Conversion',
+    def: 'Le moment où un visiteur devient client : il appelle, remplit un formulaire, demande un devis.',
+  },
+  {
+    term: 'Fiche Google',
+    def: "Votre fiche d'établissement (Google Business Profile). Gratuite et essentielle : c'est elle qui vous place sur la carte.",
+  },
+  {
+    term: 'Hébergement',
+    def: "L'espace où vit votre site sur internet, accessible 24/7. Inclus dans l'abonnement, vous n'y pensez jamais.",
+  },
+  {
+    term: 'Indexation',
+    def: 'Le fait que Google « connaisse » vos pages et puisse les afficher. Sans indexation, le site est invisible.',
+  },
+  {
+    term: 'Lead',
+    def: 'Une prise de contact : un client potentiel qui vous appelle ou écrit via le site. Notre vrai objectif.',
+  },
+  {
+    term: 'Mot-clé',
+    def: 'Ce que les gens tapent sur Google (ex. « plombier Lorient »). On vise les mots-clés précis et locaux.',
+  },
+  {
+    term: 'Nom de domaine',
+    def: 'Votre adresse sur le web (ex. votre-entreprise.fr). Chez nous : 50 € à la mise en place, puis il est géré pour vous pendant l’abonnement.',
+  },
+  {
+    term: 'Pack local',
+    def: 'Les 3 fiches affichées sur la carte Google pour une recherche locale. Y figurer = beaucoup d’appels.',
+  },
   {
     term: 'Référencement (SEO)',
     def: "L'art d'apparaître sur Google quand un client cherche votre métier. Voir notre guide du référencement local.",
@@ -41,10 +74,22 @@ const TERMS: Term[] = [
       after: '.',
     },
   },
-  { term: 'Responsive', def: "Un site qui s'adapte au téléphone, à la tablette et à l'ordinateur. Indispensable : vos clients cherchent sur mobile." },
-  { term: 'SSL / HTTPS', def: "Le petit cadenas dans la barre d'adresse : il sécurise le site et rassure. Toujours inclus." },
-  { term: 'Taux de rebond', def: 'La part de visiteurs qui repartent aussitôt. Un site clair et rapide le fait baisser.' },
-  { term: 'UX', def: "L'« expérience utilisateur » : la facilité avec laquelle un visiteur trouve ce qu'il cherche et vous contacte." },
+  {
+    term: 'Responsive',
+    def: "Un site qui s'adapte au téléphone, à la tablette et à l'ordinateur. Indispensable : vos clients cherchent sur mobile.",
+  },
+  {
+    term: 'SSL / HTTPS',
+    def: "Le petit cadenas dans la barre d'adresse : il sécurise le site et rassure. Toujours inclus.",
+  },
+  {
+    term: 'Taux de rebond',
+    def: 'La part de visiteurs qui repartent aussitôt. Un site clair et rapide le fait baisser.',
+  },
+  {
+    term: 'UX',
+    def: "L'« expérience utilisateur » : la facilité avec laquelle un visiteur trouve ce qu'il cherche et vous contacte.",
+  },
 ];
 
 // Groupage par première lettre (l'ordre source est déjà alphabétique).
@@ -59,7 +104,7 @@ const ALPHA = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
 // JSON-LD DefinedTermSet — dérivé des mêmes termes que l'affichage (parité Google).
 const glossaryDescription =
-  "Tous les mots du web expliqués simplement, pour les artisans : SEO, fiche Google, nom de domaine, responsive, hébergement… Sans jargon.";
+  'Tous les mots du web expliqués simplement, pour les artisans : SEO, fiche Google, nom de domaine, responsive, hébergement… Sans jargon.';
 const glossaryJsonLd = definedTermSetJsonLd({
   name: 'Glossaire du digital pour artisans',
   description: glossaryDescription,
@@ -71,7 +116,13 @@ const glossaryJsonLd = definedTermSetJsonLd({
 <BaseLayout
   title="Glossaire du digital pour artisans"
   description={glossaryDescription}
-  jsonLd={glossaryJsonLd}
+  jsonLd={[
+    glossaryJsonLd,
+    breadcrumbJsonLd([
+      { name: 'Accueil', url: '/' },
+      { name: 'Glossaire', url: '/glossaire' },
+    ]),
+  ]}
 >
   <section class="container-site hero-pad">
     <div class="max-w-[760px]">
@@ -81,7 +132,9 @@ const glossaryJsonLd = definedTermSetJsonLd({
       >
         Le digital, expliqué simplement.
       </h1>
-      <p class="mt-[18px] max-w-[54ch] text-[clamp(1.0625rem,1.6vw,1.25rem)] leading-[1.55] text-ink-2">
+      <p
+        class="mt-[18px] max-w-[54ch] text-[clamp(1.0625rem,1.6vw,1.25rem)] leading-[1.55] text-ink-2"
+      >
         Tous les mots du web qu'on entend sans toujours comprendre — traduits pour les artisans,
         sans jargon.
       </p>
@@ -141,7 +194,10 @@ const glossaryJsonLd = definedTermSetJsonLd({
                 {t.link ? (
                   <>
                     {t.link.before}
-                    <a href={t.link.href} class="font-semibold text-brand no-underline hover:underline">
+                    <a
+                      href={t.link.href}
+                      class="font-semibold text-brand no-underline hover:underline"
+                    >
                       {t.link.label}
                     </a>
                     {t.link.after}

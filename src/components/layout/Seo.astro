@@ -21,7 +21,15 @@ const graphs = [
 <title>{seo.title}</title>
 <meta name="description" content={seo.description} />
 <link rel="canonical" href={seo.canonical} />
-{seo.noindex && <meta name="robots" content="noindex, nofollow" />}
+{
+  /* noindex SANS nofollow : les pages masquées continuent de transmettre leur
+    maillage interne. max-image-preview:large : autorise les grands aperçus
+    d'images (snippets + Google Discover). */
+}
+<meta
+  name="robots"
+  content={seo.noindex ? 'noindex, max-image-preview:large' : 'max-image-preview:large'}
+/>
 
 {/* Open Graph */}
 <meta property="og:type" content={seo.type} />
@@ -44,8 +52,4 @@ const graphs = [
 <meta name="twitter:image" content={seo.image} />
 <meta name="twitter:image:alt" content={seo.title} />
 
-{
-  graphs.map((g) => (
-    <script is:inline type="application/ld+json" set:html={JSON.stringify(g)} />
-  ))
-}
+{graphs.map((g) => <script is:inline type="application/ld+json" set:html={JSON.stringify(g)} />)}

@@ -89,28 +89,37 @@ const chipClass =
     >
       Quand un client cherche votre métier, <em>soyez le premier qu'il voit</em>.
     </h1>
-    <p class="reveal mt-[22px] max-w-[54ch] text-[clamp(1.0625rem,1.6vw,1.3rem)] leading-[1.55] text-ink-2">
-      8 fois sur 10, votre futur client tape « votre métier + sa ville » sur son téléphone et appelle
-      l'un des premiers résultats. Notre travail : que ce soit vous.
+    <p
+      class="reveal mt-[22px] max-w-[54ch] text-[clamp(1.0625rem,1.6vw,1.3rem)] leading-[1.55] text-ink-2"
+    >
+      8 fois sur 10, votre futur client tape « votre métier + sa ville » sur son téléphone et
+      appelle l'un des premiers résultats. Notre travail : que ce soit vous.
     </p>
     <div class="reveal mt-7 flex flex-wrap gap-3.5">
       <Button href={navCta.href} size="lg">Demander un devis gratuit</Button>
-      <Button href="/guides/seo-local-artisan-btp" variant="outline" size="lg">Lire le guide SEO</Button>
+      <Button href="/guides/guide-seo-tpe-btp" variant="outline" size="lg">Lire le guide SEO</Button
+      >
     </div>
 
     {/* mockup SERP */}
-    <div class="reveal mt-[clamp(32px,4vw,48px)] overflow-hidden rounded-md border border-line bg-paper">
+    <div
+      class="reveal mt-[clamp(32px,4vw,48px)] overflow-hidden rounded-md border border-line bg-paper"
+    >
       <div class="flex items-center gap-2.5 border-b border-line bg-parchment px-[18px] py-3.5">
         <span class="font-mono text-[0.85rem] text-ink-soft">🔍 électricien lorient</span>
       </div>
       <div class="flex flex-col gap-3 px-5 py-[18px]">
-        <div class="flex items-center gap-[13px] rounded-md border border-brand bg-brand-soft px-3.5 py-3">
+        <div
+          class="flex items-center gap-[13px] rounded-md border border-brand bg-brand-soft px-3.5 py-3"
+        >
           <span
             class="inline-flex h-[26px] w-[26px] flex-none items-center justify-center rounded-full border border-brand bg-brand font-mono text-[0.75rem] text-paper"
             >1</span
           >
           <span>
-            <div class="text-[0.95rem] font-semibold text-brand">Votre entreprise — ★ 4,7 (32 avis)</div>
+            <div class="text-[0.95rem] font-semibold text-brand">
+              Votre entreprise — ★ 4,7 (32 avis)
+            </div>
             <div class="text-[0.8rem] text-ink-soft">votre-site.fr · Lorient</div>
           </span>
         </div>
@@ -243,7 +252,13 @@ const chipClass =
     Le référencement va avec un bon site.
   </h2>
   <div class="reveal mt-[clamp(24px,3vw,32px)] flex flex-wrap gap-[9px]">
-    {LIENS_SITE.map(([label, href]) => <a href={href} class={chipClass}>{label}</a>)}
+    {
+      LIENS_SITE.map(([label, href]) => (
+        <a href={href} class={chipClass}>
+          {label}
+        </a>
+      ))
+    }
   </div>
 </Section>
 
@@ -259,7 +274,13 @@ const chipClass =
     Pas les mots-clés flous : les requêtes locales et précises, celles qui amènent un appel.
   </p>
   <div class="reveal mt-[clamp(24px,3vw,32px)] flex flex-wrap gap-[9px]">
-    {REQUETES.map(([label, href]) => <a href={href} class={chipClass}>{label}</a>)}
+    {
+      REQUETES.map(([label, href]) => (
+        <a href={href} class={chipClass}>
+          {label}
+        </a>
+      ))
+    }
   </div>
 </Section>
 

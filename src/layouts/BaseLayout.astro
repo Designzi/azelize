@@ -38,43 +38,67 @@ const devStyleguideHref = import.meta.env.DEV
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {
+      /* Favicons : SVG natif + PNG en multiples de 48 px (exigence Google) +
+        apple-touch-icon (iOS ignore le SVG). Générés par scripts/generate-icons.mjs. */
+    }
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/icons/favicon-48.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/icons/favicon-96.png" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
     <meta name="generator" content={Astro.generator} />
 
-    {/* Polices (Google Fonts) — Bricolage Grotesque, Hanken Grotesk, JetBrains Mono */}
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    {
+      /* Polices auto-hébergées (Bricolage Grotesque, Hanken Grotesk, JetBrains Mono) :
+        @font-face dans src/styles/fonts.css, fichiers vendorisés par
+        scripts/vendor-fonts.mjs. Preload du subset latin des deux familles
+        critiques (titres + corps) → pas de FOUT sur le texte LCP. */
+    }
     <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/bricolagegrotesque-3y9K6as8bTXq_nANBjzKo3IeZx8z6up5BeSl9D4dj_x9PpZBMlGIInE.woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="/fonts/hankengrotesk-ieVn2YZDLWuGJpnzaiwFXS9tYtpd59A.woff2"
+      crossorigin
     />
     <Seo {...seo} organization={organization} jsonLd={jsonLd} />
   </head>
   <body class:list={['flex min-h-screen flex-col', !bare && 'pb-[76px] md:pb-0']}>
-    {!bare && (
-      <a
-        href="#contenu"
-        class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[10000] focus:rounded-md focus:bg-brand focus:px-4 focus:py-2 focus:text-on-dark"
-      >
-        Aller au contenu
-      </a>
-    )}
+    {
+      !bare && (
+        <a
+          href="#contenu"
+          class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[10000] focus:rounded-md focus:bg-brand focus:px-4 focus:py-2 focus:text-on-dark"
+        >
+          Aller au contenu
+        </a>
+      )
+    }
     {!bare && <Header />}
     <main id="contenu" class="flex-1" style={mainStyle}>
       <slot />
     </main>
     {!bare && <Footer />}
     {!bare && <MobileCtaBar />}
-    {devStyleguideHref && (
-      <a
-        href={devStyleguideHref}
-        target="_blank"
-        rel="noreferrer"
-        title="Hub couleurs — palettes, charte, démo (dev uniquement)"
-        class="fixed bottom-3 left-3 z-[9999] hidden font-mono text-[11px] tracking-[0.06em] rounded-full border border-line-strong bg-paper/90 px-3 py-1.5 text-ink-2 backdrop-blur transition-colors hover:border-brand hover:bg-brand hover:text-paper sm:inline-block"
-      >
-        🎨 couleurs
-      </a>
-    )}
+    {
+      devStyleguideHref && (
+        <a
+          href={devStyleguideHref}
+          target="_blank"
+          rel="noreferrer"
+          title="Hub couleurs — palettes, charte, démo (dev uniquement)"
+          class="fixed bottom-3 left-3 z-[9999] hidden font-mono text-[11px] tracking-[0.06em] rounded-full border border-line-strong bg-paper/90 px-3 py-1.5 text-ink-2 backdrop-blur transition-colors hover:border-brand hover:bg-brand hover:text-paper sm:inline-block"
+        >
+          🎨 couleurs
+        </a>
+      )
+    }
   </body>
 </html>

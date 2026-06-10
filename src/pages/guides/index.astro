@@ -6,13 +6,13 @@
  * « Bientôt »). Le contenu de la liste est piloté par la collection `guides`.
  */
 import BaseLayout from '@layouts/BaseLayout.astro';
+import { breadcrumbJsonLd } from '@lib/seo';
 import CtaBand from '@components/blocks/CtaBand.astro';
 import { getCollection } from 'astro:content';
 
 const guides = (await getCollection('guides')).sort(
   (a, b) =>
-    (a.data.ordre ?? 99) - (b.data.ordre ?? 99) ||
-    a.data.titre.localeCompare(b.data.titre, 'fr'),
+    (a.data.ordre ?? 99) - (b.data.ordre ?? 99) || a.data.titre.localeCompare(b.data.titre, 'fr'),
 );
 
 /**
@@ -66,8 +66,14 @@ const shot =
 <BaseLayout
   title="Guides pour artisans"
   description="Nos guides concrets pour les artisans : être trouvé sur Google, choisir entre faire soi-même ou passer par un studio, et plus encore."
+  jsonLd={breadcrumbJsonLd([
+    { name: 'Accueil', url: '/' },
+    { name: 'Guides', url: '/guides' },
+  ])}
 >
-  <script is:inline>document.documentElement.classList.add('anim');</script>
+  <script is:inline>
+    document.documentElement.classList.add('anim');
+  </script>
 
   <section class="hero-pad">
     <div class="container-site">

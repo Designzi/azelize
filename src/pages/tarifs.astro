@@ -6,6 +6,7 @@
  * ⚠️ Montants issus de la source unique `data/pricing.ts` — aucun prix codé en dur.
  */
 import BaseLayout from '@layouts/BaseLayout.astro';
+import { breadcrumbJsonLd } from '@lib/seo';
 import Section from '@components/ui/Section.astro';
 import Eyebrow from '@components/ui/Eyebrow.astro';
 import Button from '@components/ui/Button.astro';
@@ -20,80 +21,114 @@ const bulletFeat =
 ---
 
 <BaseLayout
-  title="Tarifs"
+  title="Tarifs : abonnement site internet pour artisans"
   description="Des formules claires, sans engagement, à partir de 390 €/mois. Site, référencement et entretien compris. Vous ne payez qu'une fois que ça marche."
   image={ogImage('default')}
   organization
+  jsonLd={breadcrumbJsonLd([
+    { name: 'Accueil', url: '/' },
+    { name: 'Tarifs', url: '/tarifs' },
+  ])}
 >
-  <script is:inline>document.documentElement.classList.add('anim');</script>
+  <script is:inline>
+    document.documentElement.classList.add('anim');
+  </script>
 
   {/* ── Hero ───────────────────────────────────────────────────────────────── */}
   <Section pad="none" class="pt-[clamp(40px,8vw,72px)]">
     <div class="max-w-[760px]">
       <div class="reveal"><Eyebrow>Tarifs</Eyebrow></div>
-      <h1 class="reveal mt-4 font-display text-[clamp(2.3rem,5vw,3.8rem)] font-medium leading-[1.02] tracking-display text-ink">
+      <h1
+        class="reveal mt-4 font-display text-[clamp(2.3rem,5vw,3.8rem)] font-medium leading-[1.02] tracking-display text-ink"
+      >
         Une formule claire pour rester visible.
       </h1>
-      <p class="reveal mt-5 max-w-[52ch] text-[clamp(1.0625rem,1.5vw,1.25rem)] leading-[1.55] text-ink-2">
-        Mensuel, sans engagement. Vous ne commencez à payer qu'une fois que le site
-        vous amène déjà des clients. Pas de gros budget, pas de frais cachés.
+      <p
+        class="reveal mt-5 max-w-[52ch] text-[clamp(1.0625rem,1.5vw,1.25rem)] leading-[1.55] text-ink-2"
+      >
+        Mensuel, sans engagement. Vous ne commencez à payer qu'une fois que le site vous amène déjà
+        des clients. Pas de gros budget, pas de frais cachés.
       </p>
-      <div class="reveal mt-[22px] inline-flex items-center gap-2.5 rounded-md bg-brand-soft px-4.5 py-[11px] text-[0.9rem] text-ink-2">
+      <div
+        class="reveal mt-[22px] inline-flex items-center gap-2.5 rounded-md bg-brand-soft px-4.5 py-[11px] text-[0.9rem] text-ink-2"
+      >
         <span class="block h-2 w-2 flex-none rounded-full bg-brand"></span>
-        <span><strong class="font-bold text-brand">1er mois offert</strong> · vous ne payez qu'une fois que ça vous rapporte</span>
+        <span
+          ><strong class="font-bold text-brand">1er mois offert</strong> · vous ne payez qu'une fois que
+          ça vous rapporte</span
+        >
       </div>
     </div>
   </Section>
 
   {/* ── Paliers ────────────────────────────────────────────────────────────── */}
   <Section pad="none" class="pt-[clamp(32px,4vw,52px)] pb-[clamp(40px,5vw,64px)]">
-    <div class="grid grid-cols-1 gap-[clamp(16px,2vw,22px)] max-w-[420px] mx-auto md:max-w-none md:grid-cols-3">
-      {tiers.map((tier) => (
-        <div
-          class:list={[
-            'reveal flex flex-col rounded-md bg-paper px-6.5 py-7',
-            tier.featured ? 'border-2 border-brand' : 'border border-line',
-          ]}
-        >
-          {tier.featured && (
-            <span class="mb-3.5 self-start rounded-xs bg-brand px-2.75 py-1 text-[0.72rem] font-bold uppercase tracking-[0.06em] text-paper">
-              Le plus choisi
-            </span>
-          )}
-          <h3 class="m-0 font-display text-[1.35rem] font-semibold tracking-[-0.01em] text-ink">{tier.name}</h3>
-          <p class="mt-2 min-h-[3em] text-[0.92rem] leading-[1.5] text-ink-soft">{tier.line}</p>
-          <div class="mb-1 mt-[18px] flex items-baseline gap-1.5">
-            <span class="font-display text-[2.4rem] font-semibold leading-none tracking-[-0.03em] text-ink">{tier.price}</span>
-            <span class="text-[0.9rem] text-ink-soft">{tier.unit}</span>
+    <div
+      class="grid grid-cols-1 gap-[clamp(16px,2vw,22px)] max-w-[420px] mx-auto md:max-w-none md:grid-cols-3"
+    >
+      {
+        tiers.map((tier) => (
+          <div
+            class:list={[
+              'reveal flex flex-col rounded-md bg-paper px-6.5 py-7',
+              tier.featured ? 'border-2 border-brand' : 'border border-line',
+            ]}
+          >
+            {tier.featured && (
+              <span class="mb-3.5 self-start rounded-xs bg-brand px-2.75 py-1 text-[0.72rem] font-bold uppercase tracking-[0.06em] text-paper">
+                Le plus choisi
+              </span>
+            )}
+            <h3 class="m-0 font-display text-[1.35rem] font-semibold tracking-[-0.01em] text-ink">
+              {tier.name}
+            </h3>
+            <p class="mt-2 min-h-[3em] text-[0.92rem] leading-[1.5] text-ink-soft">{tier.line}</p>
+            <div class="mb-1 mt-[18px] flex items-baseline gap-1.5">
+              <span class="font-display text-[2.4rem] font-semibold leading-none tracking-[-0.03em] text-ink">
+                {tier.price}
+              </span>
+              <span class="text-[0.9rem] text-ink-soft">{tier.unit}</span>
+            </div>
+            <span class="text-[0.8rem] text-ink-faint">sans engagement</span>
+            <ul class="m-0 mb-6 mt-5 flex flex-1 list-none flex-col gap-[9px] p-0">
+              {tier.feats.map((f, i) => (
+                <li
+                  class:list={[
+                    'text-[0.92rem] leading-[1.45]',
+                    i === 0 && tier.rolloverFirst
+                      ? 'font-semibold text-ink'
+                      : `text-ink-2 ${bulletFeat}`,
+                  ]}
+                >
+                  {f}
+                </li>
+              ))}
+            </ul>
+            <Button
+              href={chromeCta.href}
+              size="sm"
+              variant={tier.featured ? 'solid' : 'outline'}
+              block
+            >
+              Choisir {tier.name}
+            </Button>
           </div>
-          <span class="text-[0.8rem] text-ink-faint">sans engagement</span>
-          <ul class="m-0 mb-6 mt-5 flex flex-1 list-none flex-col gap-[9px] p-0">
-            {tier.feats.map((f, i) => (
-              <li
-                class:list={[
-                  'text-[0.92rem] leading-[1.45]',
-                  i === 0 && tier.rolloverFirst ? 'font-semibold text-ink' : `text-ink-2 ${bulletFeat}`,
-                ]}
-              >
-                {f}
-              </li>
-            ))}
-          </ul>
-          <Button href={chromeCta.href} size="sm" variant={tier.featured ? 'solid' : 'outline'} block>
-            Choisir {tier.name}
-          </Button>
-        </div>
-      ))}
+        ))
+      }
     </div>
     <p class="reveal mt-[clamp(20px,3vw,32px)] text-center text-[0.9rem] text-ink-soft">
-      Sans engagement<span class="mx-2 text-ink-faint">·</span>Résiliable à tout moment<span class="mx-2 text-ink-faint">·</span>Satisfait ou remboursé 30&nbsp;jours
+      Sans engagement<span class="mx-2 text-ink-faint">·</span>Résiliable à tout moment<span
+        class="mx-2 text-ink-faint">·</span
+      >Satisfait ou remboursé 30&nbsp;jours
     </p>
   </Section>
 
   {/* ── Comparatif détaillé ────────────────────────────────────────────────── */}
   <Section tone="parchment" pad="none" class="py-[clamp(48px,6vw,88px)]">
     <div class="reveal"><Eyebrow>Le détail</Eyebrow></div>
-    <h2 class="reveal mt-3 mb-[clamp(28px,4vw,40px)] max-w-[22ch] font-display text-h2 font-medium leading-[1.08] tracking-h2 text-ink">
+    <h2
+      class="reveal mt-3 mb-[clamp(28px,4vw,40px)] max-w-[22ch] font-display text-h2 font-medium leading-[1.08] tracking-h2 text-ink"
+    >
       Ce qui est compris dans chaque formule.
     </h2>
 
@@ -101,41 +136,53 @@ const bulletFeat =
       <table class="w-full border-collapse overflow-hidden rounded-md border border-line bg-paper">
         <thead>
           <tr>
-            <th class="border-b border-line bg-parchment px-4.5 py-[15px] text-left font-sans text-[0.75rem] font-semibold uppercase tracking-[0.08em] text-ink-faint">
+            <th
+              class="border-b border-line bg-parchment px-4.5 py-[15px] text-left font-sans text-[0.75rem] font-semibold uppercase tracking-[0.08em] text-ink-faint"
+            >
               Prestation
             </th>
-            {tiers.map((t) => (
-              <th
-                class:list={[
-                  'border-b border-line bg-parchment px-4.5 py-[15px] text-left font-display text-base font-semibold',
-                  t.featured ? 'text-brand' : 'text-ink',
-                ]}
-              >
-                {t.name}
-              </th>
-            ))}
+            {
+              tiers.map((t) => (
+                <th
+                  class:list={[
+                    'border-b border-line bg-parchment px-4.5 py-[15px] text-left font-display text-base font-semibold',
+                    t.featured ? 'text-brand' : 'text-ink',
+                  ]}
+                >
+                  {t.name}
+                </th>
+              ))
+            }
           </tr>
         </thead>
         <tbody>
-          {compareRows.map((row) => (
-            <tr>
-              <td class="border-b border-line px-4.5 py-[15px] text-left text-[0.92rem] font-medium text-ink">{row.label}</td>
-              {row.has.map((on) => (
-                <td class="border-b border-line px-4.5 py-[15px] text-left text-[0.92rem]">
-                  {on ? (
-                    <span class="font-bold text-brand">●</span>
-                  ) : (
-                    <span class="text-ink-faint">—</span>
-                  )}
+          {
+            compareRows.map((row) => (
+              <tr>
+                <td class="border-b border-line px-4.5 py-[15px] text-left text-[0.92rem] font-medium text-ink">
+                  {row.label}
                 </td>
-              ))}
-            </tr>
-          ))}
+                {row.has.map((on) => (
+                  <td class="border-b border-line px-4.5 py-[15px] text-left text-[0.92rem]">
+                    {on ? (
+                      <span class="font-bold text-brand">●</span>
+                    ) : (
+                      <span class="text-ink-faint">—</span>
+                    )}
+                  </td>
+                ))}
+              </tr>
+            ))
+          }
           <tr>
-            <td class="px-4.5 py-[15px] text-left text-[0.92rem] font-medium text-ink">Tarif mensuel</td>
-            {tiers.map((t) => (
-              <td class="px-4.5 py-[15px] text-left text-[0.92rem] text-ink-2">{t.price} €</td>
-            ))}
+            <td class="px-4.5 py-[15px] text-left text-[0.92rem] font-medium text-ink"
+              >Tarif mensuel</td
+            >
+            {
+              tiers.map((t) => (
+                <td class="px-4.5 py-[15px] text-left text-[0.92rem] text-ink-2">{t.price} €</td>
+              ))
+            }
           </tr>
         </tbody>
       </table>

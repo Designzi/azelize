@@ -15,7 +15,7 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const { entry } = Astro.props;
-const { client, resume, date, seo, sections } = entry.data;
+const { client, resume, date, seo, sections, noindex } = entry.data;
 const url = `/realisations/${entry.id}`;
 
 const breadcrumbs = [
@@ -30,9 +30,9 @@ const jsonLd = [
 
 // Portage fidèle : composant étude-de-cas dédié par réalisation (corps Design complet).
 const caseModules = import.meta.glob('../../views/realisations/*.astro', { eager: true });
-const CaseComponent = (caseModules[`../../views/realisations/${entry.id}.astro`] as
-  | { default: any }
-  | undefined)?.default;
+const CaseComponent = (
+  caseModules[`../../views/realisations/${entry.id}.astro`] as { default: any } | undefined
+)?.default;
 
 // Repli seulement : corps éditorial MDX (ignoré si un composant dédié prime).
 const { Content } = CaseComponent ? { Content: null } : await render(entry);
@@ -45,6 +45,7 @@ const { Content } = CaseComponent ? { Content: null } : await render(entry);
       description={seo?.description ?? resume}
       image={seo?.ogImage ?? ogImage(`realisations/${entry.id}`)}
       type="article"
+      noindex={noindex}
       jsonLd={jsonLd}
     >
       <Section pad="none" class="pt-6">
@@ -58,13 +59,12 @@ const { Content } = CaseComponent ? { Content: null } : await render(entry);
       description={seo?.description ?? resume}
       image={seo?.ogImage ?? ogImage(`realisations/${entry.id}`)}
       type="article"
+      noindex={noindex}
       jsonLd={jsonLd}
     >
       <Blocks sections={sections} />
       <Section width="hero" pad="default">
-        <div class="prose-azelize mx-auto max-w-2xl">
-          {Content && <Content />}
-        </div>
+        <div class="prose-azelize mx-auto max-w-2xl">{Content && <Content />}</div>
       </Section>
     </BaseLayout>
   ) : (
@@ -75,6 +75,7 @@ const { Content } = CaseComponent ? { Content: null } : await render(entry);
       date={date}
       description={seo?.description ?? resume}
       image={seo?.ogImage ?? ogImage(`realisations/${entry.id}`)}
+      noindex={noindex}
       breadcrumbs={breadcrumbs}
       jsonLd={jsonLd}
     >

@@ -8,7 +8,7 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 import CtaBand from '@components/blocks/CtaBand.astro';
 import Eyebrow from '@components/ui/Eyebrow.astro';
-import { faqJsonLd } from '@lib/seo';
+import { breadcrumbJsonLd, faqJsonLd } from '@lib/seo';
 import { ogImage } from '@lib/og';
 
 interface Cat {
@@ -20,26 +20,56 @@ const DATA: Cat[] = [
   {
     cat: 'Engagement & prix',
     items: [
-      ["Quand est-ce que je commence à payer ?", "Le 1er mois est offert. Vous ne commencez l'abonnement qu'une fois que le site vous amène des clients — au plus tôt le 3e mois, et seulement si vous le souhaitez. Seuls frais au départ : 50 € pour le nom de domaine."],
-      ['Je suis engagé combien de temps ?', "Aucun engagement. Vous arrêtez quand vous voulez, d'un mois sur l'autre."],
-      ["C'est combien par mois ?", 'À partir de 390 €/mois, tout compris. Trois formules selon vos besoins, sans frais cachés.'],
-      ['Pourquoi pas juste payer un site une fois ?', "Un site livré puis abandonné se dégrade : Google le déclasse, la technique casse, les contenus vieillissent. L'abonnement, c'est l'assurance qu'il reste vivant et visible."],
+      [
+        'Quand est-ce que je commence à payer ?',
+        "Le 1er mois est offert. Vous ne commencez l'abonnement qu'une fois que le site vous amène des clients — au plus tôt le 3e mois, et seulement si vous le souhaitez. Seuls frais au départ : 50 € pour le nom de domaine.",
+      ],
+      [
+        'Je suis engagé combien de temps ?',
+        "Aucun engagement. Vous arrêtez quand vous voulez, d'un mois sur l'autre.",
+      ],
+      [
+        "C'est combien par mois ?",
+        'À partir de 390 €/mois, tout compris. Trois formules selon vos besoins, sans frais cachés.',
+      ],
+      [
+        'Pourquoi pas juste payer un site une fois ?',
+        "Un site livré puis abandonné se dégrade : Google le déclasse, la technique casse, les contenus vieillissent. L'abonnement, c'est l'assurance qu'il reste vivant et visible.",
+      ],
     ],
   },
   {
     cat: 'Le site & le délai',
     items: [
-      ['En combien de temps je suis en ligne ?', 'Votre site est en ligne en 2 semaines environ. Le référencement local monte ensuite progressivement sur les premiers mois.'],
-      ["Si j'arrête, je garde mon site ?", "Non : le site reste notre propriété — l'abonnement, c'est une location. Si vous arrêtez, le site est mis hors ligne. Vous récupérez ce que vous nous avez fourni (photos, textes, logo). C'est ce qui nous permet de tout prendre en charge sans gros chèque de départ."],
-      ["Je n'ai pas de belles photos. C'est bloquant ?", "Non. Quelques photos prises au téléphone suffisent pour démarrer — on les met en valeur, et on enrichit au fil des chantiers."],
+      [
+        'En combien de temps je suis en ligne ?',
+        'Votre site est en ligne en 2 semaines environ. Le référencement local monte ensuite progressivement sur les premiers mois.',
+      ],
+      [
+        "Si j'arrête, je garde mon site ?",
+        "Non : le site reste notre propriété — l'abonnement, c'est une location. Si vous arrêtez, le site est mis hors ligne. Vous récupérez ce que vous nous avez fourni (photos, textes, logo). C'est ce qui nous permet de tout prendre en charge sans gros chèque de départ.",
+      ],
+      [
+        "Je n'ai pas de belles photos. C'est bloquant ?",
+        'Non. Quelques photos prises au téléphone suffisent pour démarrer — on les met en valeur, et on enrichit au fil des chantiers.',
+      ],
     ],
   },
   {
     cat: 'Pour qui & comment',
     items: [
-      ["C'est pour quels métiers ?", "Bâtiment, finitions, services techniques : maçons, électriciens, plombiers, peintres, carreleurs, applicateurs de résine… mais aussi commerçants et indépendants."],
-      ['Vous travaillez à distance ou sur place ?', 'Les deux. On se rencontre dans le bassin de Lorient/Vannes, ou en visio si vous préférez.'],
-      ["Je n'y connais rien en informatique. C'est un problème ?", "Au contraire, c'est notre raison d'être : on s'occupe de tout, vous restez sur votre métier. Zéro jargon."],
+      [
+        "C'est pour quels métiers ?",
+        'Bâtiment, finitions, services techniques : maçons, électriciens, plombiers, peintres, carreleurs, applicateurs de résine… mais aussi commerçants et indépendants.',
+      ],
+      [
+        'Vous travaillez à distance ou sur place ?',
+        'Les deux. On se rencontre dans le bassin de Lorient/Vannes, ou en visio si vous préférez.',
+      ],
+      [
+        "Je n'y connais rien en informatique. C'est un problème ?",
+        "Au contraire, c'est notre raison d'être : on s'occupe de tout, vous restez sur votre métier. Zéro jargon.",
+      ],
     ],
   },
 ];
@@ -52,21 +82,33 @@ const faqItems = DATA.flatMap((c) => c.items.map(([q, a]) => ({ q, a })));
   title="Questions fréquentes"
   description="Engagement, prix, délais, propriété du site : toutes les réponses à vos questions sur Azelize, en clair et sans jargon."
   image={ogImage('faq')}
-  jsonLd={faqJsonLd(faqItems)}
+  jsonLd={[
+    faqJsonLd(faqItems),
+    breadcrumbJsonLd([
+      { name: 'Accueil', url: '/' },
+      { name: 'Questions fréquentes', url: '/faq' },
+    ]),
+  ]}
 >
-  <script is:inline>document.documentElement.classList.add('anim');</script>
+  <script is:inline>
+    document.documentElement.classList.add('anim');
+  </script>
 
   {/* Hero */}
   <section class="hero-pad">
     <div class="container-site">
       <div class="max-w-190">
         <div class="reveal"><Eyebrow>Vos questions</Eyebrow></div>
-        <h1 class="reveal mt-3.5 font-display text-[clamp(2.3rem,5vw,3.8rem)] font-medium leading-[1.02] tracking-display text-ink">
+        <h1
+          class="reveal mt-3.5 font-display text-[clamp(2.3rem,5vw,3.8rem)] font-medium leading-[1.02] tracking-display text-ink"
+        >
           Tout ce qu'on nous demande.
         </h1>
-        <p class="reveal mt-5 max-w-[52ch] text-[clamp(1.0625rem,1.6vw,1.3rem)] leading-[1.55] text-ink-2">
-          Engagement, prix, délais, propriété du site : les réponses en clair. Une autre
-          question ? On y répond au téléphone, sans jargon.
+        <p
+          class="reveal mt-5 max-w-[52ch] text-[clamp(1.0625rem,1.6vw,1.3rem)] leading-[1.55] text-ink-2"
+        >
+          Engagement, prix, délais, propriété du site : les réponses en clair. Une autre question ?
+          On y répond au téléphone, sans jargon.
         </p>
       </div>
     </div>
@@ -94,10 +136,18 @@ const faqItems = DATA.flatMap((c) => c.items.map(([q, a]) => ({ q, a })));
                       aria-expanded="false"
                     >
                       <span>{q}</span>
-                      <span class="fq-sign relative mt-2 h-[11px] w-[11px] flex-none transition-transform duration-300 ease-brand" aria-hidden="true" />
+                      <span
+                        class="fq-sign relative mt-2 h-[11px] w-[11px] flex-none transition-transform duration-300 ease-brand"
+                        aria-hidden="true"
+                      />
                     </button>
-                    <div class="fq-a-wrap overflow-hidden transition-[max-height] duration-[350ms] ease-brand" style="max-height:0px">
-                      <p class="fq-a m-0 max-w-[64ch] px-5 pb-5 text-base leading-[1.65] text-ink-2">{a}</p>
+                    <div
+                      class="fq-a-wrap overflow-hidden transition-[max-height] duration-[350ms] ease-brand"
+                      style="max-height:0px"
+                    >
+                      <p class="fq-a m-0 max-w-[64ch] px-5 pb-5 text-base leading-[1.65] text-ink-2">
+                        {a}
+                      </p>
                     </div>
                   </div>
                 ))}

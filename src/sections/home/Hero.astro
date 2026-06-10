@@ -6,6 +6,7 @@
 import Button from '@components/ui/Button.astro';
 import TabletMockup from '@components/blocks/TabletMockup.astro';
 import { navCta } from '@data/nav';
+import resinefarHome from '@assets/realisations/resinefar-home.png';
 ---
 
 <section id="top" class="pt-[clamp(146px,14vw,190px)] pb-[clamp(48px,7vw,90px)] text-center">
@@ -31,14 +32,19 @@ import { navCta } from '@data/nav';
     </div>
   </div>
 
-  {/* Mobile : la tablette déborde volontairement à droite (plus grande, décalée),
+  {
+    /* Mobile : la tablette déborde volontairement à droite (plus grande, décalée),
       rognée par `overflow-x: hidden` du body → pas de scroll horizontal.
-      Dès `md` : recadrée dans les marges du site et centrée. */}
-  <div class="pl-21 pt-8 md:pt-0 md:mx-auto md:w-full md:max-w-[1240px] md:px-[clamp(22px,5vw,72px)]">
+      Dès `md` : recadrée dans les marges du site et centrée. */
+  }
+  <div
+    class="pl-21 pt-8 md:pt-0 md:mx-auto md:w-full md:max-w-[1240px] md:px-[clamp(22px,5vw,72px)]"
+  >
     {/* Maquette tablette encadrant une réalisation : resinefar.fr (FAR). */}
     <TabletMockup
-      src="/realisations/resinefar-home.png"
+      src={resinefarHome}
       alt="Site resinefar.fr — page d'accueil, réalisation Azelize"
+      eager
       class="anim-5 mt-[clamp(40px,5vw,72px)] scale-140 max-w-none md:mx-auto md:scale-100 md:max-w-[880px]"
     />
   </div>

@@ -11,12 +11,24 @@ import Button from '@components/ui/Button.astro';
 import Eyebrow from '@components/ui/Eyebrow.astro';
 import Field from '@components/ui/Field.astro';
 import RiskNote from '@components/ui/RiskNote.astro';
-import { localBusinessJsonLd } from '@lib/seo';
+import { breadcrumbJsonLd, localBusinessJsonLd } from '@lib/seo';
 
 const CP_NEXT: [string, string, string][] = [
-  ['01', 'On vous rappelle sous 48 h', 'Pas de standard ni de formulaire qui tombe dans le vide. On vous rappelle, vous.'],
-  ['02', 'On comprend votre métier', 'Un échange simple : ce que vous faites, vos clients, ce qui vous manque en ligne.'],
-  ['03', 'On vous dit concrètement quoi faire', 'Devis clair, sans jargon, sans engagement. Vous décidez ensuite, tranquillement.'],
+  [
+    '01',
+    'On vous rappelle sous 48 h',
+    'Pas de standard ni de formulaire qui tombe dans le vide. On vous rappelle, vous.',
+  ],
+  [
+    '02',
+    'On comprend votre métier',
+    'Un échange simple : ce que vous faites, vos clients, ce qui vous manque en ligne.',
+  ],
+  [
+    '03',
+    'On vous dit concrètement quoi faire',
+    'Devis clair, sans jargon, sans engagement. Vous décidez ensuite, tranquillement.',
+  ],
 ];
 ---
 
@@ -24,9 +36,17 @@ const CP_NEXT: [string, string, string][] = [
   title="Contact · Demandez votre devis gratuit"
   description="Laissez-nous votre numéro. On vous rappelle sous 48 h, sans engagement, pour comprendre votre métier et vous dire concrètement ce qu'on peut faire."
   organization
-  jsonLd={localBusinessJsonLd()}
+  jsonLd={[
+    localBusinessJsonLd(),
+    breadcrumbJsonLd([
+      { name: 'Accueil', url: '/' },
+      { name: 'Contact', url: '/contact' },
+    ]),
+  ]}
 >
-  <script is:inline>document.documentElement.classList.add('anim');</script>
+  <script is:inline>
+    document.documentElement.classList.add('anim');
+  </script>
 
   {/* Héro */}
   <section id="top" class="hero-pad">
@@ -40,8 +60,8 @@ const CP_NEXT: [string, string, string][] = [
       <p
         class="anim-3 mt-[clamp(20px,2.4vw,30px)] max-w-[48ch] text-[clamp(1.0625rem,1.5vw,1.3rem)] leading-[1.5] text-ink-2"
       >
-        Laissez-nous votre numéro. On vous rappelle sous 48 h, sans engagement —
-        pour comprendre votre métier et vous dire, concrètement, ce qu'on peut faire.
+        Laissez-nous votre numéro. On vous rappelle sous 48 h, sans engagement — pour comprendre
+        votre métier et vous dire, concrètement, ce qu'on peut faire.
       </p>
     </div>
   </section>
@@ -49,7 +69,9 @@ const CP_NEXT: [string, string, string][] = [
   {/* Corps */}
   <section class="pb-[clamp(72px,9vw,140px)]">
     <div class="container-site">
-      <div class="grid grid-cols-1 items-start gap-10 md:grid-cols-[1.05fr_0.95fr] md:gap-[clamp(36px,5vw,80px)]">
+      <div
+        class="grid grid-cols-1 items-start gap-10 md:grid-cols-[1.05fr_0.95fr] md:gap-[clamp(36px,5vw,80px)]"
+      >
         {/* Colonne formulaire */}
         <div class="reveal" data-contact-block>
           <form
@@ -107,7 +129,8 @@ const CP_NEXT: [string, string, string][] = [
               C'est noté.
             </h2>
             <p class="m-0 max-w-[34ch] text-base leading-[1.55] text-ink-soft">
-              On vous rappelle sous 48 h. En attendant, restez sur le chantier — on s'occupe du reste.
+              On vous rappelle sous 48 h. En attendant, restez sur le chantier — on s'occupe du
+              reste.
             </p>
           </div>
         </div>
@@ -115,7 +138,9 @@ const CP_NEXT: [string, string, string][] = [
         {/* Colonne aside */}
         <div class="reveal flex flex-col gap-[clamp(28px,3.4vw,44px)] pt-1.5">
           <div>
-            <div class="mb-4 text-[0.75rem] uppercase tracking-[0.1em] text-ink-faint">Ou directement</div>
+            <div class="mb-4 text-[0.75rem] uppercase tracking-[0.1em] text-ink-faint">
+              Ou directement
+            </div>
             <a
               href="tel:+33123456789"
               class="block py-0 pb-0.5 font-display text-[clamp(1.6rem,2.6vw,2.1rem)] font-medium tracking-h2 text-ink transition-colors hover:text-brand"
@@ -128,7 +153,9 @@ const CP_NEXT: [string, string, string][] = [
             >
               bonjour@azelize.fr
             </a>
-            <span class="block py-1 text-[0.95rem] text-ink-soft">12 rue de l'Atelier, 75011 Paris</span>
+            <span class="block py-1 text-[0.95rem] text-ink-soft"
+              >12 rue de l'Atelier, 75011 Paris</span
+            >
             <span class="block py-1 text-[0.95rem] text-ink-soft">Lun – Ven · 9 h – 18 h</span>
           </div>
 
@@ -137,21 +164,25 @@ const CP_NEXT: [string, string, string][] = [
               Ce qui se passe ensuite
             </div>
             <ol class="m-0 flex list-none flex-col p-0">
-              {CP_NEXT.map(([n, t, b], i) => (
-                <li
-                  class:list={[
-                    'flex gap-4 py-4',
-                    i > 0 && 'border-t border-line',
-                    i === 0 && 'pt-0',
-                  ]}
-                >
-                  <span class="flex-none pt-0.5 font-mono text-[0.8125rem] text-brand">{n}</span>
-                  <span class="flex flex-col gap-1">
-                    <span class="font-display text-[1.0625rem] font-medium tracking-tight text-ink">{t}</span>
-                    <span class="text-[0.9375rem] leading-[1.5] text-ink-soft">{b}</span>
-                  </span>
-                </li>
-              ))}
+              {
+                CP_NEXT.map(([n, t, b], i) => (
+                  <li
+                    class:list={[
+                      'flex gap-4 py-4',
+                      i > 0 && 'border-t border-line',
+                      i === 0 && 'pt-0',
+                    ]}
+                  >
+                    <span class="flex-none pt-0.5 font-mono text-[0.8125rem] text-brand">{n}</span>
+                    <span class="flex flex-col gap-1">
+                      <span class="font-display text-[1.0625rem] font-medium tracking-tight text-ink">
+                        {t}
+                      </span>
+                      <span class="text-[0.9375rem] leading-[1.5] text-ink-soft">{b}</span>
+                    </span>
+                  </li>
+                ))
+              }
             </ol>
           </div>
 

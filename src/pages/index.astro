@@ -9,13 +9,24 @@ import Proof from '@sections/home/Proof.astro';
 import Pricing from '@sections/home/Pricing.astro';
 import Faq from '@sections/home/Faq.astro';
 import FinalCta from '@sections/shared/FinalCta.astro';
-import { localBusinessJsonLd, faqJsonLd } from '@lib/seo';
+import { websiteJsonLd, localBusinessJsonLd } from '@lib/seo';
 import { ogImage } from '@lib/og';
-import { homeFaq } from '@data/faq';
 ---
 
-<BaseLayout landing organization image={ogImage('home')} jsonLd={[localBusinessJsonLd(), faqJsonLd(homeFaq)]}>
-  <script is:inline>document.documentElement.classList.add('anim');</script>
+{
+  /* Pas de faqJsonLd ici : les questions de la section Faq sont reprises de la
+    page /faq, qui porte le markup FAQPage canonique (règle Google : ne pas
+    dupliquer les Q&A balisées sur plusieurs pages). */
+}
+<BaseLayout
+  landing
+  organization
+  image={ogImage('home')}
+  jsonLd={[websiteJsonLd(), localBusinessJsonLd()]}
+>
+  <script is:inline>
+    document.documentElement.classList.add('anim');
+  </script>
   <Hero />
   <Problem />
   <HowItWorks />

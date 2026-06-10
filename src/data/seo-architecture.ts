@@ -62,9 +62,21 @@ export const SERVICES: Service[] = [
         eyebrow: 'La méthode',
         title: 'Comment on travaille',
         steps: [
-          { num: '1', title: 'On cadre', body: 'Votre métier, vos clients, vos zones — en un appel de 15 minutes.' },
-          { num: '2', title: 'On construit', body: 'Site en ligne en deux semaines environ, avec du contenu réel.' },
-          { num: '3', title: 'On entretient', body: 'On suit, on ajuste, on fait évoluer — chaque mois.' },
+          {
+            num: '1',
+            title: 'On cadre',
+            body: 'Votre métier, vos clients, vos zones — en un appel de 15 minutes.',
+          },
+          {
+            num: '2',
+            title: 'On construit',
+            body: 'Site en ligne en deux semaines environ, avec du contenu réel.',
+          },
+          {
+            num: '3',
+            title: 'On entretient',
+            body: 'On suit, on ajuste, on fait évoluer — chaque mois.',
+          },
         ],
       },
     ],
@@ -242,9 +254,21 @@ export const SERVICES: Service[] = [
         eyebrow: 'Comment ça marche',
         title: 'De zéro à publié en quelques minutes',
         steps: [
-          { num: '1', title: 'Vous recevez vos modèles', body: 'Une sélection à votre image, ouverte dans votre compte Canva.' },
-          { num: '2', title: 'Vous personnalisez', body: 'Vous changez le texte, la photo, l’offre du moment — sans toucher à la mise en page.' },
-          { num: '3', title: 'Vous publiez', body: 'Réseaux, impression, devis client : exporté et prêt en quelques clics.' },
+          {
+            num: '1',
+            title: 'Vous recevez vos modèles',
+            body: 'Une sélection à votre image, ouverte dans votre compte Canva.',
+          },
+          {
+            num: '2',
+            title: 'Vous personnalisez',
+            body: 'Vous changez le texte, la photo, l’offre du moment — sans toucher à la mise en page.',
+          },
+          {
+            num: '3',
+            title: 'Vous publiez',
+            body: 'Réseaux, impression, devis client : exporté et prêt en quelques clics.',
+          },
         ],
       },
       {
@@ -295,7 +319,7 @@ export const SERVICES: Service[] = [
     nom: 'SaaS & outils sur-mesure',
     court: 'SaaS & outils',
     resume:
-      'Prise de RDV, suivi de chantier, devis en ligne : un outil sur-mesure qui vous fait gagner du temps et professionnalise la relation client. Créé et tenu chaque mois.',
+      'Prise de RDV, suivi de chantier, devis en ligne : un outil sur-mesure qui vous fait gagner du temps et professionnalise la relation client.',
     statut: 'ship',
     matrice: { ville: false, metier: false },
     hub: [
@@ -522,9 +546,21 @@ export const SERVICES: Service[] = [
         eyebrow: 'La méthode',
         title: 'Comment on travaille',
         steps: [
-          { num: '1', title: 'On cadre', body: 'Vos envois courants, votre identité, votre messagerie — en un appel de 15 minutes.' },
-          { num: '2', title: 'On rédige', body: 'Signature et modèles écrits à votre voix, fidèles à votre image.' },
-          { num: '3', title: 'On installe', body: 'On pose le tout dans votre messagerie et on ajuste avec vous.' },
+          {
+            num: '1',
+            title: 'On cadre',
+            body: 'Vos envois courants, votre identité, votre messagerie — en un appel de 15 minutes.',
+          },
+          {
+            num: '2',
+            title: 'On rédige',
+            body: 'Signature et modèles écrits à votre voix, fidèles à votre image.',
+          },
+          {
+            num: '3',
+            title: 'On installe',
+            body: 'On pose le tout dans votre messagerie et on ajuste avec vous.',
+          },
         ],
       },
       {
@@ -575,7 +611,7 @@ export const SERVICES: Service[] = [
     nom: 'Catalogues produit',
     court: 'Catalogues',
     resume:
-      'Vos catalogues produit imprimés, PDF et web, tenus à jour chaque mois. Pour présenter votre gamme clairement à vos clients, sans la refaire à chaque changement de prix.',
+      'Vos catalogues produit imprimés, PDF et web, tenus à jour chaque mois. Présentez votre gamme clairement, sans tout refaire à chaque changement de prix.',
     statut: 'ship',
     matrice: { ville: false, metier: false },
     hub: [

@@ -15,7 +15,7 @@ export const getStaticPaths = (async () => {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
-const { titre, resume, seo, sections } = entry.data;
+const { titre, resume, seo, sections, noindex } = entry.data;
 const url = `/prestations/${entry.id}`;
 
 const breadcrumbs = [
@@ -39,6 +39,7 @@ const jsonLd = [
       description={seo?.description ?? resume}
       image={seo?.ogImage ?? ogImage(`prestations/${entry.id}`)}
       type="article"
+      noindex={noindex}
       jsonLd={jsonLd}
     >
       <Blocks sections={sections} />
@@ -55,6 +56,7 @@ const jsonLd = [
       eyebrow="Prestation"
       description={seo?.description ?? resume}
       image={seo?.ogImage ?? ogImage(`prestations/${entry.id}`)}
+      noindex={noindex}
       breadcrumbs={breadcrumbs}
       jsonLd={jsonLd}
     >

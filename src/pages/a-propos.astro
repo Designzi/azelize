@@ -6,6 +6,7 @@
  * Le portrait est un placeholder visuel (à remplacer par une vraie photo).
  */
 import BaseLayout from '@layouts/BaseLayout.astro';
+import { breadcrumbJsonLd } from '@lib/seo';
 import CtaBand from '@components/blocks/CtaBand.astro';
 
 const VALUES = [
@@ -28,9 +29,13 @@ const VALUES = [
 ---
 
 <BaseLayout
-  title="Le studio"
+  title="Le studio qui crée les sites des artisans"
   description="Azelize, le studio digital pensé pour les artisans. Qui on est, comment on travaille, et pourquoi on ne vous facture qu'une fois que ça marche."
   organization
+  jsonLd={breadcrumbJsonLd([
+    { name: 'Accueil', url: '/' },
+    { name: 'Le studio', url: '/a-propos' },
+  ])}
 >
   <section class="container-site hero-pad">
     <div class="max-w-[820px]">
@@ -40,7 +45,9 @@ const VALUES = [
       >
         Le studio digital pensé <em>pour les artisans</em>.
       </h1>
-      <p class="mt-[22px] max-w-[54ch] text-[clamp(1.0625rem,1.6vw,1.3rem)] leading-[1.55] text-ink-2">
+      <p
+        class="mt-[22px] max-w-[54ch] text-[clamp(1.0625rem,1.6vw,1.3rem)] leading-[1.55] text-ink-2"
+      >
         Les agences web ne sont pas faites pour les TPE : trop chères, trop de jargon, et une fois
         le site livré, plus personne. Azelize fait l'inverse — un studio qui vous accompagne dans la
         durée.
@@ -49,16 +56,22 @@ const VALUES = [
   </section>
 
   <section class="container-site">
-    <div class="mx-auto grid max-w-[820px] grid-cols-1 items-center gap-7 py-[clamp(40px,5vw,72px)] md:grid-cols-[0.85fr_1.15fr] md:gap-[clamp(28px,4vw,60px)]">
+    <div
+      class="mx-auto grid max-w-[820px] grid-cols-1 items-center gap-7 py-[clamp(40px,5vw,72px)] md:grid-cols-[0.85fr_1.15fr] md:gap-[clamp(28px,4vw,60px)]"
+    >
       <div
         class="flex aspect-[4/5] max-w-[280px] items-end rounded-md border border-line p-[18px] md:max-w-none"
         style="background:repeating-linear-gradient(135deg,var(--color-parchment) 0 16px,var(--color-line) 16px 32px);"
         aria-hidden="true"
       >
-        <span class="text-[0.7rem] uppercase tracking-[0.08em] text-brand/40">Portrait — le dirigeant</span>
+        <span class="text-[0.7rem] uppercase tracking-[0.08em] text-brand/40"
+          >Portrait — le dirigeant</span
+        >
       </div>
       <div>
-        <p class="m-0 font-display text-[clamp(1.4rem,2.6vw,2rem)] font-normal leading-[1.32] tracking-[-0.01em] text-ink">
+        <p
+          class="m-0 font-display text-[clamp(1.4rem,2.6vw,2rem)] font-normal leading-[1.32] tracking-[-0.01em] text-ink"
+        >
           « Je voulais un studio qui parle aux artisans comme à des pairs — pas comme à des clients
           qu'on impressionne. »
         </p>
@@ -71,8 +84,12 @@ const VALUES = [
 
   <section class="bg-parchment py-[clamp(48px,6vw,88px)]">
     <div class="container-site">
-      <p class="text-eyebrow font-semibold uppercase tracking-eyebrow text-brand">Ce qui nous tient</p>
-      <h2 class="mt-4 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink">
+      <p class="text-eyebrow font-semibold uppercase tracking-eyebrow text-brand">
+        Ce qui nous tient
+      </p>
+      <h2
+        class="mt-4 max-w-[24ch] font-display text-[clamp(1.7rem,3vw,2.4rem)] font-medium leading-[1.08] tracking-h2 text-ink"
+      >
         Trois principes, pas de baratin.
       </h2>
       <div class="mt-[clamp(28px,4vw,40px)] grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
@@ -92,7 +109,9 @@ const VALUES = [
   </section>
 
   <section class="container-site py-[clamp(44px,5vw,72px)]">
-    <p class="mx-auto max-w-[20ch] text-center font-display text-[clamp(1.6rem,3.2vw,2.5rem)] font-medium leading-[1.2] tracking-h2 text-ink [&_em]:not-italic [&_em]:text-brand">
+    <p
+      class="mx-auto max-w-[20ch] text-center font-display text-[clamp(1.6rem,3.2vw,2.5rem)] font-medium leading-[1.2] tracking-h2 text-ink [&_em]:not-italic [&_em]:text-brand"
+    >
       Votre site, <em>créé et tenu</em> — vous gardez les mains sur votre métier.
     </p>
   </section>

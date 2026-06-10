@@ -1,0 +1,40 @@
+{
+  "redirects": [
+    { "source": "/site-internet", "destination": "/creation-site-internet", "permanent": true },
+    {
+      "source": "/site-internet/plombier",
+      "destination": "/creation-site-internet/plombier",
+      "permanent": true
+    },
+    {
+      "source": "/site-internet/electricien",
+      "destination": "/creation-site-internet/electricien",
+      "permanent": true
+    },
+    {
+      "source": "/site-internet/macon",
+      "destination": "/creation-site-internet/macon",
+      "permanent": true
+    },
+    {
+      "source": "/site-internet/paysagiste",
+      "destination": "/creation-site-internet",
+      "permanent": true
+    },
+    {
+      "source": "/site-internet/menuisier",
+      "destination": "/creation-site-internet",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/fonts/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
+      "source": "/icons/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800" }]
+    }
+  ]
+}

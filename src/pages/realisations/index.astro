@@ -10,6 +10,7 @@
  * sont conservés tels quels.
  */
 import BaseLayout from '@layouts/BaseLayout.astro';
+import { breadcrumbJsonLd } from '@lib/seo';
 import CtaBand from '@components/blocks/CtaBand.astro';
 import Eyebrow from '@components/ui/Eyebrow.astro';
 import { getCollection } from 'astro:content';
@@ -40,18 +41,28 @@ function leadStat(resultats?: string[]): { b: string; label: string } | null {
   title="Réalisations"
   description="Les sites qu'on a créés et qu'on tient pour des artisans : résultats concrets, demandes en hausse, visibilité Google."
   image={ogImage('realisations')}
+  jsonLd={breadcrumbJsonLd([
+    { name: 'Accueil', url: '/' },
+    { name: 'Réalisations', url: '/realisations' },
+  ])}
 >
-  <script is:inline>document.documentElement.classList.add('anim');</script>
+  <script is:inline>
+    document.documentElement.classList.add('anim');
+  </script>
 
   {/* Hero */}
   <section class="hero-pad">
     <div class="container-site">
       <div class="max-w-190">
         <div class="reveal"><Eyebrow>Réalisations</Eyebrow></div>
-        <h1 class="reveal mt-4 font-display text-[clamp(2.3rem,5vw,3.8rem)] font-medium leading-[1.02] tracking-display text-ink [&_em]:not-italic [&_em]:text-brand">
+        <h1
+          class="reveal mt-4 font-display text-[clamp(2.3rem,5vw,3.8rem)] font-medium leading-[1.02] tracking-display text-ink [&_em]:not-italic [&_em]:text-brand"
+        >
           Des sites qui <em>amènent des clients</em>.
         </h1>
-        <p class="reveal mt-5 max-w-[52ch] text-[clamp(1.0625rem,1.5vw,1.25rem)] leading-[1.55] text-ink-2">
+        <p
+          class="reveal mt-5 max-w-[52ch] text-[clamp(1.0625rem,1.5vw,1.25rem)] leading-[1.55] text-ink-2"
+        >
           Pas de galerie pour faire joli : des artisans qu'on a rendus visibles, avec des résultats
           concrets. Chaque cas, c'est un métier, un site, et des demandes en plus.
         </p>
@@ -62,7 +73,9 @@ function leadStat(resultats?: string[]): { b: string; label: string } | null {
   {/* Grille des cas */}
   <section class="pb-[clamp(56px,7vw,96px)]">
     <div class="container-site">
-      <div class="grid grid-cols-[repeat(auto-fill,minmax(330px,1fr))] gap-[clamp(18px,2.4vw,26px)]">
+      <div
+        class="grid grid-cols-[repeat(auto-fill,minmax(330px,1fr))] gap-[clamp(18px,2.4vw,26px)]"
+      >
         {
           realisations.map((c) => {
             const stat = leadStat(c.data.resultats);
@@ -109,7 +122,9 @@ function leadStat(resultats?: string[]): { b: string; label: string } | null {
         }
 
         {/* Placeholders — à remplacer par de vrais cas au fil de l'eau */}
-        <div class="reveal flex flex-col overflow-hidden rounded-md border border-dashed border-line bg-paper">
+        <div
+          class="reveal flex flex-col overflow-hidden rounded-md border border-dashed border-line bg-paper"
+        >
           <div
             class="flex aspect-[16/10] items-center justify-center bg-parchment"
             aria-hidden="true"
@@ -118,7 +133,9 @@ function leadStat(resultats?: string[]): { b: string; label: string } | null {
           </div>
           <div class="px-[22px] pb-[22px] pt-5">
             <div class="mb-[11px] flex flex-wrap gap-[7px]">
-              <span class="rounded-full bg-brand-soft px-[11px] py-1 text-[0.72rem] font-semibold text-brand">
+              <span
+                class="rounded-full bg-brand-soft px-[11px] py-1 text-[0.72rem] font-semibold text-brand"
+              >
                 À venir
               </span>
             </div>
@@ -126,12 +143,15 @@ function leadStat(resultats?: string[]): { b: string; label: string } | null {
               Votre métier ici
             </h3>
             <p class="mt-[7px] text-[0.95rem] leading-[1.5] text-ink-soft">
-              On documente chaque nouveau chantier client. Le prochain cas, c'est peut-être le vôtre.
+              On documente chaque nouveau chantier client. Le prochain cas, c'est peut-être le
+              vôtre.
             </p>
           </div>
         </div>
 
-        <div class="reveal flex flex-col overflow-hidden rounded-md border border-dashed border-line bg-paper">
+        <div
+          class="reveal flex flex-col overflow-hidden rounded-md border border-dashed border-line bg-paper"
+        >
           <div
             class="flex aspect-[16/10] items-center justify-center bg-parchment"
             aria-hidden="true"
@@ -140,7 +160,9 @@ function leadStat(resultats?: string[]): { b: string; label: string } | null {
           </div>
           <div class="px-[22px] pb-[22px] pt-5">
             <div class="mb-[11px] flex flex-wrap gap-[7px]">
-              <span class="rounded-full bg-brand-soft px-[11px] py-1 text-[0.72rem] font-semibold text-brand">
+              <span
+                class="rounded-full bg-brand-soft px-[11px] py-1 text-[0.72rem] font-semibold text-brand"
+              >
                 À venir
               </span>
             </div>

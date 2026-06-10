@@ -13,7 +13,10 @@ export default ts.config(
   {
     rules: {
       // Les variables préfixées par _ sont volontairement inutilisées.
-      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+      ],
       // `as any` ponctuel (polymorphisme de balise Astro) toléré.
       '@typescript-eslint/no-explicit-any': 'off',
     },
@@ -22,7 +25,13 @@ export default ts.config(
   {
     files: ['scripts/**/*.mjs', '*.mjs', '*.config.*'],
     languageOptions: {
-      globals: { process: 'readonly', console: 'readonly', URL: 'readonly' },
+      globals: {
+        process: 'readonly',
+        console: 'readonly',
+        URL: 'readonly',
+        fetch: 'readonly',
+        Buffer: 'readonly',
+      },
     },
   },
   // Déclarations Astro générées.

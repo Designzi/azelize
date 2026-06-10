@@ -7,6 +7,7 @@
  * bannière fixe escamotable. Logique React du Design réécrite en JS natif (voir <script>).
  */
 import BaseLayout from '@layouts/BaseLayout.astro';
+import { breadcrumbJsonLd } from '@lib/seo';
 import Section from '@components/ui/Section.astro';
 import Eyebrow from '@components/ui/Eyebrow.astro';
 ---
@@ -14,14 +15,17 @@ import Eyebrow from '@components/ui/Eyebrow.astro';
 <BaseLayout
   title="Gestion des cookies"
   description="Choisissez les cookies que vous acceptez. Nécessaires, mesure d'audience, aucun cookie publicitaire sans votre accord."
+  jsonLd={breadcrumbJsonLd([
+    { name: 'Accueil', url: '/' },
+    { name: 'Gestion des cookies', url: '/cookies' },
+  ])}
 >
   <Section width="site" pad="none" class="ck-hero">
     <Eyebrow>Vos préférences</Eyebrow>
     <h1 class="ck-h1">Gestion des cookies</h1>
     <p class="ck-lead">
-      Vous gardez le contrôle. On n'utilise que le strict nécessaire, plus une
-      mesure d'audience anonymisée si vous l'acceptez. Aucun cookie publicitaire
-      sans votre accord.
+      Vous gardez le contrôle. On n'utilise que le strict nécessaire, plus une mesure d'audience
+      anonymisée si vous l'acceptez. Aucun cookie publicitaire sans votre accord.
     </p>
   </Section>
 
@@ -31,8 +35,8 @@ import Eyebrow from '@components/ui/Eyebrow.astro';
         <div>
           <h2 class="ck-item-t">Nécessaires</h2>
           <p class="ck-item-p">
-            Indispensables au fonctionnement du site (navigation, sécurité). Ils
-            ne peuvent pas être désactivés.
+            Indispensables au fonctionnement du site (navigation, sécurité). Ils ne peuvent pas être
+            désactivés.
           </p>
         </div>
         <span class="ck-req">Toujours actifs</span>
@@ -42,11 +46,15 @@ import Eyebrow from '@components/ui/Eyebrow.astro';
         <div>
           <h2 class="ck-item-t">Mesure d'audience</h2>
           <p class="ck-item-p">
-            Statistiques anonymisées (pages vues, durée) pour améliorer le site.
-            Aucune donnée personnelle revendue.
+            Statistiques anonymisées (pages vues, durée) pour améliorer le site. Aucune donnée
+            personnelle revendue.
           </p>
         </div>
-        <button class="ck-tog is-on" data-tog="audience" aria-pressed="true" aria-label="Mesure d'audience"></button>
+        <button
+          class="ck-tog is-on"
+          data-tog="audience"
+          aria-pressed="true"
+          aria-label="Mesure d'audience"></button>
       </div>
 
       <div class="ck-item">
@@ -54,14 +62,17 @@ import Eyebrow from '@components/ui/Eyebrow.astro';
           <h2 class="ck-item-t">Personnalisation</h2>
           <p class="ck-item-p">Mémorise vos préférences d'affichage. Désactivé par défaut.</p>
         </div>
-        <button class="ck-tog" data-tog="perso" aria-pressed="false" aria-label="Personnalisation"></button>
+        <button class="ck-tog" data-tog="perso" aria-pressed="false" aria-label="Personnalisation"
+        ></button>
       </div>
     </div>
 
     <div class="ck-actions">
       <button class="ed-btn ed-btn--lg" data-action="accept-all">Tout accepter</button>
       <button class="ed-btn ed-btn--lg ed-btn--ghost" data-action="refuse-all">Tout refuser</button>
-      <button class="ed-btn ed-btn--lg ed-btn--ghost" data-action="save">Enregistrer mes choix</button>
+      <button class="ed-btn ed-btn--lg ed-btn--ghost" data-action="save"
+        >Enregistrer mes choix</button
+      >
     </div>
     <p class="ck-saved" role="status" aria-live="polite"></p>
   </Section>
@@ -88,8 +99,8 @@ import Eyebrow from '@components/ui/Eyebrow.astro';
       </div>
       <div>
         <p class="ck-banner-t">
-          On utilise des cookies pour faire fonctionner le site et, avec votre
-          accord, mesurer l'audience. Aucun cookie publicitaire.
+          On utilise des cookies pour faire fonctionner le site et, avec votre accord, mesurer
+          l'audience. Aucun cookie publicitaire.
           <a href="/confidentialite">En savoir plus</a>.
         </p>
       </div>
@@ -243,7 +254,10 @@ import Eyebrow from '@components/ui/Eyebrow.astro';
     border: 1px solid transparent;
     background: var(--color-brand);
     color: var(--color-paper);
-    transition: background 0.15s var(--ease), border-color 0.15s var(--ease), color 0.15s var(--ease);
+    transition:
+      background 0.15s var(--ease),
+      border-color 0.15s var(--ease),
+      color 0.15s var(--ease);
   }
   .ed-btn:hover {
     background: var(--color-brand-deep);
@@ -365,17 +379,15 @@ import Eyebrow from '@components/ui/Eyebrow.astro';
 <script>
   // Gestion des cookies — logique React Design réécrite en vanilla.
   // États NON persistés (démo, fidèle au Design).
-  // IMPORTANT : ce script reste en JS pur, sans annotations de type. Le scanner de
-  // dépendances de Vite au démarrage du serveur de dev échoue sinon sur certaines
-  // annotations de type dans les scripts inline. Ne pas réintroduire de types ici.
-  const state = { audience: true, perso: false };
+  type CookieKey = 'audience' | 'perso';
+  const state: Record<CookieKey, boolean> = { audience: true, perso: false };
 
-  const toggles = Array.from(document.querySelectorAll('.ck-tog[data-tog]'));
+  const toggles = Array.from(document.querySelectorAll<HTMLButtonElement>('.ck-tog[data-tog]'));
   const banner = document.querySelector('[data-banner]');
   const savedEl = document.querySelector('.ck-saved');
 
-  function syncToggle(btn) {
-    const key = btn.dataset.tog;
+  function syncToggle(btn: HTMLButtonElement) {
+    const key = btn.dataset.tog as CookieKey;
     const on = state[key];
     btn.classList.toggle('is-on', on);
     btn.setAttribute('aria-pressed', String(on));
@@ -384,8 +396,8 @@ import Eyebrow from '@components/ui/Eyebrow.astro';
     toggles.forEach(syncToggle);
   }
 
-  let flashTimer;
-  function flash(msg) {
+  let flashTimer: number | undefined;
+  function flash(msg: string) {
     if (!savedEl) return;
     savedEl.textContent = msg;
     if (flashTimer) window.clearTimeout(flashTimer);
@@ -397,7 +409,7 @@ import Eyebrow from '@components/ui/Eyebrow.astro';
   // Toggles individuels
   toggles.forEach((btn) => {
     btn.addEventListener('click', () => {
-      const key = btn.dataset.tog;
+      const key = btn.dataset.tog as CookieKey;
       state[key] = !state[key];
       syncToggle(btn);
     });
@@ -408,7 +420,7 @@ import Eyebrow from '@components/ui/Eyebrow.astro';
   }
 
   // Actions
-  const handlers = {
+  const handlers: Record<string, () => void> = {
     'accept-all': () => {
       state.audience = true;
       state.perso = true;
@@ -441,7 +453,7 @@ import Eyebrow from '@components/ui/Eyebrow.astro';
     },
   };
 
-  document.querySelectorAll('[data-action]').forEach((el) => {
+  document.querySelectorAll<HTMLElement>('[data-action]').forEach((el) => {
     const fn = handlers[el.dataset.action ?? ''];
     if (fn) el.addEventListener('click', fn);
   });

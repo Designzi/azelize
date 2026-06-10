@@ -9,7 +9,7 @@
  * Autonome : markup et texte en dur repris de la maquette, aucune prop.
  * Le chrome (header/footer) et le fil d'Ariane sont fournis en amont (BaseLayout + route).
  */
-import Button from '@components/ui/Button.astro';
+import CtaBand from '@components/blocks/CtaBand.astro';
 
 const STATS: { n: string; l: string }[] = [
   { n: '14', l: 'demandes / mois' },
@@ -24,16 +24,27 @@ const STATS: { n: string; l: string }[] = [
   <section class="pt-[clamp(40px,7vw,72px)] pb-[clamp(28px,3vw,40px)]">
     <div class="container-hero max-w-[880px]">
       <div class="flex flex-wrap gap-2">
-        <span class="rounded-full bg-brand-soft px-3.5 py-1.5 text-[0.78rem] font-semibold text-brand">Création de site</span>
-        <span class="rounded-full bg-brand-soft px-3.5 py-1.5 text-[0.78rem] font-semibold text-brand">Référencement local</span>
-        <span class="rounded-full bg-brand-soft px-3.5 py-1.5 text-[0.78rem] font-semibold text-brand">Lanester</span>
+        <span
+          class="rounded-full bg-brand-soft px-3.5 py-1.5 text-[0.78rem] font-semibold text-brand"
+          >Création de site</span
+        >
+        <span
+          class="rounded-full bg-brand-soft px-3.5 py-1.5 text-[0.78rem] font-semibold text-brand"
+          >Référencement local</span
+        >
+        <span
+          class="rounded-full bg-brand-soft px-3.5 py-1.5 text-[0.78rem] font-semibold text-brand"
+          >Lanester</span
+        >
       </div>
-      <h1 class="mt-4.5 m-0 max-w-[18ch] font-display text-[clamp(2.1rem,4.4vw,3.4rem)] font-medium leading-[1.04] tracking-[-0.03em] text-ink">
+      <h1
+        class="mt-4.5 m-0 max-w-[18ch] font-display text-[clamp(2.1rem,4.4vw,3.4rem)] font-medium leading-[1.04] tracking-[-0.03em] text-ink"
+      >
         FAR — applicateur de résine de sol.
       </h1>
       <p class="mt-5 max-w-[52ch] text-[clamp(1.0625rem,1.5vw,1.25rem)] leading-[1.55] text-ink-2">
-        D'invisible sur Google à 1ʳᵉ page locale : comment on a donné à FAR une présence
-        en ligne qui lui amène des chantiers, chaque mois.
+        D'invisible sur Google à 1ʳᵉ page locale : comment on a donné à FAR une présence en ligne
+        qui lui amène des chantiers, chaque mois.
       </p>
     </div>
     <div class="container-hero max-w-[880px]">
@@ -41,14 +52,18 @@ const STATS: { n: string; l: string }[] = [
         class="mt-[clamp(28px,4vw,44px)] flex aspect-[16/8] items-center justify-center overflow-hidden rounded-md border border-line"
         style="background:linear-gradient(180deg,color-mix(in srgb,var(--color-brand) 7%,transparent),color-mix(in srgb,var(--color-brand) 2%,transparent)),repeating-linear-gradient(135deg,var(--color-parchment) 0 16px,var(--color-line) 16px 32px);"
       >
-        <figcaption class="text-[0.72rem] uppercase tracking-[0.08em] text-brand/40">resinefar.fr · accueil + mobile</figcaption>
+        <figcaption class="text-[0.72rem] uppercase tracking-[0.08em] text-brand/40">
+          resinefar.fr · accueil + mobile
+        </figcaption>
       </figure>
     </div>
   </section>
 
   {/* LES CHIFFRES — bande 4 colonnes (2 en mobile), filets haut/bas */}
   <section class="container-hero max-w-[880px]">
-    <div class="my-[clamp(36px,5vw,56px)] grid grid-cols-2 gap-7 border-y border-line py-[clamp(32px,4vw,52px)] md:grid-cols-4 md:gap-[clamp(16px,3vw,40px)]">
+    <div
+      class="my-[clamp(36px,5vw,56px)] grid grid-cols-2 gap-7 border-y border-line py-[clamp(32px,4vw,52px)] md:grid-cols-4 md:gap-[clamp(16px,3vw,40px)]"
+    >
       {
         STATS.map((s) => (
           <div>
@@ -66,71 +81,88 @@ const STATS: { n: string; l: string }[] = [
   <section class="pb-[clamp(40px,5vw,64px)]">
     <div class="container-hero max-w-[880px]">
       <div class="mb-[clamp(32px,4vw,48px)]">
-        <h2 class="m-0 mb-3 font-display text-2xl font-semibold tracking-tight text-ink">Le point de départ</h2>
+        <h2 class="m-0 mb-3 font-display text-2xl font-semibold tracking-tight text-ink">
+          Le point de départ
+        </h2>
         <p class="m-0 max-w-[64ch] text-[1.0625rem] leading-[1.7] text-ink-2">
-          FAR est un applicateur de résine de sol reconnu dans son métier, à Lanester. Mais en ligne,
-          <strong class="font-semibold text-ink"> il n'existait pas</strong> : pas de site, une fiche Google vide, et des concurrents
-          qui captaient les appels. Les recommandations de bouche-à-oreille marchaient, mais tout
-          nouveau client qui cherchait sur Google passait à côté.
+          FAR est un applicateur de résine de sol reconnu dans son métier, à Lanester. Mais en
+          ligne,
+          <strong class="font-semibold text-ink"> il n'existait pas</strong> : pas de site, une fiche
+          Google vide, et des concurrents qui captaient les appels. Les recommandations de bouche-à-oreille
+          marchaient, mais tout nouveau client qui cherchait sur Google passait à côté.
         </p>
       </div>
 
       <div class="mb-[clamp(32px,4vw,48px)]">
-        <h2 class="m-0 mb-3 font-display text-2xl font-semibold tracking-tight text-ink">Ce qu'on a fait</h2>
+        <h2 class="m-0 mb-3 font-display text-2xl font-semibold tracking-tight text-ink">
+          Ce qu'on a fait
+        </h2>
         <p class="m-0 max-w-[64ch] text-[1.0625rem] leading-[1.7] text-ink-2">
           On a créé un site clair qui montre ses chantiers — l'essentiel pour un métier où
-          <strong class="font-semibold text-ink"> le résultat se voit</strong>. Photos avant/après, types de résine, zones
-          d'intervention. Puis on a structuré sa fiche Google et lancé le référencement local.
+          <strong class="font-semibold text-ink"> le résultat se voit</strong>. Photos avant/après,
+          types de résine, zones d'intervention. Puis on a structuré sa fiche Google et lancé le
+          référencement local.
         </p>
         <div class="my-[clamp(24px,3vw,34px)] grid grid-cols-2 gap-3.5">
           <figure class="overflow-hidden rounded-md border border-line bg-paper">
             <div
               class="aspect-[4/3]"
               style="background:repeating-linear-gradient(135deg,var(--color-parchment) 0 14px,var(--color-line) 14px 28px);"
-            ></div>
-            <figcaption class="px-3.5 py-2.5 text-[0.72rem] font-bold uppercase tracking-[0.06em] text-ink-soft">Avant — aucune présence</figcaption>
+            >
+            </div>
+            <figcaption
+              class="px-3.5 py-2.5 text-[0.72rem] font-bold uppercase tracking-[0.06em] text-ink-soft"
+            >
+              Avant — aucune présence
+            </figcaption>
           </figure>
           <figure class="overflow-hidden rounded-md border border-line bg-paper">
             <div
               class="aspect-[4/3]"
               style="background:repeating-linear-gradient(135deg,var(--color-parchment) 0 14px,var(--color-line) 14px 28px);"
-            ></div>
-            <figcaption class="px-3.5 py-2.5 text-[0.72rem] font-bold uppercase tracking-[0.06em] text-brand">Après — site + fiche Google</figcaption>
+            >
+            </div>
+            <figcaption
+              class="px-3.5 py-2.5 text-[0.72rem] font-bold uppercase tracking-[0.06em] text-brand"
+            >
+              Après — site + fiche Google
+            </figcaption>
           </figure>
         </div>
       </div>
 
       <div class="mb-[clamp(32px,4vw,48px)]">
-        <h2 class="m-0 mb-3 font-display text-2xl font-semibold tracking-tight text-ink">Le résultat</h2>
+        <h2 class="m-0 mb-3 font-display text-2xl font-semibold tracking-tight text-ink">
+          Le résultat
+        </h2>
         <p class="m-0 max-w-[64ch] text-[1.0625rem] leading-[1.7] text-ink-2">
           En quatre mois, le site remonte en 1ʳᵉ page sur « résine sol Lanester » et les communes
-          autour. FAR reçoit aujourd'hui <strong class="font-semibold text-ink">une dizaine de demandes par mois</strong> via le site
-          et la fiche Google — des chantiers qu'il n'aurait pas eus autrement.
+          autour. FAR reçoit aujourd'hui <strong class="font-semibold text-ink"
+            >une dizaine de demandes par mois</strong
+          > via le site et la fiche Google — des chantiers qu'il n'aurait pas eus autrement.
         </p>
       </div>
 
       {/* CITATION — carte parchemin pleine, titre display 400 */}
       <figure class="my-[clamp(32px,4vw,48px)] rounded-md bg-parchment p-[clamp(28px,4vw,44px)]">
-        <blockquote class="m-0 font-display text-[clamp(1.3rem,2.2vw,1.7rem)] font-normal leading-[1.35] text-ink">
-          « Avant, je n'existais pas sur internet. Maintenant on me trouve, et on m'appelle pour des chantiers. »
+        <blockquote
+          class="m-0 font-display text-[clamp(1.3rem,2.2vw,1.7rem)] font-normal leading-[1.35] text-ink"
+        >
+          « Avant, je n'existais pas sur internet. Maintenant on me trouve, et on m'appelle pour des
+          chantiers. »
         </blockquote>
-        <figcaption class="mt-4.5 text-[0.9rem] text-ink-soft">Patron — FAR, résine &amp; sols, Lanester</figcaption>
+        <figcaption class="mt-4.5 text-[0.9rem] text-ink-soft">
+          Patron — FAR, résine &amp; sols, Lanester
+        </figcaption>
       </figure>
     </div>
   </section>
 
-  {/* CTA — bande sombre brand-900, bouton blanc */}
-  <section class="bg-brand-900 text-on-dark">
-    <div class="container-site py-[clamp(48px,6vw,80px)] text-center">
-      <h2 class="mx-auto m-0 max-w-[20ch] font-display text-[clamp(1.8rem,3.4vw,2.6rem)] font-medium leading-[1.06] tracking-h2 text-on-dark-bright">
-        Le même résultat, pour votre métier ?
-      </h2>
-      <p class="mx-auto mt-4.5 max-w-[44ch] text-[1.0625rem] leading-[1.55] text-on-dark-soft">
-        15 minutes pour en parler. Sans engagement, vous ne payez qu'une fois que ça marche.
-      </p>
-      <Button href="/contact" size="lg" class="mt-7 bg-paper text-brand-900 hover:bg-parchment">
-        Demander un devis gratuit
-      </Button>
-    </div>
-  </section>
+  {/* CTA — bloc canonique (bande sombre + bouton crème), comme asafazam/global-cars */}
+  <CtaBand
+    title="Le même résultat, pour votre métier ?"
+    lead="15 minutes pour en parler. Sans engagement, vous ne payez qu'une fois que ça marche."
+    ctaLabel="Demander un devis gratuit"
+    ctaHref="/contact"
+  />
 </main>

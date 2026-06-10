@@ -12,7 +12,9 @@ import CtaBand from '@components/blocks/CtaBand.astro';
 import { navCta } from '@data/nav';
 
 const VILLES: [string, string][] = [
-  ['Lanester', '/creation-site-internet/lanester'],
+  // Pages villes pas encore créées (cf. seo-architecture : 'conditionnel') —
+  // placeholder '#' tant qu'elles n'existent pas, jamais de lien vers un 404.
+  ['Lanester', '#'],
   ['Lorient', '#'],
   ['Vannes', '#'],
   ['Hennebont', '#'],
@@ -31,7 +33,11 @@ const METIERS = [
 
 const INCLUS = [
   ['01', 'Conçu sur-mesure', 'Un site rapide, mobile et soigné, à la hauteur de votre métier.'],
-  ['02', 'Référencé sur Google', "SEO local + fiche d'établissement pour que vos clients vous trouvent."],
+  [
+    '02',
+    'Référencé sur Google',
+    "SEO local + fiche d'établissement pour que vos clients vous trouvent.",
+  ],
   ['03', 'Tenu chaque mois', "Mises à jour, nouveaux contenus, sécurité — on s'en occupe."],
   ['04', 'Suivi clair', 'Un rapport mensuel : appels, visites, position sur Google.'],
 ] as const;
@@ -39,16 +45,16 @@ const INCLUS = [
 
 {/* HERO */}
 <section class="container-site">
-  <div
-    class="max-w-[920px] hero-pad"
-  >
+  <div class="max-w-[920px] hero-pad">
     <Eyebrow class="reveal">Création de site internet</Eyebrow>
     <h1
       class="reveal mt-[18px] m-0 font-display text-[clamp(2.3rem,5vw,4rem)] font-medium leading-[1.02] tracking-display text-ink [&_em]:not-italic [&_em]:text-brand"
     >
       Un site qui vous fait <em>paraître pro et trouver sur Google</em>.
     </h1>
-    <p class="reveal mt-[22px] max-w-[56ch] text-[clamp(1.0625rem,1.6vw,1.3rem)] leading-[1.55] text-ink-2">
+    <p
+      class="reveal mt-[22px] max-w-[56ch] text-[clamp(1.0625rem,1.6vw,1.3rem)] leading-[1.55] text-ink-2"
+    >
       On conçoit votre site, on le référence localement et on le fait vivre chaque mois. Pensé pour
       les artisans et les TPE du bâtiment — pas pour les designers.
     </p>

@@ -1,6 +1,6 @@
 ---
 /** Section « La preuve » — cas resinefar.fr (preuve/identité, marque).
- *  ⚠️ Chiffres et citations à confirmer avec les vrais résultats clients (§11). */
+ *  Chiffres et citation = résultats réels du client FAR (resinefar.fr). */
 import Section from '@components/ui/Section.astro';
 import SectionHead from '@components/ui/SectionHead.astro';
 import StatsBlock from '@components/blocks/StatsBlock.astro';
@@ -15,14 +15,10 @@ const STATS = [
 
 const TESTI = [
   {
-    quote: "Avant, je n'existais pas sur internet. Maintenant on me trouve, et on m'appelle. Je n'ai rien eu à gérer.",
+    quote:
+      "Avant, je n'existais pas sur internet. Maintenant on me trouve, et on m'appelle. Je n'ai rien eu à gérer.",
     name: 'Patron — resinefar.fr',
     trade: 'Résine & sols',
-  },
-  {
-    quote: 'Ils ont fait le site et ils le tiennent. Moi je suis sur le chantier, pas devant un écran le dimanche soir.',
-    name: 'Artisan client',
-    trade: 'Finitions & rénovation',
   },
 ];
 ---
@@ -31,19 +27,13 @@ const TESTI = [
   <SectionHead eyebrow="La preuve">
     Un cas concret : resinefar.fr
     <Fragment slot="intro">
-      Un artisan de la résine, invisible en ligne. Site créé et tenu par Azelize —
-      voici ce qui a changé.
+      Un artisan de la résine, invisible en ligne. Site créé et tenu par Azelize — voici ce qui a
+      changé.
     </Fragment>
   </SectionHead>
 
   <StatsBlock stats={STATS} />
   <TestimonialBlock items={TESTI} />
-
-  <div class="reveal">
-    <p class="mt-[clamp(28px,3.4vw,44px)] text-[0.8125rem] text-ink-faint">
-      Cas et chiffres à confirmer / compléter avec les vrais résultats clients.
-    </p>
-  </div>
 
   <CtaRow line="Le prochain résultat, c'est le vôtre." />
 </Section>

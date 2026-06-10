@@ -35,7 +35,11 @@ const META: { l: string; v: string }[] = [
 
 const FLOW: { n: string; t: string; p: string }[] = [
   { n: '01', t: 'Inscription', p: 'Compte créé en 2 minutes, infos entreprise préremplies.' },
-  { n: '02', t: 'Premier client', p: 'Carnet clients : on ajoute un contact, ses chantiers s’y rattachent.' },
+  {
+    n: '02',
+    t: 'Premier client',
+    p: 'Carnet clients : on ajoute un contact, ses chantiers s’y rattachent.',
+  },
   { n: '03', t: 'Devis → facture', p: 'Un devis accepté se convertit en facture d’un clic.' },
   { n: '04', t: 'Suivi & relances', p: 'Statuts en un coup d’œil, relances automatiques.' },
 ];
@@ -66,18 +70,26 @@ const RES: { n: string; l: string }[] = [
       ))
     }
   </div>
-  <h1 class="reveal mt-4.5 max-w-[20ch] font-display text-[clamp(2.2rem,4.6vw,3.6rem)] font-medium leading-[1.03] tracking-[-0.03em] text-ink">
+  <h1
+    class="reveal mt-4.5 max-w-[20ch] font-display text-[clamp(2.2rem,4.6vw,3.6rem)] font-medium leading-[1.03] tracking-[-0.03em] text-ink"
+  >
     Asafazam, <em class="not-italic text-brand">l’arrière-boutique</em> des micro-entrepreneurs.
   </h1>
-  <p class="reveal mt-5 max-w-[56ch] text-[clamp(1.0625rem,1.6vw,1.3rem)] leading-[1.55] text-ink-2">
-    Une SaaS de gestion pensée pour les TPE du BTP : facturation, clients, commandes, documents — sans usine
-    à gaz. Conçue, développée et tenue par Azelize, de l’idée à la mise en ligne.
+  <p
+    class="reveal mt-5 max-w-[56ch] text-[clamp(1.0625rem,1.6vw,1.3rem)] leading-[1.55] text-ink-2"
+  >
+    Une SaaS de gestion pensée pour les TPE du BTP : facturation, clients, commandes, documents —
+    sans usine à gaz. Conçue, développée et tenue par Azelize, de l’idée à la mise en ligne.
   </p>
 
   {/* mockup dashboard (vanilla) */}
-  <div class="reveal mt-[clamp(30px,4vw,48px)] grid min-h-80 grid-cols-1 overflow-hidden rounded-lg border border-line bg-paper min-[680px]:grid-cols-[200px_1fr]">
+  <div
+    class="reveal mt-[clamp(30px,4vw,48px)] grid min-h-80 grid-cols-1 overflow-hidden rounded-lg border border-line bg-paper min-[680px]:grid-cols-[200px_1fr]"
+  >
     <div class="flex flex-row flex-wrap gap-[9px] bg-brand-900 px-4 py-5 min-[680px]:flex-col">
-      <div class="mb-2.5 w-full font-display text-[1.05rem] font-bold text-on-dark-bright">Asafazam</div>
+      <div class="mb-2.5 w-full font-display text-[1.05rem] font-bold text-on-dark-bright">
+        Asafazam
+      </div>
       <div class="h-2.5 w-12 rounded-xs bg-brand min-[680px]:w-full"></div>
       <div class="h-2.5 w-12 rounded-xs bg-white/15 min-[680px]:w-full"></div>
       <div class="h-2.5 w-12 rounded-xs bg-white/15 min-[680px]:w-full"></div>
@@ -89,7 +101,9 @@ const RES: { n: string; l: string }[] = [
         {
           KPIS.map((k) => (
             <div class="min-w-30 flex-1 rounded-sm border border-line p-3.5">
-              <div class="font-display text-[1.5rem] font-semibold tracking-h2 text-brand">{k.n}</div>
+              <div class="font-display text-[1.5rem] font-semibold tracking-h2 text-brand">
+                {k.n}
+              </div>
               <div class="mt-[3px] text-[0.75rem] text-ink-soft">{k.l}</div>
             </div>
           ))
@@ -98,8 +112,15 @@ const RES: { n: string; l: string }[] = [
       <div class="overflow-hidden rounded-sm border border-line">
         {
           ROWS.map((r, i) => (
-            <div class:list={['flex items-center gap-3 px-3.5 py-[11px] text-[0.82rem] text-ink-2', i < ROWS.length - 1 && 'border-b border-line']}>
-              <span>{r.kind} #{r.ref} · {r.t}</span>
+            <div
+              class:list={[
+                'flex items-center gap-3 px-3.5 py-[11px] text-[0.82rem] text-ink-2',
+                i < ROWS.length - 1 && 'border-b border-line',
+              ]}
+            >
+              <span>
+                {r.kind} #{r.ref} · {r.t}
+              </span>
               <span
                 class:list={[
                   'ml-auto rounded-full px-2.5 py-[3px] text-[0.7rem] font-bold',
@@ -118,11 +139,15 @@ const RES: { n: string; l: string }[] = [
 
 {/* MÉTA */}
 <section class="container-site">
-  <div class="grid grid-cols-2 gap-6 border-y border-line py-[clamp(24px,3vw,36px)] md:grid-cols-4 md:gap-[clamp(16px,3vw,36px)]">
+  <div
+    class="grid grid-cols-2 gap-6 border-y border-line py-[clamp(24px,3vw,36px)] md:grid-cols-4 md:gap-[clamp(16px,3vw,36px)]"
+  >
     {
       META.map((m) => (
         <div class="reveal">
-          <div class="text-[0.72rem] font-bold uppercase tracking-[0.1em] text-ink-faint">{m.l}</div>
+          <div class="text-[0.72rem] font-bold uppercase tracking-[0.1em] text-ink-faint">
+            {m.l}
+          </div>
           <div class="mt-1.5 text-base font-medium text-ink">{m.v}</div>
         </div>
       ))
@@ -133,13 +158,17 @@ const RES: { n: string; l: string }[] = [
 {/* OBJECTIF */}
 <section class="py-[clamp(44px,5vw,76px)]">
   <div class="container-site">
-    <p class="reveal text-eyebrow font-semibold uppercase tracking-eyebrow text-brand">L’objectif</p>
-    <h2 class="reveal mt-3.5 mb-2.5 max-w-[24ch] font-display text-[clamp(1.5rem,2.6vw,2.1rem)] font-semibold tracking-tight text-ink">
+    <p class="reveal text-eyebrow font-semibold uppercase tracking-eyebrow text-brand">
+      L’objectif
+    </p>
+    <h2
+      class="reveal mt-3.5 mb-2.5 max-w-[24ch] font-display text-[clamp(1.5rem,2.6vw,2.1rem)] font-semibold tracking-tight text-ink"
+    >
       Donner aux artisans un back-office simple, vraiment.
     </h2>
     <p class="reveal max-w-[60ch] text-[1.0625rem] leading-[1.6] text-ink-2">
-      Les micro-entrepreneurs du bâtiment jonglent entre devis, factures et relances sur des carnets ou des
-      tableurs. Les logiciels existants sont trop lourds et trop chers. L’objectif : un outil
+      Les micro-entrepreneurs du bâtiment jonglent entre devis, factures et relances sur des carnets
+      ou des tableurs. Les logiciels existants sont trop lourds et trop chers. L’objectif : un outil
       <strong>léger, mobile, abordable</strong>, qui fait gagner du temps sans formation.
     </p>
   </div>
@@ -148,11 +177,17 @@ const RES: { n: string; l: string }[] = [
 {/* PARCOURS */}
 <section class="bg-parchment py-[clamp(44px,5vw,76px)]">
   <div class="container-site">
-    <p class="reveal text-eyebrow font-semibold uppercase tracking-eyebrow text-brand">Le parcours utilisateur</p>
-    <h2 class="reveal mt-3.5 mb-2.5 max-w-[24ch] font-display text-[clamp(1.5rem,2.6vw,2.1rem)] font-semibold tracking-tight text-ink">
+    <p class="reveal text-eyebrow font-semibold uppercase tracking-eyebrow text-brand">
+      Le parcours utilisateur
+    </p>
+    <h2
+      class="reveal mt-3.5 mb-2.5 max-w-[24ch] font-display text-[clamp(1.5rem,2.6vw,2.1rem)] font-semibold tracking-tight text-ink"
+    >
       De l’inscription à la première facture, en minutes.
     </h2>
-    <p class="reveal mb-[clamp(22px,3vw,30px)] max-w-[60ch] text-[1.0625rem] leading-[1.6] text-ink-2">
+    <p
+      class="reveal mb-[clamp(22px,3vw,30px)] max-w-[60ch] text-[1.0625rem] leading-[1.6] text-ink-2"
+    >
       Un parcours pensé pour quelqu’un qui n’a pas le temps : chaque écran va droit au but.
     </p>
     <div class="grid grid-cols-1 gap-3.5 min-[460px]:grid-cols-2 md:grid-cols-4">
@@ -172,12 +207,19 @@ const RES: { n: string; l: string }[] = [
 {/* STACK */}
 <section class="py-[clamp(44px,5vw,76px)]">
   <div class="container-site">
-    <p class="reveal text-eyebrow font-semibold uppercase tracking-eyebrow text-brand">Le stack technique</p>
-    <h2 class="reveal mt-3.5 mb-2.5 max-w-[24ch] font-display text-[clamp(1.5rem,2.6vw,2.1rem)] font-semibold tracking-tight text-ink">
+    <p class="reveal text-eyebrow font-semibold uppercase tracking-eyebrow text-brand">
+      Le stack technique
+    </p>
+    <h2
+      class="reveal mt-3.5 mb-2.5 max-w-[24ch] font-display text-[clamp(1.5rem,2.6vw,2.1rem)] font-semibold tracking-tight text-ink"
+    >
       Une base moderne, scalable et souveraine.
     </h2>
-    <p class="reveal mb-[clamp(22px,3vw,30px)] max-w-[60ch] text-[1.0625rem] leading-[1.6] text-ink-2">
-      Des choix de pile pensés pour la fiabilité, la rapidité de développement et la conformité des données.
+    <p
+      class="reveal mb-[clamp(22px,3vw,30px)] max-w-[60ch] text-[1.0625rem] leading-[1.6] text-ink-2"
+    >
+      Des choix de pile pensés pour la fiabilité, la rapidité de développement et la conformité des
+      données.
     </p>
     <div class="reveal flex flex-wrap gap-2.5">
       {
@@ -195,37 +237,58 @@ const RES: { n: string; l: string }[] = [
 {/* IDENTITÉ */}
 <section class="bg-parchment py-[clamp(44px,5vw,76px)]">
   <div class="container-site">
-    <p class="reveal text-eyebrow font-semibold uppercase tracking-eyebrow text-brand">L’identité visuelle</p>
-    <h2 class="reveal mt-3.5 mb-2.5 max-w-[24ch] font-display text-[clamp(1.5rem,2.6vw,2.1rem)] font-semibold tracking-tight text-ink">
+    <p class="reveal text-eyebrow font-semibold uppercase tracking-eyebrow text-brand">
+      L’identité visuelle
+    </p>
+    <h2
+      class="reveal mt-3.5 mb-2.5 max-w-[24ch] font-display text-[clamp(1.5rem,2.6vw,2.1rem)] font-semibold tracking-tight text-ink"
+    >
       Une marque claire, qui inspire confiance.
     </h2>
-    <p class="reveal mb-[clamp(22px,3vw,30px)] max-w-[60ch] text-[1.0625rem] leading-[1.6] text-ink-2">
-      Un système simple et lisible — couleurs sobres, typographie nette — pour un outil qu’on utilise tous
-      les jours.
+    <p
+      class="reveal mb-[clamp(22px,3vw,30px)] max-w-[60ch] text-[1.0625rem] leading-[1.6] text-ink-2"
+    >
+      Un système simple et lisible — couleurs sobres, typographie nette — pour un outil qu’on
+      utilise tous les jours.
     </p>
     <div class="grid grid-cols-1 gap-3.5 md:grid-cols-2">
       <div class="reveal rounded-lg border border-line bg-paper p-6">
         <h3 class="m-0 font-display text-[1.1rem] font-semibold text-ink">Palette</h3>
         <div class="mt-3.5 flex flex-wrap gap-2">
           <div class="relative h-13.5 w-13.5 rounded-lg border border-line bg-brand">
-            <span class="absolute inset-x-0 -bottom-4.5 text-center font-mono text-[0.6rem] text-ink-faint">Marque</span>
+            <span
+              class="absolute inset-x-0 -bottom-4.5 text-center font-mono text-[0.6rem] text-ink-faint"
+              >Marque</span
+            >
           </div>
           <div class="relative h-13.5 w-13.5 rounded-lg border border-line bg-brand-900">
-            <span class="absolute inset-x-0 -bottom-4.5 text-center font-mono text-[0.6rem] text-ink-faint">Encre</span>
+            <span
+              class="absolute inset-x-0 -bottom-4.5 text-center font-mono text-[0.6rem] text-ink-faint"
+              >Encre</span
+            >
           </div>
           <div class="relative h-13.5 w-13.5 rounded-lg border border-line bg-brand-deep">
-            <span class="absolute inset-x-0 -bottom-4.5 text-center font-mono text-[0.6rem] text-ink-faint">Action</span>
+            <span
+              class="absolute inset-x-0 -bottom-4.5 text-center font-mono text-[0.6rem] text-ink-faint"
+              >Action</span
+            >
           </div>
           <div class="relative h-13.5 w-13.5 rounded-lg border border-line bg-parchment">
-            <span class="absolute inset-x-0 -bottom-4.5 text-center font-mono text-[0.6rem] text-ink-faint">Fond</span>
+            <span
+              class="absolute inset-x-0 -bottom-4.5 text-center font-mono text-[0.6rem] text-ink-faint"
+              >Fond</span
+            >
           </div>
         </div>
       </div>
       <div class="reveal rounded-lg border border-line bg-paper p-6">
         <h3 class="m-0 font-display text-[1.1rem] font-semibold text-ink">Typographie</h3>
-        <div class="mt-3.5 font-display text-[1.7rem] font-semibold tracking-h2 text-ink">Asafazam</div>
+        <div class="mt-3.5 font-display text-[1.7rem] font-semibold tracking-h2 text-ink">
+          Asafazam
+        </div>
         <div class="mt-1.5 font-sans text-base leading-[1.4] text-ink-2">
-          Display : Bricolage Grotesque · Texte : Hanken Grotesk. Lisible sur mobile comme sur desktop.
+          Display : Bricolage Grotesque · Texte : Hanken Grotesk. Lisible sur mobile comme sur
+          desktop.
         </div>
       </div>
     </div>
@@ -235,8 +298,12 @@ const RES: { n: string; l: string }[] = [
 {/* RÉSULTATS */}
 <section class="py-[clamp(44px,5vw,76px)]">
   <div class="container-site">
-    <p class="reveal text-eyebrow font-semibold uppercase tracking-eyebrow text-brand">Les résultats</p>
-    <h2 class="reveal mt-3.5 mb-2.5 max-w-[24ch] font-display text-[clamp(1.5rem,2.6vw,2.1rem)] font-semibold tracking-tight text-ink">
+    <p class="reveal text-eyebrow font-semibold uppercase tracking-eyebrow text-brand">
+      Les résultats
+    </p>
+    <h2
+      class="reveal mt-3.5 mb-2.5 max-w-[24ch] font-display text-[clamp(1.5rem,2.6vw,2.1rem)] font-semibold tracking-tight text-ink"
+    >
       Un produit qui tourne, et qui évolue.
     </h2>
     <div class="mt-[clamp(22px,3vw,30px)] grid grid-cols-1 gap-3.5 md:grid-cols-3">
@@ -251,9 +318,6 @@ const RES: { n: string; l: string }[] = [
         ))
       }
     </div>
-    <p class="reveal mt-[clamp(22px,3vw,30px)] max-w-[60ch] text-[1.0625rem] leading-[1.6] text-ink-2">
-      Chiffres indicatifs — à confirmer avec les données réelles.
-    </p>
   </div>
 </section>
 
