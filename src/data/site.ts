@@ -13,7 +13,7 @@ export const site = {
   // Image Open Graph par défaut — générée au build (src/pages/og/[...route].ts).
   defaultOgImage: '/og/default.png',
   // ⚠️ Coordonnées provisoires (cf. maquette) — à confirmer.
-  email: 'bonjour@azelize.fr',
+  email: 'bonjour@azelize.com',
   phone: '06 14 74 95 99',
   phoneHref: 'tel:+33614749599',
   // Format international (JSON-LD : Google exige l'indicatif pays).

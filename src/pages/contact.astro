@@ -3,8 +3,9 @@
  * /contact — portage fidèle de la maquette Design (Contact.html + ContactPage.jsx).
  * Héro + grille (formulaire VANILLA à gauche, coordonnées + « ce qui se passe ensuite » à droite).
  *
- * ⚠️ Formulaire NON connecté (cf. brief §11) : la soumission n'affiche qu'un état
- *    « envoyé » local, sans backend. Brancher un endpoint / service avant prod.
+ * Soumission : POST /api/contact (fonction Vercel `api/contact.ts`, envoi Resend).
+ * JS intercepte et affiche l'état « envoyé » en place ; sans JS, la soumission
+ * native redirige vers /merci. Honeypot `website` côté anti-spam.
  */
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Button from '@components/ui/Button.astro';
@@ -75,10 +76,18 @@ const CP_NEXT: [string, string, string][] = [
         {/* Colonne formulaire */}
         <div class="reveal" data-contact-block>
           <form
+            method="POST"
+            action="/api/contact"
             class="flex flex-col gap-[18px] rounded-sm border border-line bg-paper p-[clamp(26px,3vw,40px)]"
             data-contact-form
           >
-            <Field label="Votre nom" name="nom" placeholder="Jean Dupont" autocomplete="name" />
+            <Field
+              label="Votre nom"
+              name="nom"
+              placeholder="Jean Dupont"
+              autocomplete="name"
+              required
+            />
             <Field label="Votre métier" name="metier" placeholder="Maçon, plombier, carreleur…" />
             <Field
               label="Votre téléphone"
@@ -86,6 +95,7 @@ const CP_NEXT: [string, string, string][] = [
               type="tel"
               placeholder="06 12 34 56 78"
               autocomplete="tel"
+              required
             />
             <div class="flex flex-col gap-[7px]">
               <label for="mot" class="text-[0.8125rem] font-semibold tracking-[0.01em] text-ink-2">
@@ -100,9 +110,20 @@ const CP_NEXT: [string, string, string][] = [
                 class="min-h-[84px] resize-y rounded-xs border border-line-strong bg-paper px-[15px] py-[13px] font-sans text-base leading-[1.5] text-ink outline-none transition-[border-color,box-shadow] placeholder:text-ink-faint focus:border-brand focus:shadow-[var(--ring-focus)]"
               ></textarea>
             </div>
+            {/* Honeypot anti-spam : caché aux humains, rempli par les bots. */}
+            <div class="hidden" aria-hidden="true">
+              <input type="text" name="website" tabindex="-1" autocomplete="off" />
+            </div>
             <Button type="submit" size="sm" block class="mt-1">
               <span>Demander mon devis gratuit</span>
             </Button>
+            <p
+              class="m-0 hidden text-center text-[0.875rem] leading-[1.5] text-ink-2"
+              data-contact-error
+              role="alert"
+            >
+              L'envoi a échoué. Réessayez dans un instant, ou appelez-nous directement.
+            </p>
             <div class="text-center">
               <RiskNote />
             </div>
@@ -148,10 +169,10 @@ const CP_NEXT: [string, string, string][] = [
               01 23 45 67 89
             </a>
             <a
-              href="mailto:bonjour@azelize.fr"
+              href="mailto:bonjour@azelize.com"
               class="block py-1 text-[1.0625rem] text-ink-2 transition-colors hover:text-brand"
             >
-              bonjour@azelize.fr
+              bonjour@azelize.com
             </a>
             <span class="block py-1 text-[0.95rem] text-ink-soft"
               >12 rue de l'Atelier, 75011 Paris</span
@@ -217,19 +238,41 @@ const CP_NEXT: [string, string, string][] = [
     reveals.forEach((el) => io.observe(el));
   }
 
-  // ── Formulaire provisoire : état « envoyé » local, sans backend (brief §11) ─
+  // ── Formulaire : fetch vers /api/contact, état « envoyé » après un vrai 200 ──
   document.querySelectorAll<HTMLFormElement>('form[data-contact-form]').forEach((form) => {
     const block = form.closest('[data-contact-block]');
     const sent = block?.querySelector<HTMLElement>('[data-contact-sent]');
-    form.addEventListener('submit', (e) => {
+    const error = form.querySelector<HTMLElement>('[data-contact-error]');
+    const submit = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const nom = (form.elements.namedItem('nom') as HTMLInputElement | null)?.value?.trim();
-      const title = block?.querySelector<HTMLElement>('[data-contact-sent-title]');
-      if (title) title.textContent = nom ? `C'est noté, ${nom}.` : "C'est noté.";
-      form.classList.add('hidden');
-      sent?.classList.remove('hidden');
-      sent?.classList.add('flex');
-      sent?.focus(); // restitue le focus + annonce le message aux lecteurs d'écran
+      error?.classList.add('hidden');
+      const label = submit?.textContent;
+      if (submit) {
+        submit.disabled = true;
+        submit.textContent = 'Envoi…';
+      }
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          body: new FormData(form),
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const nom = (form.elements.namedItem('nom') as HTMLInputElement | null)?.value?.trim();
+        const title = block?.querySelector<HTMLElement>('[data-contact-sent-title]');
+        if (title) title.textContent = nom ? `C'est noté, ${nom}.` : "C'est noté.";
+        form.classList.add('hidden');
+        sent?.classList.remove('hidden');
+        sent?.classList.add('flex');
+        sent?.focus(); // restitue le focus + annonce le message aux lecteurs d'écran
+      } catch {
+        error?.classList.remove('hidden');
+        if (submit) {
+          submit.disabled = false;
+          if (label) submit.textContent = label;
+        }
+      }
     });
   });
 </script>

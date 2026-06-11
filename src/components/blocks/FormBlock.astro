@@ -3,8 +3,9 @@
  * FormBlock — bande sombre + formulaire (couche 3). Le moment « contact ».
  * Titre via slot par défaut, chapô + champs en props, note de réassurance en slot `risk`.
  *
- * ⚠️ Le formulaire n'est PAS connecté (cf. brief §11) : la soumission n'affiche
- *    qu'un état « envoyé » local. Brancher un endpoint / service avant prod.
+ * Soumission : POST /api/contact (fonction Vercel `api/contact.ts`, envoi Resend).
+ * JS intercepte et affiche l'état « envoyé » en place ; sans JS, la soumission
+ * native redirige vers /merci. Honeypot `website` côté anti-spam.
  */
 import Button from '@components/ui/Button.astro';
 import Eyebrow from '@components/ui/Eyebrow.astro';
@@ -43,29 +44,81 @@ const hasRisk = Astro.slots.has('risk');
   <div class="container-site">
     <div class="grid grid-cols-1 items-center gap-10 md:grid-cols-2 md:gap-[clamp(40px,6vw,88px)]">
       <div>
-        {eyebrow && <div class="reveal"><Eyebrow onDark class="mb-6">{eyebrow}</Eyebrow></div>}
+        {
+          eyebrow && (
+            <div class="reveal">
+              <Eyebrow onDark class="mb-6">
+                {eyebrow}
+              </Eyebrow>
+            </div>
+          )
+        }
         <div class="reveal">
-          <h2 class="m-0 font-display text-[clamp(2rem,4vw,3.4rem)] font-medium leading-[1.05] tracking-[-0.03em] text-on-dark [&_em]:text-on-dark-bright">
+          <h2
+            class="m-0 font-display text-[clamp(2rem,4vw,3.4rem)] font-medium leading-[1.05] tracking-[-0.03em] text-on-dark [&_em]:text-on-dark-bright"
+          >
             <slot />
           </h2>
         </div>
-        {lead && (
-          <div class="reveal">
-            <p class="mt-[clamp(22px,2.6vw,32px)] max-w-[44ch] text-[clamp(1.0625rem,1.5vw,1.25rem)] leading-[1.55] text-on-dark-soft">{lead}</p>
-          </div>
-        )}
+        {
+          lead && (
+            <div class="reveal">
+              <p class="mt-[clamp(22px,2.6vw,32px)] max-w-[44ch] text-[clamp(1.0625rem,1.5vw,1.25rem)] leading-[1.55] text-on-dark-soft">
+                {lead}
+              </p>
+            </div>
+          )
+        }
       </div>
 
       <div class="reveal">
-        <form class="flex flex-col gap-[18px] rounded-sm bg-paper p-[clamp(26px,3vw,40px)]" data-contact-form>
+        <form
+          method="POST"
+          action="/api/contact"
+          class="flex flex-col gap-[18px] rounded-sm bg-paper p-[clamp(26px,3vw,40px)]"
+          data-contact-form
+        >
           {fields.map((field) => <Field {...field} />)}
+          {/* Honeypot anti-spam : caché aux humains, rempli par les bots. */}
+          <div class="hidden" aria-hidden="true">
+            <input type="text" name="website" tabindex="-1" autocomplete="off" />
+          </div>
           <Button type="submit" size="sm" block class="mt-1">{submitLabel}</Button>
-          {hasRisk && <div class="text-center"><slot name="risk" /></div>}
+          <p
+            class="m-0 hidden text-center text-[0.875rem] leading-[1.5] text-ink-2"
+            data-contact-error
+            role="alert"
+          >
+            L'envoi a échoué. Réessayez dans un instant, ou appelez-nous directement.
+          </p>
+          {
+            hasRisk && (
+              <div class="text-center">
+                <slot name="risk" />
+              </div>
+            )
+          }
         </form>
 
-        <div class="hidden flex-col items-center gap-2.5 rounded-sm bg-paper px-[clamp(26px,3vw,40px)] py-[clamp(40px,5vw,60px)] text-center" data-contact-sent role="status" aria-live="polite" tabindex="-1">
-          <div class="flex h-[54px] w-[54px] items-center justify-center rounded-full bg-brand text-[1.6rem] font-bold text-paper" aria-hidden="true">✓</div>
-          <h3 class="mt-2 font-display text-[1.6rem] font-medium tracking-[-0.02em] text-ink" data-contact-sent-title>{sentTitle}</h3>
+        <div
+          class="hidden flex-col items-center gap-2.5 rounded-sm bg-paper px-[clamp(26px,3vw,40px)] py-[clamp(40px,5vw,60px)] text-center"
+          data-contact-sent
+          role="status"
+          aria-live="polite"
+          tabindex="-1"
+        >
+          <div
+            class="flex h-[54px] w-[54px] items-center justify-center rounded-full bg-brand text-[1.6rem] font-bold text-paper"
+            aria-hidden="true"
+          >
+            ✓
+          </div>
+          <h3
+            class="mt-2 font-display text-[1.6rem] font-medium tracking-[-0.02em] text-ink"
+            data-contact-sent-title
+          >
+            {sentTitle}
+          </h3>
           <p class="m-0 max-w-[34ch] text-base leading-[1.55] text-ink-soft">{sentBody}</p>
         </div>
       </div>
@@ -74,19 +127,42 @@ const hasRisk = Astro.slots.has('risk');
 </section>
 
 <script>
-  // Formulaire provisoire : état « envoyé » local, sans backend (cf. brief §11).
+  // Soumission fetch vers /api/contact ; l'état « envoyé » ne s'affiche qu'après
+  // un vrai 200. En cas d'échec : message d'erreur en place, bouton réactivé.
   document.querySelectorAll<HTMLFormElement>('form[data-contact-form]').forEach((form) => {
     const root = form.closest('[data-formblock]');
     const sent = root?.querySelector<HTMLElement>('[data-contact-sent]');
-    form.addEventListener('submit', (e) => {
+    const error = form.querySelector<HTMLElement>('[data-contact-error]');
+    const submit = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const nom = (form.elements.namedItem('nom') as HTMLInputElement | null)?.value?.trim();
-      const title = root?.querySelector<HTMLElement>('[data-contact-sent-title]');
-      if (title && nom) title.textContent = `C'est noté, ${nom}.`;
-      form.classList.add('hidden');
-      sent?.classList.remove('hidden');
-      sent?.classList.add('flex');
-      sent?.focus(); // restitue le focus + annonce le message aux lecteurs d'écran
+      error?.classList.add('hidden');
+      const label = submit?.textContent;
+      if (submit) {
+        submit.disabled = true;
+        submit.textContent = 'Envoi…';
+      }
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          body: new FormData(form),
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const nom = (form.elements.namedItem('nom') as HTMLInputElement | null)?.value?.trim();
+        const title = root?.querySelector<HTMLElement>('[data-contact-sent-title]');
+        if (title && nom) title.textContent = `C'est noté, ${nom}.`;
+        form.classList.add('hidden');
+        sent?.classList.remove('hidden');
+        sent?.classList.add('flex');
+        sent?.focus(); // restitue le focus + annonce le message aux lecteurs d'écran
+      } catch {
+        error?.classList.remove('hidden');
+        if (submit) {
+          submit.disabled = false;
+          if (label) submit.textContent = label;
+        }
+      }
     });
   });
 </script>

@@ -1,14 +1,32 @@
 ---
-/** Section finale sombre + formulaire de prise de rendez-vous · compose FormBlock.
- *  ⚠️ Le formulaire n'est PAS connecté (cf. brief §11) : voir FormBlock. */
+/** Section finale sombre + formulaire de prise de rendez-vous · compose FormBlock
+ *  (connecté à POST /api/contact — voir api/contact.ts). */
 import FormBlock from '@components/blocks/FormBlock.astro';
 import RiskNote from '@components/ui/RiskNote.astro';
 import { navCta } from '@data/nav';
 
 const FIELDS = [
-  { name: 'nom', label: 'Votre nom', placeholder: 'Jean Dupont', autocomplete: 'name', required: true },
-  { name: 'metier', label: 'Votre métier et ville', placeholder: 'Maçon à Rennes…', required: true },
-  { name: 'tel', label: 'Votre téléphone', type: 'tel' as const, placeholder: '06 12 34 56 78', autocomplete: 'tel', required: true },
+  {
+    name: 'nom',
+    label: 'Votre nom',
+    placeholder: 'Jean Dupont',
+    autocomplete: 'name',
+    required: true,
+  },
+  {
+    name: 'metier',
+    label: 'Votre métier et ville',
+    placeholder: 'Maçon à Rennes…',
+    required: true,
+  },
+  {
+    name: 'tel',
+    label: 'Votre téléphone',
+    type: 'tel' as const,
+    placeholder: '06 12 34 56 78',
+    autocomplete: 'tel',
+    required: true,
+  },
 ];
 ---
 
