@@ -6,8 +6,9 @@
  * Le simulateur est une DÉMO : il bascule de palier selon le nombre de services choisis.
  * Les paliers/prix viennent de la source unique `@data/pricing` (jamais codés en dur).
  *
- * ⚠️ Formulaire NON connecté (cf. brief §11) : la soumission n'affiche qu'un état
- *    « envoyé » local, sans backend. Brancher un endpoint / service avant prod.
+ * Soumission : POST /api/contact (fonction Vercel `api/contact.ts`, envoi Brevo).
+ * Les services cochés (boutons-chips) sont sérialisés à la main dans le champ
+ * `services` ; sans JS, la soumission native redirige vers /merci.
  */
 import BaseLayout from '@layouts/BaseLayout.astro';
 import { breadcrumbJsonLd } from '@lib/seo';
@@ -106,6 +107,8 @@ const initial = SIM.visibilite;
       >
         {/* Formulaire */}
         <form
+          method="POST"
+          action="/api/contact"
           class="rounded-sm border border-line bg-paper p-[clamp(24px,3vw,38px)]"
           data-devis-form
         >
@@ -126,6 +129,7 @@ const initial = SIM.visibilite;
                   class="dv-input"
                   placeholder="Jean Dupont"
                   autocomplete="name"
+                  required
                 />
               </div>
               <div>
@@ -139,6 +143,7 @@ const initial = SIM.visibilite;
                   class="dv-input"
                   placeholder="06 12 34 56 78"
                   autocomplete="tel"
+                  required
                 />
               </div>
             </div>
@@ -221,7 +226,18 @@ const initial = SIM.visibilite;
             </div>
           </fieldset>
 
+          {/* Honeypot anti-spam : caché aux humains, rempli par les bots. */}
+          <div class="hidden" aria-hidden="true">
+            <input type="text" name="website" tabindex="-1" autocomplete="off" />
+          </div>
           <Button type="submit" size="lg" block class="mt-2">Envoyer ma demande</Button>
+          <p
+            class="m-0 mt-3.5 hidden text-center text-[0.875rem] leading-[1.5] text-ink-2"
+            data-devis-error
+            role="alert"
+          >
+            L'envoi a échoué. Réessayez dans un instant, ou appelez-nous directement.
+          </p>
           <p class="mt-3.5 text-[0.8125rem] text-ink-soft">
             Sans engagement · Réponse sous 48 h · Vos données ne sont jamais revendues
           </p>
@@ -371,16 +387,46 @@ const initial = SIM.visibilite;
     });
   });
 
-  // ── Formulaire provisoire : état « envoyé » local, sans backend (brief §11) ─
+  // ── Formulaire : fetch vers /api/contact, état « envoyé » après un vrai 200 ──
   const form = block?.querySelector<HTMLFormElement>('[data-devis-form]');
   const sent = block?.querySelector<HTMLElement>('[data-devis-sent]');
-  form?.addEventListener('submit', (e) => {
+  const error = form?.querySelector<HTMLElement>('[data-devis-error]');
+  const submit = form?.querySelector<HTMLButtonElement>('button[type="submit"]');
+  form?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const nom = (form.elements.namedItem('nom') as HTMLInputElement | null)?.value?.trim();
-    const title = block?.querySelector<HTMLElement>('[data-devis-sent-title]');
-    if (title) title.textContent = nom ? `C'est noté, ${nom}.` : "C'est noté.";
-    form.classList.add('hidden');
-    sent?.classList.remove('hidden');
-    sent?.classList.add('flex');
+    error?.classList.add('hidden');
+    const label = submit?.textContent;
+    if (submit) {
+      submit.disabled = true;
+      submit.textContent = 'Envoi…';
+    }
+    const data = new FormData(form);
+    // Les services cochés sont des <button aria-pressed> (pas des inputs) :
+    // on les sérialise à la main pour qu'ils partent dans l'email.
+    const picked = chips
+      .filter((c) => c.getAttribute('aria-pressed') === 'true')
+      .map((c) => c.dataset.service)
+      .filter(Boolean);
+    if (picked.length) data.set('services', picked.join(', '));
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: data,
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const nom = (form.elements.namedItem('nom') as HTMLInputElement | null)?.value?.trim();
+      const title = block?.querySelector<HTMLElement>('[data-devis-sent-title]');
+      if (title) title.textContent = nom ? `C'est noté, ${nom}.` : "C'est noté.";
+      form.classList.add('hidden');
+      sent?.classList.remove('hidden');
+      sent?.classList.add('flex');
+    } catch {
+      error?.classList.remove('hidden');
+      if (submit) {
+        submit.disabled = false;
+        if (label) submit.textContent = label;
+      }
+    }
   });
 </script>

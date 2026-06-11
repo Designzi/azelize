@@ -24,11 +24,17 @@ const MAX_LEN = 2000;
 const WINDOW_MS = 10 * 60_000;
 const MAX_PER_WINDOW = 5;
 
-/** Champs acceptés → libellé dans l'email (l'ordre est celui de l'email). */
+/** Champs acceptés → libellé dans l'email (l'ordre est celui de l'email).
+ *  Union des champs des trois formulaires : FinalCta (nom/metier/tel),
+ *  /contact (+ mot) et /devis (+ ville/services/site/objectif). */
 const LABELS: Record<string, string> = {
   nom: 'Nom',
-  metier: 'Métier / ville',
   tel: 'Téléphone',
+  metier: 'Métier',
+  ville: 'Ville',
+  services: 'Services souhaités',
+  site: 'Site existant',
+  objectif: 'Objectif',
   mot: 'Besoin',
 };
 
