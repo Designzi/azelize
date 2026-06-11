@@ -7,14 +7,11 @@
  *
  * Autonome : markup et texte en dur repris de la maquette, aucune prop.
  * Le chrome (header/footer) est fourni par BaseLayout.
- * Le prix est importé depuis la source unique `@data/pricing`.
+ * Aucun montant affiché (décision 2026-06) — abonnement sur devis.
  */
 import Button from '@components/ui/Button.astro';
 import CtaBand from '@components/blocks/CtaBand.astro';
-import { tiers } from '@data/pricing';
 import { faqJsonLd } from '@lib/seo';
-
-const prixPresence = tiers[0].price;
 
 const STATS: { n: string; l: string }[] = [
   { n: '5 s', l: 'pour convaincre un client pressé' },
@@ -140,7 +137,7 @@ const FAQ: { q: string; a: string }[] = [
   },
   {
     q: 'C’est combien pour un plombier ?',
-    a: `À partir de ${prixPresence} €/mois, tout compris. Et vous ne commencez à payer qu’une fois que le site vous amène des appels.`,
+    a: `C’est un abonnement mensuel sur devis, tout compris. Et vous ne commencez à payer qu’une fois que le site vous amène des appels.`,
   },
 ];
 

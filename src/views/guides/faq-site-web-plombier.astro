@@ -4,13 +4,10 @@
  * Portage fidèle de `faq-site-web-plombier.html` (gabarit C5/C3, silo FAQ).
  * Corps <main> : hero (h1 em, lead, méta), grille 230px/1fr avec TOC sticky,
  * 5 catégories d’accordéons (vanilla, single-open, 1er ouvert), chips de maillage,
- * CTA. Chrome + breadcrumbs par la route. Le prix vient de `@data/pricing`.
+ * CTA. Chrome + breadcrumbs par la route. Aucun montant affiché (sur devis).
  */
 import CtaBand from '@components/blocks/CtaBand.astro';
-import { tiers } from '@data/pricing';
 import { faqJsonLd } from '@lib/seo';
-
-const prix = tiers[0].price;
 
 type Item = { q: string; a: string };
 const CATS: { cat: string; items: Item[] }[] = [
@@ -87,7 +84,7 @@ const CATS: { cat: string; items: Item[] }[] = [
     items: [
       {
         q: 'Combien coûte un site pour un plombier ?',
-        a: `À partir de ${prix} €/mois, tout compris — création, référencement, entretien. Voir le détail : <a href="/guides/combien-coute-site-internet">combien coûte un site</a>. Et vous ne payez qu’une fois que ça vous amène des appels.`,
+        a: `C’est un abonnement mensuel sur devis, tout compris — création, référencement, entretien. Voir le détail : <a href="/guides/combien-coute-site-internet">combien coûte un site</a>. Et vous ne payez qu’une fois que ça vous amène des appels.`,
       },
       {
         q: 'Je n’ai pas le temps de m’en occuper. Comment ça se passe ?',

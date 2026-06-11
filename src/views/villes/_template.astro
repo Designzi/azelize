@@ -10,7 +10,6 @@
  */
 import Button from '@components/ui/Button.astro';
 import CtaBand from '@components/blocks/CtaBand.astro';
-import { tiers } from '@data/pricing';
 
 interface Props {
   /** Nom de la ville (ex. « Lanester »). */
@@ -20,9 +19,6 @@ interface Props {
 }
 
 const { ville = 'Lanester', dept = 'Morbihan' } = Astro.props;
-
-// Prix d'entrée importé de la source unique (jamais codé en dur dans la copie).
-const prixEntree = tiers[0].price;
 
 const jobs: [string, string][] = [
   ['Plombiers', 'chauffage, dépannage'],
@@ -43,7 +39,7 @@ const includes: [string, string][] = [
 const faq: [string, string][] = [
   [
     `Combien coûte un site pour un artisan du ${dept} ?`,
-    `À partir de ${prixEntree} €/mois, tout compris — création, référencement et entretien. Pas de gros chèque au départ, et vous ne commencez à payer qu'une fois que le site vous amène des clients.`,
+    `C'est un abonnement mensuel sur devis, tout compris — création, référencement et entretien. Pas de gros chèque au départ, et vous ne commencez à payer qu'une fois que le site vous amène des clients.`,
   ],
   [
     'En combien de temps mon site est en ligne ?',

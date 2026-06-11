@@ -1,14 +1,16 @@
 /**
  * Tarifs — SOURCE DE PRIX UNIQUE (consommée par la landing `home/Pricing.astro`
  * et la page `/tarifs`). Évite toute double-saisie des montants.
- * ⚠️ Prix indicatifs — à confirmer.
+ * ⚠️ Décision 2026-06 : AUCUN montant affiché sur le site (perçu trop cher) —
+ * les formules sont « sur devis ». Ne pas réintroduire de chiffres ici.
  */
-export const PRICE_UNIT = '€ / mois';
+export const PRICE_LABEL = 'Sur devis';
 
 export interface Tier {
   name: string;
-  price: number;
-  unit: string;
+  /** Libellé affiché à la place du montant (jamais de chiffre). */
+  price: string;
+  unit?: string;
   line: string;
   feats: string[];
   featured?: boolean;
@@ -19,8 +21,7 @@ export interface Tier {
 export const tiers: Tier[] = [
   {
     name: 'Présence',
-    price: 390,
-    unit: PRICE_UNIT,
+    price: PRICE_LABEL,
     line: 'Site pro + fiche Google + entretien mensuel.',
     feats: [
       'Site vitrine sur-mesure',
@@ -31,8 +32,7 @@ export const tiers: Tier[] = [
   },
   {
     name: 'Visibilité',
-    price: 590,
-    unit: PRICE_UNIT,
+    price: PRICE_LABEL,
     featured: true,
     rolloverFirst: true,
     line: 'Tout Présence + référencement local actif + contenus mensuels + rapport.',
@@ -46,8 +46,7 @@ export const tiers: Tier[] = [
   },
   {
     name: 'Croissance',
-    price: 890,
-    unit: PRICE_UNIT,
+    price: PRICE_LABEL,
     rolloverFirst: true,
     line: 'Tout Visibilité + campagnes + supports (vidéo, print) + priorité.',
     feats: [

@@ -8,11 +8,7 @@
  */
 import Button from '@components/ui/Button.astro';
 import CtaBand from '@components/blocks/CtaBand.astro';
-import { tiers } from '@data/pricing';
 import { faqJsonLd } from '@lib/seo';
-
-// Prix d'entrée importé de la source unique (jamais codé en dur dans la copie).
-const prixEntree = tiers[0].price;
 
 // Mockup catalogue — placeholders véhicules (dégradé parchemin, jamais de hex brut).
 const vehicules = [
@@ -37,7 +33,7 @@ const FAQ: { q: string; a: string }[] = [
   },
   {
     q: "C'est combien pour un garage ?",
-    a: `À partir de ${prixEntree} €/mois, tout compris. Et vous ne commencez à payer qu'une fois que le site vous amène des contacts.`,
+    a: `C'est un abonnement mensuel sur devis, tout compris. Et vous ne commencez à payer qu'une fois que le site vous amène des contacts.`,
   },
 ];
 ---

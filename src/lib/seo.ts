@@ -96,7 +96,6 @@ export function localBusinessJsonLd(): JsonLd {
     telephone: site.phoneInternational,
     image: abs(site.defaultOgImage),
     address: { '@type': 'PostalAddress', ...site.postalAddress },
-    priceRange: '390-890 € / mois',
     areaServed: 'FR',
     // TODO geo / openingHoursSpecification : à ajouter quand les coordonnées GPS
     // et horaires réels seront confirmés. Ne pas inventer de données.

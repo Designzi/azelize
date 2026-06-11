@@ -13,7 +13,7 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import { breadcrumbJsonLd } from '@lib/seo';
 import Button from '@components/ui/Button.astro';
 import Eyebrow from '@components/ui/Eyebrow.astro';
-import { tiers, PRICE_UNIT } from '@data/pricing';
+import { tiers } from '@data/pricing';
 
 // Services proposés en chips (libellés du méga-menu Services).
 const SERVICES = [
@@ -33,7 +33,7 @@ const SERVICES = [
 // Sélection par défaut (fidèle à la maquette : 2 services → palier « Visibilité »).
 const DEFAULT_PICKED = ['Site internet', 'Référencement local'];
 
-// Paliers du simulateur (source unique des prix). Notes : texte fidèle à la maquette.
+// Paliers du simulateur (source unique des formules — aucun montant affiché).
 const PRESENCE = tiers.find((t) => t.name === 'Présence')!;
 const VISIBILITE = tiers.find((t) => t.name === 'Visibilité')!;
 const CROISSANCE = tiers.find((t) => t.name === 'Croissance')!;
@@ -41,19 +41,16 @@ const CROISSANCE = tiers.find((t) => t.name === 'Croissance')!;
 const SIM = {
   presence: {
     tier: PRESENCE.name,
-    price: PRESENCE.price,
     fill: 33,
     note: 'Idéal pour démarrer : site + fiche Google + entretien.',
   },
   visibilite: {
     tier: VISIBILITE.name,
-    price: VISIBILITE.price,
     fill: 66,
     note: 'Le plus choisi : site + référencement actif + contenus + rapport.',
   },
   croissance: {
     tier: CROISSANCE.name,
-    price: CROISSANCE.price,
     fill: 100,
     note: 'Plusieurs leviers activés : campagnes, supports, priorité.',
   },
@@ -268,10 +265,10 @@ const initial = SIM.visibilite;
             <div class="p-5">
               <div class="flex items-baseline gap-1.5">
                 <span
-                  class="font-display text-[2.4rem] font-semibold leading-none tracking-[-0.03em] text-brand"
-                  data-sim-price>{initial.price}</span
+                  class="font-display text-[1.6rem] font-semibold leading-none tracking-[-0.03em] text-brand"
+                  >Sur devis</span
                 >
-                <span class="text-[0.9rem] text-ink-soft">{PRICE_UNIT} · dès le démarrage</span>
+                <span class="text-[0.9rem] text-ink-soft">proposition claire sous 48 h</span>
               </div>
               <div class="mt-4 h-1.5 overflow-hidden rounded-[3px] bg-parchment">
                 <div
@@ -339,13 +336,12 @@ const initial = SIM.visibilite;
 
 <script>
   // ── Simulateur de palier (démo) + chips multi-sélection ────────────────────
-  // Paliers/prix injectés par Astro (source unique @data/pricing), pas codés ici.
+  // Paliers injectés par Astro (source unique @data/pricing), pas codés ici.
   const SIM = JSON.parse(document.getElementById('dv-sim-data')!.textContent!);
 
   const block = document.querySelector<HTMLElement>('[data-devis-block]');
   const chips = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-devis-chip]'));
   const tierEl = block?.querySelector<HTMLElement>('[data-sim-tier]');
-  const priceEl = block?.querySelector<HTMLElement>('[data-sim-price]');
   const fillEl = block?.querySelector<HTMLElement>('[data-sim-fill]');
   const noteEl = block?.querySelector<HTMLElement>('[data-sim-note]');
 
@@ -357,7 +353,6 @@ const initial = SIM.visibilite;
     const n = pickedCount();
     const s = n >= 4 ? SIM.croissance : n >= 2 ? SIM.visibilite : SIM.presence;
     if (tierEl) tierEl.textContent = s.tier;
-    if (priceEl) priceEl.textContent = String(s.price);
     if (noteEl) noteEl.textContent = s.note;
     if (fillEl) fillEl.style.width = s.fill + '%';
   }

@@ -9,7 +9,7 @@ import Badge from '@components/ui/Badge.astro';
 export interface Tier {
   name: string;
   line: string;
-  /** Montant mensuel (nombre) ou libellé court. */
+  /** Libellé court (ex. « Sur devis ») — jamais de montant affiché. */
   price: string | number;
   unit?: string;
   feats: string[];
@@ -48,7 +48,7 @@ const bulletFeat =
         <p class="mt-1.5 text-[0.95rem] text-ink-soft">{tier.line}</p>
 
         <div class="mb-[clamp(18px,2.4vw,26px)] mt-[clamp(18px,2.4vw,28px)] flex items-baseline gap-2 border-b border-line pb-[clamp(18px,2.4vw,26px)]">
-          <span class="font-display text-[clamp(2.6rem,4vw,3.4rem)] font-medium leading-[0.9] tracking-[-0.03em] text-ink">{tier.price}</span>
+          <span class="font-display text-[clamp(1.7rem,2.6vw,2.1rem)] font-medium leading-[0.9] tracking-[-0.03em] text-ink">{tier.price}</span>
           {tier.unit && <span class="text-[0.95rem] text-ink-soft">{tier.unit}</span>}
         </div>
 

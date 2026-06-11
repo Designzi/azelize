@@ -6,7 +6,8 @@
  *
  * ⚠️ Outil INTERACTIF : toute la logique de calcul est portée en JS vanilla
  * (input panier + boutons taux → recalcul live des 3 tableaux par formule).
- * Les prix viennent de `pricing.ts` (source unique), jamais codés en dur.
+ * Aucun montant d'abonnement affiché ni calculé (décision 2026-06) — la
+ * projection ne porte que sur le CA généré.
  */
 import BaseLayout from '@layouts/BaseLayout.astro';
 import { breadcrumbJsonLd } from '@lib/seo';
@@ -16,14 +17,14 @@ import Button from '@components/ui/Button.astro';
 import CtaBand from '@components/blocks/CtaBand.astro';
 import { ogImage } from '@lib/og';
 import { chromeCta } from '@data/nav';
-import { tiers } from '@data/pricing';
 
-// Source unique des prix : on mappe les 3 formules sur les paliers de pricing.ts.
+// Les 3 formules (mêmes noms que pricing.ts) — seul le facteur d'intensité varie.
 const PLAN_FACTORS: Record<string, number> = { Présence: 0.7, Visibilité: 1.0, Croissance: 1.4 };
-const plans = ['Présence', 'Visibilité', 'Croissance'].map((name) => {
-  const tier = tiers.find((t) => t.name === name)!;
-  return { key: name, name, price: tier.price, factor: PLAN_FACTORS[name] };
-});
+const plans = ['Présence', 'Visibilité', 'Croissance'].map((name) => ({
+  key: name,
+  name,
+  factor: PLAN_FACTORS[name],
+}));
 
 // Taux : « sur 5 devis, combien j'en signe ».
 const rates = [
@@ -123,7 +124,7 @@ const config = { plans, rates };
       <div class="flex flex-col gap-[clamp(28px,4vw,44px)]" id="si-tables">
         {
           plans.map((p) => (
-            <div class="reveal" data-plan={p.key} data-price={p.price} data-factor={p.factor}>
+            <div class="reveal" data-plan={p.key} data-factor={p.factor}>
               <h2 class="m-0 font-display text-[clamp(1.4rem,2.4vw,1.9rem)] font-semibold tracking-h2 text-ink">
                 Projection · abonnement{' '}
                 <em class="not-italic text-brand shadow-[inset_0_-10px_0_var(--color-accent-2-soft)] px-0.5">
@@ -158,9 +159,9 @@ const config = { plans, rates };
                 </table>
               </div>
               <p class="mt-4 max-w-[70ch] text-[0.8rem] leading-[1.5] text-ink-faint">
-                Abonnement {p.name} ({p.price} €/mois) qui ne démarre qu'au 1er mois où un chantier
-                est signé — vous ne payez qu'une fois que ça marche. Estimation moyenne : les
-                demandes stagnent les 3 premiers mois, puis montent franchement.
+                L'abonnement {p.name} ne démarre qu'au 1er mois où un chantier est signé — vous ne
+                payez qu'une fois que ça marche. Estimation moyenne : les demandes stagnent les 3
+                premiers mois, puis montent franchement.
               </p>
             </div>
           ))
@@ -262,7 +263,7 @@ const config = { plans, rates };
   }
 
   // ── Simulateur ROI (logique portée depuis le React Design, en vanilla) ──────
-  type Plan = { key: string; name: string; price: number; factor: number };
+  type Plan = { key: string; name: string; factor: number };
   const cfg = (window as any).__SI_CONFIG__ as {
     plans: Plan[];
     rates: { accepted: number; pct: number }[];
@@ -284,11 +285,9 @@ const config = { plans, rates };
 
   function buildRows(plan: Plan) {
     const planFactor = plan.factor;
-    const PRICE = plan.price;
     let totCA = 0,
       totJobs = 0,
-      totLeads = 0,
-      cumNet = 0;
+      totLeads = 0;
     let billing = false;
     const rows = CURVE.map((center, i) => {
       const month = i + 1;
@@ -299,14 +298,12 @@ const config = { plans, rates };
       const caMid = jobsMid * panier;
       // L'abonnement ne démarre qu'au 1er mois où un chantier est signé.
       if (!billing && jobsMid >= 1) billing = true;
-      const cost = billing ? PRICE : 0;
-      cumNet += caMid - cost;
       totCA += caMid;
       totJobs += jobsMid;
       totLeads += leadsMid;
-      return { month, leads: leadsMid, jobs: jobsMid, ca: caMid, caCum: totCA, free: cost === 0 };
+      return { month, leads: leadsMid, jobs: jobsMid, ca: caMid, caCum: totCA, free: !billing };
     });
-    return { rows, totCA, totJobs, totLeads, cumNet };
+    return { rows, totCA, totJobs, totLeads };
   }
 
   function render() {

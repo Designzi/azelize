@@ -6,11 +6,7 @@
  */
 import Button from '@components/ui/Button.astro';
 import CtaBand from '@components/blocks/CtaBand.astro';
-import { tiers } from '@data/pricing';
 import { faqJsonLd } from '@lib/seo';
-
-// Prix de base (source unique) — Design : « À partir de 390 €/mois ».
-const fromPrice = tiers[0].price;
 
 const cards = [
   { n: '01', t: 'Réservation directe', p: 'Le client réserve sur votre site — vous gardez tout le tarif.' },
@@ -42,7 +38,7 @@ const faq = [
   },
   {
     q: 'C’est combien pour un VTC ?',
-    a: `À partir de ${fromPrice} €/mois, tout compris. Et vous ne commencez à payer qu’une fois que le site vous amène des réservations.`,
+    a: `C’est un abonnement mensuel sur devis, tout compris. Et vous ne commencez à payer qu’une fois que le site vous amène des réservations.`,
   },
 ];
 

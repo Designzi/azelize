@@ -7,14 +7,12 @@
  * article « payer une fois ou s'abonner », FAQ prix, CTA.
  *
  * Autonome : markup et texte en dur repris de la maquette, aucune prop.
- * Le prix est importé depuis la source unique `@data/pricing`.
+ * ⚠️ Aucun montant Azelize affiché (décision 2026-06) — formules sur devis ;
+ * seuls les prix du marché (DIY, freelance, agence) restent chiffrés.
  * Le chrome (header/footer) + fil d'Ariane sont fournis par la route guides.
  */
 import CtaBand from '@components/blocks/CtaBand.astro';
-import { tiers } from '@data/pricing';
 import { faqJsonLd } from '@lib/seo';
-
-const prix = tiers[0].price;
 
 const ROWS: { sol: string; affiche: string; reel: string; pour: string; hl?: boolean }[] = [
   {
@@ -37,7 +35,7 @@ const ROWS: { sol: string; affiche: string; reel: string; pour: string; hl?: boo
   },
   {
     sol: 'Studio en abonnement (Azelize)',
-    affiche: `dès ${prix} €/mois`,
+    affiche: 'Mensuel, sur devis',
     reel: 'Tout compris, lissé',
     pour: 'Artisan qui veut des résultats sans gérer',
     hl: true,
@@ -106,7 +104,7 @@ const FAQ: { q: string; a: string }[] = [
       <p class="m-0 text-[1.0625rem] leading-[1.6] text-ink">
         Pour un artisan, un site se situe entre <strong class="text-brand">0 € (à faire soi-même, mais
         chronophage)</strong> et <strong class="text-brand">3 000 à 5 000 € en agence</strong>. En studio à
-        l'abonnement, comptez <strong class="text-brand">à partir de {prix} €/mois tout compris</strong> —
+        l'abonnement, c'est <strong class="text-brand">un loyer mensuel tout compris, sur devis</strong> —
         création, référencement et entretien — sans gros chèque au départ.
       </p>
     </div>
